@@ -1268,14 +1268,14 @@ const TestResultsView = ({ type, navigateTo }) => (
 
 const ModuleOverview = () => {
   const MODULE_SYLLABUS = [
-    { id: 1, title: 'Responding to Customer Enquiries', company: 'Concentrix', skill: 'Greetings & Empathy', focus: 'Modal verbs, courteous openings, identifying request', task: 'First-contact customer support call simulation' },
-    { id: 2, title: 'Identifying and Clarifying Technical Problems', company: 'Concentrix', skill: 'Probing & Clarification', focus: 'Clarification questions, WH-structures, symptom gathering', task: 'Hardware troubleshooting interview' },
-    { id: 3, title: 'Explaining Troubleshooting Procedures', company: 'Evoxt', skill: 'Step-by-Step Guidance', focus: 'Sequencing words (First, Next, Then), imperative verbs', task: 'Network connectivity diagnosis walkthrough' },
-    { id: 4, title: 'Handling Customer Complaints', company: 'Teleperformance', skill: 'De-escalation & Empathy', focus: 'Apologetic formulas, active listening, reassuring phrasing', task: 'Service outage compensation handling' },
-    { id: 5, title: 'Providing Clear Instructions', company: 'BASF Malaysia', skill: 'Technical Instructions', focus: 'Clear imperatives, confirmation checks, jargon simplification', task: 'Multi-factor authentication (MFA) setup call' },
-    { id: 6, title: 'Escalating Unresolved Issues', company: 'Accenture', skill: 'Tier-2 Escalation & SLAs', focus: 'Professional handoffs, SLA timeframes, priority tagging', task: 'Critical server degradation escalation call' },
-    { id: 7, title: 'Support Tickets and Technical Documentation', company: 'Scicom', skill: 'CRM Documentation', focus: 'Concise incident summaries, troubleshooting logs, KB tags', task: 'Voice-to-ticket summary recording' },
-    { id: 8, title: 'Complete Online Customer Support Interaction', company: 'Accenture & BASF', skill: 'End-to-End Simulation', focus: 'Integrated communication, problem resolution, polite closing', task: 'Full multi-step helpdesk call' },
+    { id: 1, title: 'Professional Customer Enquiries and Call Openings', company: 'OWNDAYS & Concentrix', skill: 'Greetings & Empathy', focus: 'Modal verbs, courteous openings, identifying request', task: 'First-contact customer support call simulation' },
+    { id: 2, title: 'Identifying and Clarifying Technical Problems', company: 'Concentrix & Evoxt', skill: 'Probing & Clarification', focus: 'Diagnostic funnel, WH-structures, symptom gathering', task: 'Hardware & cloud access troubleshooting' },
+    { id: 3, title: 'Troubleshooting and Explaining Technical Problems', company: 'Scicom & TDCX', skill: 'Step-by-Step Guidance', focus: 'Sequencing words, conditional workarounds, plain English', task: 'E-commerce gateway error workaround' },
+    { id: 4, title: 'Handling Complaints and Responding Empathetically', company: 'Teleperformance', skill: 'De-escalation & Empathy', focus: 'HEAR framework, active listening, non-defensive apology', task: 'Billing dispute & service outage de-escalation' },
+    { id: 5, title: 'Giving Clear Instructions and Checking Understanding', company: 'BASF Malaysia & iFAST', skill: 'Technical Instructions', focus: 'Clear imperatives, confirmation checks, jargon simplification', task: 'Multi-factor authentication (MFA) setup call' },
+    { id: 6, title: 'Escalating Unresolved Cases and Explaining Next Steps', company: 'Accenture Malaysia', skill: 'Tier-2 Escalation & SLAs', focus: 'Professional handoffs, SLA timeframes, priority tagging', task: 'Critical payroll outage escalation call' },
+    { id: 7, title: 'Occupational Vocabulary, Case Records, and Ticket Hygiene', company: 'Credspire & BASF', skill: 'CRM Documentation', focus: '5-field incident schema, past-tense diagnostic verbs, audit tags', task: 'Oral ticket summary recording' },
+    { id: 8, title: 'Integrated Support Process, Ticket Logs, and Oral Case Summaries', company: 'Scicom & BASF', skill: 'End-to-End Simulation', focus: '5-stage handover framework, case synthesis, shift transition', task: 'Oral shift handover capstone briefing' },
   ];
 
   return (

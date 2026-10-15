@@ -4,6 +4,7 @@ import {
   Sparkles, BookOpen, Mic, ArrowRight, Lock, Unlock, Play,
   Pause, RotateCcw, FileAudio, Check, MessageSquare, AlertCircle
 } from 'lucide-react';
+import { LESSONS_DATA } from '../data/lessonsData';
 
 export default function StudentDashboard({ navigateTo, studentState, isBypass = false }) {
   const [submissions, setSubmissions] = useState([]);
@@ -43,16 +44,12 @@ export default function StudentDashboard({ navigateTo, studentState, isBypass = 
     fetchStudentSubmissions();
   }, [studentState?.id, studentState?.userId]);
 
-  const LESSON_ITEMS = [
-    { id: 1, title: 'Responding to Customer Enquiries', company: 'Concentrix', unitId: 'lesson_1' },
-    { id: 2, title: 'Identifying and Clarifying Technical Problems', company: 'Concentrix', unitId: 'lesson_2' },
-    { id: 3, title: 'Explaining Troubleshooting Procedures', company: 'Evoxt', unitId: 'lesson_3' },
-    { id: 4, title: 'Handling Customer Complaints & Empathy', company: 'Teleperformance', unitId: 'lesson_4' },
-    { id: 5, title: 'Providing Clear Step-by-Step Instructions', company: 'BASF Malaysia', unitId: 'lesson_5' },
-    { id: 6, title: 'Escalating Unresolved Cases & SLAs', company: 'Accenture', unitId: 'lesson_6' },
-    { id: 7, title: 'CRM Ticket Hygiene & Documentation', company: 'Scicom', unitId: 'lesson_7' },
-    { id: 8, title: 'Support Shift Handover & Case Summaries', company: 'Accenture & BASF', unitId: 'lesson_8' }
-  ];
+  const LESSON_ITEMS = Object.values(LESSONS_DATA).map(l => ({
+    id: l.id,
+    title: l.title,
+    company: l.company,
+    unitId: l.unitId
+  }));
 
   const isLessonLocked = (id) => {
     if (isBypass) return false;
