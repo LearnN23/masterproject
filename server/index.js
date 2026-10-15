@@ -349,6 +349,9 @@ app.post('/api/grades', (req, res) => {
     return res.status(404).json({ error: 'No submissions found to grade' });
   }
 
+  const isCalibrated = req.body.isCalibrated || req.body.is_calibrated;
+  const calibrationNotes = req.body.calibrationNotes || req.body.calibration_notes;
+
   const evals = DAL.saveEvaluation({
     submissionId: sub.id,
     raterId: req.body.raterId || (rater ? rater.id : 'usr_instructor'),
@@ -361,10 +364,57 @@ app.post('/api/grades', (req, res) => {
     scores,
     strengths,
     areasForImprovement,
-    suggestions
+    suggestions,
+    isCalibrated,
+    calibrationNotes
   });
 
   res.json({ success: true, evaluations: evals });
+});
+
+// --- DUAL-RATER CALIBRATION RECONCILIATION ---
+app.post('/api/calibration/reconcile', (req, res) => {
+  try {
+    const submissionId = req.body.submissionId || req.body.submission_id;
+    if (!submissionId) {
+      return res.status(400).json({ error: 'submissionId is required' });
+    }
+
+    const sub = DAL.getSubmissionById(submissionId);
+    if (!sub) {
+      return res.status(404).json({ error: 'Submission not found' });
+    }
+
+    const rawCalibrator = req.body.calibratedBy || req.body.raterId;
+    let raterUser = null;
+    if (rawCalibrator) {
+      raterUser = DAL.getUserById(rawCalibrator) || DAL.getUserByUsername(rawCalibrator);
+    }
+    if (!raterUser) {
+      raterUser = DAL.getUserByUsername('instructor') || DAL.getUserByUsername('admin');
+    }
+
+    const evals = DAL.saveEvaluation({
+      submissionId,
+      raterId: raterUser ? raterUser.id : 'usr_instructor',
+      raterRole: 'instructor',
+      scores: req.body.scores || {},
+      taskAchievement: req.body.taskAchievement,
+      interactiveComm: req.body.interactiveComm,
+      vocabulary: req.body.vocabulary,
+      grammar: req.body.grammar,
+      pronunciationFluency: req.body.pronunciationFluency,
+      strengths: req.body.strengths || '',
+      areasForImprovement: req.body.areasForImprovement || req.body.improvements || '',
+      suggestions: req.body.suggestions || '',
+      isCalibrated: 1,
+      calibrationNotes: req.body.calibrationNotes || req.body.calibration_notes || ''
+    });
+
+    res.json({ success: true, evaluations: evals });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
 });
 
 // --- EXPERT COMMITTEE EVALUATION FORM ---
@@ -425,6 +475,8 @@ app.get('/api/export/spss', (req, res) => {
     'R2_Percentage',
     'Score_Difference_Pts',
     'Difference_Exceeds_20Pct',
+    'Is_Calibrated',
+    'Calibration_Notes',
     'Rater1_Notes',
     'Rater2_Notes'
   ];
@@ -454,6 +506,8 @@ app.get('/api/export/spss', (req, res) => {
     row.r2_pct,
     row.score_diff,
     clean(row.diff_flag),
+    clean(row.is_calibrated),
+    clean(row.calibration_notes),
     clean(row.r1_notes),
     clean(row.r2_notes)
   ].join(','));

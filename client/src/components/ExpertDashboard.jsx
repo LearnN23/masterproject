@@ -5,9 +5,10 @@ import {
   HelpCircle, Eye, RefreshCw, MessageSquare, BookOpen,
   Mic, Check, ChevronRight, Layers, Sliders
 } from 'lucide-react';
+import ScoreCalibrationStudio from './ScoreCalibrationStudio';
 
 export default function ExpertDashboard({ currentUser, onSelectRoleWalkthrough, navigateTo }) {
-  const [activeTab, setActiveTab] = useState('hub'); // 'hub', 'evaluation', 'results'
+  const [activeTab, setActiveTab] = useState('hub'); // 'hub', 'evaluation', 'results', 'calibration'
   
   // Thesis Expert Evaluation Form State (5 Dimensions x 1-5 scale)
   const [evalForm, setEvalForm] = useState({
@@ -149,6 +150,14 @@ export default function ExpertDashboard({ currentUser, onSelectRoleWalkthrough, 
             }`}
           >
             <FileText className="w-4 h-4" /> Committee Validation Submissions ({pastEvaluations.length})
+          </button>
+          <button
+            onClick={() => setActiveTab('calibration')}
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
+              activeTab === 'calibration' ? 'bg-purple-600 text-white shadow-md' : 'text-purple-300 hover:text-white hover:bg-purple-900/40'
+            }`}
+          >
+            <Sliders className="w-4 h-4" /> Dual-Rater Calibration Hub
           </button>
         </div>
       </div>
@@ -418,6 +427,11 @@ export default function ExpertDashboard({ currentUser, onSelectRoleWalkthrough, 
             )}
           </div>
         </div>
+      )}
+
+      {/* TAB 4: DUAL-RATER SCORE CALIBRATION STUDIO */}
+      {activeTab === 'calibration' && (
+        <ScoreCalibrationStudio currentUser={currentUser} />
       )}
     </div>
   );

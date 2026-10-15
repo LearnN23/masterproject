@@ -129,6 +129,14 @@ function initSchema() {
       UNIQUE(user_id, badge_key)
     );
   `);
+
+  // Safe migrations for dual-rater calibration tracking
+  try {
+    db.exec(`ALTER TABLE evaluations ADD COLUMN is_calibrated INTEGER DEFAULT 0;`);
+  } catch (e) {}
+  try {
+    db.exec(`ALTER TABLE evaluations ADD COLUMN calibration_notes TEXT;`);
+  } catch (e) {}
 }
 
 // Seed Core Lessons & Standard Users
@@ -486,7 +494,9 @@ const DAL = {
           suggestions: e.suggestions,
           rater_name: e.rater_name,
           graded_at: e.graded_at,
-          rater_role: e.rater_role
+          rater_role: e.rater_role,
+          is_calibrated: Boolean(e.is_calibrated),
+          calibration_notes: e.calibration_notes || null
         };
         grades[e.rater_role] = info;
         if (e.rater_role === 'instructor' || e.rater_role === 'rater_1') {
@@ -553,7 +563,9 @@ const DAL = {
         suggestions: e.suggestions,
         rater_name: e.rater_name,
         graded_at: e.graded_at,
-        rater_role: e.rater_role
+        rater_role: e.rater_role,
+        is_calibrated: Boolean(e.is_calibrated),
+        calibration_notes: e.calibration_notes || null
       };
       grades[e.rater_role] = info;
       if (e.rater_role === 'instructor' || e.rater_role === 'rater_1') {
@@ -609,7 +621,19 @@ const DAL = {
     const total = ta + ic + voc + gr + pf;
     const pct = Number(((total / 25) * 100).toFixed(1));
 
-    const existing = db.prepare('SELECT id FROM evaluations WHERE submission_id = ? AND rater_id = ?').get(submissionId, raterId);
+    const isCalibrated = data.isCalibrated ? 1 : 0;
+    const calibrationNotes = data.calibrationNotes !== undefined ? String(data.calibrationNotes) : null;
+
+    let existing = null;
+    if (raterRole === 'instructor' || raterRole === 'rater_1') {
+      existing = db.prepare(`
+        SELECT id FROM evaluations 
+        WHERE submission_id = ? AND (rater_id = ? OR rater_role IN ('instructor', 'rater_1'))
+      `).get(submissionId, raterId);
+    } else {
+      existing = db.prepare('SELECT id FROM evaluations WHERE submission_id = ? AND rater_id = ?').get(submissionId, raterId);
+    }
+
     const now = new Date().toISOString();
 
     if (existing) {
@@ -625,11 +649,14 @@ const DAL = {
             strengths = ?,
             areas_for_improvement = ?,
             suggestions = ?,
-            graded_at = ?
+            graded_at = ?,
+            is_calibrated = CASE WHEN ? = 1 THEN 1 ELSE is_calibrated END,
+            calibration_notes = COALESCE(?, calibration_notes)
         WHERE id = ?
       `).run(
         ta, ic, voc, gr, pf, total, pct,
         strengths || '', areasForImprovement || '', suggestions || '', now,
+        isCalibrated, calibrationNotes,
         existing.id
       );
     } else {
@@ -638,12 +665,14 @@ const DAL = {
         INSERT INTO evaluations (
           id, submission_id, rater_id, rater_role,
           task_achievement, interactive_comm, vocabulary, grammar, pronunciation_fluency,
-          total_score, total_percentage, strengths, areas_for_improvement, suggestions, graded_at
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          total_score, total_percentage, strengths, areas_for_improvement, suggestions, graded_at,
+          is_calibrated, calibration_notes
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `).run(
         id, submissionId, raterId, raterRole || 'rater_1',
         ta, ic, voc, gr, pf, total, pct,
-        strengths || '', areasForImprovement || '', suggestions || '', now
+        strengths || '', areasForImprovement || '', suggestions || '', now,
+        isCalibrated, calibrationNotes
       );
     }
 
@@ -700,8 +729,8 @@ const DAL = {
 
     return submissions.map(sub => {
       const evals = this.getEvaluationsForSubmission(sub.id);
-      const r1 = evals.find(e => e.rater_role === 'rater_1') || {};
-      const r2 = evals.find(e => e.rater_role === 'rater_2') || {};
+      const r1 = evals.find(e => e.rater_role === 'rater_1' || e.rater_role === 'instructor') || {};
+      const r2 = evals.find(e => e.rater_role === 'rater_2' || e.rater_role === 'rater') || {};
 
       let diff = '';
       let diffFlag = 'NO';
@@ -736,6 +765,8 @@ const DAL = {
         r2_pct: r2.total_percentage ?? '',
         score_diff: diff,
         diff_flag: diffFlag,
+        is_calibrated: (r1.is_calibrated || r2.is_calibrated) ? 'YES' : 'NO',
+        calibration_notes: r1.calibration_notes || r2.calibration_notes || '',
         r1_notes: r1.strengths ? `${r1.strengths} | ${r1.areas_for_improvement}` : '',
         r2_notes: r2.strengths ? `${r2.strengths} | ${r2.areas_for_improvement}` : ''
       };

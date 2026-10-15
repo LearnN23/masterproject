@@ -7,6 +7,7 @@ import {
   MessageSquare, Volume2, RotateCcw, AlertCircle
 } from 'lucide-react';
 import { RUBRIC_CRITERIA_25, getCefrRating, ASSESSMENTS_DATA } from '../data/assessmentsData';
+import ScoreCalibrationStudio from './ScoreCalibrationStudio';
 
 export default function InstructorDashboard({ currentUser, navigateTo }) {
   const [activeTab, setActiveTab] = useState('queue'); // 'queue', 'students', 'calibration'
@@ -901,98 +902,13 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
         </div>
       )}
 
-      {/* TAB 3: INTER-RATER CALIBRATION MATRIX (PILOT PHASE) */}
+      {/* TAB 3: INTER-RATER CALIBRATION STUDIO */}
       {activeTab === 'calibration' && (
-        <div className="space-y-6">
-          <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
-            <div className="text-xs text-amber-900 leading-relaxed">
-              <span className="font-bold text-sm block mb-1">Inter-Rater Calibration Protocol (Pilot / Testing Phase)</span>
-              To guarantee high inter-rater reliability (Intraclass Correlation Coefficient / ICC) for the Master's thesis, dual ratings by the Lead Instructor and Independent Rater are recorded. Any discrepancy exceeding 20% (&ge; 5 points on the 25-point scale) is automatically flagged for consensus moderation.
-            </div>
-          </div>
-
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-            <div className="p-6 border-b border-slate-200 flex justify-between items-center bg-slate-50/50">
-              <h3 className="font-bold text-slate-900 text-base">Dual-Rater Scoring Matrix</h3>
-              <span className="text-xs text-slate-500 font-medium">Comparing Instructor vs Rater ratings</span>
-            </div>
-
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm">
-                <thead className="bg-slate-50 text-slate-400 uppercase text-[10px] font-black tracking-widest border-b border-slate-200">
-                  <tr>
-                    <th className="px-6 py-4">Participant Code</th>
-                    <th className="px-6 py-4">Assessment Unit</th>
-                    <th className="px-6 py-4 text-center">Instructor Total (25)</th>
-                    <th className="px-6 py-4 text-center">Rater Total (25)</th>
-                    <th className="px-6 py-4 text-center">Score Difference</th>
-                    <th className="px-6 py-4 text-center">Calibration Status</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100 bg-white font-medium">
-                  {submissions.map(sub => {
-                    const inst = sub.grades?.instructor;
-                    const rater = sub.grades?.rater || sub.grades?.rater1;
-                    if (!inst && !rater) return null;
-
-                    const instTotal = inst ? (inst.total_score ?? inst.total) : null;
-                    const raterTotal = rater ? (rater.total_score ?? rater.total) : null;
-                    const diff = (instTotal !== null && raterTotal !== null) ? Math.abs(instTotal - raterTotal) : null;
-                    const exceeds20Pct = diff !== null && diff >= 5;
-
-                    return (
-                      <tr key={sub.id} className="hover:bg-slate-50 transition-colors">
-                        <td className="px-6 py-4 font-mono font-bold text-xs text-slate-900">
-                          {sub.blind_mask_code || sub.participant_code}
-                        </td>
-                        <td className="px-6 py-4 text-xs font-bold text-slate-800">
-                          {sub.unit_title || sub.unit_id}
-                        </td>
-                        <td className="px-6 py-4 text-center">
-                          {instTotal !== null ? (
-                            <span className="font-black text-indigo-600">{instTotal} / 25</span>
-                          ) : (
-                            <span className="text-slate-400 text-xs italic">Awaiting</span>
-                          )}
-                        </td>
-                        <td className="px-6 py-4 text-center">
-                          {raterTotal !== null ? (
-                            <span className="font-black text-teal-600">{raterTotal} / 25</span>
-                          ) : (
-                            <span className="text-slate-400 text-xs italic">Awaiting</span>
-                          )}
-                        </td>
-                        <td className="px-6 py-4 text-center font-bold">
-                          {diff !== null ? (
-                            <span className={`text-xs px-2 py-0.5 rounded ${exceeds20Pct ? 'bg-rose-100 text-rose-800 font-black' : 'bg-slate-100 text-slate-700'}`}>
-                              {diff} pts ({Math.round((diff / 25) * 100)}%)
-                            </span>
-                          ) : (
-                            <span className="text-slate-400 text-xs">-</span>
-                          )}
-                        </td>
-                        <td className="px-6 py-4 text-center">
-                          {exceeds20Pct ? (
-                            <span className="px-2.5 py-1 rounded-full text-[10px] font-black bg-rose-100 text-rose-800 border border-rose-200 flex items-center justify-center gap-1">
-                              <AlertCircle className="w-3 h-3 text-rose-600" /> Consensus Required
-                            </span>
-                          ) : diff !== null ? (
-                            <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 flex items-center justify-center gap-1">
-                              <CheckCircle2 className="w-3 h-3 text-emerald-600" /> Validated
-                            </span>
-                          ) : (
-                            <span className="text-slate-400 text-xs">Pending 2nd Rater</span>
-                          )}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
+        <ScoreCalibrationStudio
+          currentUser={currentUser}
+          submissions={submissions}
+          onRefresh={fetchDashboardData}
+        />
       )}
     </div>
   );
