@@ -1,0 +1,14 @@
+{
+  "name": "techquest-eop-learning-module",
+  "version": "1.0.0",
+  "description": "TECHQUEST: Web-based EOP Learning Module for IT Technical Support (Master's Thesis Project)",
+  "scripts": {
+    "start": "node server/index.js",
+    "client": "npm --prefix client run dev",
+    "server": "npm --prefix server start",
+    "build": "npm --prefix client run build"
+  },
+  "keywords": ["eop", "tblt", "moodle", "rubric", "inter-rater-reliability"],
+  "author": "Nasroh",
+  "license": "ISC"
+}

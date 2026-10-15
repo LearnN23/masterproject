@@ -1,0 +1,638 @@
+DELIVERABLE 2: COMPLETE LESSON MATERIALS (CONTINUED)
+
+LESSON 4: Handling Complaints and Responding Empathetically
+
+A. LESSON OVERVIEW
+
+Lesson Number & Title: Lesson 4: Handling Complaints and Responding Empathetically
+
+Allocated Learning Duration: 120 Minutes (2.0 Hours)
+
+Occupational Relevance: In multinational BPO contact centers and customer support operations in Malaysia (e.g., Teleperformance JA004, MSIG Insurance JA005, Brandt Business Services JA021, TDCX JA018, Foundever JA006), frontline specialists regularly handle irate, frustrated, or dissatisfied callers. Complaints typically stem from delayed shipments, recurring system outages, or billing discrepancies. Frontline agents must apply structured de-escalation techniques (such as the HEAR Framework: Hear, Empathize, Apologize, Resolve) to validate customer feelings, project professional ownership, and restore customer confidence without becoming defensive or blaming other internal departments.
+
+Measurable Learning Objectives:By the end of this 120-minute lesson, Thai IT undergraduate learners will be able to:
+
+Identify and critique defensive or dismissive agent responses versus empathetic, de-escalating customer service expressions.
+
+Formulate formal professional apologies and empathy statements ("I completely understand your frustration...", "I sincerely apologize for the delay...") to validate customer distress politely.
+
+Construct immediate reassurance commitments ("Rest assured that I am personally taking ownership of your case...") using target modal and passive structures.
+
+Perform a 60-second complaint de-escalation spoken response in a simulated customer support interaction to resolve a severe order delay complaint, achieving a minimum score of "3" across all rubric criteria.
+
+========================================================================================
+
+LESSON 4 COMMUNICATION FUNCTIONS, VOCABULARY, AND GRAMMAR MATRIX
+
+========================================================================================
+
+Target Communication Functions:
+
+  - De-escalating customer anger and validating emotional frustration
+
+  - Expressing sincere, professional corporate apologies without assigning internal blame
+
+  - Offering immediate reassurance and taking personal case ownership
+
+  - Proposing service recovery options and clear resolution timelines
+
+
+
+Target Occupational Vocabulary & Acronyms:
+
+  - De-escalation, Empathy, Service Recovery, Resolution, Goodwill Gesture, Escalation,
+
+    Unacceptable Delay, Operational Glitch, Personal Ownership, CSAT Recovery.
+
+
+
+Target Sentence Patterns & Grammar:
+
+  - Empathetic Validation: "I completely understand how [frustrating / inconvenient] this situation is for you."
+
+  - Formal Corporate Apologies: "I sincerely apologize for [the delay in delivering your package]."
+
+  - Reassurance Commitments: "Rest assured that [I am personally escalating your case to priority status]."
+
+  - Service Recovery Proposals: "To resolve this for you today, I would like to [issue an immediate refund / expedite shipment]."
+
+========================================================================================
+
+Prerequisite Knowledge: Call Openings (Lesson 1), Diagnostic Questioning (Lesson 2), and Plain English Technical Explanations (Lesson 3).
+
+Materials Needed: Web-based EOP portal access, Audio/Video player, microphone/audio recording interface.
+
+Connection to Curriculum Flow:
+
+Backward Linkage: Builds upon the plain English explanations and workarounds from Lesson 3 when technical failures cause customer distress.
+
+Forward Linkage: Provides emotional grounding for Lesson 5 (Giving Clear Instructions and Checking Understanding), where calm customers can then be guided through multi-step recovery procedures.
+
+B. ATTENTION-GRABBING OPENING HOOK
+
+Workplace Context: Customer Complaints Desk at an e-Commerce Logistics BPO Center in Kuala Lumpur, Malaysia.
+
+The Problem / Communication Mistake: An irate caller shouts into the headset: "My express shipment is three days overdue! You people ruined my birthday party!" The agent, Aof, panics and responds defensively: "Calm down, sir! It is not my fault! The courier department made the mistake, not customer service. You have to wait." The customer becomes furious at the agent's deflection, demands a manager, and posts a negative public review, resulting in a zero CSAT rating for Aof's team.
+
+Reflective Question for Students:
+
+Why did Aof's response make the customer even angrier?
+
+How can you apologize on behalf of a company without taking the complaint as a personal attack or blaming your colleagues?
+
+Occupational Importance: In Malaysian customer service centers, customer complaint management is monitored closely under Quality Assurance (QA) rubrics. Telling an irate customer to "calm down" or saying "it's not my fault" is classified as a Critical QA Failure. Mastering empathetic de-escalation turns negative interactions into positive CSAT outcomes.
+
+C. COMPLETE INSTRUCTIONAL VIDEO SCRIPT
+
+Video Title: Module 4.1 — Empathetic De-escalation & Handling Dissatisfied Callers
+
+Target Duration: 8 Minutes (Runtime) + 10 Minutes (Interactive Pauses) = 18 Minutes Total Learning Time
+
+AI Tool Production Note: AI video generation script with split-screen visual comparisons and interactive pauses.
+
+========================================================================================
+
+INSTRUCTIONAL VIDEO SCRIPT: MODULE 4.1
+
+========================================================================================
+
+
+
+[SCENE 1: INTRODUCTION & THE POWER OF EMPATHY]
+
+Visual Direction: Split screen showing a customer service office in Kuala Lumpur on the left, and an emotional de-escalation curve graph on the right.
+
+On-Screen Text: Lesson 4.1: Handling Complaints & Responding Empathetically
+
+Audio / Narrator Script:
+
+"Welcome to Lesson 4. When customers encounter service failures, they don't just want a fix—they want to be heard and valued. In this lesson, you will master the HEAR Framework to de-escalate angry callers, restore trust, and handle complaints with professional confidence."
+
+
+
+[SCENE 2: THE 4-STAGE HEAR DE-ESCALATION FRAMEWORK]
+
+Visual Direction: An interactive infographic animates four connected steps on screen.
+
+On-Screen Text:
+
+  H - Hear (Listen without interrupting)
+
+  E - Empathize (Validate emotional distress)
+
+  A - Apologize (Express formal corporate regret)
+
+  R - Resolve (Take personal ownership & offer action)
+
+Narrator Script:
+
+"Remember the acronym H-E-A-R. First, Hear: let the caller vent without interrupting. Second, Empathize: acknowledge their frustration using validation phrases. Third, Apologize: express sincere regret on behalf of the company. Fourth, Resolve: state the immediate action you will take to fix the situation."
+
+
+
+[SCENE 3: CONTRAST ANALYSIS - DEFENSIVE VS. EMPATHETIC AGENT]
+
+Visual Direction: Side-by-side video comparison of two agents responding to an irate caller.
+
+Left Panel (Red Border - Ineffective Agent Aof):
+
+Caller: "My shipment is 3 days late! This is completely unacceptable!"
+
+Aof: "Sir, please calm down! It's not my department's fault. The warehouse was closed."
+
+On-Screen Text (Red): 
+
+  X Defensive and argumentative
+
+  X Tells customer to "calm down" (Escalates anger)
+
+  X Blames internal warehouse team
+
+
+
+Right Panel (Green Border - Effective Agent Pear):
+
+Caller: "My shipment is 3 days late! This is completely unacceptable!"
+
+Pear (Calm, lower pitch, open posture): "I completely understand your frustration, sir. A three-day delay is indeed unacceptable. On behalf of our company, I sincerely apologize for this inconvenience. Rest assured that I am taking personal ownership of your shipment right now to ensure it is expedited today."
+
+On-Screen Text (Green):
+
+  ✓ Empathetic validation ("I completely understand...")
+
+  ✓ Formal apology ("I sincerely apologize...")
+
+  ✓ Reassurance & personal ownership ("Rest assured that I am...")
+
+
+
+[SCENE 4: INTERACTIVE PAUSE & PRACTICE]
+
+Visual Direction: Countdown timer (10 seconds) with audio chime.
+
+On-Screen Text: PRACTICE PAUSE: Repeat Pear's de-escalation line out loud three times. Focus on keeping your voice calm, steady, and lower in pitch.
+
+Narrator Script:
+
+"Pause the video now. Practice repeating Pear's response out loud. Notice how a calm, lower pitch instantly defuses caller anger."
+
+
+
+[INTERACTIVE PAUSE - 120 SECONDS]
+
+
+
+[SCENE 5: TAKING OWNERSHIP WITHOUT BLAMING OTHERS]
+
+Visual Direction: Highlighted text box showing ownership transition phrases: "Rest assured that I will personally track this until it reaches your doorstep."
+
+Narrator Script:
+
+"Never say 'it's not my job' or blame courier partners. The customer sees you as the company. Take personal ownership using the phrase 'Rest assured that I will...' to build instant credibility."
+
+
+
+[SCENE 6: LESSON RECAP]
+
+Visual Direction: Summary graphic displaying key de-escalation rules.
+
+On-Screen Text:
+
+  RECAP:
+
+  1. Never tell an angry customer to "calm down".
+
+  2. Validate emotions: "I completely understand how frustrating..."
+
+  3. Apologize formally: "I sincerely apologize for..."
+
+  4. Offer reassurance: "Rest assured that I am..."
+
+Narrator Script:
+
+"Empathetic communication turns upset callers into loyal brand advocates. Let's practice these structures in Section D!"
+
+========================================================================================
+
+D. EXPLICIT TEACHING OF SENTENCE STRUCTURES AND LANGUAGE USE
+
+1. Language Pattern 1: Empathetic Validation & Formal Apologies
+
+========================================================================================
+
+LANGUAGE PATTERN 1: EMPATHETIC VALIDATION & FORMAL APOLOGIES
+
+========================================================================================
+
+Form / Syntax Pattern:
+
+  [Empathy Lead-in] + [Validation Clause: how / that...] + [Formal Apology: I sincerely apologize for...]
+
+
+
+Communicative Function:
+
+  Acknowledging customer distress, validating their emotional experience as reasonable, and extending an official apology without defensiveness.
+
+
+
+Explanation in Thai (คำอธิบายภาษาไทย):
+
+  เมื่อลูกค้าแสดงความโกรธ ห้ามพูดว่า "Calm down" (ใจเย็นๆ) เด็ดขาด เพราะจะทำให้ลูกค้ารู้สึกว่าอารมณ์ของตนถูกมองข้าม โครงสร้างที่ถูกต้องคือการแสดงความเห็นอกเห็นใจ (Empathy) ด้วยประโยค "I completely understand how [frustrating / disappointing] this is..." แล้วตามด้วยคำขอโทษอย่างเป็นทางการในนามบริษัท "I sincerely apologize for [the delay / this error]..."
+
+
+
+Contextualized Workplace Examples:
+
+  Example 1: "I completely understand how frustrating this delivery delay is for you, and I sincerely apologize for the inconvenience caused."
+
+  Example 2: "I recognize how disappointing it is to experience a system outage during peak hours, and on behalf of our team, I apologize sincerely."
+
+  Example 3: "I understand your concern regarding this unexpected charge, and I am very sorry for the confusion it has caused."
+
+
+
+Common Learner Errors & Corrections:
+
+  x Incorrect: "Please calm down, it is not a big problem." (Dismissive and highly offensive)
+
+    ✓ Correct: "I completely understand your frustration, and I apologize for this inconvenience."
+
+  x Incorrect: "Sorry about that, but courier was late." (Casual apology combined with internal blame)
+
+    ✓ Correct: "I sincerely apologize for the delay in your shipment."
+
+  x Incorrect: "Don't be angry, I try my best." (Informal and ungrammatical)
+
+    ✓ Correct: "I understand why you are upset, and I am taking immediate steps to resolve this."
+
+========================================================================================
+
+Substitution / Transformation Exercise (10 Minutes)
+
+Instructions: Transform the following dismissive or defensive agent lines into professional empathetic apologies.
+
+Defensive: "It's not my fault the software crashed."
+
+Professional Transformation: "I completely understand how disruptive this software crash is to your work, and I sincerely apologize for the trouble."
+
+Dismissive: "You have to wait because we are busy."
+
+Professional Transformation: "I recognize that the long wait time is frustrating, and I am truly sorry for keeping you waiting."
+
+Defensive: "Read the terms policy, no refunds allowed."
+
+Professional Transformation: "I understand your disappointment regarding our refund policy, and I apologize that we could not meet your expectations."
+
+Production Task (10 Minutes)
+
+Write two original empathetic de-escalation statements to address a client whose billing statement contains a duplicate charge.
+
+Student Output Example 1: "I completely understand how concerning a duplicate charge is on your statement, and I sincerely apologize for this error."
+
+Student Output Example 2: "I recognize how frustrating this billing discrepancy must be, and I assure you I am correcting it immediately."
+
+2. Language Pattern 2: Reassurance Commitments & Personal Ownership (Rest assured that...)
+
+========================================================================================
+
+LANGUAGE PATTERN 2: REASSURANCE COMMITMENTS & PERSONAL OWNERSHIP
+
+========================================================================================
+
+Form / Syntax Pattern:
+
+  Rest assured that + [Subject: I / our team] + [will / am + Present Participle] + [Action / Priority]...
+
+  OR: Please be assured that + [Subject] + [Active Resolution Commitment]...
+
+
+
+Communicative Function:
+
+  Reassuring a customer that their problem is being actively handled with priority, projecting personal ownership and confidence.
+
+
+
+Explanation in Thai (คำอธิบายภาษาไทย):
+
+  โครงสร้าง "Rest assured that..." (ขอให้คุณมั่นใจได้เลยว่า...) เป็นวลีทรงพลังในสายงานบริการลูกค้าสไตล์ BPO มาเลเซีย เพื่อสร้างความเชื่อมั่นอย่างรวดเร็ว โครงสร้างตามด้วยประโยคบอกเล่า แสดงสิ่งที่เจ้าหน้าที่จะลงมือทำทันที เช่น "Rest assured that I am personally monitoring your ticket..."
+
+
+
+Contextualized Workplace Examples:
+
+  Example 1: "Rest assured that I am personally overriding this dispatch order to ensure delivery tomorrow morning."
+
+  Example 2: "Please be assured that our senior engineering team is actively investigating this server connection error."
+
+  Example 3: "Rest assured that a full credit refund will be processed back to your original payment method within 24 hours."
+
+
+
+Common Learner Errors & Corrections:
+
+  x Incorrect: "Don't worry, maybe tomorrow fixed." (Vague, unconvincing, and unprofessional)
+
+    ✓ Correct: "Rest assured that I will personally monitor your case until it is completely resolved."
+
+  x Incorrect: "Rest assure that I try." (Grammar error: 'rest assure' and weak verb 'try')
+
+    ✓ Correct: "Rest assured that I am taking immediate action to fix this issue."
+
+========================================================================================
+
+E. GUIDED EXAMPLES AND MODEL DIALOGUES
+
+Model Dialogue 4.1: Handling an Irate Customer Complaint (E-Commerce Order Delay)
+
+Workplace Context: Customer Complaint Operations at Teleperformance Malaysia (JA004).
+
+Interaction Type: Inbound Voice Call — Critical Shipment Delay Complaint.
+
+========================================================================================
+
+MODEL DIALOGUE 4.1: COMPLAINT DE-ESCALATION
+
+========================================================================================
+
+[Audio Cue: High volume, agitated voice tone from caller]
+
+
+
+Caller (Mr. Lee):  "This is ridiculous! I paid for overnight express shipping four days ago, and my event equipment STILL hasn't arrived! Your service is completely useless!"
+
+
+
+Agent (Pear):     "I completely understand how frustrating and unacceptable this delay is for you, Mr. Lee, especially when you paid for overnight express shipping. On behalf of our company, I sincerely apologize for failing to meet your delivery expectations."
+
+                   [Communication Purpose: Stage 1 & 2 - HEAR Framework: Empathize & Apologize]
+
+
+
+Caller (Mr. Lee):  "Apologies won't fix my event tonight! I need those items on site in two hours or I'm canceling my contract!"
+
+
+
+Agent (Pear):     "I completely hear your urgency, Mr. Lee. Rest assured that I am taking personal ownership of your shipment right now. I am opening an immediate priority dispatch request to send a local courier directly to your event location within 90 minutes. In addition, I will issue a full refund for your express shipping fee."
+
+                   [Communication Purpose: Stage 3 & 4 - Reassurance, Personal Ownership & Service Recovery]
+
+
+
+Caller (Mr. Lee):  [Tone relaxes noticeably] "Well... okay. If you can get it here in 90 minutes and refund the fee, that will work. Thank you for handling this quickly."
+
+
+
+Agent (Pear):     "It is my absolute pleasure, Mr. Lee. I will send the live courier tracking link directly to your mobile phone via SMS right now."
+
+                   [Communication Purpose: Immediate Action Confirmation & CSAT Recovery]
+
+
+
+========================================================================================
+
+ANALYSIS & FORMALITY OPTIONS:
+
+Why This Dialogue is Effective:
+
+  1. Agent Pear does NOT interrupt Mr. Lee or tell him to calm down.
+
+  2. Pear validates his anger immediately ("unacceptable this delay is... especially when you paid for overnight express").
+
+  3. Pear uses "Rest assured that I am taking personal ownership..." and offers concrete service recovery (local courier + shipping refund).
+
+
+
+Alternative De-escalation Phrases:
+
+  - Highly Formal: "Please accept my most sincere apologies for this operational oversight. Rest assured that corrective measures are being taken immediately."
+
+  - Action-Focused: "I understand your disappointment entirely. Let me take charge of this immediately to make things right for you."
+
+========================================================================================
+
+F. FORMATIVE PRACTICE PAGE & SIMULATED SPEAKING TASKS
+
+Activity 4.1: Knowledge Check & De-escalation Identification (15 Minutes)
+
+A caller is shouting about a delayed refund. Which response is most effective for de-escalating the situation?
+
+A) "Sir, you need to lower your voice or I will disconnect this call."
+
+B) "I completely understand how concerning this refund delay is, and I sincerely apologize for the inconvenience."
+
+C) "Our finance team is very busy, so you just have to wait."
+
+D) "Why didn't you check your bank statement earlier?"
+
+Answer: B
+
+Explanation: Option B validates the customer's concern empathetically and extends an official corporate apology without defensiveness.
+
+Which sentence correctly uses the personal ownership structure Rest assured that...?
+
+A) "Rest assure I try my best today."
+
+B) "Rest assured that I am personally tracking your replacement order until it arrives."
+
+C) "Rest assured for you that warehouse is working."
+
+D) "You rest assured that maybe system fixed tomorrow."
+
+Answer: B
+
+Explanation: Option B uses the correct fixed phrase "Rest assured that..." followed by a clear, active resolution commitment ("I am personally tracking...").
+
+Complete the sentence: "On behalf of our team, I _____ apologize for the unexpected server outage this morning."
+
+A) sincerely
+
+B) slowly
+
+C) aggressively
+
+D) carelessly
+
+Answer: A
+
+Explanation: "Sincerely" is the standard professional adverb paired with apologize in formal customer service interactions.
+
+Activity 4.2: Error Correction & De-escalation Transformation (15 Minutes)
+
+Instructions: Identify the defensive flaw in each statement and rewrite it into a professional de-escalation response.
+
+Flaw Statement: "It's not my job to handle delivery drivers."
+
+Professional Rewrite: "I completely understand your frustration regarding the driver's delay, and rest assured that I am taking charge of this shipment right now."
+
+Flaw Statement: "Calm down, yelling won't make your app work faster."
+
+Professional Rewrite: "I recognize how frustrating this app crash is during your work, and I sincerely apologize for the inconvenience caused."
+
+Activity 4.3: Simulated Speaking Practice — Guided & Independent Calls
+
+========================================================================================
+
+SIMULATED SPEAKING TASK 4.1: GUIDED COMPLAINT DE-ESCALATION (PARTIALLY GUIDED)
+
+========================================================================================
+
+Workplace Situation:
+
+  You are a Customer Complaint Operations Specialist at Teleperformance Malaysia (`JA004`).
+
+  A client calls furious because their premium subscription was double-billed this month.
+
+
+
+Customer Prerecorded Audio Line:
+
+  [Audio Prompt]: "I just checked my credit card bill and you charged me TWICE for my monthly subscription! Your billing system is a disaster!"
+
+
+
+Student's Specific Speaking Task:
+
+  Deliver a 45-second de-escalation spoken response. Validate the client's frustration (*"I completely understand how concerning..."*), offer a formal corporate apology (*"I sincerely apologize..."*), and use *"Rest assured that..."* to commit to an immediate refund override.
+
+
+
+Task Parameters:
+
+  - Preparation Time: 45 Seconds
+
+  - Target Response Duration: 35 - 45 Seconds
+
+
+
+Model Spoken Response:
+
+  "I completely understand how concerning a duplicate charge is on your credit card statement, and I sincerely apologize for this billing error. Rest assured that I am taking personal ownership of your account right now. I am issuing an immediate refund for the duplicate amount, and you will see the credit returned to your statement within 24 hours."
+
+
+
+Model Effectiveness Analysis:
+
+  - Demonstrates calm, empathetic tone without defensiveness.
+
+  - Uses exact target structures: *"I completely understand how concerning..."*, *"sincerely apologize..."*, *"Rest assured that I am taking personal ownership..."*.
+
+
+
+Self-Check Checklist for Students:
+
+  [ ] Did I validate the caller's distress without telling them to calm down?
+
+  [ ] Did I include a formal corporate apology (*sincerely apologize*)?
+
+  [ ] Did I use "Rest assured that..." followed by an active refund commitment?
+
+========================================================================================
+
+========================================================================================
+
+SIMULATED SPEAKING TASK 4.2: INDEPENDENT TRANSFER TASK (HIGH AUTONOMY)
+
+========================================================================================
+
+Workplace Situation:
+
+  You are a Client Services Executive at MSIG Insurance (`JA005`).
+
+  A corporate client calls extremely upset because their emergency travel insurance claim was delayed by five business days during an overseas medical emergency.
+
+
+
+Customer Prerecorded Audio Line:
+
+  [Audio Prompt]: "My employee was hospitalized in Bangkok and we filed an emergency claim five days ago! Nobody responded! Your emergency hotline is completely unreliable!"
+
+
+
+Student's Specific Speaking Task:
+
+  Formulate an independent 60-second complaint de-escalation response. Validate their severe distress, deliver a formal apology on behalf of MSIG, commit to personal ownership using *"Rest assured that..."*, and explain that you are assigning a dedicated senior claims officer immediately.
+
+
+
+Task Parameters:
+
+  - Preparation Time: 45 Seconds
+
+  - Target Response Duration: 45 - 60 Seconds
+
+
+
+Model Spoken Response:
+
+  "I completely understand how distressing and urgent this situation is for you and your hospitalized employee, and I agree that a five-day delay is entirely unacceptable. On behalf of MSIG Insurance, I sincerely apologize for failing to respond promptly during your emergency. Rest assured that I am taking personal charge of this file immediately. I am escalating your claim to top-priority status right now and assigning a dedicated senior claims manager to process the authorization within the hour. I will personally send you their direct phone contact via email immediately."
+
+
+
+Acceptable Alternative Variations:
+
+  - "I recognize how critical this medical claim is, and I am deeply sorry for the delay you experienced. Please accept our sincere apologies. Rest assured that I am overriding standard processing times to approve this emergency authorization immediately. You will receive direct confirmation within 30 minutes."
+
+
+
+Common Mistakes to Avoid:
+
+  - Do not try to defend the company by saying "We had too many claims this week."
+
+  - Maintain a steady, calm, lower-pitched voice tone to project competence and authority.
+
+========================================================================================
+
+H. LESSON REVIEW AND TRANSFER
+
+Concise Summary: In Lesson 4, you learned the HEAR Framework (Hear, Empathize, Apologize, Resolve) for handling dissatisfied callers. Never tell customers to "calm down" or blame internal teams. Validate customer emotions (I completely understand how frustrating...), apologize sincerely on behalf of the company, and project personal ownership using "Rest assured that I am...".
+
+Essential Expressions & Sentence Patterns Checklist:
+
+[ ] "I completely understand how frustrating / concerning this delay is for you."
+
+[ ] "On behalf of our company, I sincerely apologize for this inconvenience."
+
+[ ] "Rest assured that I am taking personal ownership of your case right now."
+
+[ ] "Please be assured that I am escalating your ticket to top priority status."
+
+[ ] "To resolve this for you today, I am issuing an immediate refund / priority dispatch."
+
+Independent Transfer Task: Record a 60-second complaint de-escalation response for a new scenario: A customer at TDCX (JA018) is furious because their hotel booking reservation was canceled without notice due to a system glitch. De-escalate the caller, apologize formally, and assure them that you are booking an upgraded room at no extra charge.
+
+Preview of Next Lesson: In Lesson 5 (Giving Clear Instructions and Checking Understanding), you will learn how to guide calm customers through step-by-step technical procedures, software configurations, and password resets using clear imperative verbs, transition markers, and comprehension checks.
+
+PROGRESS AND TASK TRACKING UPDATE
+
+x Deliverable 1: Evidence & Design Blueprint (COMPLETED)
+
+/ Deliverable 2: Complete Lesson Materials
+
+x Lesson 1: Professional Customer Enquiries & Call Openings (120 Mins) — COMPLETED
+
+x Lesson 2: Identifying & Clarifying Technical Problems (150 Mins) — COMPLETED
+
+x Lesson 3: Troubleshooting & Explaining Technical Problems (150 Mins) — COMPLETED
+
+x Lesson 4: Handling Complaints & Responding Empathetically (120 Mins) — COMPLETED ABOVE
+
+ Lesson 5: Giving Clear Instructions & Checking Understanding (120 Mins) — NEXT BATCH
+
+ Lesson 6: Escalating Unresolved Cases & Explaining Next Steps (120 Mins)
+
+ Lesson 7: Occupational Vocabulary, Case Records & Ticket Hygiene (120 Mins)
+
+ Lesson 8: Integrated Support Process, Ticket Logs & Oral Case Summaries (240 Mins)
+
+ Deliverable 3: Assessment Package (Pre-test Form A & Post-test Form B)
+
+ Deliverable 4: Implementation Package (Google Classroom & Asset Lists)
+
+ Deliverable 5: Research Documentation Summary
+
+Lesson 4 has been completed in full student-ready detail. I am ready to generate Lesson 5 (Giving Clear Instructions and Checking Understanding - 120 Minutes) next. Shall I proceed with Lesson 5?
+
+
+

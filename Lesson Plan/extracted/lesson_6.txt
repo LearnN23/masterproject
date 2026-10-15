@@ -1,0 +1,640 @@
+DELIVERABLE 2: COMPLETE LESSON MATERIALS (CONTINUED)
+
+LESSON 6: Escalating Unresolved Cases and Explaining Next Steps
+
+A. LESSON OVERVIEW
+
+Lesson Number & Title: Lesson 6: Escalating Unresolved Cases and Explaining Next Steps
+
+Allocated Learning Duration: 120 Minutes (2.0 Hours)
+
+Occupational Relevance: In multinational BPO contact centers and IT helpdesks in Malaysia (e.g., Michael Page JA008, Hays Recruitment JA017, Two95 International JA027, Scicom JA020, Accenture JA013), frontline support specialists (Tier-1) frequently encounter complex incidents that exceed frontline permissions or technical scope. Examples include backend database bugs, server firewall reconfigurations, and payment gateway hardware failures. Frontline agents must know how to explain escalation triggers to callers, transfer tickets to Tier-2 engineering, set realistic Service Level Agreement (SLA) turnaround times (TAT), and manage customer expectations professionally without assigning internal blame or making unpromisable resolution guarantees.
+
+Measurable Learning Objectives:By the end of this 120-minute lesson, Thai IT undergraduate learners will be able to:
+
+Identify SLA priority levels (P1 Critical, P2 High, P3 Standard) and escalation triggers requiring Tier-2 internal transfers.
+
+Construct clear escalation explanations ("Due to the backend nature of this database error, I am escalating your ticket to our Tier-2 Engineering team...") without blaming internal departments.
+
+Formulate precise SLA turnaround time commitments ("Our senior engineering team will review your case and contact you within two business hours...") using passive and reporting structures.
+
+Perform a 60-second escalation spoken response in a simulated support call transferring an unresolved software bug to Tier-2, achieving a minimum score of "3" across all rubric criteria.
+
+========================================================================================
+
+LESSON 6 COMMUNICATION FUNCTIONS, VOCABULARY, AND GRAMMAR MATRIX
+
+========================================================================================
+
+Target Communication Functions:
+
+  - Explaining internal escalation reasons clearly and professionally to customers
+
+  - Setting clear SLA turnaround time (TAT) expectations and next steps
+
+  - Assigning incident priority tags (P1/P2/P3) and logging ticket reference IDs
+
+  - Reassuring customers during case handovers without assigning internal blame
+
+
+
+Target Occupational Vocabulary & Acronyms:
+
+  - Tier-2 Support, Tier-3 Engineering, Escalation, Service Level Agreement (SLA),
+
+    Turnaround Time (TAT), Priority Ticket (P1/P2/P3), Subject Matter Expert (SME),
+
+    Backend Infrastructure, Internal Handover, Incident Tracking ID.
+
+
+
+Target Sentence Patterns & Grammar:
+
+  - Explaining Escalation Triggers: "Due to [the complexity of this backend fault], I am escalating your ticket to [our Tier-2 Engineering Team]."
+
+  - Setting SLA Turnaround Expectations: "Our senior engineers will review your case and update you within [2 business hours]."
+
+  - Present Continuous Passive for Ongoing Progress: "Your ticket is currently being processed by [our Network Security Team]."
+
+  - Reassuring Case Continuity: "In the meantime, please retain Ticket Reference ID [#TK-9921] for tracking."
+
+========================================================================================
+
+Prerequisite Knowledge: Call Openings (Lesson 1), Diagnostic Questioning (Lesson 2), Technical Explanations (Lesson 3), Empathetic De-escalation (Lesson 4), and Step-by-Step Instructions (Lesson 5).
+
+Materials Needed: Web-based EOP portal access, Audio/Video player, microphone/audio recording interface.
+
+Connection to Curriculum Flow:
+
+Backward Linkage: Transitions from Lesson 5 when frontline instructions fail to solve a complex issue and escalation becomes necessary.
+
+Forward Linkage: Directs structured escalation details into Lesson 7 (Occupational Vocabulary, Case Records, and Ticket Hygiene) for official CRM ticket logging.
+
+B. ATTENTION-GRABBING OPENING HOOK
+
+Workplace Context: Level-1 IT Service Desk at a Multinational BPO Center in Kuala Lumpur, Malaysia.
+
+The Problem / Communication Mistake: An IT support agent named Win is handling a customer whose cloud database is corrupted. Win realizes he cannot fix it at Tier-1. He panics and tells the caller: "I don't know how to fix this. Our Tier-2 developers are very slow and lazy, but I will send them your ticket. Goodbye!" The client loses complete trust in the company, fears their data is destroyed, and immediately escalates a breach complaint to the BPO Account Manager.
+
+Reflective Question for Students:
+
+Why did Win's explanation destroy customer trust and damage company reputation?
+
+How can you explain a case transfer professionally, highlighting Tier-2 expertise while setting clear SLA response times?
+
+Occupational Importance: In Malaysian shared service centers, badmouthing internal teams or leaving escalation timelines vague is a major Quality Assurance (QA) violation. Delivering smooth, professional case transfers reassures clients that their ticket is receiving high-priority expert attention.
+
+C. COMPLETE INSTRUCTIONAL VIDEO SCRIPT
+
+Video Title: Module 6.1 — Mastering Case Escalations & Managing SLA Expectations
+
+Target Duration: 8 Minutes (Runtime) + 10 Minutes (Interactive Pauses) = 18 Minutes Total Learning Time
+
+AI Tool Production Note: AI video generation script with split-screen visual workflows and interactive pauses.
+
+========================================================================================
+
+INSTRUCTIONAL VIDEO SCRIPT: MODULE 6.1
+
+========================================================================================
+
+
+
+[SCENE 1: INTRODUCTION & THE PURPOSE OF ESCALATION]
+
+Visual Direction: Split screen showing a Tier-1 agent handing off a digital ticket to a Tier-2 engineering pod on a high-tech floor in Kuala Lumpur.
+
+On-Screen Text: Lesson 6.1: Escalating Unresolved Cases & Explaining Next Steps
+
+Audio / Narrator Script:
+
+"Welcome to Lesson 6. As a frontline technical support specialist, you will resolve 80% of customer calls directly. But for the remaining 20%—complex bugs, backend outages, or account policy overrides—you must escalate. Escalating is not a failure; it is a professional process to ensure the customer gets expert help."
+
+
+
+[SCENE 2: THE 4-PART ESCALATION FRAMEWORK]
+
+Visual Direction: An interactive diagram builds four sequential blocks on screen.
+
+On-Screen Text:
+
+  1. State the Escalation Reason (Framed positively around Tier-2 expertise)
+
+  2. Assign Ticket Priority & Provide Reference ID
+
+  3. State the Exact SLA Turnaround Time (TAT)
+
+  4. Reassure Case Tracking & Ownership
+
+Narrator Script:
+
+"When transferring an unresolved case, follow four golden rules. First, state the escalation reason clearly, framing Tier-2 as specialized experts. Second, provide a unique Ticket Reference ID. Third, give an exact SLA response timeline. Fourth, reassure the caller that you are personally logging all details."
+
+
+
+[SCENE 3: CONTRAST ANALYSIS - UNPROFESSIONAL ESCALATION VS. SMOOTH HANDOVER]
+
+Visual Direction: Side-by-side video comparison of two agents escalating a server bug.
+
+Left Panel (Red Border - Ineffective Agent Win):
+
+Win: "I can't fix this bug. I will throw your ticket to Tier-2. They might email you sometime this week."
+
+Caller: "Sometime this week?! My entire office is waiting for this server!"
+
+On-Screen Text (Red): 
+
+  X Admits incompetence ("I can't fix this")
+
+  X Uses informal, careless language ("throw your ticket")
+
+  X Vague timeline ("sometime this week") creates anxiety
+
+
+
+Right Panel (Green Border - Effective Agent Sarah):
+
+Sarah: "Because this issue involves backend database permissions, I am escalating your case directly to our Senior System Engineers. I have logged this as a Priority 2 ticket under ID #TK-4402. Our engineering team will review your account and update you within two business hours."
+
+On-Screen Text (Green):
+
+  ✓ Professional escalation reason ("backend database permissions")
+
+  ✓ Clear Tier-2 positioning ("Senior System Engineers")
+
+  ✓ Specific SLA commitment ("within two business hours")
+
+  ✓ Official Ticket ID provided (#TK-4402)
+
+
+
+[SCENE 4: INTERACTIVE PAUSE & PRACTICE]
+
+Visual Direction: Countdown timer (10 seconds) with audio chime.
+
+On-Screen Text: PRACTICE PAUSE: Convert this vague statement into a professional SLA commitment: "Someone will look at it later today."
+
+Narrator Script:
+
+"Pause the video now. How would you state an SLA commitment professionally? Practice saying: 'Our engineering team will review your case and provide an update within two business hours.'"
+
+
+
+[INTERACTIVE PAUSE - 120 SECONDS]
+
+
+
+[SCENE 5: SETTING SLA TURNAROUND TIMES]
+
+Visual Direction: Highlighted text box displaying standard SLA phrasing: "Under our Service Level Agreement, P2 high-priority tickets are addressed within 2 business hours."
+
+Narrator Script:
+
+"Always align your promises with official company SLAs. Never promise an instant fix if Tier-2 needs time to investigate. Clear timelines prevent repeat impatient calls."
+
+
+
+[SCENE 6: LESSON RECAP]
+
+Visual Direction: Summary graphic displaying escalation checklist.
+
+On-Screen Text:
+
+  RECAP:
+
+  1. Never blame internal departments or say "I don't know".
+
+  2. Frame Tier-2 as specialized experts.
+
+  3. Always provide a Ticket Reference ID.
+
+  4. State precise SLA Turnaround Times (e.g., 2 hours / 24 hours).
+
+Narrator Script:
+
+"Professional case escalation protects customer trust. Let's practice these structures in Section D!"
+
+========================================================================================
+
+D. EXPLICIT TEACHING OF SENTENCE STRUCTURES AND LANGUAGE USE
+
+1. Language Pattern 1: Explaining Escalation Triggers & Tier-2 Handovers
+
+========================================================================================
+
+LANGUAGE PATTERN 1: EXPLAINING ESCALATION TRIGGERS
+
+========================================================================================
+
+Form / Syntax Pattern:
+
+  Due to + [Noun Phrase: the backend nature / complexity of this error], 
+
+  I am escalating your ticket to + [Department: our Tier-2 Engineering Team / Senior Specialists].
+
+
+
+Communicative Function:
+
+  Explaining why a support case cannot be resolved immediately on the frontline call and transferring responsibility to specialized engineers without admitting personal failure or assigning internal blame.
+
+
+
+Explanation in Thai (คำอธิบายภาษาไทย):
+
+  เมื่อปัญหาเกินขอบเขตหน้าที่ของ Tier-1 การอธิบายส่งต่อเคส (Escalation) ต้องไม่อ้างว่า "ผมทำไม่เป็น" หรือ "แผนกนั้นทำงานช้า" แต่ต้องใช้โครงสร้างทางการที่แสดงถึงระบบการดูแลอย่างมืออาชีพขึ้นต้นด้วย "Due to..." (เนื่องด้วย...) แล้วตามด้วยการส่งต่อเคสด้วย "I am escalating your ticket to..." เพื่อให้ลูกค้ารู้สึกว่าเคสของตนกำลังได้รับการดูแลโดยผู้เชี่ยวชาญเฉพาะทาง
+
+
+
+Contextualized Workplace Examples:
+
+  Example 1: "Due to the backend nature of this server configuration error, I am escalating your ticket directly to our Tier-2 Network Engineers."
+
+  Example 2: "Due to the security protocols required for account recovery, I am transferring your file to our Senior Risk Assessment Team."
+
+  Example 3: "Due to the technical complexity of this software glitch, I am assigning your ticket to our Lead Application Developers."
+
+
+
+Common Learner Errors & Corrections:
+
+  x Incorrect: "I cannot fix, so I give ticket to Tier-2." (Inelegant, unprofessional)
+
+    ✓ Correct: "Due to the complexity of this issue, I am escalating your ticket to Tier-2."
+
+  x Incorrect: "Our IT team is confused, so wait a minute." (Destroys customer confidence)
+
+    ✓ Correct: "Due to required system diagnostics, I am transferring your case to our Senior IT Engineers."
+
+========================================================================================
+
+Substitution / Transformation Exercise (10 Minutes)
+
+Instructions: Rewrite the following unprofessional transfer statements using "Due to complexity/nature, I am escalating your ticket to...".
+
+Unprofessional: "I don't have permission to unlock your database."
+
+Professional Transformation: "Due to administrator security permissions, I am escalating your ticket to our Database Engineering Team."
+
+Unprofessional: "This payment bug is too hard for me."
+
+Professional Transformation: "Due to the technical complexity of this payment gateway bug, I am transferring your file to our Senior Technical Specialists."
+
+Unprofessional: "Our firewall team needs to look at this."
+
+Professional Transformation: "Due to required network firewall reconfigurations, I am escalating your ticket to our Network Operations Team."
+
+Production Task (10 Minutes)
+
+Write two original escalation statements explaining why a client's cloud storage migration failure is being transferred to Tier-3 specialists.
+
+Student Output Example 1: "Due to the data volume involved in your cloud migration, I am escalating your ticket to our Tier-3 Cloud Architecture Team."
+
+Student Output Example 2: "Due to server-side synchronization limits, I am transferring your case to our Senior Cloud Infrastructure Specialists."
+
+2. Language Pattern 2: Setting SLA Turnaround Expectations (Within... / Present Continuous Passive)
+
+========================================================================================
+
+LANGUAGE PATTERN 2: SETTING SLA TURNAROUND EXPECTATIONS
+
+========================================================================================
+
+Form / Syntax Pattern:
+
+  Our [Tier-2 Team] + [will review / will contact you] + within + [Timeframe: 2 business hours / 24 hours].
+
+  AND: Your ticket + is currently being + [Past Participle: logged / reviewed / processed]...
+
+
+
+Communicative Function:
+
+  Establishing clear, realistic resolution timelines based on Service Level Agreements (SLAs) and reassuring callers using present continuous passive structures.
+
+
+
+Explanation in Thai (คำอธิบายภาษาไทย):
+
+  การระบุระยะเวลาที่ลูกค้าต้องรอ (Turnaround Time) ต้องมีความชัดเจนตามสัญญา SLA ห้ามบอกเวลาเลื่อนลอย เช่น "soon" หรือ "later" ให้ใช้คำว่า "within..." (ภายใน...) ตามด้วยกรอบเวลาที่แน่นอน เช่น "within 2 business hours" ร่วมกับโครงสร้าง Present Continuous Passive ("Your ticket is currently being processed...") เพื่อเน้นย้ำว่างานกำลังดำเนินการอยู่
+
+
+
+Contextualized Workplace Examples:
+
+  Example 1: "Our Senior Engineering Team will review your account and contact you within two business hours."
+
+  Example 2: "Your incident log is currently being analyzed by our Network Security Team under Priority 2 status."
+
+  Example 3: "You will receive an automated email update with full diagnostic results within 24 hours."
+
+
+
+Common Learner Errors & Corrections:
+
+  x Incorrect: "Tier-2 will call you maybe today or tomorrow." (Vague, breaches QA standards)
+
+    ✓ Correct: "Our Tier-2 team will contact you within four business hours."
+
+  x Incorrect: "Your ticket processing now." (Grammar breakdown: missing 'is being')
+
+    ✓ Correct: "Your ticket is currently being processed by our technical specialists."
+
+========================================================================================
+
+E. GUIDED EXAMPLES AND MODEL DIALOGUES
+
+Model Dialogue 6.1: Escalating a P2 Backend Server Outage Ticket
+
+Workplace Context: Level-1 Service Desk at Accenture Malaysia (JA013).
+
+Interaction Type: Inbound Call — Unresolved Database Synchronization Error.
+
+========================================================================================
+
+MODEL DIALOGUE 6.1: CASE ESCALATION & SLA SETTING
+
+========================================================================================
+
+Agent (Golf):     "Thank you for completing those network adapter checks with me, Mr. Alex. Since the gateway connection remains unresponsive, this indicates a backend database synchronization issue."
+
+                   [Communication Purpose: Diagnostic Conclusion & Transition to Escalation]
+
+
+
+Caller (Mr. Alex): "Oh dear. Does that mean we can't fix it on this call?"
+
+
+
+Agent (Golf):     "That is correct. Due to the backend database permissions required to reset the server node, I am escalating your ticket directly to our Tier-2 Network Operations Team."
+
+                   [Communication Purpose: Language Pattern 1 - Explaining Escalation Trigger]
+
+
+
+Caller (Mr. Alex): "I see. How long will my team have to wait? We have client reports due this afternoon!"
+
+
+
+Agent (Golf):     "I completely understand your time sensitivity, Mr. Alex. I have logged this as a High-Priority P2 incident under Ticket ID #TK-9942. Under our Service Level Agreement, our Tier-2 engineers will investigate your server node and contact you with a progress update within two business hours."
+
+                   [Communication Purpose: Language Pattern 2 - Priority Tag, Ticket ID & SLA Setting]
+
+
+
+Caller (Mr. Alex): "Okay, 2 hours sounds reasonable. Will I get a confirmation email?"
+
+
+
+Agent (Golf):     "Yes, absolutely. A confirmation email containing your Ticket ID #TK-9942 has just been sent to your registered inbox. In the meantime, rest assured that I will personally monitor your ticket progress until Tier-2 takes ownership."
+
+                   [Communication Purpose: Reassurance, Ownership & Professional Closure]
+
+
+
+========================================================================================
+
+ANALYSIS & FORMALITY OPTIONS:
+
+Why This Dialogue is Effective:
+
+  1. Agent Golf frames the escalation positively ("backend database permissions required") rather than admitting ignorance.
+
+  2. Provides an official Ticket Reference ID (#TK-9942) and assigns a clear priority level (P2 High Priority).
+
+  3. Gives a firm, realistic SLA turnaround commitment ("within two business hours") and offers personal progress tracking.
+
+
+
+Alternative SLA Formulations:
+
+  - Critical P1 Incident: "Due to total service interruption, this has been logged as a P1 Critical Incident, and our emergency response team will contact you within 30 minutes."
+
+  - Standard P3 Request: "Our specialized billing team will review your adjustment request and update you within one business day."
+
+========================================================================================
+
+F. FORMATIVE PRACTICE PAGE & SIMULATED SPEAKING TASKS
+
+Activity 6.1: Knowledge Check & Escalation Identification (15 Minutes)
+
+An agent needs to escalate a complex firewall bug to Tier-2. Which statement is most professional?
+
+A) "I don't know how firewalls work, so I'm giving your call to someone else."
+
+B) "Due to the network security protocols involved, I am escalating your case to our Tier-2 Security Engineering Team."
+
+C) "Our firewall department is very slow, but try waiting a few days."
+
+D) "Why are you asking me about firewalls? That's not my job."
+
+Answer: B
+
+Explanation: Option B frames the escalation professionally around security protocols and specialized Tier-2 expertise.
+
+Select the option that correctly states an SLA turnaround time commitment:
+
+A) "Someone will probably email you sometime later."
+
+B) "Our senior specialists will review your ticket and update you within two business hours."
+
+C) "Wait for call when Tier-2 is ready."
+
+D) "I promise 100% it is fixed in 5 seconds."
+
+Answer: B
+
+Explanation: Option B gives a clear, realistic, SLA-aligned turnaround time ("within two business hours").
+
+Complete the sentence: "Your incident file _____ by our senior infrastructure team under Priority 1 status."
+
+A) is currently being reviewed
+
+B) reviewing now
+
+C) were reviewed yesterday
+
+D) to review
+
+Answer: A
+
+Explanation: Option A correctly uses the Present Continuous Passive ("is currently being reviewed") to show active ongoing handling.
+
+Activity 6.2: Error Correction & Escalation Transformation (15 Minutes)
+
+Instructions: Identify the unprofessional flaw in each statement and rewrite it into a proper escalation response.
+
+Flaw Statement: "I am throwing your ticket to Tier-2 because Tier-1 cannot do this."
+
+Professional Rewrite: "Due to the specialized technical requirements of this issue, I am escalating your ticket to our Tier-2 Technical Specialists."
+
+Flaw Statement: "Just wait for an email whenever they finish."
+
+Professional Rewrite: "Our engineering team will review your case record and provide a direct update within four business hours."
+
+Activity 6.3: Simulated Speaking Practice — Guided & Independent Calls
+
+========================================================================================
+
+SIMULATED SPEAKING TASK 6.1: GUIDED ESCALATION RESPONSE (PARTIALLY GUIDED)
+
+========================================================================================
+
+Workplace Situation:
+
+  You are an L1 Technical Support Executive at Scicom (`JA020`).
+
+  A client calls because their enterprise ERP application is failing during payroll processing.
+
+
+
+Customer Prerecorded Audio Line:
+
+  [Audio Prompt]: "Helpdesk? Our payroll software failed right in the middle of executing monthly staff payments! This is a critical business emergency!"
+
+
+
+Student's Specific Speaking Task:
+
+  Deliver a 45-second escalation response. Validate their urgency, explain the escalation trigger using *"Due to the server-side processing nature of this error..."*, assign Priority 1 status under Ticket ID #TK-7012, and commit to a 30-minute SLA response time.
+
+
+
+Task Parameters:
+
+  - Preparation Time: 45 Seconds
+
+  - Target Response Duration: 35 - 45 Seconds
+
+
+
+Model Spoken Response:
+
+  "I completely understand the critical urgency of this payroll issue, sir. Due to the server-side processing nature of this error, I am escalating your case immediately to our Tier-2 Systems Engineering Team. I have tagged this as a P1 Critical Incident under Ticket ID #TK-7012. Our lead engineers will investigate your server node and contact you with a direct update within 30 minutes."
+
+
+
+Model Effectiveness Analysis:
+
+  - Validates business emergency empathetically.
+
+  - Uses exact target structures: *"Due to the server-side processing nature..."*, *"P1 Critical Incident under Ticket ID..."*, *"update within 30 minutes"*.
+
+
+
+Self-Check Checklist for Students:
+
+  [ ] Did I frame the escalation professionally using "Due to..."?
+
+  [ ] Did I assign a Priority Level (P1) and provide a Ticket ID?
+
+  [ ] Did I state a firm SLA turnaround time (30 minutes)?
+
+========================================================================================
+
+========================================================================================
+
+SIMULATED SPEAKING TASK 6.2: INDEPENDENT TRANSFER TASK (HIGH AUTONOMY)
+
+========================================================================================
+
+Workplace Situation:
+
+  You are a Service Desk Engineer at Two95 International (`JA027`).
+
+  A corporate user calls stating that an automated software patch update corrupted their local encrypted workstation drive.
+
+
+
+Customer Prerecorded Audio Line:
+
+  [Audio Prompt]: "Hi! My laptop installed an automated patch reboot 20 minutes ago, and now BitLocker says 'Encrypted Drive Drive Locked - Master Key Required'! I can't access any files!"
+
+
+
+Student's Specific Speaking Task:
+
+  Formulate an independent 60-second escalation response. Explain that due to master key security encryption protocols, you must transfer the file to the Senior Data Security Team. Assign P2 status under Ticket ID #TK-8831, set a 2-hour SLA turnaround time, and reassure the caller that you are attaching all diagnostic logs to the handover file.
+
+
+
+Task Parameters:
+
+  - Preparation Time: 45 Seconds
+
+  - Target Response Duration: 45 - 60 Seconds
+
+
+
+Model Spoken Response:
+
+  "I understand how concerning it is to be locked out of your encrypted drive. Due to the master key security protocols required for BitLocker recovery, I am escalating your ticket directly to our Senior Data Security Team. I have logged this under Priority 2 status with Ticket ID #TK-8831. Our security specialists will review your encryption hash and contact you with the recovery key within two business hours. In the meantime, rest assured that I am attaching all diagnostic error logs to your ticket so our engineers can begin work immediately."
+
+
+
+Acceptable Alternative Variations:
+
+  - "I recognize the critical nature of this disk encryption lock. Due to administrative security clearance rules, I am transferring your case to our Senior Information Security Specialists. This is logged as Ticket ID #TK-8831 under Priority 2 status, and an engineer will contact you within two hours."
+
+
+
+Common Mistakes to Avoid:
+
+  - Never tell the caller "We ruined your laptop" or "I don't have the key".
+
+  - Always provide the exact Ticket ID number for tracking reference.
+
+========================================================================================
+
+H. LESSON REVIEW AND TRANSFER
+
+Concise Summary: In Lesson 6, you learned that escalating unresolved cases is a professional handover process. Always frame Tier-2 as specialized experts (Due to the backend nature of this issue, I am escalating...), assign a clear Priority Level (P1/P2/P3) and Ticket Reference ID, set a firm SLA Turnaround Time (within 2 business hours), and reassure the customer that their case is actively tracked.
+
+Essential Expressions & Sentence Patterns Checklist:
+
+[ ] "Due to technical reason, I am escalating your ticket to Tier-2 / Senior Team."
+
+[ ] "I have logged this under Priority 1/2/3 status with Ticket ID #TK-XXXX."
+
+[ ] "Our senior specialists will review your case and update you within 2 hours / 24 hours."
+
+[ ] "Your ticket is currently being processed by our specialized engineering pod."
+
+[ ] "In the meantime, rest assured that I will personally monitor your ticket progress."
+
+Independent Transfer Task: Record a 60-second escalation response for a new scenario: A customer at Hays Recruitment (JA017) experiences a regional network outage affecting their Order-to-Cash (OTC) portal. Escalate the ticket to Network Operations, assign P1 Critical status, and promise a 45-minute SLA update.
+
+Preview of Next Lesson: In Lesson 7 (Occupational Vocabulary, Case Records, and Ticket Hygiene), you will learn how to take all caller interaction details and document them into structured, professionally formatted CRM ticket logs using past-tense diagnostic verbs and contact center acronyms (SLA, FCR, AHT, TAT).
+
+PROGRESS AND TASK TRACKING UPDATE
+
+x Deliverable 1: Evidence & Design Blueprint (COMPLETED)
+
+/ Deliverable 2: Complete Lesson Materials
+
+x Lesson 1: Professional Customer Enquiries & Call Openings (120 Mins) — COMPLETED
+
+x Lesson 2: Identifying & Clarifying Technical Problems (150 Mins) — COMPLETED
+
+x Lesson 3: Troubleshooting & Explaining Technical Problems (150 Mins) — COMPLETED
+
+x Lesson 4: Handling Complaints & Responding Empathetically (120 Mins) — COMPLETED
+
+x Lesson 5: Giving Clear Instructions & Checking Understanding (120 Mins) — COMPLETED
+
+x Lesson 6: Escalating Unresolved Cases & Explaining Next Steps (120 Mins) — COMPLETED ABOVE
+
+ Lesson 7: Occupational Vocabulary, Case Records & Ticket Hygiene (120 Mins) — NEXT BATCH
+
+ Lesson 8: Integrated Support Process, Ticket Logs & Oral Case Summaries (240 Mins)
+
+ Deliverable 3: Assessment Package (Pre-test Form A & Post-test Form B)
+
+ Deliverable 4: Implementation Package (Google Classroom & Asset Lists)
+
+ Deliverable 5: Research Documentation Summary
+
+Lesson 6 is complete in full student-ready detail. I am ready to generate Lesson 7 (Occupational Vocabulary, Case Records, and Ticket Hygiene - 120 Minutes) next. Shall I proceed with Lesson 7?
+
+
+

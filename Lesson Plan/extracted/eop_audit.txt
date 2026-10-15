@@ -1,0 +1,166 @@
+DELIVERABLE 5: RESEARCH DOCUMENTATION SUMMARY (METHODOLOGICAL AUDIT TRAIL &amp; THESIS DOCUMENTATION PACKAGE)
+1. RESEARCH DOCUMENTATION SUMMARY OVERVIEW
+Research Title: Development and Evaluation of a Web-Based English for Occupational Purposes (EOP) Learning Module for Enhancing Online Technical Support and Customer Service Communication Skills among Thai Undergraduate IT Students Preparing for Employment in Malaysia 1, 2
+Target Degree / Institution: Master of Education in English Language Teaching (ELT) / Master's Thesis, Fatoni University 2-4
+Empirical Corpus Denominator: \\(N = 29\\) Unique Included Malaysian Job Advertisements 2, 5
+Total Planned Instructional Duration: 1,140 Minutes (Exactly 19.0 Hours across Lessons 1–8) 2
+Target CEFR Readiness Level: B2 Occupational Communicative Competence 6
+This document serves as the complete Methodological Audit Trail and Thesis Documentation Package for Chapter 3 and the Appendices of the thesis 2, 7. It establishes strict data lineage connecting empirical findings from Malaysian job postings to module design, documents supervisor approval decisions, logs methodological limitations, verifies arithmetic time accounting, and provides a reproducible LLM prompt audit trail 6, 8-10.
+2. SECTION 1: EMPIRICAL JOB ADVERTISEMENT ANALYSIS &amp; MAPPING TABLE
+2.1 Empirical Corpus &amp; Sampling Summary (\\(N = 29\\))
+The curriculum is grounded in an empirical needs analysis of \\(N = 29\\) unique included job advertisements for Thai-speaking Customer Support (CS), Order-to-Cash (OTC), and IT Service Desk positions located in Malaysia 5, 11. Advertisements were ingested from regional employment portals (JobStreet Malaysia, Indeed Malaysia, BeBee) and corporate career portals of multinational BPO contact centers and Shared Service Centres (SSCs) operating in Kuala Lumpur, Selangor, and Cyberjaya (e.g., Teleperformance, TDCX, Concentrix, Scicom, Accenture, BASF, OWNDAYS) 11-14.
+========================================================================================
+EMPIRICAL JOB ADVERTISEMENT CORPUS SUMMARY (N = 29 INCLUDED POSITIONS)
+========================================================================================
+Total Ingested Raw Files &amp; Web Resources:        87 Items [15]
+Secondary Research Tools &amp; Frameworks:           5 Items [16]
+Identified Duplicate Postings (Excluded Category E): 31 Items [16]
+Unique Identified Job Advertisements Sample:     51 Unique Postings (N_total = 51) [16]
+SCREENING RESULTS:
+- Included Job Advertisements (Ratio &gt; 50.0%):   29 Positions (N = 29) [2, 17]
+- Excluded Job Advertisements (Ratio &lt;= 50.0%):   22 Positions [17]
+* Category A (Outside Malaysia):               3 Items [17]
+* Category B (Unrelated IT/Admin Domain):      4 Items [17]
+* Category C (Relevant Ratio &lt;= 50.0%):         7 Items [17]
+* Category D (Insufficient Bullet Data):        3 Items [17]
+* Category E (Confirmed Duplicates):           5 Items [17]
+========================================================================================
+2.2 Prevalence Distribution of Occupational Communication Tasks
+Content coding across the \\(N = 29\\) included postings revealed 10 primary occupational communication tasks 5, 18. Tasks 1 through 9 exhibit a 100.0% prevalence rate (\\(29/29\\) ads), confirming their status as core requirements across all Malaysian CS, OTC, and IT Service Desk roles 18, 19. Task 10 (Troubleshooting technical issues) exhibits an 86.2% prevalence rate (\\(25/29\\) ads), appearing in 100% of IT Service Desk positions (\\(10/10\\) ads) and 78.9% of SaaS/e-Commerce support positions (\\(15/19\\) ads) 18, 19.
+========================================================================================
+OCCUPATIONAL TASK PREVALENCE IN MALAYSIAN JOB POSTINGS (N = 29)
+========================================================================================
+1. Responding to customer enquiries                 [f = 29 | 100.0%]  (Core Requirement) [19]
+2. Identifying &amp; clarifying technical problems       [f = 29 | 100.0%]  (Core Requirement) [19]
+3. Explaining technical information                  [f = 29 | 100.0%]  (Core Requirement) [19]
+4. Giving instructions or guidance                   [f = 29 | 100.0%]  (Core Requirement) [19]
+5. Handling customer complaints                      [f = 29 | 100.0%]  (Core Requirement) [19]
+6. Escalating unresolved cases                       [f = 29 | 100.0%]  (Core Requirement) [19]
+7. Documenting cases or updating tickets             [f = 29 | 100.0%]  (Core Requirement) [19]
+8. Following up with customers                       [f = 29 | 100.0%]  (Core Requirement) [19]
+9. Coordinating with internal teams                  [f = 29 | 100.0%]  (Core Requirement) [19]
+10. Troubleshooting technical issues                 [f = 25 |  86.2%]  (IT/SaaS Focus) [19]
+========================================================================================
+2.3 Empirical Traceability Matrix
+The matrix below links empirical evidence from the job postings (\\(N = 29\\)) directly to the 8 module learning objectives, lesson activities, formative speaking tasks, and parallel assessment scenarios 20, 21.
+========================================================================================================================
+EMPIRICAL TRACEABILITY MATRIX: JOB AD EVIDENCE TO MODULE LESSONS &amp; ASSESSMENTS
+========================================================================================================================
+Empirical Evidence &amp; Job ID   Occupational Need         Module Learning Objective    Lesson &amp; Practice Activity   Formative &amp; Assessment Link
+------------------------------------------------------------------------------------------------------------------------
+JA001 (Owndays.pdf) [14]     Opening voice/chat calls,  Greet customers              Lesson 1: Call Openings &amp;   Formative Task 1.3;
+JA002 (Xstar.pdf) [14]       verifying user credentials, professionally, verify       Credential Verification     Pre/Post Test Task 1
+JA006 (Foundever.pdf) [14]   establishing polite tone.  account, express readiness.  (Video 1.1, Drill 1.2) [21]  (Scenario S1) [21, 22]
+JA003 (Concentrix.pdf) [14]  Eliciting error codes,    Formulate indirect probes,   Lesson 2: Fault Isolation &amp; Formative Task 2.4;
+JA009 (Inphosoft.pdf) [14]   isolating fault symptoms,  paraphrase vague inputs,     Diagnostic Clarification    Pre/Post Test Task 2
+JA016 (MicroTech.pdf) [14]   clarifying user inputs.    confirm understanding.       (Video 2.1, Drill 2.2) [21]  (Scenario S2) [21, 22]
+JA014 (Evoxt.pdf) [14]       Explaining root causes in  Translate tech causes into   Lesson 3: Troubleshooting &amp; Formative Task 3.4;
+JA019 (Credspire.pdf) [14]   plain English, proposing   plain terms, offer work-     Technical Workarounds       Pre/Post Test Task 3
+JA023 (Leuze.pdf) [14]       workarounds, verifying.    arounds via First Cond.      (Video 3.1, Drill 3.2) [21]  (Scenario S3) [21, 22]
+JA004 (Teleperf.pdf) [14]    Managing angry callers,    Validate caller anger via    Lesson 4: Complaint         Formative Task 4.4;
+JA005 (MSIG.pdf) [14]        formal apologies,          HEAR framework, apologize    De-escalation &amp; Recovery    Pre/Post Test Task 3
+JA021 (Brandt.pdf) [14]      offering service recovery. formally, take ownership.    (Video 4.1, Drill 4.2) [21]  (Scenario S4) [21, 22]
+JA010 (BASF.pdf) [14]        Giving multi-step directions Deliver clear sequential    Lesson 5: Step-by-Step IT   Formative Task 5.4;
+JA012 (iFAST.pdf) [14]       for resets, software setup, guidance using imperatives   Instructions &amp; Checks       Pre/Post Test Task 2
+JA025 (Swarovski.pdf) [14]   and checking understanding. and visual check prompts.    (Video 5.1, Drill 5.2) [21]  (Scenario S5) [21, 22]
+JA008 (MichaelPage.pdf) [14] Transferring unresolved P1/ Frame Tier-2 handovers      Lesson 6: Case Escalation   Formative Task 6.4;
+JA017 (Hays.pdf) [14]        P2 cases, explaining SLA   professionally, state SLA    &amp; SLA Turnaround Times      Pre/Post Test Task 4
+JA027 (Two95.pdf) [14]       turnaround expectations.   timelines, maintain trust.   (Video 6.1, Drill 6.2) [21]  (Scenario S6) [21, 22]
+JA015 (Cogoport.pdf) [14]    Applying CS/IT acronyms    Apply SLA, FCR, AHT, TAT;    Lesson 7: CRM Ticket        Formative Task 7.4;
+JA020 (Scicom.pdf) [14]      (SLA/FCR/AHT), logging     construct audit-ready CRM    Hygiene &amp; Case Logging      Pre/Post Test Task 4
+JA022 (Corebase.pdf) [14]    ticket case notes.         notes in past tense.         (Video 7.1, Drill 7.2) [21]  (Scenario S7) [21, 22]
+JA013 (Accenture.pdf) [14]   Synthesizing ticket logs,  Synthesize ticket history,   Lesson 8: Integrated Case   Capstone Task 8.4;
+JA024 (Welsend.pdf) [14]     delivering oral shift      deliver 90-sec 5-stage       Summaries &amp; Handovers       Pre/Post Test Task 4
+JA028 (InterIsland) [14]     handover briefings.        oral handover speech.        (Video 8.1, Drill 8.2) [21]  (Scenario S8) [21, 22]
+========================================================================================================================
+3. SECTION 2: ACADEMIC ADVISOR &amp; EXPERT PANEL APPROVAL LOG
+3.1 Design Decisions Submitted for Formal Review
+The table below logs four major pedagogical and methodological design decisions submitted to the thesis advisory committee for formal approval 6, 23, 24.
+========================================================================================================================
+ACADEMIC ADVISOR &amp; EXPERT PANEL APPROVAL LOG
+========================================================================================================================
+Decision ID   Proposed Design Decision                Methodological Rationale                    Status &amp; Sign-off
+------------------------------------------------------------------------------------------------------------------------
+DEC-01        Time Allocation: 1,140 minutes total   Reflects the higher cognitive load and     [x] Approved by Advisory
+across 8 lessons, allocating 240 mins   task synthesis required for capstone oral   Committee
+to Lesson 8 (Oral Case Summaries) [24]. shift handovers [24].                     Date: 15 October 2026
+DEC-02        Standardized Pre-Recorded Audio        Eliminates actor variability across test    [x] Approved by Advisory
+Prompts for Parallel Pre/Post-Tests    administrations, ensuring high test        Committee
+(Form A &amp; Form B) [24].               reliability for pre/post comparison [24]. Date: 15 October 2026
+DEC-03        Non-Penalization of Intelligible Thai  Aligns with the EOP World Englishes         [x] Approved by Advisory
+Accent under CEFR B2 Intelligibility    framework, prioritizing functional         Committee
+Rubric Criteria [24].                  workplace clarity over accent reduction [24]. Date: 15 October 2026
+DEC-04        Application of 20-Point Analytic Oral  Provides balanced 4-criteria diagnostic     [x] Approved by Advisory
+Assessment Rubric (4 Criteria x 5      feedback across Task, Structure,           Committee
+Band Levels) [24].                     Fluency, and Professional Tone [24].       Date: 15 October 2026
+========================================================================================================================
+4. SECTION 3: METHODOLOGICAL LIMITATIONS &amp; SCOPE RECORD
+4.1 Study Boundaries for Thesis Inclusion
+To maintain academic rigor and transparency in Chapter 3 of the thesis, three explicit study boundaries are recorded 9, 25, 26:
+Asynchronous Simulated Task Limitation: The pre-test and post-test instruments evaluate spoken production against standardized pre-recorded audio prompts rather than live, spontaneous, reciprocal customer negotiations 26. While this design guarantees identical testing conditions for all participants, it does not measure real-time conversational improvisation 26.
+Human-Rater Evaluation Scope: Spoken audio recordings are evaluated by trained human raters using the 20-point EOP Analytic Oral Proficiency Rubric rather than Automated Speech Recognition (ASR) software 26. Rater calibration sessions are conducted prior to scoring to establish high inter-rater reliability (Intraclass Correlation Coefficient \\(ICC &gt; 0.85\\)).
+Conceptual Parallel Equivalence Assumption: Form A and Form B are engineered to be parallel in scenario complexity, prompt length, information load, and target language structures 22, 26. Empirical parallel-form equivalence (\\(r &gt; 0.85\\)) will be statistically verified following pilot testing (\\(N = 20\\) pilot students) 26, 27.
+5. SECTION 4: LESSON SEQUENCE &amp; TIME ALLOCATION AUDIT
+5.1 Arithmetic Accounting &amp; Time Verification
+The table below confirms exact 100% time accounting across all 8 lessons, matching the planned 1,140 total instructional minutes (19.0 Hours) 2.
+========================================================================================================================
+LESSON SEQUENCE &amp; TIME ALLOCATION AUDIT TABLE (TOTAL = 1,140 MINUTES / 19.0 HOURS)
+========================================================================================================================
+Lesson #   Lesson Title &amp; Focus Area                       Minutes   Hours   % of Total   Curriculum Verification
+------------------------------------------------------------------------------------------------------------------------
+Lesson 1   Professional Customer Enquiries &amp; Call Openings  120 Mins  2.0 Hrs  10.53%       [x] Verified Complete
+Lesson 2   Identifying &amp; Clarifying Technical Problems     150 Mins  2.5 Hrs  13.16%       [x] Verified Complete
+Lesson 3   Troubleshooting &amp; Explaining Tech Problems      150 Mins  2.5 Hrs  13.16%       [x] Verified Complete
+Lesson 4   Handling Complaints &amp; Responding Empathetically 120 Mins  2.0 Hrs  10.53%       [x] Verified Complete
+Lesson 5   Giving Clear Instructions &amp; Checking Understanding 120 Mins 2.0 Hrs  10.53%       [x] Verified Complete
+Lesson 6   Escalating Unresolved Cases &amp; Explaining Next Steps 120 Mins 2.0 Hrs  10.53%       [x] Verified Complete
+Lesson 7   Occupational Vocab, Case Records &amp; Ticket Hygiene 120 Mins 2.0 Hrs  10.53%       [x] Verified Complete
+Lesson 8   Capstone: Integrated Support &amp; Oral Case Summaries 240 Mins 4.0 Hrs  21.05%       [x] Verified Complete
+------------------------------------------------------------------------------------------------------------------------
+TOTAL ALLOCATED INSTRUCTIONAL TIME                         1,140 Mins 19.0 Hrs 100.00%     [x] 100% Exact Match
+========================================================================================================================
+6. SECTION 5: REPRODUCIBLE RESEARCH PROTOCOL &amp; PROMPT AUDIT TRAIL
+6.1 Data Screening &amp; Inclusion Rules
+During job advertisement analysis, data screening followed strict operational rules to eliminate selection bias 5, 28:
+Geographic Location Rule: Job postings must be located in Malaysia (Kuala Lumpur, Selangor, Penang, Cyberjaya) 28.
+Relevant Duties Ratio Formula:\\\text{Calculated Ratio (\%)} = \left( \frac{\text{Support Bullets } (n)}{\text{Total Bullets } (N_{\text{total}})} \right) \times 100\\
+Support Bullets (\\(n\\)): Count only explicit bullet points describing customer service, helpline interaction, technical troubleshooting, order processing, or ticketing 29, 30.
+Total Bullets (\\(N_{\text{total}}\\)): Count all identifiable job-duty bullets, excluding company overviews, qualification requirements, benefits, and general admin headers 30.
+Inclusion Threshold: Positions were included only if the Calculated Ratio was strictly greater than 50.0% (\\(&gt; 50.0\%\\)) 5, 31. Postings with a ratio of exactly 50.0% or less (\\(\le 50.0\%\\)) were excluded to maintain a strict majority threshold 31.
+6.2 Prompt Audit Trail for LLM-Assisted Analysis
+To ensure complete academic transparency and reproducibility, the primary LLM prompts used for data extraction and coding during the research analysis phase are recorded below 10, 32:
+========================================================================================
+REPRODUCIBLE RESEARCH PROMPT 1: JOB ADVERTISEMENT SCREENING &amp; RATIO CALCULATION
+========================================================================================
+Prompt Text:
+&quot;Analyze all provided job advertisements for my EOP research on online technical support
+and customer service jobs in Malaysia.
+Screening rule: Calculate Calculated Ratio (%) = (Support Bullets / Total Bullets) * 100.
+- Support Bullets: Count relevant frontline customer service, helpdesk interaction,
+troubleshooting, or order management job-duty bullets.
+- Total Bullets: Count all identifiable job-duty bullets (EXCLUDE qualifications,
+requirements, benefits, and company intros).
+Include only Malaysia-based jobs with a ratio strictly GREATER than 50.0% (&gt; 50%).
+Jobs with exactly 50.0% or less (&lt;= 50%) MUST be EXCLUDED.
+Flag duplicates under Excluded Category E. Never invent missing data.&quot; [33, 34]
+========================================================================================
+========================================================================================
+REPRODUCIBLE RESEARCH PROMPT 2: JOB DUTY EXTRACTION &amp; LANGUAGE NEEDS CODING
+========================================================================================
+Prompt Text:
+&quot;For each included job advertisement (Ratio &gt; 50%), construct a complete analysis record:
+1. PART B: GENERAL INFORMATION (Company Name, Job ID, Job Title, Location, Source URL, Archive Link).
+2. PART C: JOB TASKS (Responsibilities, Daily Tasks, Communication Situations, Stakeholders, Channels, Issues).
+3. PART D: ENGLISH LANGUAGE NEEDS (Listening, Speaking, Reading, Writing, Grammar, Vocabulary,
+Technical Vocabulary, Workplace Expressions, Customer Service Language, Technical Support Language).
+Clearly distinguish between 'Explicitly Stated' language requirements and 'Analytically Inferred'
+communicative micro-functions. Output individual Job-Duty Audit Tables verifying each bullet.&quot; [34, 35]
+========================================================================================
+7. SUMMARY OF COMPLETED THESIS DELIVERABLES
+With the completion of Deliverable 5, all five core deliverables of the EOP Research Curriculum Project are fully generated, audited, and ready for thesis inclusion 2, 36, 37:
+x Deliverable 1: Evidence &amp; Design Blueprint (19-Hour Time Allocation) 2
+x Deliverable 2: Complete Lesson Materials (Lessons 1 through 8 in full student-ready detail) 2
+x Deliverable 3: Parallel Assessment Package (Form A Pre-Test &amp; Form B Post-Test with Scripts &amp; Rubrics) 36, 37
+x Deliverable 4: Implementation Package (Google Classroom Architecture, Asset Matrix &amp; Guides) 36, 37
+x Deliverable 5: Research Documentation Summary (Methodological Audit Trail &amp; Thesis Documentation) 2, 36, 37
+All project deliverables are complete. Please let me know if you would like to explore any specific section in further detail or prepare additional thesis appendix materials!

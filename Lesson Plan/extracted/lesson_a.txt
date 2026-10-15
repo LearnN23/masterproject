@@ -1,0 +1,164 @@
+APPENDIX AWEB-BASED ENGLISH FOR OCCUPATIONAL PURPOSES (EOP) LEARNING MODULE
+Master's Thesis Curriculum Design &amp; Assessment BlueprintResearch Title: “Development and Evaluation of a Web-Based English for Occupational Purposes Learning Module for Enhancing Online Technical Support and Customer Service Communication Skills among Thai Undergraduate IT Students Preparing for Employment in Malaysia”
+1. Module Overview and Instructional Specifications
+Module Title: Web-Based English for Occupational Purposes (EOP) Learning Module for Technical Support and Customer Service (19-Hour Intensive Curriculum).
+Target Learners: Thai undergraduate IT students preparing for employment in Business Process Outsourcing (BPO) contact centers, Shared Service Centres (SSCs), and IT service desks in Malaysia (e.g., in Kuala Lumpur, Selangor, Cyberjaya, Penang, and Melaka).
+Learning Rationale &amp; Purpose: Grounded in an empirical needs analysis of N = 29 unique included Malaysian job advertisements across Thai-speaking Customer Support (CS), Order-to-Cash (OTC), and IT Service Desk positions. The primary purpose of the module is to systematically enhance spoken and written English communicative competence across core workplace tasks, bridging the transition from academic language study to high-stakes regional contact center operations.
+Overall Learning Objectives: Upon completion of the 19-hour instructional module, learners will be able to:
+LO1 (Call Openings &amp; Verification): Greet customers professionally, introduce brand/agent affiliation, and request account credentials securely using modal verbs (may, could).
+LO2 (Fault Isolation &amp; Clarification): Formulate open/closed and indirect diagnostic questions (Could you tell me...) to isolate software, hardware, and network faults without interrogating callers, confirming understanding via reflective paraphrasing.
+LO3 (Troubleshooting &amp; Workarounds): Translate complex technical root causes into plain English, propose temporary workarounds using First Conditional logic (If + present, will + base verb), and verify resolution collaboratively.
+LO4 (Empathetic De-escalation): Apply the HEAR Framework (Hear, Empathize, Apologize, Resolve) to validate customer anger, deliver formal corporate apologies, and project personal case ownership without assigning internal blame.
+LO5 (Step-by-Step IT Instructions): Deliver clear, sequential technical instructions using imperative verbs and transition markers (First, Next, Finally), verifying visual screen alignment at each step.
+LO6 (Case Escalations &amp; Next Steps): Explain Service Level Agreement (SLA) escalation triggers, transfer unresolved P1/P2 incidents to Tier-2 engineering pods, set firm turnaround time (TAT) commitments, and log ticket reference IDs.
+LO7 (CRM Ticket Hygiene): Apply core contact center acronyms (SLA, FCR, AHT, TAT, CSAT) correctly and construct audit-ready CRM ticket logs using standard field headers and past-tense diagnostic verbs.
+LO8 (Shift Handovers &amp; Oral Case Summaries): Synthesize complex multi-turn CRM ticket histories into structured 60–90 second oral case summaries for global shift handovers following the 5-Stage Handover Framework.
+Overall Structure &amp; Instructional Duration: The module comprises exactly 1,140 planned instructional minutes (19.0 Hours) divided across 8 progressive lessons, supplemented by an orientation/pre-test baseline session (Module 00) and an exit post-test evaluation session (Module 09).
+2. Curriculum Learning Sequence and Instructional Workflow
+The module follows a task-based, pedagogical sequence designed to build communicative competence progressively, moving from initial customer engagement to complex technical synthesis and capstone oral shift handovers:
+Phase 1: Orientation &amp; Diagnostic Baseline (Module 00 | 1.0 Hour): Student onboarding, digital learning platform navigation, recording equipment positioning, and completion of Pre-Test Form A (4 spoken tasks).
+Phase 2: Foundational Customer Interaction &amp; Fault Diagnostics (Lessons 1–3 | 420 Mins / 7.0 Hours): Focuses on professional greetings (Lesson 1: 120 mins), diagnostic fault isolation (Lesson 2: 150 mins), and plain-English troubleshooting workarounds (Lesson 3: 150 mins).
+Phase 3: Customer Service Recovery &amp; Technical Guidance (Lessons 4–6 | 360 Mins / 6.0 Hours): Focuses on empathetic complaint de-escalation via HEAR (Lesson 4: 120 mins), paced step-by-step IT instructions (Lesson 5: 120 mins), and SLA case escalations to Tier-2 (Lesson 6: 120 mins).
+Phase 4: Documentation &amp; Capstone Synthesis (Lessons 7–8 | 360 Mins / 6.0 Hours): Focuses on audit-ready written CRM ticket logging (Lesson 7: 120 mins) and capstone 5-stage oral shift handover summaries (Lesson 8: 240 mins).
+Phase 5: Exit Evaluation &amp; Certification (Module 09 | 1.0 Hour): Summative Post-Test Form B (4 parallel spoken tasks) and CEFR occupational deployment auditing.
+3. Structured Summary of All Eight Module Lessons
+Lesson Title &amp; Duration
+Measurable Learning Objectives
+Key Occupational Communication Content
+Target Language Focus (Syntax &amp; Vocab)
+Learning Activities &amp; Formative Tasks
+Lesson 1: Professional Customer Enquiries &amp; Call Openings
+(120 Mins / 2.0 Hrs)
+• LO1.1: Identify brand greetings &amp; verification protocols.
+• LO1.2: Formulate polite requests via modals (may, could).
+• LO1.3: Perform 30-sec call opening in simulated call.
+Opening voice/chat calls; brand salutations; agent introduction; polite identity verification; data privacy protocols (OWNDAYS JA001, Foundever JA006).
+• Modals: 'May I please have your full name/order ref?'
+• Greetings: 'Thank you for calling [Company]. My name is...'
+• Vocab: Credential, Authentication, Account Ref ID.
+Hook analysis; Video 1.1 study (4-part structure); modal drills; dialogue study; MCQ practice; Guided Task 1.1 (OWNDAYS) &amp; Independent Task 1.2 (Concentrix).
+Lesson 2: Identifying &amp; Clarifying Technical Problems
+(150 Mins / 2.5 Hrs)
+• LO2.1: Differentiate open vs closed questions.
+• LO2.2: Construct indirect diagnostic probes.
+• LO2.3: Perform 45-sec fault isolation response.
+3-Stage Diagnostic Funnel (Open -&gt; Narrow -&gt; Confirm); eliciting error symptoms/codes; fault isolation (Concentrix JA003, Evoxt JA014).
+• Indirect probes: 'Could you tell me what error code appears?'
+• Paraphrasing: 'So if I understand correctly...'
+• Vocab: Fault Isolation, Timeout, Gateway Error.
+Miscommunication case hook; Video 2.1 study; indirect question word-order drills; question classification; Guided Task 2.1 (Evoxt) &amp; Independent Task 2.2 (Leuze).
+Lesson 3: Troubleshooting &amp; Explaining Technical Problems
+(150 Mins / 2.5 Hrs)
+• LO3.1: Classify faults (software, cache, network).
+• LO3.2: Explain root causes via First Conditional.
+• LO3.3: Perform 60-sec workaround response.
+Translating jargon into plain English; proposing temporary workarounds; explaining cause-and-effect; verifying resolution (Scicom JA020, Credspire JA019).
+• First Conditional: 'If you clear your cache, the portal will load.'
+• Modals: 'You might want to try...'
+• Vocab: Workaround, Memory Leak, Root Cause, Cookies.
+Jargon hook; Video 3.1 study; conditional syntax drills; symptom-workaround matching; Guided Task 3.1 (Credspire) &amp; Independent Task 3.2 (Corebase).
+Lesson 4: Handling Complaints &amp; Responding Empathetically
+(120 Mins / 2.0 Hrs)
+• LO4.1: Identify empathy vs defensive phrasing.
+• LO4.2: Formulate apologies &amp; reassurance.
+• LO4.3: Perform 60-sec complaint de-escalation.
+HEAR Framework (Hear, Empathize, Apologize, Resolve); defusing angry callers; personal ownership without internal blame (Teleperformance JA004, MSIG JA005).
+• Validation: 'I completely understand your frustration...'
+• Apology: 'I sincerely apologize for...'
+• Reassurance: 'Rest assured that I am taking ownership...'
+Defensive agent hook; Video 4.1 study; empathy &amp; apology drills; model dialogue analysis; Guided Task 4.1 (Teleperformance) &amp; Independent Task 4.2 (MSIG).
+Lesson 5: Giving Clear Instructions &amp; Checking Understanding
+(120 Mins / 2.0 Hrs)
+• LO5.1: Apply imperatives &amp; transition markers.
+• LO5.2: Construct visual comprehension checks.
+• LO5.3: Perform 60-sec IT instruction speech.
+Multi-step technical guidance (VPN, MFA, resets); 3-part cycle (Sequence -&gt; Check -&gt; Advance); verifying visual screen alignment (BASF JA010, iFAST JA012).
+• Sequence: 'First, [click]. Next, [select]. Finally, [verify].'
+• Visual Checks: 'Does a green checkmark appear on your screen?'
+• Vocab: Security Token, Dialog Box, Toggle.
+Instruction error hook; Video 5.1 study; sequential imperative drills; re-ordering exercises; Guided Task 5.1 (iFAST) &amp; Independent Task 5.2 (Micro Tech).
+Lesson 6: Escalating Unresolved Cases &amp; Explaining Next Steps
+(120 Mins / 2.0 Hrs)
+• LO6.1: Explain SLA escalation triggers.
+• LO6.2: Formulate Tier-2 transfer explanations.
+• LO6.3: Perform 60-sec escalation speech.
+Transferring unresolved P1/P2 cases to Tier-2; framing Tier-2 positively; setting firm SLA Turnaround Times (TAT); Ticket Ref ID logging (Accenture JA013, Two95 JA027).
+• Escalations: 'Due to backend permissions, I am escalating...'
+• SLA: 'Our senior specialists will update you within 2 hours.'
+• Vocab: Tier-2, SLA, Turnaround Time, Priority P1/P2.
+Failed escalation hook; Video 6.1 study; reporting verb &amp; SLA drills; script transformations; Guided Task 6.1 (Scicom) &amp; Independent Task 6.2 (Two95).
+Lesson 7: Occupational Vocabulary, Case Records &amp; Ticket Hygiene
+(120 Mins / 2.0 Hrs)
+• LO7.1: Apply contact center acronyms.
+• LO7.2: Document structured CRM ticket notes.
+• LO7.3: Produce audit-ready CRM ticket log.
+CRM ticket hygiene &amp; audit compliance; documenting 5 mandatory fields (Subject, Symptom, Cause, Action, Status); past-tense telegraphic style (Corebase JA022).
+• Past Verbs: 'Verified credentials. Isolated fault. Resolved ticket.'
+• Acronyms: SLA, FCR, AHT, TAT, CSAT, CRM.
+• Format: Priority: P2 | Status: RESOLVED (FCR).
+Sloppy log audit hook; Video 7.1 study; acronym identification; editing sloppy notes into audit-ready logs; Formative Task 7.1 (Guided) &amp; Task 7.2 (Independent).
+Lesson 8: Integrated Support Process &amp; Oral Case Summaries (Capstone)
+(240 Mins / 4.0 Hrs)
+• LO8.1: Synthesize multi-turn CRM histories.
+• LO8.2: Structure 5-stage oral case summary.
+• LO8.3: Perform 90-sec shift handover speech.
+24/7 global shift handovers; converting written CRM records into 60-90 sec oral briefings; reporting active P1/P2 incidents and SLA deadlines (Accenture JA013, BASF JA010).
+• 5-Stage Pyramid: Identification -&gt; Symptom -&gt; Actions Taken -&gt; Status -&gt; Next Step/SLA.
+• Transitions: 'I am briefing you on...', 'currently sitting at...'
+Handover failure hook; Video 8.1 study (5-stage pyramid); ticket-to-speech drills; model summary deconstruction; Guided Task 8.1 (Scicom) &amp; Capstone Task 8.2 (BASF).
+4. Representative Exemplars of Learning Tasks and Workplace Language
+To illustrate the operational depth and pedagogical authenticity of student practice, representative model exemplars across key lessons are presented below:
+Exemplar 1: Professional Call Opening (Lesson 1 — OWNDAYS Helpline):
+“Thank you for calling OWNDAYS Customer Care. My name is Golf. I would be glad to check your order tracking status today. To access your account details securely, may I please verify your full name and order reference number?”
+Exemplar 2: Indirect Fault Isolation &amp; Paraphrasing (Lesson 2 — Concentrix Banking Desk):
+“I understand how frustrating it is when your portal freezes. Could you tell me if a numeric error code appears on your screen? Also, would you mind specifying whether you are connected via Wi-Fi or Mobile Data? So if I understand correctly, the login page freezes only when connecting over office Wi-Fi, is that right?”
+Exemplar 3: Technical Workaround via First Conditional (Lesson 3 — Scicom SaaS Desk):
+“This export crash occurs because temporary browser memory becomes overloaded when generating large files. As a quick workaround, you might want to try exporting the report in smaller monthly batches. If you export one month at a time, the portal will process the file without exceeding browser memory limits.”
+Exemplar 4: HEAR De-escalation &amp; Reassurance (Lesson 4 — Teleperformance Complaint Ops):
+“I completely understand how frustrating and unacceptable this delivery delay is for you, Mr. Lee, especially when you paid for overnight express shipping. On behalf of our company, I sincerely apologize for failing to meet your delivery expectations. Rest assured that I am taking personal ownership of your shipment right now.”
+Exemplar 5: 3-Step Sequential IT Guidance (Lesson 5 — BASF Service Desk):
+“I would be glad to guide you through setting up your MFA security token. First, open your browser and navigate to the security portal. Next, click 'Register New Device'—does a black and white QR code display on your screen? Great. Finally, scan the QR code using your Authenticator app and enter the 6-digit passkey. Does a green checkmark appear?”
+Exemplar 6: SLA Escalation &amp; Tier-2 Transfer Speech (Lesson 6 — Accenture IT Helpdesk):
+“Due to the backend database permissions required to reset your server node, I am escalating your ticket directly to our Tier-2 Network Operations Team. I have logged this as a High-Priority P2 incident under Ticket ID #TK-9942. Under our Service Level Agreement, our Tier-2 engineers will investigate your server and update you within two business hours.”
+Exemplar 7: Audit-Ready CRM Ticket Record (Lesson 7 — Corebase Technologies):
+SUBJECT: [SaaS Portal] Export Memory Crash &amp; Billing Report FailureSYMPTOM: User reported Error 504 Timeout during monthly PDF report export.ROOT CAUSE: Local browser memory overload caused by accumulated temporary cache files.ACTION TAKEN: 1. Verified merchant credentials (#M-9021). 2. Guided user through browser cache clearance. 3. Instructed user to attempt export in Incognito Mode.STATUS: RESOLVED (FCR Achieved | AHT: 8.5 Mins). Verified export functioning normally.
+Exemplar 8: 5-Stage Oral Shift Handover Briefing (Lesson 8 Capstone — Accenture Regional Desk):
+“Good morning, team. I am briefing you on Ticket ID #TK-9021, a Priority 1 Critical incident affecting the Accenture Order-to-Cash regional portal. The client reported a complete system freeze during morning automated payment reconciliation, displaying Error Code 504 Timeout, impacting the Thailand desk. Initial diagnostic checks confirmed database table lock congestion following an overnight patch update. To date, Tier-1 has executed a session reset, flushed the DNS cache, and isolated blocked tables while activating a temporary manual batch workaround. The case is currently sitting at P1 Escalated Status with Senior Database Engineering. The required next step is for the incoming shift lead to verify database table re-indexing with Tier-2 at 09:30 AM and update the client prior to our 10:00 AM SLA breach deadline. Thank you.”
+5. Parallel Assessment Package and Evaluation Blueprint
+The module incorporates two parallel testing instruments: Form A (Pre-Test Diagnostic Assessment) and Form B (Post-Test Summative Assessment). Both forms share 100% parallel construct validity, task specifications, time budgets, and rubric criteria to calculate exact pre-to-post learning gain scores.
+The Standardized 4-Task Assessment Matrix:
+Task 1: Call Opening &amp; Identity Verification (Prep: 45s | Speak: 30s) — Form A: OWNDAYS order tracking query (JA001). Form B: Foundever unauthorized subscription charge query (JA006). Evaluates brand salutation, agent identification, and polite modal credential requests.
+Task 2: Fault Isolation &amp; Reflective Paraphrasing (Prep: 45s | Speak: 45s) — Form A: Concentrix mobile banking app freeze (JA003). Form B: Evoxt cloud control panel timeout (JA014). Evaluates indirect diagnostic probes and reflective paraphrasing checks.
+Task 3: Technical Workaround &amp; Empathetic Recovery (Prep: 60s | Speak: 60s) — Form A: Teleperformance checkout gateway freeze (JA004). Form B: MSIG emergency travel claim delay (JA005). Evaluates HEAR de-escalation framework, formal corporate apology, personal ownership, and First Conditional workarounds.
+Task 4: CRM Ticket Synthesis &amp; Shift Handover (Prep: 90s | Speak: 90s) — Form A: Accenture Priority 1 Ticket #TK-9021 (JA013). Form B: BASF Priority 1 Ticket #TK-1009 (JA010). Evaluates 5-stage oral shift handover speech based on a complex CRM ticket record.
+20-Point Analytic Oral Proficiency Rubric Criteria:
+Criteria 1: Task Fulfillment &amp; Technical Accuracy (1–5 Points): Evaluates completeness of task requirements, inclusion of essential credentials/SLA deadlines, and factual accuracy of technical explanations.
+Criteria 2: Grammatical Accuracy &amp; Target Structures (1–5 Points): Evaluates correct application of modals (may/could), indirect question word order, First Conditional syntax, imperatives, and past-tense diagnostic verbs.
+Criteria 3: Pronunciation, Fluency &amp; Intonation (1–5 Points): Evaluates speech intelligibility, natural pacing (100–120 wpm), absence of disfluency/pauses, and clear L2 articulation (intelligible Thai accent is non-penalized).
+Criteria 4: Professional Tone &amp; Pragmatic Appropriateness (1–5 Points): Evaluates active empathy, formal corporate apologies, customer reassurance, personal case ownership, and professional BPO register.
+CEFR Score Conversion &amp; Occupational Deployment Benchmark Matrix:
+Total Raw Score (out of 20)
+Percentage
+CEFR Level
+Occupational Readiness &amp; Deployment Status
+18 – 20 Points
+90% – 100%
+B2.2 / C1
+Advanced / Job-Ready Specialist (Direct BPO Deployment)
+15 – 17 Points
+75% – 85%
+B2.1
+Proficient / Deployable Support Agent (Mentor Supervision)
+12 – 14 Points
+60% – 70%
+B1.2
+Intermediate / Requires On-the-Job Supervision
+08 – 11 Points
+40% – 55%
+B1.1
+Developing / Requires Remedial Language Training
+00 – 07 Points
+0% – 35%
+A2
+Novice / Unprepared for Voice Support Operations
+Learning Gain Calculation (Delta Score):Delta Score = Post-Test Score (Form B) − Pre-Test Score (Form A)This delta score quantifies student growth in target sentence structures, professional tone, diagnostic reasoning, and overall occupational deployment readiness following the 19-hour module instruction.

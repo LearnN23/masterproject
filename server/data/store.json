@@ -1,0 +1,1050 @@
+{
+  "course": {
+    "id": "TECHQUEST-EOP",
+    "title": "TECHQUEST: English for IT Technical Support",
+    "shortname": "TECHQUEST-EOP",
+    "target": "3rd & 4th-Year Undergraduate IT Students",
+    "framework": "Task-Based Language Teaching (TBLT) & ADDIE Model",
+    "format": "topics",
+    "courselayout": 1,
+    "enablecompletion": 1,
+    "showcompletionconditions": 1,
+    "groups": [
+      {
+        "id": "group-pilot-experts",
+        "name": "Group_Pilot_Experts",
+        "description": "For thesis committee members, expert evaluators, and pilot participants. Bypasses all activity completion locks to enable free inspection across all modules.",
+        "bypassLocks": true
+      },
+      {
+        "id": "group-main-study",
+        "name": "Group_Main_Study",
+        "description": "For the formal experimental cohort. Subject to strict sequential gating rules: Pre-Test -> Lesson 1 to 8 -> Post-Test.",
+        "bypassLocks": false
+      }
+    ],
+    "units": [
+      {
+        "id": "section-0",
+        "sectionNumber": 0,
+        "title": "Section 0: Course Welcome & Diagnostic Pre-Test",
+        "description": "Mandatory Diagnostic Gateway. Baseline assessment measuring oral technical support communication prior to TBLT instructional intervention.",
+        "isFormalAssessment": true,
+        "requiresPrereq": null,
+        "badge": {
+          "id": "badge-pre",
+          "name": "Diagnostic Candidate",
+          "tier": "Bronze",
+          "icon": "ShieldCheck",
+          "criteria": "Submit formal baseline Pre-Test speaking assessment ticket #PRE-01."
+        },
+        "preTask": {
+          "video": {
+            "title": "Course Orientation & Pre-Test Protocols",
+            "url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+            "notes": "Overview of research requirements, microphone setup, and baseline diagnostic speaking expectations."
+          },
+          "cheatsheet": {
+            "title": "Diagnostic Baseline Vocabulary Guide",
+            "categories": [
+              {
+                "name": "Initial Call Intake",
+                "phrases": [
+                  "IT Technical Support, this is [Name]. How may I direct your urgent request?",
+                  "I understand your deployment is blocked; let's troubleshoot the gateway immediately."
+                ]
+              }
+            ]
+          },
+          "quiz": [
+            {
+              "id": "q-pre1",
+              "question": "What is the primary objective of the initial diagnostic call?",
+              "options": [
+                "Blame the customer's hardware.",
+                "Acknowledge the deployment deadline calmly and isolate the fault systematically.",
+                "Tell the customer to reschedule the deployment.",
+                "Put the caller on mute."
+              ],
+              "correct": 1,
+              "explanation": "Calm ownership and systematic fault isolation are the core foundations of professional IT communication."
+            }
+          ]
+        },
+        "duringTask": {
+          "ticket": {
+            "code": "#PRE-01",
+            "priority": "High / Escalated",
+            "category": "Network Gateway & Packet Drops",
+            "client": "David Sterling",
+            "department": "DevOps Engineering",
+            "timeWindow": "25 Minutes before Offshore Deployment",
+            "scenario": "David Sterling's automated Jenkins deployment cluster is failing handshake negotiation every 90 seconds. His team has an offshore release in 25 minutes. He is extremely impatient.",
+            "audioPrompt": {
+              "transcript": "\"Support! David here from DevOps. Our automated Jenkins build cluster is terminating TLS handshakes every 90 seconds. We have an offshore deployment scheduled in 25 minutes! Fix the gateway routing immediately!\""
+            }
+          }
+        },
+        "postTask": {
+          "modelResponse": {
+            "transcript": "\"Hi David, this is IT Technical Support. I hear the urgency with that offshore deployment in 25 minutes. I am on the gateway console right now. It looks like an MTU fragmentation mismatch on tunnel interface 2. I have clamped the MTU packet size to 1380 bytes; trigger your build pipeline now and confirm if the TLS handshake holds. I'm staying on this line with you.\"",
+            "keyTakeaways": [
+              "Immediate calm intake of high-pressure caller.",
+              "Technical isolation of MTU fragmentation.",
+              "Clear, testable action step provided within caller's time window."
+            ]
+          }
+        }
+      },
+      {
+        "id": "section-1",
+        "sectionNumber": 1,
+        "title": "Section 1: Lesson 1 - Ticket Intake & Clarifying Symptoms",
+        "description": "Active listening, polite clarifying inquiries, identifying root symptoms, and establishing positive customer rapport.",
+        "isFormalAssessment": false,
+        "requiresPrereq": "section-0",
+        "badge": {
+          "id": "badge-1",
+          "name": "Helpdesk Dispatcher",
+          "tier": "Bronze",
+          "icon": "ShieldCheck",
+          "criteria": "Complete all Lesson 1 scaffolding and formative case ticket practice."
+        },
+        "preTask": {
+          "video": {
+            "title": "Model Intake & Clarification Dialogue",
+            "url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+            "notes": "Notice the technician’s calming opening, immediate empathy phrase (\"I completely understand how critical this is\"), and clear sequential instructions."
+          },
+          "cheatsheet": {
+            "title": "IT Helpdesk Vocabulary & De-Escalation Phrases",
+            "categories": [
+              {
+                "name": "Opening & Immediate Empathy",
+                "phrases": [
+                  "Thank you for reaching out to IT Technical Support. My name is [Name].",
+                  "I understand how time-sensitive this presentation is, and I am prioritizing your ticket right now.",
+                  "Rest assured, we will get you back into the dashboard shortly."
+                ]
+              },
+              {
+                "name": "Diagnostic & Clarification Verbs",
+                "phrases": [
+                  "Could you please verify your corporate user handle and registered email?",
+                  "Did you encounter an \"Account Locked: Error 403\" notification?",
+                  "Please avoid refreshing the page while I reset your authentication token."
+                ]
+              },
+              {
+                "name": "Action Plan & Firm ETA",
+                "phrases": [
+                  "I have initiated a secure temporary token dispatch to your mobile device.",
+                  "This temporary passcode will arrive in approximately 60 seconds.",
+                  "I will stay on the line with you until you confirm successful login."
+                ]
+              }
+            ]
+          },
+          "quiz": [
+            {
+              "id": "q1",
+              "question": "A client says: \"My presentation starts in 10 minutes and your system locked me out!\" What is the most appropriate initial de-escalation response?",
+              "options": [
+                "You should have reset your password yesterday.",
+                "I understand the urgency of your presentation, and I am unlocking your account right now.",
+                "Please submit a web form and wait 24 hours.",
+                "The system locks users after 3 attempts; that is your fault."
+              ],
+              "correct": 1,
+              "explanation": "Empathy + immediate ownership reduces customer anxiety and fulfills the professional de-escalation standard."
+            },
+            {
+              "id": "q2",
+              "question": "Which term best describes the credential sent to a user for one-time emergency access?",
+              "options": [
+                "Temporary Authentication Token",
+                "Firewall Gateway Block",
+                "Bandwidth Throttler",
+                "Kernel Driver Override"
+              ],
+              "correct": 0,
+              "explanation": "Temporary Authentication Token is the industry-standard terminology for time-limited credentials."
+            },
+            {
+              "id": "q3",
+              "question": "Which statement provides a professional, actionable ETA (Estimated Time of Arrival)?",
+              "options": [
+                "It will take whenever the server finishes.",
+                "I am pushing the reset through our directory; you should receive the confirmation SMS within 60 to 90 seconds.",
+                "Maybe later today or tomorrow.",
+                "I cannot promise anything."
+              ],
+              "correct": 1,
+              "explanation": "Clear technical action coupled with a defined, realistic time window sets clear customer expectations."
+            }
+          ]
+        },
+        "duringTask": {
+          "ticket": {
+            "code": "#TK-101",
+            "priority": "Critical / High Urgency",
+            "category": "Authentication & Access Control",
+            "client": "Sarah Jenkins",
+            "department": "Operations & Strategic Sales",
+            "timeWindow": "15 Minutes before Board Presentation",
+            "scenario": "Sarah Jenkins attempted to log into the executive analytics dashboard three times with an expired credential. Her account is automatically suspended. She has a live multi-million dollar pitch to executive stakeholders starting in 15 minutes and is in high distress.",
+            "audioPrompt": {
+              "transcript": "\"Hi, this is Sarah Jenkins from Operations! Look, I am having a total panic attack here. I’m giving the quarterly executive presentation to foreign partners in literally 14 minutes, and the portal just locked me out with error code 403! It says my credentials are suspended. I need someone in IT to fix this IMMEDIATELY! Please tell me what to do!\""
+            }
+          }
+        },
+        "postTask": {
+          "modelResponse": {
+            "transcript": "\"Hello Sarah, this is Alex from IT Technical Support. First, take a slow breath—I completely understand how high-stakes this presentation is, and I am actively taking ownership of your ticket right now. The 403 error is an automated safeguard from three invalid password attempts. I have cleared the directory lockout on our console. I am dispatching a one-time 6-digit verification code to your mobile phone right now, arriving in 30 seconds. Enter that, set a new password, and you will have full access within 2 minutes. I'm staying right here until you confirm you're logged in.\"",
+            "keyTakeaways": [
+              "Immediate calm, empathetic greeting addressing her distress directly.",
+              "Clear technical explanation (error 403 safeguard) without condescending blame.",
+              "Explicit action plan with tight, realistic ETAs (30s SMS, 2 min full access).",
+              "Proactive reassurance: \"I will remain actively monitoring until you are safely logged in.\""
+            ]
+          }
+        }
+      },
+      {
+        "id": "section-2",
+        "sectionNumber": 2,
+        "title": "Section 2: Lesson 2 - Guiding Step-by-Step Solutions",
+        "description": "Sequential discourse markers, non-technical instructions, verifying client comprehension, and remote guidance.",
+        "isFormalAssessment": false,
+        "requiresPrereq": "section-1",
+        "badge": {
+          "id": "badge-2",
+          "name": "Technical Guide",
+          "tier": "Bronze",
+          "criteria": "Complete Lesson 2 case ticket."
+        },
+        "preTask": {
+          "video": {
+            "title": "Sequential Step Guidance",
+            "url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+            "notes": "Focus on transitional discourse markers: 'First', 'Once that finishes', 'Next'."
+          },
+          "cheatsheet": {
+            "title": "Step-by-Step Guidance Glossary",
+            "categories": [
+              {
+                "name": "Sequential Markers",
+                "phrases": [
+                  "First, navigate to your system tray.",
+                  "Next, right-click the network adapter icon."
+                ]
+              }
+            ]
+          },
+          "quiz": [
+            {
+              "id": "q-l2-1",
+              "question": "What is the best way to verify client comprehension during remote troubleshooting?",
+              "options": [
+                "Assume they know.",
+                "Ask: 'Could you confirm what appears on your screen right now?'",
+                "Yell at them.",
+                "Hang up."
+              ],
+              "correct": 1,
+              "explanation": "Verification checks maintain mutual clarity."
+            }
+          ]
+        },
+        "duringTask": {
+          "ticket": {
+            "code": "#TK-201",
+            "priority": "Medium",
+            "category": "Application Configuration",
+            "client": "James Cole",
+            "department": "Marketing",
+            "timeWindow": "1 Hour",
+            "scenario": "James needs guidance configuring multi-factor authentication on a newly provisioned tablet.",
+            "audioPrompt": {
+              "transcript": "\"Hey support, James here. I got this new tablet and it's asking for authenticator QR setup. Can someone walk me through it step by step?\""
+            }
+          }
+        },
+        "postTask": {
+          "modelResponse": {
+            "transcript": "\"Hi James, congratulations on the new tablet! I'd be glad to guide you through the MFA setup. First, open the corporate portal on your computer screen. Next, click 'Security Settings' and select 'Pair New Device' to reveal the QR code. Once you have that on your screen, let me know!\"",
+            "keyTakeaways": [
+              "Clear chronological sequencing",
+              "Positive tone",
+              "Verification checkpoint"
+            ]
+          }
+        }
+      },
+      {
+        "id": "section-3",
+        "sectionNumber": 3,
+        "title": "Section 3: Lesson 3 - Handling System Downtime & Urgent Requests",
+        "description": "Communicating outage statuses, ETA estimations, critical priority categorization, and customer de-escalation.",
+        "isFormalAssessment": false,
+        "requiresPrereq": "section-2",
+        "badge": {
+          "id": "badge-3",
+          "name": "Crisis Dispatcher",
+          "tier": "Bronze",
+          "criteria": "Complete Lesson 3 case ticket."
+        },
+        "preTask": {
+          "video": {
+            "title": "Outage Communication Protocol",
+            "url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+            "notes": "Notice the emphasis on transparent ETAs without false promises."
+          },
+          "cheatsheet": {
+            "title": "Outage & Downtime Lexicon",
+            "categories": [
+              {
+                "name": "ETA Phrases",
+                "phrases": [
+                  "Our infrastructure engineers are actively working on the failover.",
+                  "We anticipate gateway recovery within 45 minutes."
+                ]
+              }
+            ]
+          },
+          "quiz": [
+            {
+              "id": "q-l3-1",
+              "question": "When a major system is down, what should you communicate to users?",
+              "options": [
+                "Promise it will take 1 second even if untrue.",
+                "Transparent status, affected services, and verified estimated recovery windows.",
+                "Deny that the system is down.",
+                "Ignore their emails."
+              ],
+              "correct": 1,
+              "explanation": "Transparent status builds trust."
+            }
+          ]
+        },
+        "duringTask": {
+          "ticket": {
+            "code": "#TK-301",
+            "priority": "Critical",
+            "category": "Database Server Outage",
+            "client": "Rebecca Stone",
+            "department": "Finance",
+            "timeWindow": "30 Minutes",
+            "scenario": "Quarterly payroll processing halted due to primary database node failure.",
+            "audioPrompt": {
+              "transcript": "\"Support! Payroll processing just threw error 500 across all terminals! Payday is tomorrow morning. When is this coming back online?!\""
+            }
+          }
+        },
+        "postTask": {
+          "modelResponse": {
+            "transcript": "\"Rebecca, thank you for alerting us immediately. Our database cluster experienced an unexpected failover. Our database administrators are currently syncing the secondary replica. We anticipate full service restoration by 11:30 AM, in 35 minutes. I will send you a direct status ping the moment the node is verified.\"",
+            "keyTakeaways": [
+              "Empathetic intake",
+              "Transparent root cause without jargon",
+              "Precise ETA"
+            ]
+          }
+        }
+      },
+      {
+        "id": "section-4",
+        "sectionNumber": 4,
+        "title": "Section 4: Lesson 4 - Explaining Hardware & Network Diagnostics",
+        "description": "Explaining packet loss, latency, router configurations, adapter errors, and peripheral troubleshooting.",
+        "isFormalAssessment": false,
+        "requiresPrereq": "section-3",
+        "badge": {
+          "id": "badge-4",
+          "name": "Network Troubleshooter",
+          "tier": "Silver",
+          "icon": "Wifi",
+          "criteria": "Complete Lesson 4 case ticket."
+        },
+        "preTask": {
+          "video": {
+            "title": "Network Diagnostic Telemetry",
+            "url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+            "notes": "Explaining ping, traceroute, and packet loss clearly to clients."
+          },
+          "cheatsheet": {
+            "title": "Hardware & Network Phrasing",
+            "categories": [
+              {
+                "name": "Network Inquiries",
+                "phrases": [
+                  "Let's run a continuous ping test to check packet drops.",
+                  "Could you restart your local optical network terminal?"
+                ]
+              }
+            ]
+          },
+          "quiz": [
+            {
+              "id": "q-l4-1",
+              "question": "What is packet loss in customer-friendly terms?",
+              "options": [
+                "A stolen laptop.",
+                "Small chunks of data not reaching their destination, causing lag or dropouts.",
+                "A broken monitor.",
+                "Expired RAM."
+              ],
+              "correct": 1,
+              "explanation": "Translating technical concepts into accessible metaphors is key."
+            }
+          ]
+        },
+        "duringTask": {
+          "ticket": {
+            "code": "#TK-401",
+            "priority": "Medium",
+            "category": "Network Infrastructure / VPN",
+            "client": "Marcus Vance",
+            "department": "Cloud Engineering",
+            "timeWindow": "2 Hours",
+            "scenario": "Remote engineer experiencing persistent TLS timeout drops every 5 minutes on corporate WireGuard VPN.",
+            "audioPrompt": {
+              "transcript": "\"Hey support, Marcus from dev team. My VPN keeps terminating the handshake every 5 minutes with TLS timeout. I’ve checked my local fiber connection and it’s fine. Can you check if the gateway is dropping packets?\""
+            }
+          }
+        },
+        "postTask": {
+          "modelResponse": {
+            "transcript": "\"Hi Marcus, thanks for providing those initial handshake details. I checked our regional gateway telemetry and noticed MTU packet fragmentation on the tunnel interface. Let’s adjust your local client MTU clamp to 1380 bytes. That should prevent the handshake timeouts immediately.\"",
+            "keyTakeaways": [
+              "Technical peer communication",
+              "Direct diagnosis acknowledgment",
+              "Actionable MTU fix"
+            ]
+          }
+        }
+      },
+      {
+        "id": "section-5",
+        "sectionNumber": 5,
+        "title": "Section 5: Lesson 5 - Software Licenses & Spec Comparisons",
+        "description": "Explaining software license tiers, system requirements, hardware specs, and cloud storage allocations.",
+        "isFormalAssessment": false,
+        "requiresPrereq": "section-4",
+        "badge": {
+          "id": "badge-5",
+          "name": "Software Analyst",
+          "tier": "Silver",
+          "criteria": "Complete Lesson 5 case ticket."
+        },
+        "preTask": {
+          "video": {
+            "title": "Software Spec Consultations",
+            "url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+            "notes": "Explaining RAM, GPU, and SaaS license tiers objectively."
+          },
+          "cheatsheet": {
+            "title": "Software & Spec Comparison Lexicon",
+            "categories": [
+              {
+                "name": "Comparison Markers",
+                "phrases": [
+                  "While the Standard license supports 10GB storage, the Pro tier provides unlimited cloud retention.",
+                  "Your CAD rendering requires a minimum of 32GB RAM."
+                ]
+              }
+            ]
+          },
+          "quiz": [
+            {
+              "id": "q-l5-1",
+              "question": "How should an IT specialist compare two software tiers to an employee?",
+              "options": [
+                "Pick the most expensive one arbitrarily.",
+                "Highlight feature differences mapped to their specific workflow requirements.",
+                "Tell them IT doesn't care.",
+                "Send a 100-page manual."
+              ],
+              "correct": 1,
+              "explanation": "Consultative technical alignment."
+            }
+          ]
+        },
+        "duringTask": {
+          "ticket": {
+            "code": "#TK-501",
+            "priority": "Low",
+            "category": "Software Licensing",
+            "client": "Chloe Adams",
+            "department": "Design & UI",
+            "timeWindow": "4 Hours",
+            "scenario": "Chloe needs to understand why her Adobe Cloud license does not include 4K cloud rendering credits.",
+            "audioPrompt": {
+              "transcript": "\"Hi IT, Chloe here from Design. I'm trying to render our 4K promo video and Adobe says my license doesn't have enough cloud credits. What's the difference between my license and the Enterprise tier?\""
+            }
+          }
+        },
+        "postTask": {
+          "modelResponse": {
+            "transcript": "\"Hi Chloe, happy to explain. Your current license is the Standard Creative seat, which includes 100GB local cache but caps cloud render credits at 25 per month. The Enterprise tier removes credit caps and allocates dedicated GPU rendering nodes. I've sent an upgrade approval request to your department lead.\"",
+            "keyTakeaways": [
+              "Clear contrastive phrasing",
+              "Objective explanation",
+              "Proactive administrative next step"
+            ]
+          }
+        }
+      },
+      {
+        "id": "section-6",
+        "sectionNumber": 6,
+        "title": "Section 6: Lesson 6 - De-escalating Frustrated & Anxious Clients",
+        "description": "Empathy statements, active acknowledgment, anger de-escalation, professional boundary maintenance, and rebuilding trust.",
+        "isFormalAssessment": false,
+        "requiresPrereq": "section-5",
+        "badge": {
+          "id": "badge-6",
+          "name": "Conflict Mediator",
+          "tier": "Silver",
+          "criteria": "Complete Lesson 6 case ticket."
+        },
+        "preTask": {
+          "video": {
+            "title": "De-escalation Demonstration",
+            "url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+            "notes": "Listen to the lower pitch, measured cadence, and validation phrases used by the support lead."
+          },
+          "cheatsheet": {
+            "title": "De-escalation & Conflict Phrasebook",
+            "categories": [
+              {
+                "name": "Validation Phrases",
+                "phrases": [
+                  "I completely understand your frustration with this repeated error.",
+                  "You have every right to expect this system to work reliably."
+                ]
+              }
+            ]
+          },
+          "quiz": [
+            {
+              "id": "q-l6-1",
+              "question": "What is the best immediate reply when a client screams: 'Your team is completely incompetent!'?",
+              "options": [
+                "'No, you are!'",
+                "'I hear how upset you are, and I am stepping in personally right now to make sure this gets resolved.'",
+                "Hang up the phone immediately.",
+                "Tell them you don't care."
+              ],
+              "correct": 1,
+              "explanation": "De-escalates emotion without accepting unwarranted insult."
+            }
+          ]
+        },
+        "duringTask": {
+          "ticket": {
+            "code": "#TK-601",
+            "priority": "High",
+            "category": "Recurring Hardware Fault",
+            "client": "Arthur Pendelton",
+            "department": "Executive VP",
+            "timeWindow": "20 Minutes",
+            "scenario": "Arthur's laptop monitor has flickered and died for the third time this week during a video call.",
+            "audioPrompt": {
+              "transcript": "\"This is Arthur! For the THIRD time this week my laptop screen blacked out in the middle of a board meeting! Your technician said this was fixed on Tuesday! This is utterly unacceptable! What are you people doing over there?!\""
+            }
+          }
+        },
+        "postTask": {
+          "modelResponse": {
+            "transcript": "\"Arthur, I hear your frustration loud and clear, and having your screen fail during a board meeting is completely unacceptable. You have every right to be angry. I am taking personal ownership of this right now. I am bringing a pre-configured replacement executive laptop up to your office in 5 minutes, and I will transfer your active session immediately.\"",
+            "keyTakeaways": [
+              "Empathy acknowledgment without defensive excuses",
+              "Personal ownership",
+              "Instant tangible remedy in 5 mins"
+            ]
+          }
+        }
+      },
+      {
+        "id": "section-7",
+        "sectionNumber": 7,
+        "title": "Section 7: Lesson 7 - Quotations, Service Tiers & Escalation",
+        "description": "Explaining hardware quotes, procurement workflows, tier escalation to Tier 2 / engineering, and warranty coverage.",
+        "isFormalAssessment": false,
+        "requiresPrereq": "section-6",
+        "badge": {
+          "id": "badge-7",
+          "name": "Service Architect",
+          "tier": "Gold",
+          "criteria": "Complete Lesson 7 case ticket."
+        },
+        "preTask": {
+          "video": {
+            "title": "Tier Escalation Protocol",
+            "url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+            "notes": "Warm transfer and ticket handover communication."
+          },
+          "cheatsheet": {
+            "title": "Procurement & Escalation Terms",
+            "categories": [
+              {
+                "name": "Escalation Statements",
+                "phrases": [
+                  "I am escalating this ticket directly to our Tier 3 Systems Engineering queue.",
+                  "The replacement motherboards are covered under our Enterprise SLA."
+                ]
+              }
+            ]
+          },
+          "quiz": [
+            {
+              "id": "q-l7-1",
+              "question": "What must you give a client when escalating a ticket to Tier 2?",
+              "options": [
+                "Nothing.",
+                "The escalation ticket ID, the receiving engineer/team, and the expected callback window.",
+                "Tell them to figure it out.",
+                "Close the ticket."
+              ],
+              "correct": 1,
+              "explanation": "Ensures seamless communication continuity."
+            }
+          ]
+        },
+        "duringTask": {
+          "ticket": {
+            "code": "#TK-701",
+            "priority": "High",
+            "category": "Storage SAN Escalation",
+            "client": "Grace Hopper",
+            "department": "Data Science",
+            "timeWindow": "1 Hour",
+            "scenario": "High-performance cluster storage volume requires kernel driver patching by Tier 3 Storage Team.",
+            "audioPrompt": {
+              "transcript": "\"Hi Support, Grace from Data Science. Our NVMe array is reporting I/O block errors on sector 4. This is beyond standard Tier 1 diagnostics. Can we escalate this to the storage kernel team immediately?\""
+            }
+          }
+        },
+        "postTask": {
+          "modelResponse": {
+            "transcript": "\"Hi Grace, thank you for those sector diagnostics. You are completely right—this requires Tier 3 Storage Engineering. I have escalated this under Ticket #SAN-902 with High Priority. Senior Engineer Liam has accepted the handover and will initiate kernel diagnosis within 20 minutes. I will monitor this ticket alongside you.\"",
+            "keyTakeaways": [
+              "Respectful handover",
+              "Clear ticket reference",
+              "SLA callback window confirmed"
+            ]
+          }
+        }
+      },
+      {
+        "id": "section-8",
+        "sectionNumber": 8,
+        "title": "Section 8: Lesson 8 - Final Resolution, Wrap-Up & Closing Tickets",
+        "description": "Verifying ticket resolution, confirming user satisfaction, documentation habits, and polite ticket closure.",
+        "isFormalAssessment": false,
+        "requiresPrereq": "section-7",
+        "badge": {
+          "id": "badge-8",
+          "name": "Resolution Specialist",
+          "tier": "Gold",
+          "criteria": "Complete Lesson 8 case ticket."
+        },
+        "preTask": {
+          "video": {
+            "title": "Professional Ticket Closure",
+            "url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+            "notes": "Confirming satisfaction before marking tickets resolved."
+          },
+          "cheatsheet": {
+            "title": "Ticket Closure & Wrap-up Lexicon",
+            "categories": [
+              {
+                "name": "Closure Phrases",
+                "phrases": [
+                  "Could you verify that all applications are functioning to your satisfaction?",
+                  "Is there anything else I can assist you with today?"
+                ]
+              }
+            ]
+          },
+          "quiz": [
+            {
+              "id": "q-l8-1",
+              "question": "What is the golden rule of closing a support ticket?",
+              "options": [
+                "Close it before the customer tests.",
+                "Confirm that the user has verified the fix on their end and has no remaining issues.",
+                "Never reply.",
+                "Delete the ticket log."
+              ],
+              "correct": 1,
+              "explanation": "Customer confirmation prevents premature ticket reopening."
+            }
+          ]
+        },
+        "duringTask": {
+          "ticket": {
+            "code": "#TK-801",
+            "priority": "Low",
+            "category": "Resolution Verification",
+            "client": "Nathan Drake",
+            "department": "Sales",
+            "timeWindow": "2 Hours",
+            "scenario": "Nathan's email client indexing issue has been repaired; confirm everything is working smoothly before formal ticket resolution.",
+            "audioPrompt": {
+              "transcript": "\"Hey support, I see the rebuild finished on Outlook and my emails are appearing again. Are we good to close this out?\""
+            }
+          }
+        },
+        "postTask": {
+          "modelResponse": {
+            "transcript": "\"Hi Nathan, that's wonderful to hear that the index rebuild completed successfully. Before I formally mark this ticket as resolved, could you please run one quick search test for a message from last month to verify indexing is 100% complete? If that returns smoothly, I will close this ticket and archive the resolution notes for you.\"",
+            "keyTakeaways": [
+              "Friendly verification request",
+              "Clear procedure",
+              "Professional closure"
+            ]
+          }
+        }
+      },
+      {
+        "id": "section-9",
+        "sectionNumber": 9,
+        "title": "Section 9: Summative Post-Test Evaluation & Course Completion",
+        "description": "Mandatory Post-Test Diagnostic Speaking Assessment. Measures oral EOP performance gain for thesis Chapter 4 data analysis.",
+        "isFormalAssessment": true,
+        "requiresPrereq": "section-8",
+        "badge": {
+          "id": "badge-post",
+          "name": "Certified IT Quest Specialist",
+          "tier": "Gold",
+          "icon": "Award",
+          "criteria": "Submit formal summative Post-Test speaking assessment ticket #POST-01."
+        },
+        "preTask": {
+          "video": {
+            "title": "Post-Test Capstone Instructions",
+            "url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+            "notes": "Demonstrate the complete synthesis of fluency, lexical precision, and customer empathy."
+          },
+          "cheatsheet": {
+            "title": "Comprehensive EOP Communication Standard",
+            "categories": [
+              {
+                "name": "High-Stakes Crisis Protocol",
+                "phrases": [
+                  "I understand the severity of this database rollback request, and I am locking the schema now.",
+                  "Our point-in-time snapshot will restore all records within four minutes."
+                ]
+              }
+            ]
+          },
+          "quiz": [
+            {
+              "id": "q-post1",
+              "question": "What is the most critical element when communicating during a major data loss scare?",
+              "options": [
+                "Argue with the customer.",
+                "Calm assurance, confirmation of backups, and a concrete ETA for restoration.",
+                "Tell them to wait until Monday.",
+                "Deny any company responsibility."
+              ],
+              "correct": 1,
+              "explanation": "Reassuring the customer about backup validity and giving a firm restoration window prevents panic."
+            }
+          ]
+        },
+        "duringTask": {
+          "ticket": {
+            "code": "#POST-01",
+            "priority": "Critical / P1",
+            "category": "Database Truncation & Rollback",
+            "client": "Elena Rostova",
+            "department": "Senior Database Architecture",
+            "timeWindow": "20 Minutes before Executive Demo",
+            "scenario": "Elena Rostova reports an accidental batch truncation on the staging schema wiping 30,000 customer records right before an executive demo. She is in extreme panic.",
+            "audioPrompt": {
+              "transcript": "\"Hello?! IT emergency! A junior developer ran a destructive batch script on our client staging schema and wiped 30,000 customer records! The executive demo is in 20 minutes! Can we restore from point-in-time snapshot, or are we completely ruined?!\""
+            }
+          }
+        },
+        "postTask": {
+          "modelResponse": {
+            "transcript": "\"Elena, this is IT Technical Support. Take a deep breath—we are not ruined. Our immutable transaction log takes snapshots every 15 minutes. I have located the 11:45 AM clean state prior to the batch script. I am executing an automated point-in-time rollback right now. The restoration will take exactly 3 to 4 minutes. Your data will be 100% intact well before your executive demo.\"",
+            "keyTakeaways": [
+              "Instant calming reassurance preventing catastrophic panic.",
+              "Concrete explanation of technical safeguard (immutable 15-min snapshot).",
+              "Firm, reliable ETA (3-4 mins) well ahead of executive demo."
+            ]
+          }
+        }
+      }
+    ],
+    "rubric": {
+      "totalPoints": 16,
+      "criteria": [
+        {
+          "id": "fluency",
+          "name": "1. Fluency & Delivery",
+          "weight": "25%",
+          "levels": [
+            {
+              "points": 1,
+              "label": "Level 1 (Novice)",
+              "description": "Halting, excessive pauses (>5s), fragmented speech severely impeding rhythm."
+            },
+            {
+              "points": 2,
+              "label": "Level 2 (Developing)",
+              "description": "Noticeable hesitation; uneven tempo with multiple restarts and choppy flow."
+            },
+            {
+              "points": 3,
+              "label": "Level 3 (Competent)",
+              "description": "Steady delivery with occasional natural pauses and minor self-repairs."
+            },
+            {
+              "points": 4,
+              "label": "Level 4 (Proficient)",
+              "description": "Fluent, professional tempo; natural pause distribution; confident spoken cadence."
+            }
+          ]
+        },
+        {
+          "id": "lexicon",
+          "name": "2. Technical & EOP Lexicon",
+          "weight": "25%",
+          "levels": [
+            {
+              "points": 1,
+              "label": "Level 1 (Novice)",
+              "description": "Non-standard or inaccurate IT terms; inappropriate informal slang."
+            },
+            {
+              "points": 2,
+              "label": "Level 2 (Developing)",
+              "description": "Basic IT vocabulary used; occasional misuse of helpdesk phrasing."
+            },
+            {
+              "points": 3,
+              "label": "Level 3 (Competent)",
+              "description": "Accurate standard IT and support terminology used appropriately."
+            },
+            {
+              "points": 4,
+              "label": "Level 4 (Proficient)",
+              "description": "Highly precise technical vocabulary, clear procedural commands, and professional customer service lexicon."
+            }
+          ]
+        },
+        {
+          "id": "empathy",
+          "name": "3. Task Fulfillment & Empathy",
+          "weight": "25%",
+          "levels": [
+            {
+              "points": 1,
+              "label": "Level 1 (Novice)",
+              "description": "Fails to address urgent lockout; ignores customer panic; no solution given."
+            },
+            {
+              "points": 2,
+              "label": "Level 2 (Developing)",
+              "description": "Acknowledges lockout but offers vague steps; weak reassuring empathy."
+            },
+            {
+              "points": 3,
+              "label": "Level 3 (Competent)",
+              "description": "Resolves core problem, offers standard reassurance, and provides an ETA."
+            },
+            {
+              "points": 4,
+              "label": "Level 4 (Proficient)",
+              "description": "Effectively de-escalates client anxiety; empathetic tone; clear step-by-step action plan and firm ETA."
+            }
+          ]
+        },
+        {
+          "id": "phonology",
+          "name": "4. Phonological Clarity",
+          "weight": "25%",
+          "levels": [
+            {
+              "points": 1,
+              "label": "Level 1 (Novice)",
+              "description": "Pronunciation errors severely obscure meaning; heavy L1 interference."
+            },
+            {
+              "points": 2,
+              "label": "Level 2 (Developing)",
+              "description": "Intelligible with concentrated effort; frequent stress and vowel errors."
+            },
+            {
+              "points": 3,
+              "label": "Level 3 (Competent)",
+              "description": "Clear pronunciation with minor phonetic slips that do not impede understanding."
+            },
+            {
+              "points": 4,
+              "label": "Level 4 (Proficient)",
+              "description": "Crisp, highly intelligible articulation; accurate word stress and professional intonation."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "submissions": [
+    {
+      "id": "sub-pre-101",
+      "participantId": "P-101",
+      "ticketId": "section-0",
+      "audioFile": "/uploads/audio/demo-sample.webm",
+      "durationSeconds": 58,
+      "submittedAt": "2026-10-10T08:30:00.000Z",
+      "grades": {
+        "raterA": {
+          "fluency": 2,
+          "lexicon": 2,
+          "empathy": 2,
+          "phonology": 2,
+          "total": 8,
+          "gradedAt": "2026-10-10T10:00:00.000Z",
+          "notes": "Baseline hesitation, limited de-escalation vocabulary."
+        },
+        "raterB": {
+          "fluency": 2,
+          "lexicon": 2,
+          "empathy": 2,
+          "phonology": 2,
+          "total": 8,
+          "gradedAt": "2026-10-10T11:00:00.000Z",
+          "notes": "Basic communication, needed more empathy."
+        }
+      }
+    },
+    {
+      "id": "sub-001",
+      "participantId": "P-101",
+      "ticketId": "section-1",
+      "audioFile": "/uploads/audio/demo-sample.webm",
+      "durationSeconds": 78,
+      "submittedAt": "2026-10-14T04:06:32.485Z",
+      "grades": {
+        "raterA": {
+          "fluency": 3,
+          "lexicon": 4,
+          "empathy": 3,
+          "phonology": 3,
+          "total": 13,
+          "gradedAt": "2026-10-14T10:00:00.000Z",
+          "notes": "Good technical clarity and solid de-escalation."
+        },
+        "raterB": {
+          "fluency": 3,
+          "lexicon": 3,
+          "empathy": 4,
+          "phonology": 3,
+          "total": 13,
+          "gradedAt": "2026-10-14T12:00:00.000Z",
+          "notes": "Excellent reassurance given to the anxious client."
+        }
+      }
+    },
+    {
+      "id": "sub-post-101",
+      "participantId": "P-101",
+      "ticketId": "section-9",
+      "audioFile": "/uploads/audio/demo-sample.webm",
+      "durationSeconds": 82,
+      "submittedAt": "2026-10-15T09:15:00.000Z",
+      "grades": {
+        "raterA": {
+          "fluency": 4,
+          "lexicon": 4,
+          "empathy": 4,
+          "phonology": 3,
+          "total": 15,
+          "gradedAt": "2026-10-15T11:00:00.000Z",
+          "notes": "Substantial gain. High confidence, precise snapshot lexicon, reassuring empathy."
+        },
+        "raterB": {
+          "fluency": 4,
+          "lexicon": 3,
+          "empathy": 4,
+          "phonology": 4,
+          "total": 15,
+          "gradedAt": "2026-10-15T11:30:00.000Z",
+          "notes": "Proficient de-escalation; clear ETA provided."
+        }
+      }
+    },
+    {
+      "id": "sub-002",
+      "participantId": "P-102",
+      "ticketId": "section-1",
+      "audioFile": "/uploads/audio/demo-sample.webm",
+      "durationSeconds": 65,
+      "submittedAt": "2026-10-14T13:06:32.487Z",
+      "grades": {
+        "raterA": {
+          "fluency": 2,
+          "lexicon": 3,
+          "empathy": 2,
+          "phonology": 2,
+          "total": 9,
+          "gradedAt": "2026-10-14T14:00:00.000Z",
+          "notes": "Noticeable hesitations during technical instructions."
+        },
+        "raterB": {
+          "fluency": 3,
+          "lexicon": 3,
+          "empathy": 3,
+          "phonology": 2,
+          "total": 11,
+          "gradedAt": "2026-10-14T15:00:00.000Z",
+          "notes": "Intelligible, minor stress inaccuracies."
+        }
+      }
+    },
+    {
+      "id": "sub_test_1",
+      "participantId": "STU-1024",
+      "ticketId": "section-0",
+      "submittedAt": "2026-10-15T05:19:31.958Z",
+      "durationSeconds": 15,
+      "audioFileName": null,
+      "audioUrl": null,
+      "grades": {
+        "raterA": {
+          "rubricVersion": "25pt",
+          "task_achievement": 4,
+          "interactive_communication": 5,
+          "vocabulary": 4,
+          "grammar": 4,
+          "pronunciation_fluency": 4,
+          "total": 21,
+          "maxPossible": 25,
+          "notes": "Excellent tone, strong professional empathy, and accurate modal verb usage.",
+          "gradedAt": "2026-10-15T05:19:31.958Z"
+        }
+      }
+    }
+  ],
+  "progress": {
+    "P-101": {
+      "completedActivities": [
+        "section-0-duringtask-audio",
+        "section-0-posttask",
+        "section-1-pretask-quiz",
+        "section-1-duringtask-audio",
+        "section-1-posttask"
+      ],
+      "badges": [
+        "badge-pre",
+        "badge-1"
+      ]
+    }
+  }
+}

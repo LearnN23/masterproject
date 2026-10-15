@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CallReady: speaking pretest and lessons for IT support English</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎧%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap">
+<style>
+:root{
+  --paper:#EEF2F4; --surface:#FFFFFF; --ink:#16252E; --slate:#51636E; --line:#D3DCE1;
+  --signal:#0A6F6A; --signal-ink:#FFFFFF; --signal-soft:#DDF0EE; --live:#C2362C; --live-soft:#FBE6E3; --amber:#946200; --amber-soft:#FFF1D1;
+  --f-display:"Bricolage Grotesque","IBM Plex Sans Thai",system-ui,sans-serif; --f-body:"IBM Plex Sans Thai",system-ui,-apple-system,"Segoe UI",sans-serif;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0F1A20; --surface:#17262E; --ink:#E7EEF1; --slate:#9DB0BA; --line:#2C404A; --signal:#4FC3BA; --signal-ink:#06201E; --signal-soft:#143A38; --live:#FF7A6E; --live-soft:#3B1D1B; --amber:#F0B54A; --amber-soft:#3A2D10;}}
+:root[data-theme="dark"]{--paper:#0F1A20; --surface:#17262E; --ink:#E7EEF1; --slate:#9DB0BA; --line:#2C404A; --signal:#4FC3BA; --signal-ink:#06201E; --signal-soft:#143A38; --live:#FF7A6E; --live-soft:#3B1D1B; --amber:#F0B54A; --amber-soft:#3A2D10;}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font:400 16px/1.6 var(--f-body);-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--f-display);line-height:1.15;margin:0 0 .5em;letter-spacing:-.01em}
+h1{font-size:clamp(1.7rem,4vw,2.4rem);font-weight:700}
+h3{font-size:1.05rem;margin:1.2em 0 .4em}
+p{margin:.5em 0}
+.sub{color:var(--slate);margin-top:-.2em}
+.hint{color:var(--slate);font-size:.88rem}
+.note{background:var(--amber-soft);color:var(--amber);padding:8px 12px;border-radius:6px;font-size:.88rem}
+code{background:var(--paper);padding:1px 5px;border-radius:4px;font-size:.85em}
+:focus-visible{outline:3px solid var(--signal);outline-offset:2px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:disabled{cursor:not-allowed;opacity:.5}
+
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px clamp(14px,3vw,28px);background:var(--surface);border-bottom:1px solid var(--line)}
+.brand b{font:700 1.25rem var(--f-display);letter-spacing:-.02em;color:var(--signal)}
+.brand span{margin-left:10px;color:var(--slate);font-size:.88rem}
+.topr{display:flex;gap:14px;align-items:center;font-size:.88rem}
+.who{color:var(--slate)}
+.link{background:none;border:0;padding:0;color:var(--signal);text-decoration:underline;font-size:.88rem}
+
+.layout{display:grid;grid-template-columns:270px minmax(0,1fr);gap:clamp(16px,3vw,40px);max-width:1120px;margin:0 auto;padding:24px clamp(14px,3vw,28px) 64px}
+.layout.norail{grid-template-columns:minmax(0,760px)}
+main{min-width:0;max-width:760px}
+.rail{position:sticky;top:16px;align-self:start;font-size:.9rem}
+.railhead{font:600 .8rem var(--f-body);color:var(--slate);margin-bottom:8px}
+.rail ol{list-style:none;margin:0;padding:0;border-left:2px solid var(--line)}
+.rail li button{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;background:none;border:0;padding:7px 8px 7px 0;margin-left:-11px;color:var(--ink)}
+.rail .dot{flex:0 0 20px;height:20px;border-radius:50%;background:var(--surface);border:2px solid var(--line);display:grid;place-items:center;font-size:.7rem;line-height:1}
+.rail li.cur button{font-weight:600}
+.rail li.cur .dot{border-color:var(--signal);background:var(--signal)}
+.rail li.done .dot{background:var(--signal);border-color:var(--signal);color:var(--signal-ink)}
+.rail li.lock button{color:var(--slate)}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px 22px;margin:14px 0}
+.card.soft{background:var(--paper)}
+.btn{display:inline-block;background:var(--signal);color:var(--signal-ink);border:0;border-radius:8px;padding:11px 20px;font-weight:600;margin-top:10px}
+.btn.ghost{background:transparent;color:var(--signal);border:1.5px solid var(--signal)}
+.btn.stop{background:var(--live);color:#fff}
+.mini{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--signal);background:transparent;color:var(--signal);font-size:.8rem;flex:0 0 32px}
+label{display:block;font-weight:500;margin-bottom:4px}
+input[type=text],input:not([type]),textarea{width:100%;font:inherit;padding:10px 12px;border:1.5px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink)}
+textarea{resize:vertical}
+.chk{display:flex;gap:10px;align-items:flex-start;font-weight:400;margin:8px 0}
+.chk input{margin-top:5px;flex:0 0 auto}
+.chk.small{font-size:.88rem;color:var(--slate)}
+.plain{padding-left:1.2em;margin:.6em 0}
+.plain li{margin:.3em 0}
+.steps{padding-left:1.3em}.steps li{margin:.7em 0}
+.toast{background:var(--signal-soft);border-left:4px solid var(--signal);padding:10px 14px;border-radius:6px;margin-bottom:14px}
+.tag{display:inline-block;background:var(--signal-soft);color:var(--signal);padding:2px 10px;border-radius:99px;font-size:.85rem;font-weight:500}
+.chip{display:inline-block;background:var(--paper);border:1px solid var(--line);padding:3px 10px;border-radius:6px;font-size:.88rem;margin:2px 2px 2px 0}
+.btnchip{background:var(--surface);border:1.5px solid var(--signal);color:var(--ink);font-size:.95rem;padding:7px 12px;text-align:left}
+.count{color:var(--slate);font-size:.9rem;font-weight:500}
+
+/* Pretest console */
+.queue{display:flex;gap:6px;margin:8px 0 16px}
+.queue i{flex:1;height:6px;border-radius:3px;background:var(--line)}
+.queue i.d{background:var(--signal)}.queue i.c{background:var(--ink)}
+.console{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.callbar{display:flex;gap:28px;padding:14px 22px;background:var(--ink);color:var(--paper)}
+.callbar small{display:block;opacity:.7;font-size:.78rem}
+.callbar b{font-family:var(--f-display);font-size:1.1rem}
+.setting{padding:16px 22px 0;margin:0;font-size:1.05rem}
+.infocard{margin:14px 22px 0;padding:10px 14px;background:var(--amber-soft);border-radius:8px;color:var(--ink)}
+.infocard small,.todo small{display:block;color:var(--slate);font-weight:600;font-size:.8rem;margin-bottom:2px}
+.todo{margin:14px 22px 0}.todo ul{margin:.2em 0;padding-left:1.2em}
+.ctl{padding:18px 22px 24px;border-top:1px solid var(--line);margin-top:18px}
+.play{display:flex;align-items:center;gap:16px;width:100%;padding:18px 22px;border-radius:12px;border:2px solid var(--signal);background:var(--signal-soft);font-weight:600;font-size:1.05rem;text-align:left}
+.play .bars{display:flex;gap:4px;align-items:center;height:30px}
+.play .bars i{width:5px;height:10px;background:var(--signal);border-radius:3px}
+.play.on .bars i{animation:wave .9s ease-in-out infinite}
+.play.on .bars i:nth-child(2){animation-delay:.12s}.play.on .bars i:nth-child(3){animation-delay:.24s}.play.on .bars i:nth-child(4){animation-delay:.36s}.play.on .bars i:nth-child(5){animation-delay:.48s}
+@keyframes wave{0%,100%{height:8px}50%{height:28px}}
+@media (prefers-reduced-motion:reduce){.play.on .bars i{animation:none;height:20px}}
+.clock{display:flex;align-items:center;gap:18px;padding:6px 0}
+.clock .big{font:700 3rem var(--f-display);font-variant-numeric:tabular-nums;min-width:2.2em}
+.clock.rec .big{color:var(--live)}.clock.sm .big{font-size:1.8rem}
+.live{display:flex;align-items:center;gap:8px;font-weight:600;color:var(--live)}
+.live i{width:12px;height:12px;border-radius:50%;background:var(--live);animation:blink 1.1s infinite}
+@keyframes blink{50%{opacity:.25}}
+@media (prefers-reduced-motion:reduce){.live i{animation:none}}
+audio{width:100%;margin:10px 0}
+
+/* Lessons */
+.tabs{display:flex;gap:2px;flex-wrap:wrap;border-bottom:2px solid var(--line);margin:14px 0 6px}
+.tabs button{background:none;border:0;padding:9px 14px;color:var(--slate);border-bottom:3px solid transparent;margin-bottom:-2px;font-weight:500}
+.tabs button.on{color:var(--ink);border-color:var(--signal);font-weight:600}
+.navrow{display:flex;justify-content:space-between;margin-top:6px}
+.phr,.dlg{list-style:none;padding:0;margin:8px 0}
+.phr li,.dlg li{display:grid;grid-template-columns:1fr auto;gap:2px 12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.phr li small,.dlg li small{grid-column:1/-1;color:var(--slate);font-size:.8rem}
+.dlg li.A span{font-weight:500}
+.dlg li.C span{color:var(--slate)}
+.dlg li.T{background:var(--paper)}
+.quote{display:flex;gap:12px;align-items:center;justify-content:space-between;background:var(--paper);border-left:4px solid var(--ink);padding:12px 16px;border-radius:0 8px 8px 0;margin:10px 0}
+.q{margin:20px 0}
+.opt{display:block;width:100%;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:8px;padding:10px 14px;margin:6px 0}
+.opt:hover:not(:disabled){border-color:var(--signal)}
+.opt.ok{background:var(--signal-soft);border-color:var(--signal);opacity:1}
+.opt.bad{background:var(--live-soft);border-color:var(--live);opacity:1}
+.opt:disabled{opacity:.85}
+.why{padding:8px 12px;border-radius:6px;background:var(--live-soft);font-size:.92rem}
+.why.good{background:var(--signal-soft)}
+.slots{display:grid;gap:6px;margin:8px 0}
+.slot{display:flex;gap:10px;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:8px;padding:8px 12px}
+.slot b{color:var(--signal);min-width:1.2em}
+.slot.ok{border-color:var(--signal);background:var(--signal-soft)}.slot.bad{border-color:var(--live);background:var(--live-soft)}
+.pool{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.lcard{display:flex;flex-direction:column;gap:4px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.lcard b{font-family:var(--f-display)}.lcard small{color:var(--slate)}
+.lcard.done{border-color:var(--signal)}
+.bar{height:8px;background:var(--line);border-radius:4px;overflow:hidden}.bar i{display:block;height:100%;background:var(--signal)}
+.req{list-style:none;padding:0}.req li::before{content:"○ ";color:var(--slate)}.req li.y::before{content:"✓ ";color:var(--signal)}
+.model{background:var(--paper);padding:10px 14px;border-radius:8px}
+details summary{cursor:pointer;font-weight:500;margin:8px 0}
+
+/* Researcher */
+.tbl{width:100%;border-collapse:collapse;font-size:.88rem;margin:10px 0}
+.tbl th,.tbl td{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left;vertical-align:top}
+.up{display:inline-block;border:1.5px solid var(--signal);color:var(--signal);padding:3px 10px;border-radius:6px;cursor:pointer;font-weight:500;font-size:.85rem;margin:0}
+.rate{border-top:1px solid var(--line);padding:6px 0}
+.rgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:8px 0}
+.seg{display:flex;gap:4px}.seg button{flex:1;padding:6px 0;border:1.5px solid var(--line);background:var(--surface);border-radius:6px}.seg button.on{background:var(--signal);color:var(--signal-ink);border-color:var(--signal)}
+.hero{padding-top:6vh}.hero .lead{font-size:1.15rem;max-width:34em}
+
+@media (max-width:820px){
+  .layout{grid-template-columns:minmax(0,1fr)}
+  .rail{position:static}
+  .rail ol{display:flex;gap:6px;overflow-x:auto;border:0;padding-bottom:6px}
+  .rail li{flex:0 0 auto}.rail li button{margin:0;padding:6px 10px;border:1px solid var(--line);border-radius:99px;background:var(--surface);width:auto}
+  .rail .dot{display:none}.rail li.done button::after{content:" ✓"}
+  .railhead{display:none}
+  .brand span{display:none}
+  .callbar{gap:18px}.tbl{display:block;overflow-x:auto}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+/* ===== STUDY CONTENT (edit here; the app reads everything from these objects) ===== */
+const N_ADS = 29;
+const AUDIO_URLS = {}; // optional: { p1: "audio/p1.mp3", ... } when you host your own pre-recorded files
+
+const RUBRIC = [
+  { key: "task", name: "Task completion", what: "Responds to the customer's purpose and covers the required steps.",
+    a4: "All required moves made, fully relevant", a2: "Some moves missing or only partly relevant", a0: "No relevant response" },
+  { key: "clarity", name: "Clarity and organisation", what: "Information and instructions are understandable and in logical order.",
+    a4: "Clear, logically ordered, easy to follow", a2: "Understandable but order or detail unclear", a0: "Cannot be understood" },
+  { key: "interact", name: "Interaction strategies", what: "Asks relevant questions, clarifies, confirms understanding.",
+    a4: "Uses questions and checks naturally", a2: "Few or mechanical checks", a0: "No interaction strategies" },
+  { key: "tone", name: "Professional tone", what: "Polite, customer-appropriate language; handles concerns respectfully.",
+    a4: "Consistently polite and customer-focused", a2: "Mostly polite, some abrupt or flat phrasing", a0: "Impolite or inappropriate" },
+  { key: "lang", name: "Language control", what: "Grammar and vocabulary accurate enough to communicate meaning.",
+    a4: "Errors rare, never block meaning", a2: "Frequent errors, meaning mostly clear", a0: "Errors block meaning" }
+];
+
+const TASKS = {
+  enq:   { name: "Responding to customer enquiries",              f: 29, fns: ["Suggesting solutions", "Confirming understanding", "Requesting repetition", "Closing an interaction politely"] },
+  clar:  { name: "Identifying and clarifying technical problems", f: 29, fns: ["Asking for information", "Asking clarifying questions", "Describing symptoms or errors"] },
+  expl:  { name: "Explaining technical information",              f: 29, fns: ["Explaining technical problems", "Confirming understanding"] },
+  instr: { name: "Giving instructions or guidance",               f: 29, fns: ["Giving instructions", "Checking whether a solution works"] },
+  comp:  { name: "Handling customer complaints",                  f: 29, fns: ["Apologizing and responding to complaints", "Reassuring customers"] },
+  esc:   { name: "Escalating unresolved cases",                   f: 29, fns: ["Escalating cases", "Reassuring customers"] },
+  coord: { name: "Coordinating with internal teams",              f: 29, fns: ["Requesting assistance", "Reporting problems"] },
+  doc:   { name: "Documenting cases or updating tickets",         f: 29, fns: ["Summarizing and documenting information"] }
+};
+
+/* ---- Speaking pretest: one simulated call per lesson task ---- */
+const PRETEST = [
+  { id: "p1", task: "enq", caller: "Ms Aisyah", channel: "Phone", voice: { pitch: 1.15, rate: 0.92 },
+    setting: "You are a support agent at Brightlink, a broadband and IT service company. A new customer calls.",
+    script: "Hello, good morning. I'm calling about your broadband plans. I saw an advertisement for a new fibre package, and I'd like to know the price and whether it's available in my area.",
+    todo: ["Open the call politely", "Respond to the enquiry (you do not need exact prices)", "Ask for the information you need", "Close politely"] },
+  { id: "p2", task: "clar", caller: "Mr Tan", channel: "Phone", voice: { pitch: 0.85, rate: 0.95 },
+    setting: "A customer calls about a laptop problem. He is not sure what is wrong.",
+    script: "Hi. My laptop has not been working properly since yesterday. It is very slow and sometimes the screen just goes black. I don't know what the problem is.",
+    todo: ["Ask at least three clarifying questions", "Confirm what you understand about the problem"] },
+  { id: "p3", task: "expl", caller: "Ms Priya", channel: "Live chat (voice note)", voice: { pitch: 1.1, rate: 0.9 },
+    setting: "A customer is not confident with technology and has sent a voice note.",
+    script: "I got an error message that says, DNS server not responding. What does that actually mean? I'm not very good with computers, so please explain it simply.",
+    todo: ["Explain the problem in plain language", "Avoid unexplained technical terms", "Check that the customer understands"] },
+  { id: "p4", task: "instr", caller: "Mr Hafiz", channel: "Phone", voice: { pitch: 0.9, rate: 0.93 },
+    setting: "A customer wants to reset his email password. Assume he has the login page open.",
+    script: "Okay, so I want to reset my email password, but I can't find where to do it. Can you guide me, please?",
+    todo: ["Give clear steps in order (at least four)", "Use sequencing language", "Check whether each step worked"] },
+  { id: "p5", task: "comp", caller: "Mrs Lim", channel: "Phone", voice: { pitch: 1.0, rate: 1.05 },
+    setting: "A customer is angry. This is her third call about the same internet outage.",
+    script: "This is the third time I'm calling! My internet has been down for two days and nobody has fixed it. I work from home and I'm losing money. I'm really frustrated!",
+    todo: ["Acknowledge the problem and apologise", "Show you understand how she feels", "Say what you will do next", "Reassure her"] },
+  { id: "p6", task: "esc", caller: "Mr Daniel Wong", channel: "Phone", voice: { pitch: 0.88, rate: 0.95 },
+    setting: "You restarted the router with the customer and checked the cables. The fault is still there. You must escalate to the Tier-2 technical team.",
+    script: "I've already restarted the router like you said, and the light is still red. So what else can we do?",
+    info: "Case reference: BL-48210. Tier-2 will call back within 24 hours.",
+    todo: ["Tell the customer you are escalating the case, and why", "Explain what happens next and when", "Give the reference number", "Check the customer is happy with this"] },
+  { id: "p7", task: "coord", caller: "Mr Lim", channel: "Phone", voice: { pitch: 0.92, rate: 0.93 },
+    setting: "You have just spoken to the logistics team about this customer's replacement modem. The customer calls back for an update.",
+    script: "Hello, it's Mr Lim again. Did you speak to your logistics team? I'd like to know what they said about my replacement modem.",
+    info: "Logistics said: the modem was shipped today. It arrives in two working days. Tracking number: MY-70231.",
+    todo: ["Report what the internal team told you", "Give the delivery details clearly", "Offer further help"] },
+  { id: "p8", task: "doc", caller: "Ms Nurul", channel: "Phone", voice: { pitch: 1.12, rate: 0.94 },
+    setting: "You have fixed a customer's Wi-Fi problem by changing the channel on her router. Before she hangs up, she asks about your records.",
+    script: "Thank you, it's working now. Before I go, could you tell me exactly what you are going to write in my case record, so I know it's correct?",
+    info: "Your notes: Wi-Fi dropping every evening. Router restarted, no change. Changed Wi-Fi channel from 11 to 6. Connection stable. No further action.",
+    todo: ["Summarise the issue", "Say what you did", "State the outcome and next step"] }
+];
+
+/* ---- Lessons: sequenced as the stages of a real support interaction ---- */
+const LESSONS = [
+  { n: 1, task: "enq", title: "Opening, answering and closing an enquiry",
+    why: "Every one of the 29 advertisements asks for staff who respond to customer enquiries, so this is where the call begins.",
+    outcomes: ["Open a call in a professional, friendly way", "Respond to a general enquiry and offer a next step", "Ask a customer to repeat, and close politely"],
+    phrases: [
+      ["Opening", "Thank you for calling Brightlink Support. How may I assist you today?"],
+      ["Responding", "I'd be happy to help you with that."],
+      ["Asking for details", "May I have your name and account number, please?"],
+      ["Requesting repetition", "Sorry, could you repeat that more slowly, please?"],
+      ["Suggesting a solution", "One option is to upgrade to our fibre plan."],
+      ["Closing", "Is there anything else I can help you with today?"],
+      ["Closing", "Thank you for contacting us. Have a good day."] ],
+    dialogue: [
+      ["C", "Hello? Is this the support line?"],
+      ["A", "Yes, it is. Thank you for calling Brightlink Support. How may I assist you today?"],
+      ["C", "I'd like to change my broadband plan, but I'm not sure which one is suitable."],
+      ["A", "I'd be happy to help you with that. May I have your name and account number, please?"],
+      ["C", "It's Aisyah Rahman, and the number is 4 4 7 0 2 1."],
+      ["A", "Thank you, Ms Rahman. One option is to upgrade to our fibre plan. Is there anything else I can help you with today?"] ],
+    mcq: [
+      { q: "A customer says only, \"Hello?\" Which is the best way to open the call?",
+        o: ["Yes? What do you want?", "Thank you for calling Brightlink Support. How may I assist you today?", "Hello. Tell me your problem.", "Please wait."], a: 1,
+        why: "It names the company, thanks the caller and invites them to explain. The other options sound abrupt." },
+      { q: "You could not hear the customer's account number. What should you say?",
+        o: ["What? Again.", "Your voice is bad.", "Sorry, could you repeat that more slowly, please?", "I can't hear. Call again."], a: 2,
+        why: "A polite apology plus a clear request keeps the customer comfortable and gets the information you need." } ],
+    order: { prompt: "Put the stages of a customer enquiry in order.",
+      steps: ["Greet the customer and offer help", "Listen to the enquiry", "Ask for the details you need", "Answer and suggest an option", "Ask if there is anything else", "Close the call politely"] },
+    speak: { customer: "Hi, I'm thinking of changing my internet plan. Can you tell me about your options?",
+      checklist: ["I opened the call politely", "I asked for at least one detail", "I suggested an option", "I offered more help and closed politely"],
+      model: "Thank you for calling Brightlink Support. I'd be happy to help. May I have your name and your current plan, please? ... One option is our fibre plan, which is faster. Is there anything else I can help you with today? Thank you for calling." } },
+
+  { n: 2, task: "clar", title: "Finding the real problem",
+    why: "Identifying and clarifying technical problems appears in all 29 advertisements. Customers rarely describe a fault clearly, so good questions come first.",
+    outcomes: ["Ask open and closed questions to find the cause", "Understand customers' descriptions of symptoms", "Confirm the problem before acting"],
+    phrases: [
+      ["Open question", "Could you tell me exactly what happens when you try to connect?"],
+      ["Timing", "When did the problem start?"],
+      ["Error message", "Are you seeing any error message on the screen?"],
+      ["Previous steps", "What have you tried so far?"],
+      ["Scope", "Is the problem on one device, or on all your devices?"],
+      ["Confirming", "Just to confirm, the Wi-Fi drops every evening. Is that right?"],
+      ["Summarising", "Let me make sure I understand. You can connect, but the pages load very slowly."] ],
+    dialogue: [
+      ["C", "My Wi-Fi isn't working."],
+      ["A", "I'm sorry to hear that. Could you tell me exactly what happens when you try to connect?"],
+      ["C", "My phone connects, but there's no internet."],
+      ["A", "I see. Is the problem on one device, or on all your devices?"],
+      ["C", "My laptop has the same problem."],
+      ["A", "Just to confirm, both devices connect to the Wi-Fi but cannot open any websites. Is that right?"] ],
+    mcq: [
+      { q: "The customer says: \"My Wi-Fi is not working.\" Which is the best next question?",
+        o: ["Why did you break it?", "Restart it.", "Are you connected by Wi-Fi or by cable, and is any other device affected?", "Is it your fault?"], a: 2,
+        why: "It narrows the problem down with two specific questions. The others blame the customer or skip the diagnosis." },
+      { q: "Which sentence confirms understanding best?",
+        o: ["OK.", "Let me make sure I understand. The screen goes black after about ten minutes. Is that right?", "You said something about a screen.", "Anyway, I'll check."], a: 1,
+        why: "It repeats the key detail in your own words and invites the customer to correct you." } ],
+    order: { prompt: "Put these clarifying questions in a sensible order.",
+      steps: ["Could you tell me what happens exactly?", "When did the problem start?", "Are you seeing any error message?", "What have you tried so far?", "Let me make sure I understand. Is that right?"] },
+    speak: { customer: "My computer is very slow today and I can't do my work. I don't know why.",
+      checklist: ["I asked at least three questions", "I used polite question forms", "I confirmed the problem in my own words"],
+      model: "I'm sorry to hear that. When did it start being slow? Are you seeing any error message? What have you tried so far? ... Just to confirm, the computer has been slow since this morning and you have not restarted it. Is that right?" } },
+
+  { n: 3, task: "expl", title: "Explaining technical ideas in plain language",
+    why: "Explaining technical information is required in all 29 advertisements. Customers need an answer they can understand, not a list of terms.",
+    outcomes: ["Replace technical terms with simple words", "Explain what a problem means for the customer", "Check understanding without sounding patronising"],
+    phrases: [
+      ["Simple terms", "In simple terms, it means your computer cannot find the website."],
+      ["Comparison", "Think of it like a phone book for the internet."],
+      ["Reason", "The reason is that the connection to the server was interrupted."],
+      ["Meaning", "This means that the problem is not caused by your computer."],
+      ["Rephrasing", "Let me put it another way."],
+      ["Checking", "Does that make sense so far?"],
+      ["Inviting questions", "Please tell me if anything is unclear."] ],
+    dialogue: [
+      ["C", "It says DNS server not responding. What does that mean?"],
+      ["A", "In simple terms, DNS works like a phone book for the internet. It turns a website name into an address."],
+      ["C", "So what is wrong?"],
+      ["A", "The reason is that your computer cannot reach that phone book right now. This means the problem is usually the connection, not your computer."],
+      ["C", "I see. Can it be fixed?"],
+      ["A", "Yes. Does that make sense so far? If so, I'll guide you through the fix."] ],
+    mcq: [
+      { q: "Which is the best plain-language explanation of \"bandwidth\" for a non-technical customer?",
+        o: ["The throughput capacity of your WAN link.", "It's how much data your connection can carry at one time, like the width of a road.", "Bandwidth is bandwidth.", "It's a network parameter."], a: 1,
+        why: "It uses a familiar comparison and no extra jargon." },
+      { q: "You said \"The router is not handing out IP addresses.\" The customer looks confused. What next?",
+        o: ["Repeat it louder.", "Let me put it another way. The router is not giving your devices permission to use the internet.", "That is basic.", "Please read the manual."], a: 1,
+        why: "Rephrasing in simpler words repairs the misunderstanding without blaming the customer." } ],
+    order: { prompt: "Put the parts of a clear explanation in order.",
+      steps: ["Say what the term or problem is, in simple words", "Give a familiar comparison", "Explain what it means for the customer", "Say what happens next", "Check understanding"] },
+    speak: { customer: "My screen says, no secure connection. Is that dangerous? Please explain, I don't understand.",
+      checklist: ["I used simple words", "I gave a comparison or example", "I said what it means for the customer", "I checked understanding"],
+      model: "In simple terms, it means the website is not proving that it is safe. Think of it like a shop without a licence on the wall. This means you should not enter any passwords on that page. Does that make sense so far?" } },
+
+  { n: 4, task: "instr", title: "Guiding a customer step by step",
+    why: "Giving instructions or guidance is in all 29 advertisements. On the phone the customer cannot see your screen, so every step must be clear and checked.",
+    outcomes: ["Give spoken instructions in a clear sequence", "Use sequencing words and polite imperatives", "Check whether each step worked"],
+    phrases: [
+      ["First step", "First, please open the login page."],
+      ["Next step", "Then click on Forgot password."],
+      ["Sequencing", "After that, enter your email address."],
+      ["Final step", "Finally, create a new password."],
+      ["Checking the screen", "Do you see the blue button on the right?"],
+      ["Waiting", "Let me know when you're there."],
+      ["Checking the result", "Has that fixed the problem?"] ],
+    dialogue: [
+      ["C", "I want to reset my email password, but I can't find where to do it."],
+      ["A", "No problem. First, please open the login page. Let me know when you're there."],
+      ["C", "Okay, I'm there."],
+      ["A", "Then click on Forgot password. It's under the Sign in button. Do you see it?"],
+      ["C", "Yes, I see it."],
+      ["A", "After that, enter your email address. Finally, check your inbox for the link. Has that worked?"] ],
+    mcq: [
+      { q: "Which instruction is the clearest for a customer on the phone?",
+        o: ["Just reset it in the settings thing.", "First, please click the gear icon in the top right corner. Then select Settings.", "Do the usual steps.", "It's easy, you'll find it."], a: 1,
+        why: "It gives one action at a time with a sequencing word and a clear location." },
+      { q: "After giving a step, what should you do?",
+        o: ["Immediately give the next three steps.", "Say nothing and wait.", "Check: Do you see the new window? Let me know when you're ready.", "Hang up."], a: 2,
+        why: "A check stops the customer from getting lost and shows you where they are." } ],
+    order: { prompt: "Put these password-reset steps in the correct order.",
+      steps: ["Open the login page", "Click on Forgot password", "Enter your email address", "Open the link in your inbox", "Create a new password"] },
+    speak: { customer: "My Wi-Fi password is wrong and I can't log in on my phone. Can you tell me how to find the right one?",
+      checklist: ["I gave at least four steps in order", "I used first, then, after that, finally", "I checked at least once if it worked"],
+      model: "Of course. First, please look at the sticker on the back of your router. Then find the line that says Wi-Fi password. After that, type it into your phone exactly as written. Let me know when you've done that. Has it connected now?" } },
+
+  { n: 5, task: "comp", title: "Calming an upset customer",
+    why: "Handling complaints appears in all 29 advertisements, and apologising or responding to complaints is stated outright in 27 of them (93.1%).",
+    outcomes: ["Acknowledge a complaint and apologise sincerely", "Show empathy and avoid defensive language", "Explain what you will do and give reassurance"],
+    phrases: [
+      ["Apology", "I'm really sorry for the inconvenience."],
+      ["Empathy", "I understand how frustrating this must be."],
+      ["Taking ownership", "Let me look into this right away."],
+      ["Action", "Here's what I'm going to do."],
+      ["Follow-up", "I will personally check on this by tomorrow morning."],
+      ["Reassuring", "Rest assured, we are working on it."],
+      ["Thanking", "Thank you for your patience."] ],
+    dialogue: [
+      ["C", "This is the third time I'm calling! My internet is still down!"],
+      ["A", "I'm really sorry for the inconvenience, and I understand how frustrating this must be."],
+      ["C", "I work from home. I'm losing money every day."],
+      ["A", "Thank you for telling me. Let me look into this right away. Here's what I'm going to do. I'll check your line now."],
+      ["C", "And if it's not fixed?"],
+      ["A", "Then I will arrange a technician visit, and I'll personally call you by tomorrow morning. Rest assured, we are working on it."] ],
+    mcq: [
+      { q: "An angry customer says, \"Nobody has helped me!\" Which response is best?",
+        o: ["That's not my department.", "Calm down, please.", "I'm really sorry for that. Let me look into this right away.", "You should have called earlier."], a: 2,
+        why: "It apologises, takes ownership and promises action. The others are defensive or blame the customer." },
+      { q: "Which sentence gives a clear next step?",
+        o: ["We'll see.", "Hopefully someone will call you.", "I will arrange a technician visit and call you by tomorrow morning.", "It depends."], a: 2,
+        why: "It names the action, the person responsible and the time." } ],
+    order: { prompt: "Put the steps of handling a complaint in order.",
+      steps: ["Listen without interrupting", "Acknowledge the feeling and apologise", "Ask the questions you need", "Explain what you will do", "Give a time frame", "Thank the customer for their patience"] },
+    speak: { customer: "I've been waiting a week for my refund and nobody has told me anything. This is unacceptable!",
+      checklist: ["I apologised", "I showed I understood the feeling", "I said exactly what I will do", "I gave a time frame or reassurance"],
+      model: "I'm really sorry for the delay, and I understand how frustrating that is. Let me look into this right away. Here's what I'm going to do. I'll check the refund status now and call you back today by 5 p.m. Thank you for your patience." } },
+
+  { n: 6, task: "esc", title: "Escalating a case to the customer",
+    why: "Escalating unresolved cases is in all 29 advertisements, and escalating cases is stated outright in 27 of them (93.1%). The customer needs to know what is happening and why.",
+    outcomes: ["Explain that you are escalating, and why", "Set clear expectations about next steps and time", "Reassure the customer that they will not need to repeat themselves"],
+    phrases: [
+      ["Announcing", "I'm going to escalate this to our Tier-2 technical team."],
+      ["Reason", "They have specialist tools that can resolve this."],
+      ["Reference", "Your case reference number is BL-48210."],
+      ["Time", "You can expect a call within 24 hours."],
+      ["Reassuring", "I've noted everything, so you won't need to repeat yourself."],
+      ["Checking", "Is that acceptable to you?"],
+      ["Contact", "If you don't hear from us, please call and quote this number."] ],
+    dialogue: [
+      ["C", "I restarted the router and the light is still red. What else can we do?"],
+      ["A", "Thank you for trying that. Unfortunately I can't fix this from my side, so I'm going to escalate it to our Tier-2 technical team."],
+      ["C", "What will they do?"],
+      ["A", "They have specialist tools that can check your line. Your case reference number is BL-48210."],
+      ["C", "When will they call?"],
+      ["A", "You can expect a call within 24 hours. I've noted everything, so you won't need to repeat yourself. Is that acceptable to you?"] ],
+    mcq: [
+      { q: "Which statement explains an escalation best?",
+        o: ["I can't help, sorry. Bye.", "I'll pass you to someone else.", "I'm going to escalate this to our Tier-2 team, because they have specialist tools to fix it.", "Somebody will contact you maybe."], a: 2,
+        why: "It says what, who and why." },
+      { q: "What reassurance is most useful after escalating?",
+        o: ["Don't worry about it.", "I've noted everything, so you won't need to repeat yourself.", "That's normal.", "You'll see."], a: 1,
+        why: "It addresses the customer's real concern: having to explain the problem again." } ],
+    order: { prompt: "Put the parts of an escalation in order.",
+      steps: ["Thank the customer for what they tried", "Say you are escalating, and to whom", "Explain why", "Give the reference number", "Say when they will hear back", "Check the customer is happy"] },
+    speak: { customer: "I've done everything you asked and it still doesn't work. What happens now?",
+      checklist: ["I said I am escalating, and why", "I gave a time frame", "I mentioned a reference number", "I checked the customer was happy"],
+      model: "Thank you for trying all of that. I'm going to escalate this to our Tier-2 team, because they have specialist tools to fix it. Your reference number is BL-48210, and you can expect a call within 24 hours. Is that acceptable to you?" } },
+
+  { n: 7, task: "coord", title: "Working with other teams",
+    why: "Coordinating with internal teams is in all 29 advertisements. Colleagues are busy, so internal calls must be short, specific and polite.",
+    outcomes: ["Request help from a colleague clearly", "Report a problem and what you already tried", "Relay a colleague's answer back to the customer"],
+    phrases: [
+      ["Asking for help", "Could you help me with a case, please?"],
+      ["Reporting", "The customer reports that the router light stays red."],
+      ["Steps tried", "I've already restarted the router and checked the cables."],
+      ["Request", "Could you check the delivery status for this order?"],
+      ["Deadline", "Could you let me know by 3 p.m.?"],
+      ["Thanking", "Thanks for your support."],
+      ["Relaying to a customer", "I've spoken to our logistics team, and they confirmed that your modem was shipped today."] ],
+    dialogue: [
+      ["A", "Hi Daniel, could you help me with a case, please?"],
+      ["T", "Sure. What's the issue?"],
+      ["A", "The customer reports that the router light stays red. I've already restarted the router and checked the cables."],
+      ["T", "Okay. What do you need from me?"],
+      ["A", "Could you check the line from your side? Could you let me know by 3 p.m.?"],
+      ["T", "No problem. I'll update the ticket."] ],
+    mcq: [
+      { q: "Which is the best way to ask a colleague for help?",
+        o: ["You, do this now.", "Could you check the delivery status for order 5521, please? I need it by 3 p.m.", "Why is nobody helping?", "Check it."], a: 1,
+        why: "It is specific (what, which order, by when) and polite." },
+      { q: "A colleague tells you the modem was shipped today. How do you tell the customer?",
+        o: ["They said it's shipped.", "I've spoken to our logistics team, and they confirmed that your modem was shipped today.", "It is not my problem.", "Maybe it is shipped."], a: 1,
+        why: "It names the source, reports the fact clearly and sounds professional." } ],
+    order: { prompt: "Put the parts of a spoken handover in order.",
+      steps: ["Greet and say why you are calling", "Describe the problem", "Say what you have already tried", "Make your request", "Agree on a deadline", "Thank your colleague"] },
+    speak: { customer: "Hello, it's Mr Lim. Did you speak to your team about my replacement modem? What did they say?",
+      checklist: ["I said who I spoke to", "I reported the facts clearly (shipped, arrival time)", "I offered further help"],
+      model: "Hello Mr Lim. Yes, I've spoken to our logistics team, and they confirmed that your modem was shipped today. It will arrive in two working days, and the tracking number is MY-70231. Is there anything else I can help you with?" } },
+
+  { n: 8, task: "doc", title: "Summarising and recording the case",
+    why: "Documenting cases and updating tickets is in all 29 advertisements, and summarising and documenting information is stated outright in every one (100%). A good summary also helps you report the case aloud.",
+    outcomes: ["Summarise a case in four moves: issue, action, outcome, next step", "Write concise ticket notes in the past tense", "Give an oral summary of what you recorded"],
+    phrases: [
+      ["Issue", "Customer reported that the Wi-Fi drops every evening."],
+      ["Action", "Restarted the router. No change."],
+      ["Action", "Changed the Wi-Fi channel from 11 to 6."],
+      ["Outcome", "Connection stable after the change."],
+      ["Next step", "No further action needed. Customer to contact us if it recurs."],
+      ["Oral summary", "To summarise, the problem was the Wi-Fi channel, and it is now fixed."],
+      ["Confirming", "Is that correct?"] ],
+    dialogue: [
+      ["C", "It's working now. What are you going to write in my record?"],
+      ["A", "I'll note that you reported the Wi-Fi dropping every evening."],
+      ["A", "I'll also note that I restarted the router, with no change, and then changed the Wi-Fi channel from 11 to 6."],
+      ["C", "And the result?"],
+      ["A", "The connection is now stable, and no further action is needed. To summarise, the problem was the Wi-Fi channel and it is now fixed. Is that correct?"],
+      ["C", "Yes, thank you."] ],
+    mcq: [
+      { q: "Which ticket note is best?",
+        o: ["The customer was very angry and the Wi-Fi was bad.", "Customer reported Wi-Fi dropping every evening. Restarted router, no change. Changed channel 11 to 6. Stable. No further action.", "Fixed it.", "I think the router might possibly be having some kind of difficulty maybe."], a: 1,
+        why: "It is short, factual, in the past tense and covers issue, action, outcome and next step." },
+      { q: "Which part of a ticket note tells the next agent what to do?",
+        o: ["The customer's name", "The next step", "The greeting", "The date format"], a: 1,
+        why: "The next step is what lets a colleague continue the case without asking the customer again." } ],
+    order: { prompt: "Put the parts of a case summary in order.",
+      steps: ["Issue the customer reported", "Checks and actions taken", "Result of those actions", "Next step or follow-up"] },
+    speak: { customer: "Thanks for your help. Can you quickly tell me what you recorded about my problem?",
+      checklist: ["I stated the issue", "I said what I did", "I gave the outcome", "I gave the next step"],
+      model: "Of course. I recorded that you reported your laptop freezing at start-up. I updated the software and restarted it twice. The laptop now starts normally. No further action is needed, but please contact us if it happens again." } }
+];
+
+/* ===== CallReady app ===== */
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const fmt = s => String(Math.floor(s / 60)).padStart(2, "0") + ":" + String(Math.floor(s % 60)).padStart(2, "0");
+
+/* ---------- storage (all wrapped: storage can be empty or blocked) ---------- */
+const LS = {
+  get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* ignore */ } }
+};
+let dbp = null;
+function idb() {
+  if (dbp) return dbp;
+  dbp = new Promise(res => {
+    try {
+      const rq = indexedDB.open("callready", 1);
+      rq.onupgradeneeded = () => { rq.result.createObjectStore("kv"); };
+      rq.onsuccess = () => res(rq.result);
+      rq.onerror = () => res(null);
+    } catch (e) { res(null); }
+  });
+  return dbp;
+}
+const memStore = {};
+async function kvGet(k) {
+  const db = await idb(); if (!db) return memStore[k] || null;
+  return new Promise(res => { try { const r = db.transaction("kv").objectStore("kv").get(k); r.onsuccess = () => res(r.result || memStore[k] || null); r.onerror = () => res(memStore[k] || null); } catch (e) { res(memStore[k] || null); } });
+}
+async function kvSet(k, v) {
+  memStore[k] = v;
+  const db = await idb(); if (!db) return;
+  return new Promise(res => { try { const tx = db.transaction("kv", "readwrite"); tx.objectStore("kv").put(v, k); tx.oncomplete = () => res(true); tx.onerror = () => res(false); } catch (e) { res(false); } });
+}
+
+/* ---------- state ---------- */
+const blankState = pid => ({ pid, consent: false, micOk: false, view: "consent", pre: { idx: 0, done: false, items: {} }, les: {}, createdAt: new Date().toISOString() });
+let S = null;
+const U = { lessonStep: 0, mode: "participant", rtab: "audio", rater: { id: "", pkgs: [], scores: {} }, busy: false, msg: "" };
+const save = () => { if (S) LS.set("cr_state_" + S.pid, JSON.stringify(S)); };
+const lessonState = n => (S.les[n] = S.les[n] || { mcq: {}, order: null, reflect: "", rec: false, speakChecks: [], done: false, openedAt: Date.now() });
+const lessonDone = n => !!(S.les[n] && S.les[n].done);
+const lessonUnlocked = n => n === 1 || lessonDone(n - 1);
+const doneCount = () => LESSONS.filter(l => lessonDone(l.n)).length;
+
+/* ---------- audio: prompts, TTS, recording ---------- */
+let curAudio = null, curUtter = null;
+function stopSpeech() { try { speechSynthesis.cancel(); } catch (e) { /* none */ } if (curAudio) { try { curAudio.pause(); } catch (e) { /* none */ } curAudio = null; } }
+function pickVoice() {
+  try {
+    const vs = speechSynthesis.getVoices().filter(v => /^en/i.test(v.lang));
+    return vs.find(v => /en-(MY|SG|GB)/i.test(v.lang)) || vs.find(v => /en-US/i.test(v.lang)) || vs[0] || null;
+  } catch (e) { return null; }
+}
+function speakText(text, voice = {}) {
+  return new Promise(res => {
+    stopSpeech();
+    try {
+      const u = new SpeechSynthesisUtterance(text); curUtter = u;
+      const v = pickVoice(); if (v) { u.voice = v; u.lang = v.lang; } else u.lang = "en-US";
+      u.pitch = voice.pitch || 1; u.rate = voice.rate || 0.95;
+      u.onend = () => res(true); u.onerror = () => res(false);
+      speechSynthesis.speak(u);
+    } catch (e) { res(false); }
+  });
+}
+async function playBlobUrl(url) {
+  return new Promise(res => { stopSpeech(); const a = new Audio(url); curAudio = a; a.onended = () => res(true); a.onerror = () => res(false); a.play().catch(() => res(false)); });
+}
+/* A pre-recorded prompt (uploaded by researcher in this browser, or hosted via AUDIO_URLS) wins over the browser voice. */
+async function promptSource(item) {
+  if (AUDIO_URLS[item.id]) return { type: "url", url: AUDIO_URLS[item.id] };
+  const rec = await kvGet("prompt_" + item.id);
+  if (rec && rec.blob) return { type: "blob", url: URL.createObjectURL(rec.blob) };
+  return { type: "tts" };
+}
+async function playPrompt(item) {
+  const src = await promptSource(item);
+  if (src.type === "tts") return speakText(item.script, item.voice);
+  return playBlobUrl(src.url);
+}
+function beep() {
+  try { const c = new (window.AudioContext || window.webkitAudioContext)(); const o = c.createOscillator(); const g = c.createGain(); o.frequency.value = 880; g.gain.value = 0.15; o.connect(g); g.connect(c.destination); o.start(); setTimeout(() => { o.stop(); c.close(); }, 220); } catch (e) { /* ignore */ }
+}
+const REC = { stream: null, mr: null, chunks: [], timer: null, t0: 0 };
+async function ensureMic() {
+  if (REC.stream && REC.stream.active) return true;
+  try { REC.stream = await navigator.mediaDevices.getUserMedia({ audio: true }); return true; } catch (e) { return false; }
+}
+function bestMime() {
+  const c = ["audio/webm;codecs=opus", "audio/webm", "audio/mp4", "audio/ogg;codecs=opus"];
+  try { return c.find(m => MediaRecorder.isTypeSupported(m)) || ""; } catch (e) { return ""; }
+}
+function startRecording() {
+  REC.chunks = [];
+  const mime = bestMime();
+  REC.mr = mime ? new MediaRecorder(REC.stream, { mimeType: mime }) : new MediaRecorder(REC.stream);
+  REC.mr.ondataavailable = e => { if (e.data && e.data.size) REC.chunks.push(e.data); };
+  REC.t0 = Date.now(); REC.mr.start();
+}
+function stopRecording() {
+  return new Promise(res => {
+    if (!REC.mr || REC.mr.state === "inactive") return res(null);
+    REC.mr.onstop = () => { const type = REC.mr.mimeType || "audio/webm"; res({ blob: new Blob(REC.chunks, { type }), mime: type, sec: Math.round((Date.now() - REC.t0) / 100) / 10 }); };
+    REC.mr.stop();
+  });
+}
+const blobToB64 = b => new Promise(res => { const r = new FileReader(); r.onload = () => res(String(r.result).split(",")[1]); r.readAsDataURL(b); });
+const b64ToBlob = (b64, mime) => { const bin = atob(b64); const u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); return new Blob([u], { type: mime }); };
+
+/* ---------- downloads (viewer-confirmed; may be unavailable) ---------- */
+let downloadsNs = null;
+(async () => { try { downloadsNs = await claude.use("downloads"); } catch (e) { downloadsNs = null; } render(); })();
+async function saveFile(filename, data) {
+  if (!downloadsNs) { U.msg = "Saving files is not available in this view. Open the page in the Claude app or browser where downloads are enabled."; render(); return false; }
+  try { await downloadsNs.save({ filename, data }); U.msg = "Saved: " + filename; render(); return true; }
+  catch (e) { U.msg = e && e.code === "declined" ? "Save cancelled." : "Could not save the file (" + ((e && e.code) || "error") + ")."; render(); return false; }
+}
+
+/* ---------- small UI helpers ---------- */
+const stageOf = () => {
+  if (!S) return "welcome";
+  if (S.view === "consent" || S.view === "setup") return "setup";
+  if (S.view.startsWith("pre")) return "pre";
+  if (S.view === "lesson") return "L" + U.lesson;
+  if (S.view === "finish") return "finish";
+  return "home";
+};
+function rail() {
+  if (!S) return "";
+  const st = stageOf();
+  const preDone = S.pre.done;
+  const items = [
+    ["setup", "Consent and setup", true, S.consent && S.micOk !== null],
+    ["pre", "Speaking pretest", S.consent, preDone],
+    ...LESSONS.map(l => ["L" + l.n, "Lesson " + l.n + ". " + TASKS[l.task].name, preDone && lessonUnlocked(l.n), lessonDone(l.n)]),
+    ["finish", "Finish and export", preDone, false]
+  ];
+  return `<nav class="rail" aria-label="Course route"><div class="railhead">Route</div><ol>` + items.map(([k, label, open, done]) =>
+    `<li class="${st === k ? "cur" : ""} ${open ? "" : "lock"} ${done ? "done" : ""}"><button ${open ? "" : "disabled"} data-act="goto" data-k="${k}"><span class="dot">${done ? "✓" : open ? "" : "·"}</span><span>${esc(label)}</span></button></li>`).join("") + `</ol></nav>`;
+}
+function shell(inner, opts = {}) {
+  const who = S ? `<span class="who">Participant ${esc(S.pid)}</span>` : "";
+  return `<header class="top"><div class="brand"><b>CallReady</b><span>English for IT support calls</span></div><div class="topr">${who}<button class="link" data-act="${U.mode === "researcher" ? "exitres" : "res"}">${U.mode === "researcher" ? "Exit researcher tools" : "Researcher tools"}</button></div></header>
+  <div class="layout ${opts.norail ? "norail" : ""}">${opts.norail ? "" : rail()}<main id="main">${U.msg ? `<div class="toast" role="status">${esc(U.msg)}</div>` : ""}${inner}</main></div>`;
+}
+const taskTag = t => { const k = TASKS[t]; return `<span class="tag">${k.f}/${N_ADS} ads · ${(k.f / N_ADS * 100).toFixed(1)}%</span>`; };
+
+/* ---------- views ---------- */
+function vWelcome() {
+  return shell(`<section class="hero"><h1>Speaking test for online technical support</h1>
+  <p class="lead">You will hear customers and answer as the support agent. Then you will work through eight short lessons, in the order a real call happens.</p>
+  <div class="card"><label for="pid">Participant code</label><input id="pid" autocomplete="off" placeholder="e.g. P017" maxlength="20"><p class="hint">Use the code your researcher gave you. Do not enter your name.</p>
+  <button class="btn" data-act="begin">Continue</button></div>
+  <p class="hint">Prototype for a thesis study. Designed for headphones, a quiet room and a laptop or phone with a microphone.</p></section>`, { norail: true });
+}
+function vConsent() {
+  return shell(`<h1>Before you start</h1>
+  <div class="card"><p class="note">Placeholder wording. Replace with the text approved by your ethics committee before any data collection.</p>
+  <ul class="plain"><li>This study looks at how a speaking test and a short online module help students prepare for English in IT support jobs.</li>
+  <li>Taking part is voluntary. You may stop at any time.</li>
+  <li>Your spoken answers are recorded. They are kept on this device and are shared with the researcher only when you press the export button at the end.</li>
+  <li>The test measures English for work. It does not affect your course grade. Your answers are linked to your participant code, not your name.</li></ul>
+  <label class="chk"><input type="checkbox" id="cons" ${S.consent ? "checked" : ""}> I have read this and I agree to take part.</label></div>
+  <button class="btn" data-act="consent">Agree and continue</button>`, { norail: false });
+}
+function vSetup() {
+  return shell(`<h1>Check your sound and microphone</h1>
+  <div class="card"><ol class="steps"><li><button class="btn ghost" data-act="soundtest">Play a test sound</button> <span class="hint">You should hear a voice saying "This is a sound check."</span></li>
+  <li><button class="btn ghost" data-act="mictest">Allow microphone</button> <span id="micstate" class="hint">${S.micOk ? "Microphone is ready." : "Your browser will ask for permission."}</span></li></ol>
+  <p class="hint">If the microphone does not work, you can still continue. In the test you will be asked to upload an audio file of your answer instead.</p></div>
+  <button class="btn" data-act="tointro">Continue to the pretest</button>`);
+}
+function vPreIntro() {
+  return shell(`<h1>Speaking pretest</h1>
+  <div class="card"><p>This pretest has <b>${PRETEST.length} short calls</b>. It takes about 15 to 20 minutes. It shows what you can do now, before the lessons. It is not a grade.</p>
+  <ul class="plain"><li>You are the <b>support agent</b>. A customer speaks. You answer.</li>
+  <li>You can listen to each customer <b>two times</b>.</li>
+  <li>You have <b>10 seconds</b> to prepare. A beep tells you to start. You have up to <b>60 seconds</b> to answer.</li>
+  <li>You answer each call <b>once</b>. You cannot go back.</li>
+  <li>Speak in English only. Do not worry about small mistakes. Keep going.</li></ul></div>
+  <button class="btn" data-act="startpre">${S.pre.idx > 0 ? "Continue the pretest" : "Start the pretest"}</button>`);
+}
+function itemState(id) { return (S.pre.items[id] = S.pre.items[id] || { plays: 0, done: false }); }
+const P = { phase: "listen", plays: 0, sec: 0, timer: null, playing: false, recUrl: null, recData: null, usedUpload: false };
+function resetP() { clearInterval(P.timer); P.phase = "listen"; P.plays = 0; P.sec = 0; P.playing = false; P.recUrl = null; P.recData = null; P.usedUpload = false; }
+function vPreItem() {
+  const it = PRETEST[S.pre.idx]; const st = itemState(it.id);
+  if (!P.started) { P.started = Date.now(); P.plays = st.plays || 0; }
+  const left = 2 - P.plays;
+  let ctl = "";
+  if (P.phase === "listen") {
+    ctl = `<button class="play ${P.playing ? "on" : ""}" data-act="playp" ${left <= 0 || P.playing ? "disabled" : ""} aria-label="Play customer"><span class="bars"><i></i><i></i><i></i><i></i><i></i></span><span class="pl">${P.playing ? "Customer speaking…" : left > 0 ? "Play customer" : "No plays left"}</span></button>
+    <p class="hint">Plays left: ${left}</p>
+    <button class="btn" data-act="prep" ${P.plays < 1 || P.playing ? "disabled" : ""}>I am ready to answer</button>`;
+  } else if (P.phase === "prep") {
+    ctl = `<div class="clock"><div class="big">${P.sec}</div><div>Prepare. Recording starts after the beep.</div></div>`;
+  } else if (P.phase === "rec") {
+    ctl = `<div class="clock rec"><div class="big">${fmt(P.sec)}</div><div class="live"><i></i>Recording. Speak now.</div></div><button class="btn stop" data-act="stoprec">Finish answer</button>`;
+  } else if (P.phase === "upload") {
+    ctl = `<div class="card soft"><p>No microphone found. Record your answer on your phone, then upload the file here.</p><input type="file" accept="audio/*" id="upl"></div>`;
+  } else if (P.phase === "review") {
+    ctl = `<p>Your answer is saved. You can listen to it, but you cannot record again.</p><audio controls src="${P.recUrl}"></audio><div><button class="btn" data-act="nextp">${S.pre.idx === PRETEST.length - 1 ? "Finish the pretest" : "Next call"}</button></div>`;
+  }
+  return shell(`<div class="count">Call ${S.pre.idx + 1} of ${PRETEST.length}</div>
+  <div class="queue">${PRETEST.map((p, i) => `<i class="${i < S.pre.idx ? "d" : i === S.pre.idx ? "c" : ""}"></i>`).join("")}</div>
+  <section class="console"><div class="callbar"><div><small>Caller</small><b>${esc(it.caller)}</b></div><div><small>Channel</small><b>${esc(it.channel)}</b></div></div>
+  <p class="setting">${esc(it.setting)}</p>
+  ${it.info ? `<div class="infocard"><small>Your information</small>${esc(it.info)}</div>` : ""}
+  <div class="todo"><small>In your answer</small><ul>${it.todo.map(t => `<li>${esc(t)}</li>`).join("")}</ul></div>
+  <div class="ctl">${ctl}</div></section>`);
+}
+function vPreDone() {
+  return shell(`<h1>Pretest complete</h1><div class="card"><p>Thank you. Your ${PRETEST.length} answers are saved on this device. Your researcher will score them using a shared rubric.</p><p>Next, start the lessons. Lesson 1 is open now. Each lesson opens after you finish the one before it.</p></div>
+  <button class="btn" data-act="L" data-n="1">Start Lesson 1</button>`);
+}
+function vHome() {
+  return shell(`<h1>Your route</h1><div class="card"><p>${doneCount()} of ${LESSONS.length} lessons complete.</p><div class="bar"><i style="width:${doneCount() / LESSONS.length * 100}%"></i></div></div>
+  <div class="lgrid">${LESSONS.map(l => `<button class="lcard ${lessonDone(l.n) ? "done" : ""}" data-act="L" data-n="${l.n}" ${lessonUnlocked(l.n) ? "" : "disabled"}><b>Lesson ${l.n}</b><span>${esc(l.title)}</span><small>${lessonDone(l.n) ? "Complete" : lessonUnlocked(l.n) ? "Open" : "Locked until Lesson " + (l.n - 1) + " is finished"}</small></button>`).join("")}</div>`);
+}
+
+const STEPS = ["Why it matters", "Key expressions", "Model call", "Practice", "Speak", "Reflect"];
+function playBtn(text, voice) { return `<button class="mini" data-act="say" data-t="${esc(text)}" data-v="${esc(JSON.stringify(voice || {}))}" aria-label="Play">▶</button>`; }
+function vLesson() {
+  const l = LESSONS[U.lesson - 1]; const ls = lessonState(l.n); const step = U.lessonStep;
+  const tabs = `<div class="tabs" role="tablist">${STEPS.map((s, i) => `<button role="tab" class="${i === step ? "on" : ""}" data-act="step" data-i="${i}">${esc(s)}</button>`).join("")}</div>`;
+  let body = "";
+  if (step === 0) {
+    body = `<div class="card"><p>${esc(l.why)}</p><p>${taskTag(l.task)} <span class="hint">Percentages are not added together, because one advertisement lists many tasks.</span></p>
+    <h3>By the end you can</h3><ul class="plain">${l.outcomes.map(o => `<li>${esc(o)}</li>`).join("")}</ul>
+    <h3>Language functions in this lesson</h3><p>${TASKS[l.task].fns.map(f => `<span class="chip">${esc(f)}</span>`).join(" ")}</p></div>`;
+  } else if (step === 1) {
+    body = `<div class="card"><p class="hint">Press ▶ to listen. Say each one aloud after you hear it.</p><ul class="phr">${l.phrases.map(p => `<li><small>${esc(p[0])}</small><span>${esc(p[1])}</span>${playBtn(p[1], { pitch: 1.05, rate: 0.9 })}</li>`).join("")}</ul></div>`;
+  } else if (step === 2) {
+    const who = { C: "Customer", A: "You (agent)", T: "Tier-2 colleague" };
+    body = `<div class="card"><p class="hint">Listen to the whole call, then read it again and underline the expressions from the last step.</p><button class="btn ghost" data-act="sayall">Play the whole call</button>
+    <ol class="dlg">${l.dialogue.map(d => `<li class="${d[0]}"><small>${who[d[0]]}</small><span>${esc(d[1])}</span>${playBtn(d[1], d[0] === "A" ? { pitch: 1.05, rate: 0.95 } : { pitch: 0.85, rate: 0.95 })}</li>`).join("")}</ol></div>`;
+  } else if (step === 3) {
+    body = `<div class="card">${l.mcq.map((q, i) => { const r = ls.mcq[i]; return `<div class="q"><p><b>${i + 1}.</b> ${esc(q.q)}</p>${q.o.map((o, j) => `<button class="opt ${r ? (j === q.a ? "ok" : j === r.choice ? "bad" : "") : ""}" data-act="mcq" data-i="${i}" data-j="${j}" ${r ? "disabled" : ""}>${esc(o)}</button>`).join("")}${r ? `<p class="why ${r.correct ? "good" : ""}">${r.correct ? "Correct. " : "Not quite. "}${esc(q.why)}</p>` : ""}</div>`; }).join("")}
+    <div class="q"><p><b>3.</b> ${esc(l.order.prompt)} <span class="hint">Tap the steps in the correct order.</span></p>${orderUI(l, ls)}</div></div>`;
+  } else if (step === 4) {
+    body = `<div class="card"><p>A customer says:</p><div class="quote">${esc(l.speak.customer)} ${playBtn(l.speak.customer, { pitch: 0.95, rate: 0.93 })}</div><p>Answer as the agent. Use the language from this lesson.</p>
+    <div class="recbox">${lessonRecUI(l)}</div>
+    <h3>Check yourself</h3><div class="checks">${l.speak.checklist.map((c, i) => `<label class="chk"><input type="checkbox" data-act="schk" data-i="${i}" ${ls.speakChecks.includes(i) ? "checked" : ""}> ${esc(c)}</label>`).join("")}</div>
+    <details><summary>Show a model answer</summary><p class="model">${esc(l.speak.model)} ${playBtn(l.speak.model, { pitch: 1.05, rate: 0.95 })}</p></details></div>`;
+  } else {
+    const ok = canFinish(l);
+    body = `<div class="card"><p>What was one expression from this lesson that you will use at work, and one you still need to practise?</p><textarea id="reflect" rows="4" placeholder="Write 1 to 3 sentences.">${esc(ls.reflect)}</textarea>
+    <ul class="plain req"><li class="${Object.keys(ls.mcq).length >= l.mcq.length ? "y" : ""}">Answer the practice questions</li><li class="${ls.order && ls.order.checked ? "y" : ""}">Complete the ordering task</li><li class="${ls.rec ? "y" : ""}">Record your speaking answer <span class="hint">(or tick that you have no microphone)</span></li><li class="${ls.reflect.trim().length > 5 ? "y" : ""}">Write your reflection</li></ul></div>
+    <button class="btn" data-act="finishL" ${ok ? "" : "disabled"}>${lessonDone(l.n) ? "Lesson complete. Back to route" : l.n === LESSONS.length ? "Finish the last lesson" : "Finish lesson and unlock Lesson " + (l.n + 1)}</button>`;
+  }
+  const nav = `<div class="navrow"><button class="btn ghost" data-act="prevstep" ${step === 0 ? "disabled" : ""}>Back</button><button class="btn ghost" data-act="nextstep" ${step === STEPS.length - 1 ? "disabled" : ""}>Next</button></div>`;
+  return shell(`<div class="count">Lesson ${l.n} of ${LESSONS.length}</div><h1>${esc(l.title)}</h1><p class="sub">${esc(TASKS[l.task].name)}</p>${tabs}${body}${nav}`);
+}
+function canFinish(l) { const ls = lessonState(l.n); return Object.keys(ls.mcq).length >= l.mcq.length && ls.order && ls.order.checked && (ls.rec || ls.noMic) && ls.reflect.trim().length > 5; }
+function shuffled(arr, seed) {
+  const idx = arr.map((v, i) => i); let s = seed * 7919 + 13;
+  const rnd = () => { s = (s * 9301 + 49297) % 233280; return s / 233280; };
+  for (let i = idx.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [idx[i], idx[j]] = [idx[j], idx[i]]; }
+  if (idx.every((v, i) => v === i)) idx.reverse();
+  return idx;
+}
+function orderUI(l, ls) {
+  const steps = l.order.steps; const st = ls.order || { picked: [], checked: false, correct: false, attempts: 0 };
+  const idxs = shuffled(steps, l.n + 3);
+  const pool = idxs.filter(i => !st.picked.includes(i));
+  return `<div class="ord"><div class="slots">${st.picked.length ? st.picked.map((i, k) => `<button class="slot ${st.checked ? (i === k ? "ok" : "bad") : ""}" data-act="unpick" data-k="${k}" ${st.checked ? "disabled" : ""}><b>${k + 1}</b>${esc(steps[i])}</button>`).join("") : `<p class="hint">Your order will appear here.</p>`}</div>
+  <div class="pool">${pool.map(i => `<button class="chip btnchip" data-act="pick" data-i="${i}" ${st.checked ? "disabled" : ""}>${esc(steps[i])}</button>`).join("")}</div>
+  ${st.checked ? `<p class="why ${st.correct ? "good" : ""}">${st.correct ? "Correct order." : "Not quite. The correct order is: " + steps.map((s, k) => (k + 1) + ") " + esc(s)).join("  ")}</p>` : `<button class="btn ghost" data-act="chkorder" ${st.picked.length === steps.length ? "" : "disabled"}>Check order</button> <button class="link" data-act="resetorder">Start again</button>`}</div>`;
+}
+const LR = { phase: "idle", sec: 0, timer: null, url: null };
+function lessonRecUI(l) {
+  const ls = lessonState(l.n);
+  if (LR.phase === "rec") return `<div class="clock rec sm"><div class="big">${fmt(LR.sec)}</div><div class="live"><i></i>Recording</div></div><button class="btn stop" data-act="lstop">Stop</button>`;
+  const has = ls.rec;
+  return `<button class="btn ghost" data-act="lrec">${has ? "Record again" : "Record my answer"}</button> ${has ? `<span class="hint">Saved.</span>` : ""}
+  ${LR.url && has ? `<audio controls src="${LR.url}"></audio>` : ""}
+  ${!has ? `<label class="chk small"><input type="checkbox" data-act="nomic" ${ls.noMic ? "checked" : ""}> I cannot record on this device</label>` : ""}`;
+}
+function vFinish() {
+  return shell(`<h1>Finish and send your results</h1><div class="card"><p>Press the button to save one file with your pretest recordings, your lesson answers and your timings. Send that file to your researcher.</p>
+  <p class="hint">Lessons complete: ${doneCount()} of ${LESSONS.length}. You can export at any time.</p>
+  <button class="btn" data-act="export">Save my results file</button></div>`);
+}
+
+/* ---------- researcher tools ---------- */
+function vResearcher() {
+  const tabs = [["audio", "Prompt audio"], ["blueprint", "Test blueprint"], ["rater", "Score recordings"]];
+  const t = U.rtab;
+  let body = "";
+  if (t === "audio") {
+    body = `<div class="card"><p>The customer prompts currently use the browser's built-in voice so the prototype works anywhere. For the study, record your own audio for each call (same speaker, same volume, 15 to 30 seconds) and upload it here to test it. To use the files for participants, host them and fill in <code>AUDIO_URLS</code> in the page source, so every participant hears identical audio.</p>
+    <table class="tbl"><thead><tr><th>Call</th><th>Customer line (script)</th><th>Audio</th></tr></thead><tbody>${PRETEST.map(p => `<tr><td>${p.id.toUpperCase()}<br><small>${esc(TASKS[p.task].name)}</small></td><td>${esc(p.script)}</td><td><button class="mini" data-act="testprompt" data-id="${p.id}">▶</button> <label class="up">Upload<input type="file" accept="audio/*" data-act="upprompt" data-id="${p.id}" hidden></label> <span id="ps_${p.id}" class="hint"></span></td></tr>`).join("")}</tbody></table></div>`;
+  } else if (t === "blueprint") {
+    body = `<div class="card"><p>Each pretest call matches one lesson and one task from the job-advertisement analysis. All tasks below are present in 29 of 29 advertisements.</p><table class="tbl"><thead><tr><th>Call</th><th>Task (lesson)</th><th>Language functions targeted</th><th>Customer words</th></tr></thead><tbody>${PRETEST.map((p, i) => `<tr><td>${p.id.toUpperCase()}</td><td>${esc(TASKS[p.task].name)}<br><small>Lesson ${i + 1}</small></td><td>${TASKS[p.task].fns.map(esc).join("; ")}</td><td>${p.script.split(/\s+/).length}</td></tr>`).join("")}</tbody></table>
+    <h3>Scoring rubric (0 to 4 for each criterion, 20 per call, 160 in total)</h3><table class="tbl"><thead><tr><th>Criterion</th><th>What is judged</th><th>4</th><th>2</th><th>0</th></tr></thead><tbody>${RUBRIC.map(r => `<tr><td>${esc(r.name)}</td><td>${esc(r.what)}</td><td>${esc(r.a4)}</td><td>${esc(r.a2)}</td><td>${esc(r.a0)}</td></tr>`).join("")}</tbody></table>
+    <p class="hint">Rubric descriptors and cut scores are drafts. Validate them with expert review and a pilot before use.</p></div>`;
+  } else {
+    body = raterUI();
+  }
+  return shell(`<h1>Researcher tools</h1><div class="tabs">${tabs.map(([k, n]) => `<button class="${t === k ? "on" : ""}" data-act="rtab" data-k="${k}">${n}</button>`).join("")}</div>${body}`, { norail: true });
+}
+function raterUI() {
+  const R = U.rater;
+  const pk = R.pkgs;
+  let h = `<div class="card"><label for="rid">Your rater ID</label><input id="rid" value="${esc(R.id)}" placeholder="e.g. R1" maxlength="10"><label style="margin-top:12px">Load a participant results file (.json)</label><input type="file" id="pkgs" accept=".json,application/json" multiple></div>`;
+  if (!pk.length) return h + `<p class="hint">No files loaded yet.</p>`;
+  h += pk.map((p, pi) => `<div class="card"><h3>Participant ${esc(p.pid)}</h3>${PRETEST.map(it => {
+    const rec = (p.items || []).find(x => x.id === it.id); const key = p.pid + "|" + it.id; const sc = R.scores[key] || {};
+    const tot = RUBRIC.reduce((a, r) => a + (Number(sc[r.key]) || 0), 0);
+    return `<details class="rate"><summary>${it.id.toUpperCase()} · ${esc(TASKS[it.task].name)} <span class="hint">${rec && rec.audio ? "" : "(no recording)"} Score: ${Object.keys(sc).length === RUBRIC.length ? tot + "/20" : "incomplete"}</span></summary>
+      <p class="hint">Customer said: ${esc(it.script)}</p>${rec && rec.audio ? `<audio controls src="${URL.createObjectURL(b64ToBlob(rec.audio, rec.mime))}"></audio><p class="hint">Plays: ${rec.meta ? rec.meta.plays : "?"} · Answer length: ${rec.meta ? rec.meta.sec : "?"}s</p>` : ""}
+      <div class="rgrid">${RUBRIC.map(r => `<div><small>${esc(r.name)}</small><div class="seg">${[0, 1, 2, 3, 4].map(v => `<button class="${sc[r.key] === v ? "on" : ""}" data-act="score" data-key="${esc(key)}" data-c="${r.key}" data-v="${v}">${v}</button>`).join("")}</div></div>`).join("")}</div></details>`;
+  }).join("")}</div>`).join("");
+  h += `<button class="btn" data-act="exportscores">Save scores as CSV</button>`;
+  return h;
+}
+
+/* ---------- render + events ---------- */
+function render() {
+  const app = $("#app");
+  let h;
+  if (U.mode === "researcher") h = vResearcher();
+  else if (!S) h = vWelcome();
+  else h = ({ consent: vConsent, setup: vSetup, preintro: vPreIntro, preitem: vPreItem, predone: vPreDone, home: vHome, lesson: vLesson, finish: vFinish })[S.view]();
+  const y = window.scrollY;
+  app.innerHTML = h;
+  if (U.keepScroll) window.scrollTo(0, y);
+}
+function go(view, extra) { stopSpeech(); S.view = view; Object.assign(U, extra || {}); U.msg = ""; save(); render(); window.scrollTo(0, 0); }
+
+async function begin() {
+  const pid = ($("#pid").value || "").trim().replace(/[^\w-]/g, "");
+  if (!pid) { U.msg = "Enter your participant code to continue."; render(); return; }
+  const saved = LS.get("cr_state_" + pid);
+  try { S = saved ? JSON.parse(saved) : blankState(pid); } catch (e) { S = blankState(pid); }
+  if (!S.consent) S.view = "consent"; else if (!S.pre.done) S.view = (S.pre.idx > 0 || Object.keys(S.pre.items).length) ? "preintro" : "setup"; else S.view = "home";
+  U.msg = ""; save(); render();
+}
+
+async function startPrep() {
+  const it = PRETEST[S.pre.idx];
+  P.phase = "prep"; P.sec = 10; render();
+  const hasMic = await ensureMic();
+  clearInterval(P.timer);
+  P.timer = setInterval(async () => {
+    P.sec--; if (P.sec > 0) { render(); return; }
+    clearInterval(P.timer); beep();
+    if (!hasMic) { P.phase = "upload"; render(); return; }
+    P.phase = "rec"; P.sec = 0; P.recStart = Date.now(); startRecording(); render();
+    P.timer = setInterval(() => { P.sec++; if (P.sec >= 60) finishPre(); else { const c = $(".clock .big"); if (c) c.textContent = fmt(P.sec); } }, 1000);
+  }, 1000);
+}
+async function finishPre() {
+  clearInterval(P.timer);
+  const r = await stopRecording(); if (!r) return;
+  await commitPre(r.blob, r.mime, r.sec, false);
+}
+async function commitPre(blob, mime, sec, uploaded) {
+  const it = PRETEST[S.pre.idx]; const st = itemState(it.id);
+  await kvSet(`rec_${S.pid}_${it.id}`, { blob, mime });
+  Object.assign(st, { done: true, plays: P.plays, sec, mime, size: blob.size, uploaded, finishedAt: new Date().toISOString(), startedAt: new Date(P.started).toISOString() });
+  P.recUrl = URL.createObjectURL(blob); P.phase = "review"; save(); render();
+}
+async function buildPackage() {
+  const items = [];
+  for (const it of PRETEST) {
+    const st = S.pre.items[it.id]; const rec = await kvGet(`rec_${S.pid}_${it.id}`);
+    items.push({ id: it.id, task: it.task, meta: st || null, mime: rec ? rec.mime : null, audio: rec ? await blobToB64(rec.blob) : null });
+  }
+  const lessons = [];
+  for (const l of LESSONS) {
+    const ls = S.les[l.n]; if (!ls) continue;
+    const rec = await kvGet(`lrec_${S.pid}_${l.n}`);
+    lessons.push({ n: l.n, done: ls.done, mcq: ls.mcq, order: ls.order ? { correct: ls.order.correct, attempts: ls.order.attempts } : null, speakChecks: ls.speakChecks, reflect: ls.reflect, completedAt: ls.completedAt || null, mime: rec ? rec.mime : null, audio: rec ? await blobToB64(rec.blob) : null });
+  }
+  return JSON.stringify({ app: "CallReady", version: 1, pid: S.pid, createdAt: S.createdAt, exportedAt: new Date().toISOString(), items, lessons });
+}
+function csvEsc(v) { v = String(v == null ? "" : v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }
+
+document.addEventListener("click", async e => {
+  const el = e.target.closest("[data-act]"); if (!el || el.tagName === "INPUT" && el.type === "file") return;
+  const a = el.dataset.act; U.keepScroll = false;
+  if (a === "begin") return begin();
+  if (a === "res") { U.mode = "researcher"; U.msg = ""; return render(); }
+  if (a === "exitres") { U.mode = "participant"; U.msg = ""; return render(); }
+  if (a === "rtab") { U.rtab = el.dataset.k; return render(); }
+  if (a === "consent") { if (!$("#cons").checked) { U.msg = "Tick the box to agree before continuing."; return render(); } S.consent = true; return go("setup"); }
+  if (a === "soundtest") { speakText("This is a sound check.", { pitch: 1, rate: 0.95 }); return; }
+  if (a === "mictest") { const ok = await ensureMic(); S.micOk = ok; save(); const m = $("#micstate"); if (m) m.textContent = ok ? "Microphone is ready." : "Microphone not available. You can upload audio files instead."; return; }
+  if (a === "tointro") return go("preintro");
+  if (a === "startpre") { resetP(); P.started = null; while (S.pre.idx < PRETEST.length && (S.pre.items[PRETEST[S.pre.idx].id] || {}).done) S.pre.idx++; if (S.pre.idx >= PRETEST.length) { S.pre.idx = PRETEST.length - 1; S.pre.done = true; return go("predone"); } return go("preitem"); }
+  if (a === "playp") { const it = PRETEST[S.pre.idx]; P.playing = true; P.plays++; itemState(it.id).plays = P.plays; save(); render(); await playPrompt(it); P.playing = false; if (S.view === "preitem") render(); return; }
+  if (a === "prep") { stopSpeech(); return startPrep(); }
+  if (a === "stoprec") return finishPre();
+  if (a === "nextp") { if (S.pre.idx >= PRETEST.length - 1) { S.pre.done = true; S.pre.idx = PRETEST.length - 1; resetP(); P.started = null; return go("predone"); } S.pre.idx++; resetP(); P.started = null; save(); return render(); }
+  if (a === "goto") { const k = el.dataset.k; if (k === "setup") return go(S.consent ? "setup" : "consent"); if (k === "pre") return go(S.pre.done ? "predone" : (S.pre.idx > 0 || Object.keys(S.pre.items).length ? "preintro" : "setup")); if (k === "finish") return go("finish"); if (k[0] === "L") { U.lesson = Number(k.slice(1)); U.lessonStep = 0; return go("lesson"); } }
+  if (a === "L") { U.lesson = Number(el.dataset.n); U.lessonStep = 0; LR.phase = "idle"; LR.url = null; return go("lesson"); }
+  if (a === "step") { U.lessonStep = Number(el.dataset.i); U.keepScroll = true; return render(); }
+  if (a === "nextstep") { U.lessonStep = Math.min(STEPS.length - 1, U.lessonStep + 1); return render(); }
+  if (a === "prevstep") { U.lessonStep = Math.max(0, U.lessonStep - 1); return render(); }
+  if (a === "say") { let v = {}; try { v = JSON.parse(el.dataset.v); } catch (x) { /* ignore */ } speakText(el.dataset.t, v); return; }
+  if (a === "sayall") { const l = LESSONS[U.lesson - 1]; for (const d of l.dialogue) { if (S.view !== "lesson") break; await speakText(d[1], d[0] === "A" ? { pitch: 1.05, rate: 0.95 } : { pitch: 0.82, rate: 0.95 }); } return; }
+  if (a === "mcq") { const l = LESSONS[U.lesson - 1]; const ls = lessonState(l.n); const i = +el.dataset.i, j = +el.dataset.j; ls.mcq[i] = { choice: j, correct: j === l.mcq[i].a }; save(); U.keepScroll = true; return render(); }
+  if (a === "pick" || a === "unpick" || a === "chkorder" || a === "resetorder") {
+    const l = LESSONS[U.lesson - 1]; const ls = lessonState(l.n); ls.order = ls.order || { picked: [], checked: false, correct: false, attempts: 0 };
+    if (a === "pick") ls.order.picked.push(+el.dataset.i);
+    if (a === "unpick") ls.order.picked.splice(+el.dataset.k, 1);
+    if (a === "resetorder") ls.order.picked = [];
+    if (a === "chkorder") { ls.order.checked = true; ls.order.attempts++; ls.order.correct = ls.order.picked.every((v, k) => v === k); }
+    save(); U.keepScroll = true; return render();
+  }
+  if (a === "lrec") { const ok = await ensureMic(); if (!ok) { U.msg = "Microphone not available. Tick 'I cannot record on this device' to continue."; return render(); } LR.phase = "rec"; LR.sec = 0; startRecording(); clearInterval(LR.timer); LR.timer = setInterval(() => { LR.sec++; const c = $(".clock .big"); if (c) c.textContent = fmt(LR.sec); if (LR.sec >= 90) stopL(); }, 1000); U.keepScroll = true; return render(); }
+  if (a === "lstop") return stopL();
+  if (a === "finishL") { const l = LESSONS[U.lesson - 1]; const ls = lessonState(l.n); if (!canFinish(l)) return; ls.done = true; ls.completedAt = new Date().toISOString(); save(); if (l.n < LESSONS.length) { U.lesson = l.n + 1; U.lessonStep = 0; LR.phase = "idle"; LR.url = null; return go("lesson"); } return go("finish"); }
+  if (a === "export") { U.msg = "Preparing file…"; render(); const data = await buildPackage(); return saveFile(`CallReady_${S.pid}_results.json`, data); }
+  /* researcher */
+  if (a === "testprompt") { const it = PRETEST.find(p => p.id === el.dataset.id); return playPrompt(it); }
+  if (a === "score") { const R = U.rater; const k = el.dataset.key; R.scores[k] = R.scores[k] || {}; R.scores[k][el.dataset.c] = +el.dataset.v; LS.set("cr_scores", JSON.stringify(R.scores)); const open = [...document.querySelectorAll("details.rate")].map(d => d.open); U.keepScroll = true; render(); document.querySelectorAll("details.rate").forEach((d, i) => { d.open = open[i]; }); return; }
+  if (a === "exportscores") { const R = U.rater; const rows = [["participant", "rater", "call", "task", ...RUBRIC.map(r => r.key), "total_of_20"]]; for (const p of R.pkgs) for (const it of PRETEST) { const sc = R.scores[p.pid + "|" + it.id]; if (!sc) continue; rows.push([p.pid, R.id || "", it.id, it.task, ...RUBRIC.map(r => sc[r.key] == null ? "" : sc[r.key]), RUBRIC.reduce((s, r) => s + (sc[r.key] || 0), 0)]); } return saveFile("CallReady_scores.csv", rows.map(r => r.map(csvEsc).join(",")).join("\n")); }
+});
+async function stopL() {
+  clearInterval(LR.timer); const r = await stopRecording(); LR.phase = "idle"; if (!r) return render();
+  const l = LESSONS[U.lesson - 1]; const ls = lessonState(l.n);
+  await kvSet(`lrec_${S.pid}_${l.n}`, { blob: r.blob, mime: r.mime }); ls.rec = true; LR.url = URL.createObjectURL(r.blob); save(); U.keepScroll = true; render();
+}
+document.addEventListener("change", async e => {
+  const el = e.target;
+  if (el.id === "upl" && el.files[0]) { const f = el.files[0]; await commitPre(f, f.type || "audio/webm", 0, true); return; }
+  if (el.dataset.act === "schk") { const ls = lessonState(U.lesson); const i = +el.dataset.i; ls.speakChecks = el.checked ? [...new Set([...ls.speakChecks, i])] : ls.speakChecks.filter(x => x !== i); save(); return; }
+  if (el.dataset.act === "nomic") { lessonState(U.lesson).noMic = el.checked; save(); return; }
+  if (el.dataset.act === "upprompt" && el.files[0]) { const id = el.dataset.id; await kvSet("prompt_" + id, { blob: el.files[0] }); const s = $("#ps_" + id); if (s) s.textContent = "Uploaded (this browser only)"; return; }
+  if (el.id === "pkgs") { for (const f of el.files) { try { const j = JSON.parse(await f.text()); if (j.app === "CallReady") { U.rater.pkgs = U.rater.pkgs.filter(p => p.pid !== j.pid); U.rater.pkgs.push(j); } } catch (x) { U.msg = "Could not read " + f.name; } } try { U.rater.scores = Object.assign(JSON.parse(LS.get("cr_scores") || "{}"), U.rater.scores); } catch (x) { /* ignore */ } return render(); }
+  if (el.id === "rid") { U.rater.id = el.value.trim(); return; }
+});
+document.addEventListener("input", e => { if (e.target.id === "reflect") { const ls = lessonState(U.lesson); ls.reflect = e.target.value; save(); const li = document.querySelector(".req li:last-child"); if (li) li.className = ls.reflect.trim().length > 5 ? "y" : ""; const b = document.querySelector('[data-act="finishL"]'); if (b) b.disabled = !canFinish(LESSONS[U.lesson - 1]); } });
+try { speechSynthesis.getVoices(); } catch (e) { /* none */ }
+render();
+
+</script>
+</body>
+</html>

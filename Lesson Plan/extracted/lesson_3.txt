@@ -1,0 +1,640 @@
+DELIVERABLE 2: COMPLETE LESSON MATERIALS (CONTINUED)
+
+LESSON 3: Troubleshooting and Explaining Technical Problems
+
+A. LESSON OVERVIEW
+
+Lesson Number & Title: Lesson 3: Troubleshooting and Explaining Technical Problems
+
+Allocated Learning Duration: 150 Minutes (2.5 Hours)
+
+Occupational Relevance: In Malaysian technical helpdesks and cloud support centers (e.g., Evoxt JA014, CREDSPIRE JA019, Leuze Electronic JA023, Scicom JA020, Micro Technology Solution JA016), support specialists must guide non-technical customers through troubleshooting procedures once a fault is isolated. Non-technical users often feel intimidated by technical jargon or complex settings. Frontline specialists must translate root causes into plain English, explain temporary workarounds clearly, and verify whether a proposed fix successfully restores functionality before closing the case.
+
+Measurable Learning Objectives:By the end of this 150-minute lesson, Thai IT undergraduate learners will be able to:
+
+Analyze customer error symptoms and classify them into hardware, software, memory/cache, or network-level faults.
+
+Construct first conditional sentences ("If you clear your browser cache, the portal will load correctly") to explain technical cause-and-effect relationships and workarounds in plain English.
+
+Formulate polite technical suggestions using modal structures ("You might want to try restarting...", "I suggest that we reset...") to guide callers without sounding forceful.
+
+Perform a 60-second troubleshooting spoken response in a simulated support call proposing a temporary workaround for an application crash or memory glitch, achieving a minimum score of "3" across all rubric criteria.
+
+========================================================================================
+
+LESSON 3 COMMUNICATION FUNCTIONS, VOCABULARY, AND GRAMMAR MATRIX
+
+========================================================================================
+
+Target Communication Functions:
+
+  - Explaining technical root causes in non-jargon, plain English
+
+  - Proposing temporary workarounds and permanent corrective fixes
+
+  - Using conditional logic to explain cause-and-effect relationships
+
+  - Checking whether a troubleshooting step successfully resolved the fault
+
+
+
+Target Occupational Vocabulary & Acronyms:
+
+  - Workaround, Root Cause, Cache, Browser Cookies, Memory Leak, Gateway Reset,
+
+    Session Timeout, System Glitch, Application Crash, Patch, Compatibility.
+
+
+
+Target Sentence Patterns & Grammar:
+
+  - First Conditional for Cause-and-Effect: "If you [clear your cache], the [portal will load]."
+
+  - Modal Suggestions for Workarounds: "You might want to [try launching the app in incognito mode]."
+
+  - Explaining Root Causes in Plain English: "This error occurs because [the server memory is overloaded]."
+
+  - Resolution Checking: "Could you check if [the page opens properly now]?"
+
+========================================================================================
+
+Prerequisite Knowledge: Mastery of Call Openings (Lesson 1) and Diagnostic Questioning / Fault Isolation (Lesson 2).
+
+Materials Needed: Web-based EOP portal access, Audio/Video player, microphone/audio recording interface.
+
+Connection to Curriculum Flow:
+
+Backward Linkage: Relies directly on the diagnostic details isolated in Lesson 2.
+
+Forward Linkage: Provides the technical explanation foundation for Lesson 4 (Handling Complaints & Responding Empathetically) when troubleshooting delays or recurring faults trigger customer frustration.
+
+B. ATTENTION-GRABBING OPENING HOOK
+
+Workplace Context: Level-1 Cloud & Application Support Desk at a BPO Center in Cyberjaya, Malaysia.
+
+The Problem / Communication Mistake: An IT support executive named Nat receives a call from a business client whose reporting portal is freezing. Nat explains the cause by dumping heavy technical jargon: "Your local DNS cache has a corrupted socket binding causing an unhandled null-pointer exception in the API layer." The client feels completely confused, responds defensively ("I don't care about socket bindings! Just fix my portal!"), and hangs up in frustration.
+
+Reflective Question for Students:
+
+Why did Nat's explanation cause the client to panic and become hostile?
+
+How can you translate complex technical causes into simple, everyday English that puts non-technical users at ease?
+
+Occupational Importance: In Malaysian IT service desks, customer satisfaction (CSAT) drops sharply when agents use incomprehensible technical jargon. Clear, empathetic explanations empower customers, reduce call stress, and ensure smooth collaboration during multi-step troubleshooting.
+
+C. COMPLETE INSTRUCTIONAL VIDEO SCRIPT
+
+Video Title: Module 3.1 — Plain English Troubleshooting & Technical Workarounds
+
+Target Duration: 10 Minutes (Runtime) + 10 Minutes (Interactive Pauses) = 20 Minutes Total Learning Time
+
+AI Tool Production Note: Production-ready script with split-screen visual animations and interactive pauses.
+
+========================================================================================
+
+INSTRUCTIONAL VIDEO SCRIPT: MODULE 3.1
+
+========================================================================================
+
+
+
+[SCENE 1: INTRODUCTION & TECHNICAL TRANSLATION]
+
+Visual Direction: Split screen showing a corporate IT helpdesk on the left and a visual 'Jargon-to-Plain-English' translation wheel on the right.
+
+On-Screen Text: Lesson 3.1: Troubleshooting & Explaining Technical Workarounds
+
+Audio / Narrator Script:
+
+"Welcome to Lesson 3. Once you have isolated a technical problem, your next challenge is explaining the solution. Most callers are not IT specialists. If you use overly dense technical jargon, customers feel overwhelmed. Today, you will learn how to explain technical root causes in plain English, propose workarounds using conditional sentences, and check if your fix worked."
+
+
+
+[SCENE 2: THE 3-STEP TROUBLESHOOTING EXPLANATION FRAMEWORK]
+
+Visual Direction: An infographic builds three connected blocks on screen.
+
+On-Screen Text:
+
+  Step 1: State the Root Cause (Plain English)
+
+  Step 2: Offer the Workaround (Conditional Logic: "If you..., it will...")
+
+  Step 3: Verify the Fix ("Could you test if...?")
+
+Narrator Script:
+
+"Effective troubleshooting explanations follow three clear steps. Step 1: Explain the cause in simple terms. Step 2: Present the workaround using conditional language. Step 3: Ask the customer to test the fix while you stay on the line."
+
+
+
+[SCENE 3: CONTRAST ANALYSIS - JARGON DUMP VS. PLAIN ENGLISH WORKAROUND]
+
+Visual Direction: Side-by-side video comparison of two support agents handling an app crash.
+
+Left Panel (Red Border - Ineffective Agent Nat):
+
+Client: "Why does my dashboard keep crashing when I export files?"
+
+Nat: "Because your local memory allocation exceeds the heap limit due to uncleared cache cookies."
+
+On-Screen Text (Red): 
+
+  X Overloaded with technical jargon
+
+  X Fails to offer an actionable fix
+
+  X Confuses the customer
+
+
+
+Right Panel (Green Border - Effective Agent Lisa):
+
+Client: "Why does my dashboard keep crashing when I export files?"
+
+Lisa: "This issue happens because stored temporary files are slowing down your browser. If we clear your browser cache, the portal will free up memory and export your file smoothly. Would you like to try that together now?"
+
+On-Screen Text (Green):
+
+  ✓ Plain English root cause ("stored temporary files")
+
+  ✓ Conditional workaround ("If we clear..., the portal will...")
+
+  ✓ Collaborative verification offer
+
+
+
+[SCENE 4: INTERACTIVE PAUSE & PRACTICE]
+
+Visual Direction: Countdown timer (10 seconds) with audio chime.
+
+On-Screen Text: PRACTICE PAUSE: Translate this jargon into plain English: "The server is experiencing high packet loss on port 80."
+
+Narrator Script:
+
+"Pause the video for two minutes. How would you explain 'high packet loss on port 80' to a non-technical customer using plain English? Practice speaking your explanation out loud."
+
+
+
+[INTERACTIVE PAUSE - 120 SECONDS]
+
+
+
+[SCENE 5: VERIFYING THE RESOLUTION]
+
+Visual Direction: Highlighted text box showing resolution check phrases: "Could you please refresh the page and test if it works now?"
+
+Narrator Script:
+
+"Never assume a workaround worked! Always invite the caller to verify the result while you are still connected. Say: 'Could you please try logging in again to confirm that the fix worked?'"
+
+
+
+[SCENE 6: LESSON RECAP]
+
+Visual Direction: Summary bullet points with green checkmarks.
+
+On-Screen Text:
+
+  RECAP:
+
+  1. Translate jargon into plain English.
+
+  2. Use Conditional Sentences: "If you [action], [result]."
+
+  3. Always verify the fix before closing the call.
+
+Narrator Script:
+
+"Clear troubleshooting builds trust. Practice applying conditional structures in Section D!"
+
+========================================================================================
+
+D. EXPLICIT TEACHING OF SENTENCE STRUCTURES AND LANGUAGE USE
+
+1. Language Pattern 1: First Conditional Structures for Workarounds (If + Present, Will + Base Verb)
+
+========================================================================================
+
+LANGUAGE PATTERN 1: FIRST CONDITIONAL FOR TECHNICAL WORKAROUNDS
+
+========================================================================================
+
+Form / Syntax Pattern:
+
+  If + [Subject] + [Present Simple Verb], [Subject/System] + [will / should] + [Base Verb].
+
+  OR: [Subject/System] + [will / should] + [Base Verb] + if + [Subject] + [Present Simple Verb].
+
+
+
+Communicative Function:
+
+  Explaining the direct technical result or benefit that will occur when a customer performs a specific troubleshooting action.
+
+
+
+Explanation in Thai (คำอธิบายภาษาไทย):
+
+  การอธิบายขั้นตอนการแก้ปัญหาทางเทคนิค นิยมใช้ประโยคเงื่อนไขแบบที่ 1 (First Conditional) เพื่อแสดงความสัมพันธ์ที่เป็นเหตุเป็นผลแบบชัดเจนระหว่าง "การกระทำของผู้ใช้" (If clause - Present Simple) กับ "ผลลัพธ์ที่จะเกิดขึ้นกับระบบ" (Main clause - Subject + will/should + กริยาช่อง 1) ช่วยให้ลูกค้าเข้าใจว่าทำไมต้องทำตามขั้นตอนนั้นๆ
+
+
+
+Contextualized Workplace Examples:
+
+  Example 1: "If you clear your browser cache, the portal will load the updated dashboard."
+
+  Example 2: "The application will run much faster if we disable background auto-updates."
+
+  Example 3: "If you connect via an Ethernet cable, your file download will complete without interruption."
+
+
+
+Common Learner Errors & Corrections:
+
+  x Incorrect: "If you will clear cache, the portal loads." (Misuse of 'will' inside the 'if' clause)
+
+    ✓ Correct: "If you clear your cache, the portal will load."
+
+  x Incorrect: "If you restart router, system will working." (Grammar error: 'will working')
+
+    ✓ Correct: "If you restart the router, the system will work properly."
+
+  x Incorrect: "Clear cache and portal is okay." (Too informal/broken grammar)
+
+    ✓ Correct: "If we clear your browser cache, the portal will operate normally."
+
+========================================================================================
+
+Substitution / Transformation Exercise (10 Minutes)
+
+Instructions: Combine the troubleshooting action and result into a professional First Conditional sentence.
+
+Action: Reset password. Result: Log in successfully.
+
+Conditional Sentence: "If you reset your password, you will be able to log in successfully."
+
+Action: Disable VPN. Result: Local printer reconnects immediately.
+
+Conditional Sentence: "If we temporarily disable the VPN, your local printer will reconnect immediately."
+
+Action: Update mobile app. Result: Notification glitch stops.
+
+Conditional Sentence: "If you update the mobile application, the notification glitch will stop."
+
+Production Task (10 Minutes)
+
+Write two original conditional statements offering workarounds to a caller experiencing a frozen video conferencing app.
+
+Student Output Example 1: "If you close background browser tabs, your video stream will become much smoother."
+
+Student Output Example 2: "The microphone will reconnect automatically if you rejoin the call room."
+
+2. Language Pattern 2: Modal Verbs for Technical Suggestions (Might want to / Suggest that)
+
+========================================================================================
+
+LANGUAGE PATTERN 2: MODAL STRUCTURES FOR TECHNICAL SUGGESTIONS
+
+========================================================================================
+
+Form / Syntax Pattern:
+
+  [Subject: You] + [Modal Marker: might want to / could try] + [Base Verb]...
+
+  OR: [Subject: I] + [suggest / recommend] + [that you / + -ing]...
+
+
+
+Communicative Function:
+
+  Proposing alternative workarounds or non-intrusive technical options in a polite, advisory tone without forcing the caller.
+
+
+
+Explanation in Thai (คำอธิบายภาษาไทย):
+
+  เมื่อต้องการเสนอทางเลือกในการแก้ไขปัญหาที่ลูกค้ารู้สึกไม่แน่ใจ หรือเป็นเพียงทางแก้ชั่วคราว การใช้คำแนะนำแบบนุ่มนวลด้วยโครงสร้าง "You might want to..." (คุณอาจลอง...) หรือ "I suggest that..." (ผมขอแนะนำให้...) จะช่วยลดความกดดัน ทำให้ลูกค้ารู้สึกว่าตนเองมีส่วนร่วมในการตัดสินใจแก้ปัญหา
+
+
+
+Contextualized Workplace Examples:
+
+  Example 1: "As a temporary workaround, you might want to try opening the portal in Incognito Mode."
+
+  Example 2: "I suggest that we temporarily switch to a secondary Wi-Fi network while we test the connection."
+
+  Example 3: "You could try re-installing the mobile application if the screen remains unresponsive."
+
+
+
+Common Learner Errors & Corrections:
+
+  x Incorrect: "You must to clear your phone now." (Harsh and ungrammatical 'must to')
+
+    ✓ Correct: "You might want to try clearing your application data."
+
+  x Incorrect: "I suggest you to download again." (Incorrect verb pattern with 'suggest')
+
+    ✓ Correct: "I suggest that you download the application setup file again."
+
+========================================================================================
+
+E. GUIDED EXAMPLES AND MODEL DIALOGUES
+
+Model Dialogue 3.1: Technical Troubleshooting & Workaround Proposal (SaaS Application Crash)
+
+Workplace Context: Application Support Desk at Scicom (MSC) Berhad (JA020).
+
+Interaction Type: Inbound Voice Call — E-Commerce Admin Portal Crash during Inventory Export.
+
+========================================================================================
+
+MODEL DIALOGUE 3.1: TECHNICAL TROUBLESHOOTING & WORKAROUND
+
+========================================================================================
+
+Agent (Golf):     "Thank you for holding, Ms. Anna. I have reviewed your account log. This export crash occurs because temporary browser memory becomes overloaded when generating large PDF files."
+
+                   [Communication Purpose: Step 1 - Plain English Root Cause Explanation]
+
+
+
+Caller (Ms. Anna): "Oh, I see! So that's why it freezes every time I try to export my weekly sales report?"
+
+
+
+Agent (Golf):     "Exactly. As a quick workaround, you might want to try exporting the data in smaller monthly batches. If you export one month at a time, the portal will process the files without exceeding the browser memory limit."
+
+                   [Communication Purpose: Step 2 - Modal Suggestion & First Conditional Workaround]
+
+
+
+Caller (Ms. Anna): "That makes sense. Let me try exporting just the month of August right now."
+
+
+
+Agent (Golf):     "Certainly! Please go ahead and click export for August. I will stay on the line to verify if the file downloads successfully."
+
+                   [Communication Purpose: Step 3 - Reassurance & Collaborative Verification]
+
+
+
+Caller (Ms. Anna): [Pause 5 seconds] "Oh, perfect! It downloaded in two seconds without freezing!"
+
+
+
+Agent (Golf):     "That is wonderful news, Ms. Anna. Could I assist you with anything else today?"
+
+                   [Communication Purpose: Case Resolution Confirmation & Closing Lead-in]
+
+
+
+========================================================================================
+
+ANALYSIS & FORMALITY OPTIONS:
+
+Why This Dialogue is Effective:
+
+  1. Agent Golf translates a complex memory heap crash into plain English ("temporary browser memory becomes overloaded").
+
+  2. Uses polite modal suggestion ("you might want to try...") combined with First Conditional logic ("If you export..., the portal will process...").
+
+  3. Stays on the line to verify the resolution, providing excellent customer service.
+
+
+
+Alternative Formulations:
+
+  - More Formal: "I recommend that we process the export in smaller date ranges to ensure system stability."
+
+  - Direct Instruction: "Please select the August date range first, and then click the export button."
+
+========================================================================================
+
+F. FORMATIVE PRACTICE PAGE & SIMULATED SPEAKING TASKS
+
+Activity 3.1: Knowledge Check & Conditional Syntax (15 Minutes)
+
+Select the grammatically correct First Conditional sentence for a troubleshooting workaround:
+
+A) "If you will reset the router, the connection will restore."
+
+B) "If you reset the router, the connection will restore."
+
+C) "If you resetting router, connection restored."
+
+D) "If router is reset, connection restores yesterday."
+
+Answer: B
+
+Explanation: Option B correctly uses Present Simple in the 'if' clause ("If you reset") and 'will + base verb' in the main clause ("will restore").
+
+An agent wants to suggest using Chrome instead of Safari without sounding forceful. Which option is best?
+
+A) "You must delete Safari immediately."
+
+B) "You might want to try accessing the portal using Google Chrome."
+
+C) "Why are you using Safari? Safari is terrible."
+
+D) "I force you to change your browser."
+
+Answer: B
+
+Explanation: Option B uses the polite modal suggestion structure "You might want to try...", preserving customer rapport.
+
+Complete the sentence: "I suggest that you _____ your browser cache before logging in again."
+
+A) clearing
+
+B) to clear
+
+C) clear
+
+D) cleared
+
+Answer: C
+
+Explanation: The verb suggest followed by a 'that' clause takes a base form subjunctive verb ("suggest that you clear").
+
+Activity 3.2: Error Correction & Transformation (15 Minutes)
+
+Instructions: Rewrite the following unhelpful or grammatically incorrect statements into professional troubleshooting workarounds.
+
+Unhelpful Statement: "Your computer is too slow, so the app crashed."
+
+Professional Rewrite: "This crash happens because background applications are using system memory. If we close unused programs, the application will run smoothly."
+
+Incorrect Statement: "If you will turn off firewall, system works."
+
+Professional Rewrite: "If you temporarily disable the firewall, the system will connect to the server."
+
+Activity 3.3: Simulated Speaking Practice — Guided & Independent Calls
+
+========================================================================================
+
+SIMULATED SPEAKING TASK 3.1: GUIDED TROUBLESHOOTING RESPONSE (PARTIALLY GUIDED)
+
+========================================================================================
+
+Workplace Situation:
+
+  You are an L1 Support Specialist at Credspire (`JA019`).
+
+  A merchant calls stating that their online payment checkout button is unresponsive.
+
+
+
+Customer Prerecorded Audio Line:
+
+  [Audio Prompt]: "Hi! My customers are complaining that when they click 'Pay Now' on my store website, nothing happens! I'm losing sales!"
+
+
+
+Student's Specific Speaking Task:
+
+  Deliver a 45-second troubleshooting response. Explain in plain English that stored browser cookies are causing the checkout glitch. Propose a workaround using First Conditional syntax (*"If you clear your browser cookies..."*), and ask them to test the button while you stay on the line.
+
+
+
+Task Parameters:
+
+  - Preparation Time: 45 Seconds
+
+  - Target Response Duration: 35 - 45 Seconds
+
+
+
+Model Spoken Response:
+
+  "I completely understand how critical this payment button issue is for your business. This glitch occurs because old browser cookies are blocking the payment gateway script. If you clear your browser cookies and refresh the store page, the checkout button will function properly again. Please try clearing your cookies now, and I will stay on the line to verify if it works."
+
+
+
+Model Effectiveness Analysis:
+
+  - Validates business impact empathetically ("critical this payment issue is").
+
+  - Translates script execution failure into plain English ("old browser cookies blocking gateway script").
+
+  - Uses First Conditional (*"If you clear..., the button will function..."*) and offers collaborative verification.
+
+
+
+Self-Check Checklist for Students:
+
+  [ ] Did I explain the root cause in plain English?
+
+  [ ] Did I use a First Conditional sentence (*If + present, will + base verb*)?
+
+  [ ] Did I invite the customer to test the workaround while staying on the line?
+
+========================================================================================
+
+========================================================================================
+
+SIMULATED SPEAKING TASK 3.2: INDEPENDENT TRANSFER TASK (HIGH AUTONOMY)
+
+========================================================================================
+
+Workplace Situation:
+
+  You are a Technical Support Executive at Corebase Technologies (`JA022`).
+
+  An enterprise client calls reporting that their automated daily backup file is failing to upload to the cloud server.
+
+
+
+Customer Prerecorded Audio Line:
+
+  [Audio Prompt]: "Helpdesk? Our automated database backup failed at 2:00 AM last night, and the error log says 'Session Interrupted'. What should we do?"
+
+
+
+Student's Specific Speaking Task:
+
+  Formulate an independent 60-second troubleshooting response. Explain the plain English cause (network bandwidth congestion during peak hours). Propose a workaround using modal suggestions (*"You might want to try..."*) and First Conditional logic (*"If we reschedule the backup to 4:00 AM..."*), and ask the client to run a manual test backup now.
+
+
+
+Task Parameters:
+
+  - Preparation Time: 45 Seconds
+
+  - Target Response Duration: 45 - 60 Seconds
+
+
+
+Model Spoken Response:
+
+  "I can certainly help you resolve that backup upload failure. This 'Session Interrupted' error typically occurs because heavy network traffic causes a temporary connection drop during peak hours. As a workaround, you might want to try rescheduling the automated backup time. If we reschedule the backup task to run at 4:00 AM, the network will be clear and the upload will complete without interruption. Would you mind triggering a manual test backup right now so we can verify if the connection holds?"
+
+
+
+Acceptable Alternative Variations:
+
+  - "I'd be glad to assist with your backup issue. This error happens when network congestion interrupts the data stream. I suggest that we adjust the backup schedule to a off-peak hour. If you run the backup at 4:00 AM, the server will process the file smoothly. Let's run a quick manual test now to verify."
+
+
+
+Common Mistakes to Avoid:
+
+  - Avoid using unexplained jargon like "packet loss on port 443".
+
+  - Do not forget the 'will' in the main conditional clause (*"the network will be clear"*).
+
+========================================================================================
+
+H. LESSON REVIEW AND TRANSFER
+
+Concise Summary: In Lesson 3, you learned how to translate technical causes into plain English, propose workarounds using First Conditional logic (If + present, will + base verb), offer soft modal suggestions (You might want to try...), and always verify whether a workaround restored functionality before ending the interaction.
+
+Essential Expressions & Sentence Patterns Checklist:
+
+[ ] "This issue occurs because plain English root cause."
+
+[ ] "If you action, the system will benefit/result."
+
+[ ] "You might want to try troubleshooting step as a temporary workaround."
+
+[ ] "I suggest that we action to resolve the glitch."
+
+[ ] "Please test the fix now, and I will stay on the line to verify."
+
+Independent Transfer Task: Record a 60-second troubleshooting response for a new scenario: A customer at Micro Technology Solution (JA016) reports that their VPN connection disconnects every time their laptop enters sleep mode. Explain the cause in plain English and propose a power-setting workaround using conditional logic.
+
+Preview of Next Lesson: In Lesson 4 (Handling Complaints and Responding Empathetically), you will learn how to handle dissatisfied customers experiencing recurring technical faults or order delays using empathetic de-escalation language and formal service recovery structures.
+
+PROGRESS AND TASK TRACKING UPDATE
+
+x Deliverable 1: Evidence & Design Blueprint (COMPLETED)
+
+/ Deliverable 2: Complete Lesson Materials
+
+x Lesson 1: Professional Customer Enquiries & Call Openings (120 Mins) — COMPLETED
+
+x Lesson 2: Identifying & Clarifying Technical Problems (150 Mins) — COMPLETED
+
+x Lesson 3: Troubleshooting & Explaining Technical Problems (150 Mins) — COMPLETED ABOVE
+
+ Lesson 4: Handling Complaints & Responding Empathetically (120 Mins) — NEXT BATCH
+
+ Lesson 5: Giving Clear Instructions & Checking Understanding (120 Mins)
+
+ Lesson 6: Escalating Unresolved Cases & Explaining Next Steps (120 Mins)
+
+ Lesson 7: Occupational Vocabulary, Case Records & Ticket Hygiene (120 Mins)
+
+ Lesson 8: Integrated Support Process, Ticket Logs & Oral Case Summaries (240 Mins)
+
+ Deliverable 3: Assessment Package (Pre-test Form A & Post-test Form B)
+
+ Deliverable 4: Implementation Package (Google Classroom & Asset Lists)
+
+ Deliverable 5: Research Documentation Summary
+
+Lesson 3 is complete in full detail. I am ready to move directly to Lesson 4 (Handling Complaints and Responding Empathetically - 120 Minutes). Shall I proceed with Lesson 4?
+
+
+

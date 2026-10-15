@@ -1,0 +1,646 @@
+DELIVERABLE 2: COMPLETE LESSON MATERIALS (CONTINUED)
+
+LESSON 7: Occupational Vocabulary, Case Records, and Ticket Hygiene
+
+A. LESSON OVERVIEW
+
+Lesson Number & Title: Lesson 7: Occupational Vocabulary, Case Records, and Ticket Hygiene
+
+Allocated Learning Duration: 120 Minutes (2.0 Hours)
+
+Occupational Relevance: In multinational BPO contact centers and IT helpdesks in Malaysia (e.g., Cogoport JA015, Scicom JA020, Corebase Technologies JA022, BASF JA010, Concentrix JA003), every voice call or webchat must be documented in a Customer Relationship Management (CRM) ticketing platform (such as Zendesk, Salesforce, or ServiceNow). Incomplete, sloppy, or informal ticket records cause confusion during shift handovers, violate audit compliance, and inflate Average Handling Time (AHT). Frontline specialists must master contact center acronyms (SLA, FCR, AHT, TAT, CSAT) and write concise, professional CRM case notes using standardized past-tense diagnostic verbs.
+
+Measurable Learning Objectives:By the end of this 120-minute lesson, Thai IT undergraduate learners will be able to:
+
+Define and apply core contact center acronyms (SLA, FCR, AHT, TAT, CSAT, CRM) correctly within occupational support contexts.
+
+Construct standardized past-tense diagnostic case log entries ("Verified credentials, isolated authentication failure, reconfigured gateway settings, and resolved ticket") using professional workplace formatting.
+
+Edit and refine sloppy, informal, or incomplete call notes into polished, audit-compliant CRM ticket records.
+
+Produce a complete, grammatically accurate written CRM ticket log from a raw customer interaction transcript within 15 minutes, achieving 100% compliance with industry ticket hygiene standards.
+
+========================================================================================
+
+LESSON 7 COMMUNICATION FUNCTIONS, VOCABULARY, AND GRAMMAR MATRIX
+
+========================================================================================
+
+Target Communication Functions:
+
+  - Documenting customer interactions in CRM ticketing systems (Zendesk / Salesforce)
+
+  - Summarizing diagnostic actions using passive and active past-tense reporting verbs
+
+  - Structuring case notes under standard field headers (Issue, Cause, Action, Status)
+
+  - Applying occupational BPO/IT acronyms accurately in professional documentation
+
+
+
+Target Occupational Vocabulary & Acronyms:
+
+  - Service Level Agreement (SLA), First Contact Resolution (FCR), Average Handling Time (AHT),
+
+    Turnaround Time (TAT), Customer Satisfaction (CSAT), Customer Relationship Management (CRM),
+
+    Ticket Hygiene, Audit Trail, Workaround Applied, Pending Customer Action, Case Resolved.
+
+
+
+Target Sentence Patterns & Grammar:
+
+  - Past-Tense Diagnostic Verbs: "Customer reported [issue]. Verified [credentials]. Isolated [cause]."
+
+  - Concise Telegraphic Reporting Style: "Action Taken: Reconfigured [IP settings] and cleared [cache]."
+
+  - Passive Status Summaries: "Ticket escalated to [Tier-2] due to [unresolved database glitch]."
+
+  - Abbreviation & Tag Formatting: "Priority: P2 | Category: SaaS Authentication | SLA: 2 Hours"
+
+========================================================================================
+
+Prerequisite Knowledge: Mastery of Call Openings (Lesson 1), Diagnostic Questioning (Lesson 2), Technical Troubleshooting (Lesson 3), Complaint Handling (Lesson 4), Step-by-Step Instructions (Lesson 5), and Escalations (Lesson 6).
+
+Materials Needed: Web-based EOP portal access, Audio/Video player, CRM Ticket Simulator interface.
+
+Connection to Curriculum Flow:
+
+Backward Linkage: Synthesizes the oral diagnostic and resolution skills learned in Lessons 1–6 into written CRM ticket logs.
+
+Forward Linkage: Serves as the direct prerequisite for Lesson 8 (Integrated Support Process, Ticket Logs & Oral Case Summaries), where written ticket records are converted into structured oral shift handovers.
+
+B. ATTENTION-GRABBING OPENING HOOK
+
+Workplace Context: Quality Assurance & Audit Department at a Shared Service Center in Cyberjaya, Malaysia.
+
+The Problem / Communication Mistake: An IT support agent named Bank finishes a 20-minute support call. In the CRM ticket log, he types only three words: "User app broken. Fixed it. Bye." Two days later, the same user calls back because the issue recurred. The next agent on shift opens Bank's ticket, finds zero diagnostic details, and has to repeat the entire 20-minute diagnostic process from scratch. Bank receives a major Quality Audit failure for poor "Ticket Hygiene."
+
+Reflective Question for Students:
+
+Why did Bank's three-word ticket log harm customer service quality and waste colleague time?
+
+What specific information fields must be included in a professional CRM ticket entry?
+
+Occupational Importance: In Malaysian contact centers, ticket logging quality is audited weekly. Clear ticket logs ensure seamless case transfers across global shifts, protect company audit trails, and maintain high team productivity.
+
+C. COMPLETE INSTRUCTIONAL VIDEO SCRIPT
+
+Video Title: Module 7.1 — CRM Ticket Hygiene & Professional Case Logging
+
+Target Duration: 8 Minutes (Runtime) + 10 Minutes (Interactive Pauses) = 18 Minutes Total Learning Time
+
+AI Tool Production Note: AI video generation script with split-screen CRM interface demos and interactive pauses.
+
+========================================================================================
+
+INSTRUCTIONAL VIDEO SCRIPT: MODULE 7.1
+
+========================================================================================
+
+
+
+[SCENE 1: INTRODUCTION & THE PURPOSE OF TICKET HYGIENE]
+
+Visual Direction: Split screen showing a modern BPO floor on the left, and a live Zendesk/Salesforce CRM ticket screen on the right.
+
+On-Screen Text: Lesson 7.1: Occupational Vocabulary, Case Records & Ticket Hygiene
+
+Audio / Narrator Script:
+
+"Welcome to Lesson 7. In a multinational contact center, your voice is only half of your job. The other half is what you write in the CRM database. Professional ticket hygiene means documenting every call so clearly that any colleague in Malaysia, the Philippines, or Europe can read your notes and understand the exact case history in 10 seconds."
+
+
+
+[SCENE 2: THE 5 MANDATORY CRM TICKET FIELDS]
+
+Visual Direction: A structured CRM ticket template highlights five color-coded fields.
+
+On-Screen Text:
+
+  1. Incident Summary / Subject Line
+
+  2. Customer Reported Symptom
+
+  3. Root Cause Identified
+
+  4. Diagnostic Action Taken
+
+  5. Current Status & Next Steps
+
+Narrator Script:
+
+"Every professional CRM ticket contains five mandatory fields. First, a concise Subject Line. Second, the Customer Reported Symptom. Third, the Root Cause Identified. Fourth, the Diagnostic Action Taken. Fifth, the Current Status and Next Steps. Let's look at a common mistake."
+
+
+
+[SCENE 3: CONTRAST ANALYSIS - SLOPPY LOG VS. AUDIT-READY TICKET]
+
+Visual Direction: Side-by-side comparison of two ticket logs.
+
+Left Panel (Red Border - Ineffective Agent Bank):
+
+Text: "Cust called. VPN no work. I told him clear cache. Now okay. Close."
+
+On-Screen Text (Red): 
+
+  X Vague and informal ("no work", "now okay")
+
+  X Missing ticket headers and reference codes
+
+  X Unprofessional past-tense grammar
+
+
+
+Right Panel (Green Border - Effective Agent Pear):
+
+Text:
+
+  Subject: [SaaS VPN] Authentication Timeout Error
+
+  Symptom: User reported 504 timeout error when connecting via home Wi-Fi.
+
+  Root Cause: Stored browser cache conflict following gateway patch update.
+
+  Action Taken: Guided user through browser cache clearance and DNS flush.
+
+  Status: RESOLVED (FCR achieved). Verified user successfully reconnected.
+
+On-Screen Text (Green):
+
+  ✓ Professional field headers
+
+  ✓ Standard past-tense diagnostic verbs ("reported", "guided", "verified")
+
+  ✓ Industry acronyms applied correctly (FCR, SaaS, VPN)
+
+
+
+[SCENE 4: INTERACTIVE PAUSE & PRACTICE]
+
+Visual Direction: Countdown timer (10 seconds) with audio chime.
+
+On-Screen Text: PRACTICE PAUSE: Convert this casual line into a professional CRM action entry: "I helped him change his password."
+
+Narrator Script:
+
+"Pause the video now. How would you record 'I helped him change his password' in a professional CRM log? Practice writing: 'Guided user through portal password reset protocol.'"
+
+
+
+[INTERACTIVE PAUSE - 120 SECONDS]
+
+
+
+[SCENE 5: CONTACT CENTER ACRONYMS & METRICS]
+
+Visual Direction: On-screen graphic highlighting core contact center KPIs: SLA, FCR, AHT, TAT, CSAT.
+
+Narrator Script:
+
+"Understand these acronyms: FCR means First Contact Resolution—solving the issue on the first call. SLA is Service Level Agreement—your promised turnaround time. AHT is Average Handling Time. Using precise terms keeps your logs professional and audit-ready."
+
+
+
+[SCENE 6: LESSON RECAP]
+
+Visual Direction: Summary bullet points with green checkmarks.
+
+On-Screen Text:
+
+  RECAP:
+
+  1. Always use 5 structured ticket fields.
+
+  2. Use past-tense diagnostic verbs (Verified, Isolated, Guided, Resolved).
+
+  3. Keep entries concise, objective, and free of slang.
+
+  4. Apply BPO acronyms correctly (FCR, SLA, TAT).
+
+Narrator Script:
+
+"High-quality ticket notes prove your professional competence. Let's practice writing ticket logs in Section D!"
+
+========================================================================================
+
+D. EXPLICIT TEACHING OF SENTENCE STRUCTURES AND LANGUAGE USE
+
+1. Language Pattern 1: Core Contact Center Acronyms & Jargon
+
+========================================================================================
+
+LANGUAGE PATTERN 1: CONTACT CENTER ACRONYMS & JARGON
+
+========================================================================================
+
+Form / Concept Definition & Usage:
+
+  - SLA (Service Level Agreement): Contractual resolution deadline (e.g., "P2 SLA = 2 Hours").
+
+  - FCR (First Contact Resolution): Case resolved on first call without callback ("FCR Achieved").
+
+  - AHT (Average Handling Time): Total duration of call + wrap-up logging ("Target AHT = 300s").
+
+  - TAT (Turnaround Time): Time elapsed from ticket opening to final closure.
+
+  - CSAT (Customer Satisfaction): Customer rating score following interaction.
+
+  - CRM (Customer Relationship Management): System used to log tickets (e.g., Zendesk, Salesforce).
+
+
+
+Communicative Function:
+
+  Using industry-standard terminology in BPO ticket logs and team performance reporting.
+
+
+
+Explanation in Thai (คำอธิบายภาษาไทย):
+
+  การทำงานในศูนย์ BPO และ Shared Service Center ในประเทศมาเลเซีย จำเป็นต้องบันทึกข้อมูลโดยใช้คำย่อมาตรฐานสากล เพื่อความสะดวกรวดเร็วและเป็นมืออาชีพ การเข้าใจคำย่อเหล่านี้ช่วยให้เขียนบันทึก CRM ได้อย่างกระชับและผ่านเกณฑ์การตรวจสอบ Quality Audit
+
+
+
+Contextualized Workplace Examples:
+
+  Example 1: "Case resolved on initial contact. Marked as FCR in CRM portal."
+
+  Example 2: "Ticket escalated to Tier-2 due to pending SLA breach (TAT: 1.5 hours)."
+
+  Example 3: "Customer expressed high satisfaction (CSAT 5/5) following password reset guidance."
+
+
+
+Common Learner Errors & Corrections:
+
+  x Incorrect: "Finish problem in first time call." (Wordy and non-standard)
+
+    ✓ Correct: "Case resolved upon initial call (FCR achieved)."
+
+  x Incorrect: "Late time for contract promise." (Incorrect workplace vocabulary)
+
+    ✓ Correct: "Ticket escalated to prevent SLA breach."
+
+========================================================================================
+
+Substitution / Transformation Exercise (10 Minutes)
+
+Instructions: Replace the underlined wordy phrases with the correct contact center acronym (SLA, FCR, AHT, CSAT, CRM).
+
+Wordy: "This ticket was solved during the first call without needing a call back."
+
+Professional Rewrite: "This ticket achieved First Contact Resolution (FCR)."
+
+Wordy: "We must finish this task before our contractual time limit expires."
+
+Professional Rewrite: "This ticket must be resolved within the promised Service Level Agreement (SLA)."
+
+Wordy: "Please record this case details into our customer software program."
+
+Professional Rewrite: "Please record these case details in the CRM system."
+
+2. Language Pattern 2: Past-Tense Diagnostic Verbs for CRM Logging
+
+========================================================================================
+
+LANGUAGE PATTERN 2: PAST-TENSE DIAGNOSTIC VERBS FOR CRM LOGS
+
+========================================================================================
+
+Form / Syntax Pattern:
+
+  [Field Header: Action Taken:] + [Past-Tense Diagnostic Verb: Verified / Isolated / Guided / Reconfigured / Escalated / Resolved] + [Technical Component]
+
+
+
+Communicative Function:
+
+  Recording concise, objective, past-tense summaries of actions taken during a customer support call in CRM ticket logs.
+
+
+
+Explanation in Thai (คำอธิบายภาษาไทย):
+
+  การเขียนบันทึก CRM ในช่อง Action Taken นิยมใช้กริยาช่อง 2 (Past-Tense Verbs) ที่แสดงถึงการกระทำทางเทคนิคที่เสร็จสิ้นแล้ว ขึ้นต้นประโยคแบบย่อ (Telegraphic style) โดยไม่จำเป็นต้องใส่ประธาน "I" หรือ "The agent" เพื่อความกระชับและเป็นทางการ
+
+
+
+Contextualized Workplace Examples:
+
+  Example 1: "Verified customer identity via OTP. Isolated issue to corrupted browser cache."
+
+  Example 2: "Guided user through network adapter reset. Confirmed connection restored."
+
+  Example 3: "Reconfigured VPN server gateway settings. Issued new authentication token."
+
+  Example 4: "Escalated ticket to Tier-2 Engineering due to database timeout error."
+
+
+
+Common Learner Errors & Corrections:
+
+  x Incorrect: "I am helping customer change password and it work." (Present tense & informal)
+
+    ✓ Correct: "Guided customer through password reset. Verified login functional."
+
+  x Incorrect: "Customer tell app crash so I check." (Broken grammar)
+
+    ✓ Correct: "Customer reported application crash. Isolated fault to memory leak."
+
+========================================================================================
+
+E. GUIDED EXAMPLES AND MODEL TICKET RECORDS
+
+Model Ticket Record 7.1: Professional Audit-Ready CRM Case Log
+
+Workplace Context: CRM Ticketing System (Zendesk) at Corebase Technologies (JA022).
+
+Source Scenario: Support call regarding a frozen enterprise billing portal.
+
+========================================================================================
+
+MODEL CRM TICKET RECORD 7.1
+
+========================================================================================
+
+TICKET ID: #TK-88204                               PRIORITY: P2 (High)
+
+ACCOUNT: Corebase SaaS / E-Commerce Channel         CATEGORY: Software / Portal Freeze
+
+AGENT: Golf (Tier-1 Tech Support)                  STATUS: RESOLVED (FCR)
+
+
+
+SUBJECT: [Portal Freeze] Checkout Gateway Unresponsive during Export
+
+
+
+INCIDENT SUMMARY & SYMPTOMS:
+
+- Customer reported checkout portal freeze when exporting monthly transaction logs.
+
+- Error Code displayed: 'Timeout Error 504'.
+
+- Issue affected single user on desktop web browser.
+
+
+
+DIAGNOSTIC ACTIONS TAKEN:
+
+1. Verified customer identity via account ID and registered phone number.
+
+2. Isolated fault to stored browser cache congestion following patch update.
+
+3. Guided customer through clearing browser cookies and flushing DNS cache.
+
+4. Instructed user to attempt export in Incognito Mode.
+
+
+
+RESOLUTION & CURRENT STATUS:
+
+- RESOLVED. User successfully exported monthly report without system freeze.
+
+- FCR achieved (AHT: 8.5 minutes).
+
+- No further customer action required. Ticket closed.
+
+========================================================================================
+
+F. FORMATIVE PRACTICE PAGE & TICKET LOGGING EXERCISES
+
+Activity 7.1: Knowledge Check & Acronym Identification (15 Minutes)
+
+What does FCR stand for in contact center operations?
+
+A) First Contact Resolution
+
+B) Fast Customer Response
+
+C) Final Case Report
+
+D) Formal Communication Protocol
+
+Answer: A
+
+Explanation: First Contact Resolution (FCR) measures the percentage of customer issues resolved during the initial contact.
+
+Which CRM log entry uses professional past-tense diagnostic verbs?
+
+A) "Cust say app broken. I tell him restart."
+
+B) "Reported application crash. Isolated fault to memory congestion. Guided user through system restart."
+
+C) "I will fix the application tomorrow morning."
+
+D) "Application crash because user don't know computer."
+
+Answer: B
+
+Explanation: Option B uses structured past-tense diagnostic verbs (Reported, Isolated, Guided) in a professional, objective tone.
+
+Complete the ticket field: "Status: ESCALATED | Reason: Pending Tier-2 review to prevent _____ breach."
+
+A) SLA
+
+B) FCR
+
+C) CSAT
+
+D) AHT
+
+Answer: A
+
+Explanation: Tickets are escalated to higher tiers to prevent a Service Level Agreement (SLA) turnaround time breach.
+
+Activity 7.2: Ticket Log Editing & Formatting (15 Minutes)
+
+Instructions: Rewrite the following sloppy call notes into a structured, audit-ready CRM ticket entry using standard headers (Subject, Symptom, Action Taken, Status).
+
+Sloppy Notes:"User called Ms Anna. She angry because payment failed. I checked her account. Her credit card expired. I told her update card. She updated and payment worked. Bye."
+
+Structured Audit-Ready Ticket Log:
+
+Subject: [Payment Failure] Card Authorization Error
+
+Symptom: Customer reported payment processing failure during checkout.
+
+Root Cause: Expired credit card credentials on customer account file.
+
+Action Taken:
+
+1. Verified customer identity and account status.
+
+2. Identified expired credit card expiration date.
+
+3. Guided customer through updating billing card details in customer portal.
+
+Status: RESOLVED (FCR Achieved). Payment processed successfully.
+
+Activity 7.3: Formative CRM Ticket Logging Tasks
+
+========================================================================================
+
+FORMATIVE TASK 7.1: GUIDED CRM TICKET LOGGING FROM CALL TRANSCRIPT
+
+========================================================================================
+
+Source Call Transcript:
+
+  Agent: "Thank you for calling Credspire Support. My name is Golf. How may I help you?"
+
+  Caller: "Hi, I'm David. I can't log into my merchant portal. It says 'Account Locked'."
+
+  Agent: "I can help with that, Mr. David. May I verify your merchant ID?"
+
+  Caller: "Yes, it's #M-9021."
+
+  Agent: "Thank you. I see 3 failed password attempts triggered an automatic security lock. I have sent a password reset link to your registered email. Please click it now."
+
+  Caller: "Okay, got it! I just reset my password and I'm logged in now. Thanks!"
+
+
+
+Student Task:
+
+  Complete the structured CRM ticket record below based on the transcript above.
+
+
+
+Expected Student Output:
+
+  TICKET ID: #TK-3091                      PRIORITY: P3 (Standard)
+
+  ACCOUNT: Credspire Merchant Portal       CATEGORY: Account Access / Lockout
+
+  AGENT: Golf (Tier-1)                     STATUS: RESOLVED (FCR)
+
+
+
+  SUBJECT: [Account Lockout] Password Reset & Account Unlocking
+
+  SYMPTOM: User reported 'Account Locked' error on merchant portal.
+
+  ROOT CAUSE: Automatic security lock triggered by 3 consecutive failed login attempts.
+
+  ACTION TAKEN:
+
+    1. Verified merchant credentials (ID #M-9021).
+
+    2. Dispatched automated password reset link to user's registered email.
+
+    3. Confirmed user successfully reset password and restored account access.
+
+  RESOLUTION: RESOLVED. FCR achieved. Account fully functional.
+
+========================================================================================
+
+========================================================================================
+
+FORMATIVE TASK 7.2: INDEPENDENT CRM TICKET ENTRY FROM RAW INCIDENT NOTES
+
+========================================================================================
+
+Raw Incident Notes:
+
+  - Caller: Sarah Lim (Company: Logistics Corp)
+
+  - Time: 10:15 AM
+
+  - Issue: Could not connect to corporate VPN from home. Screen showed 'Gateway Unreachable Code 102'.
+
+  - Diagnostic: User's home Wi-Fi router DNS was blocking the VPN IP address.
+
+  - Action: Agent guided user through changing Wi-Fi DNS to [suspicious link removed] and clearing local DNS cache.
+
+  - Result: VPN reconnected successfully. User verified access to internal servers.
+
+
+
+Student Task:
+
+  Formulate an independent, complete CRM ticket record using professional field headers, past-tense diagnostic verbs, and BPO acronyms.
+
+
+
+Expected Student Output:
+
+  TICKET ID: #TK-5541                      PRIORITY: P2 (High)
+
+  ACCOUNT: Corporate VPN Network           CATEGORY: Connectivity / Gateway Error
+
+  AGENT: Student Name                      STATUS: RESOLVED (FCR)
+
+
+
+  SUBJECT: [VPN Gateway] Connection Error Code 102
+
+  SYMPTOM: User reported 'Gateway Unreachable Code 102' when connecting via home Wi-Fi.
+
+  ROOT CAUSE: Local router DNS resolution blocking corporate VPN IP gateway.
+
+  ACTION TAKEN:
+
+    1. Verified employee credentials and isolated connectivity fault.
+
+    2. Guided user through reconfiguring home router DNS settings to [suspicious link removed].
+
+    3. Instructed user to execute local DNS cache flush.
+
+  RESOLUTION: RESOLVED. VPN connection established successfully. Verified server access. FCR achieved.
+
+========================================================================================
+
+H. LESSON REVIEW AND TRANSFER
+
+Concise Summary: In Lesson 7, you learned how to document support interactions professionally in CRM databases. Use structured ticket fields (Subject, Symptom, Cause, Action Taken, Status), write concise entries using past-tense diagnostic verbs (Verified, Isolated, Guided, Reconfigured, Resolved), and apply contact center acronyms (SLA, FCR, AHT, TAT) correctly to ensure audit compliance.
+
+Essential Expressions & Sentence Patterns Checklist:
+
+[ ] "Subject: Category Concise Summary of Problem"
+
+[ ] "Symptom: Customer reported error message/behavior."
+
+[ ] "Root Cause: Fault isolated to technical cause."
+
+[ ] "Action Taken: Verified credentials, guided user through fix."
+
+[ ] "Status: RESOLVED / ESCALATED (FCR Achieved / SLA 2 Hours)."
+
+Independent Transfer Task: Write a complete CRM ticket record for a new scenario: A customer at BASF (JA010) reports a printer driver error during SAP report generation. The agent guided them through reinstalling the driver, restoring print functionality.
+
+Preview of Next Lesson: In Lesson 8 (Integrated Support Process, Ticket Logs & Oral Case Summaries), you will synthesize all course skills: read a complex CRM ticket record, extract key case details, and deliver a polished 90-second Oral Case Summary for a shift handover.
+
+PROGRESS AND TASK TRACKING UPDATE
+
+x Deliverable 1: Evidence & Design Blueprint (COMPLETED)
+
+/ Deliverable 2: Complete Lesson Materials
+
+x Lesson 1: Professional Customer Enquiries & Call Openings (120 Mins) — COMPLETED
+
+x Lesson 2: Identifying & Clarifying Technical Problems (150 Mins) — COMPLETED
+
+x Lesson 3: Troubleshooting & Explaining Technical Problems (150 Mins) — COMPLETED
+
+x Lesson 4: Handling Complaints & Responding Empathetically (120 Mins) — COMPLETED
+
+x Lesson 5: Giving Clear Instructions & Checking Understanding (120 Mins) — COMPLETED
+
+x Lesson 6: Escalating Unresolved Cases & Explaining Next Steps (120 Mins) — COMPLETED
+
+x Lesson 7: Occupational Vocabulary, Case Records & Ticket Hygiene (120 Mins) — COMPLETED ABOVE
+
+ Lesson 8: Integrated Support Process, Ticket Logs & Oral Case Summaries (240 Mins) — NEXT BATCH
+
+ Deliverable 3: Assessment Package (Pre-test Form A & Post-test Form B)
+
+ Deliverable 4: Implementation Package (Google Classroom & Asset Lists)
+
+ Deliverable 5: Research Documentation Summary
+
+Lesson 7 is complete. I am ready to generate Lesson 8 (Integrated Support Process, Ticket Logs & Oral Case Summaries - 240 Minutes) next, fulfilling all special requirements for oral case summaries and shift handovers. Shall I proceed with Lesson 8?
+
+
+

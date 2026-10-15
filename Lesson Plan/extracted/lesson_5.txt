@@ -1,0 +1,674 @@
+DELIVERABLE 2: COMPLETE LESSON MATERIALS (CONTINUED)
+
+LESSON 5: Giving Clear Instructions and Checking Understanding
+
+A. LESSON OVERVIEW
+
+Lesson Number & Title: Lesson 5: Giving Clear Instructions and Checking Understanding
+
+Allocated Learning Duration: 120 Minutes (2.0 Hours)
+
+Occupational Relevance: In multinational IT helpdesks and shared service centers in Malaysia (e.g., BASF JA010, iFAST Global Hub JA012, Swarovski JA025, Midea JA007, BE International JA011), frontline specialists frequently guide users through multi-step technical procedures. Common tasks include configuring VPN clients, setting up Multi-Factor Authentication (MFA), adjusting email security settings, and navigating self-service portals. Frontline agents must deliver clear, sequential instructions using imperative verbs and transition markers, while constantly verifying user comprehension at each step to prevent user errors and abandoned support calls.
+
+Measurable Learning Objectives:By the end of this 120-minute lesson, Thai IT undergraduate learners will be able to:
+
+Apply imperative verbs (click, select, enter, toggle, verify) paired with sequential transition markers (first, next, subsequently, once that is done, finally) to structure multi-step technical guidance.
+
+Construct polite comprehension-check questions ("Does that dialog box appear on your screen?", "Have you located the 'Settings' tab?") to verify user alignment before moving to the next step.
+
+Re-order and refine scrambled or ambiguous technical instructions into clear, logical, step-by-step user guides.
+
+Perform a 60-second instructional spoken response in a simulated technical support call guiding a user through a Multi-Factor Authentication (MFA) setup or VPN configuration, achieving a minimum score of "3" across all rubric criteria.
+
+========================================================================================
+
+LESSON 5 COMMUNICATION FUNCTIONS, VOCABULARY, AND GRAMMAR MATRIX
+
+========================================================================================
+
+Target Communication Functions:
+
+  - Delivering clear, step-by-step technical instructions and device configurations
+
+  - Sequencing technical tasks logically using sequential transition markers
+
+  - Verifying customer comprehension and visual alignment at every step
+
+  - Pausing and confirming task completion before advancing to subsequent steps
+
+
+
+Target Occupational Vocabulary & Acronyms:
+
+  - Multi-Factor Authentication (MFA), VPN Gateway, Security Token, Dialog Box,
+
+    Drop-down Menu, Checkbox, Toggle, Drop-down List, Authentication App, QR Code.
+
+
+
+Target Sentence Patterns & Grammar:
+
+  - Imperative Verbs for Direct Actions: "[Click] the 'Security' tab and [select] 'Password Reset'."
+
+  - Sequential Transition Markers: "First, [action]. Next, [action]. Once that is done, [action]."
+
+  - Comprehension Checks: "Does the green confirmation checkmark appear on your screen?"
+
+  - Pacing & Pause Prompts: "Please let me know once you have completed that step."
+
+========================================================================================
+
+Prerequisite Knowledge: Mastery of Call Openings (Lesson 1), Diagnostic Questioning (Lesson 2), Plain English Explanations (Lesson 3), and Empathetic De-escalation (Lesson 4).
+
+Materials Needed: Web-based EOP portal access, Audio/Video player, microphone/audio recording interface.
+
+Connection to Curriculum Flow:
+
+Backward Linkage: Leverages the calm, empathetic customer state achieved in Lesson 4 to begin step-by-step technical execution.
+
+Forward Linkage: Mastered instructional delivery directly supports Lesson 6 (Escalating Unresolved Cases and Explaining Next Steps) when an instructional workaround fails and the case must be escalated to Tier-2.
+
+B. ATTENTION-GRABBING OPENING HOOK
+
+Workplace Context: Corporate IT Helpdesk at a Shared Service Center in Kuala Lumpur, Malaysia.
+
+The Problem / Communication Mistake: An IT support agent named Ken is guiding a remote employee through setting up Multi-Factor Authentication (MFA). Ken dumps four steps in one single, rapid-fire sentence: "Go to settings click security generate token type the 6-digit code and press enter." The user gets completely confused, types the code into the wrong field, locks herself out of her account, and panics ("Wait! What screen are you talking about? My app is locked now!").
+
+Reflective Question for Students:
+
+Why did Ken's rapid-fire instruction cause the user to lock her account?
+
+How can you break down a complex multi-step technical process into bite-sized instructions with clear checks?
+
+Occupational Importance: In Malaysian enterprise helpdesks, user lockout incidents caused by poor agent instructions increase ticket resolution costs and generate avoidable escalation tickets. Delivering one instruction at a time and checking for visual confirmation ensures high First Contact Resolution (FCR) rates.
+
+C. COMPLETE INSTRUCTIONAL VIDEO SCRIPT
+
+Video Title: Module 5.1 — Delivering Clear Instructions & Pacing Support Calls
+
+Target Duration: 8 Minutes (Runtime) + 10 Minutes (Interactive Pauses) = 18 Minutes Total Learning Time
+
+AI Tool Production Note: AI video generation script with split-screen screen-sharing visual guides and interactive pauses.
+
+========================================================================================
+
+INSTRUCTIONAL VIDEO SCRIPT: MODULE 5.1
+
+========================================================================================
+
+
+
+[SCENE 1: INTRODUCTION & THE ONE-STEP-AT-A-TIME RULE]
+
+Visual Direction: Split screen showing an IT helpdesk agent on the left and a animated smartphone MFA screen on the right.
+
+On-Screen Text: Lesson 5.1: Giving Clear Instructions & Checking Understanding
+
+Audio / Narrator Script:
+
+"Welcome to Lesson 5. Guiding a user through software configuration over the phone is like guiding someone through a dark room. You must take one step at a time, use clear transition markers, and constantly check if the customer is standing in the right spot before moving forward."
+
+
+
+[SCENE 2: THE 3-PART INSTRUCTIONAL CYCLE]
+
+Visual Direction: An interactive diagram displays a 3-stage looping cycle.
+
+On-Screen Text:
+
+  Step 1: Sequence Marker + Imperative Action ("First, click the 'Settings' icon.")
+
+  Step 2: Pause & Confirmation Check ("Does the settings menu appear?")
+
+  Step 3: Acknowledge & Advance ("Great. Next, select 'Security'...")
+
+Narrator Script:
+
+"Master the 3-part instructional cycle. First, combine a transition marker like 'First' or 'Next' with an imperative verb like 'click' or 'select'. Second, ask a visual comprehension check. Third, wait for the customer to confirm before giving the next step."
+
+
+
+[SCENE 3: CONTRAST ANALYSIS - RAPID-FIRE DUMP VS. PACED GUIDANCE]
+
+Visual Direction: Side-by-side video comparison of two agents guiding an MFA setup.
+
+Left Panel (Red Border - Ineffective Agent Ken):
+
+Ken (Speaking rapidly without pausing): "Open your phone scan the QR code type the token and click submit okay?"
+
+Caller: "Wait! Slow down! Which QR code? My screen is blank!"
+
+On-Screen Text (Red): 
+
+  X Overloads user with 4 steps at once
+
+  X No transition markers
+
+  X Zero comprehension checks
+
+
+
+Right Panel (Green Border - Effective Agent Mei):
+
+Mei (Paced, clear, pausing after each step): "First, please open the Authenticator application on your smartphone... Let me know once the app is open."
+
+Caller: "Okay, the app is open now."
+
+Mei: "Perfect. Next, tap the '+' icon in the top right corner. Do you see the camera scanner screen?"
+
+Caller: "Yes, I see the scanner."
+
+Mei: "Great. Now scan the QR code displayed on your laptop screen."
+
+On-Screen Text (Green):
+
+  ✓ Clear sequential markers ("First", "Next", "Now")
+
+  ✓ Imperative action verbs ("Open", "Tap", "Scan")
+
+  ✓ Visual checks & explicit pauses ("Do you see...?", "Let me know once...")
+
+
+
+[SCENE 4: INTERACTIVE PAUSE & PRACTICE]
+
+Visual Direction: Countdown timer (10 seconds) with audio chime.
+
+On-Screen Text: PRACTICE PAUSE: Convert this vague statement into a clear imperative instruction with a check: "You need to toggle the VPN switch to ON."
+
+Narrator Script:
+
+"Pause the video now. How would you give this VPN instruction using a sequential marker and a comprehension check? Practice saying it out loud."
+
+
+
+[INTERACTIVE PAUSE - 120 SECONDS]
+
+
+
+[SCENE 5: VERIFYING VISUAL ALIGNMENT]
+
+Visual Direction: Text box highlighting visual alignment questions: "Does a green checkmark appear next to your username?"
+
+Narrator Script:
+
+"Never ask 'Do you understand?' because callers often say 'yes' even when confused. Instead, ask specific visual checks like 'Does the security dialog box pop up?' or 'What color is the status indicator?'"
+
+
+
+[SCENE 6: LESSON RECAP]
+
+Visual Direction: Summary bullet points with green checkmarks.
+
+On-Screen Text:
+
+  RECAP:
+
+  1. Give ONE instruction at a time.
+
+  2. Use Sequential Markers: First, Next, Subsequently, Finally.
+
+  3. Use Action Imperatives: Click, Select, Enter, Toggle.
+
+  4. Verify with Specific Visual Checks.
+
+Narrator Script:
+
+"Paced instructions prevent errors and empower users. Practice these structures in Section D!"
+
+========================================================================================
+
+D. EXPLICIT TEACHING OF SENTENCE STRUCTURES AND LANGUAGE USE
+
+1. Language Pattern 1: Imperative Actions & Sequential Transition Markers
+
+========================================================================================
+
+LANGUAGE PATTERN 1: IMPERATIVES & SEQUENTIAL TRANSITION MARKERS
+
+========================================================================================
+
+Form / Syntax Pattern:
+
+  [Sequential Marker: First / Next / Subsequently / Once that is done / Finally] + 
+
+  [Imperative Action Verb: Click / Select / Enter / Toggle / Verify] + [Target Field/Button]
+
+
+
+Communicative Function:
+
+  Guiding users through complex technical configurations in a clear, logical, step-by-step chronological order.
+
+
+
+Explanation in Thai (คำอธิบายภาษาไทย):
+
+  การให้คำแนะนำขั้นตอนทางเทคนิค (Step-by-step instructions) ต้องเริ่มประโยคด้วยคำบอกลำดับขั้นตอน (Sequential Markers) เช่น "First", "Next", "Subsequently", "Once that is done", "Finally" ตามด้วยกริยาคำสั่ง (Imperative Verb) ขึ้นต้นประโยคโดยไม่ต้องใส่ประธาน เช่น "Click...", "Select...", "Enter..." เพื่อความกระชับและชัดเจน
+
+
+
+Contextualized Workplace Examples:
+
+  Example 1: "First, click on the 'Account Settings' tab located at the top right of your portal."
+
+  Example 2: "Next, select 'Multi-Factor Authentication' from the drop-down menu."
+
+  Example 3: "Once that is done, enter the 6-digit security code generated by your mobile app."
+
+  Example 4: "Finally, click 'Save Changes' to finalize your security updates."
+
+
+
+Common Learner Errors & Corrections:
+
+  x Incorrect: "You must to click security and then you type password." (Clunky syntax with 'must to')
+
+    ✓ Correct: "First, click 'Security Settings', and then enter your current password."
+
+  x Incorrect: "First step click here, second step click there, third step finish." (Repetitive, non-standard)
+
+    ✓ Correct: "First, click 'Account'. Next, select 'Privacy'. Finally, click 'Confirm'."
+
+========================================================================================
+
+Substitution / Transformation Exercise (10 Minutes)
+
+Instructions: Rewrite the following informal instructions into formal, sequentially marked step-by-step guides.
+
+Informal: "Open your browser and clear cache then restart."
+
+Professional Transformation: "First, open your web browser. Next, clear your browsing cache. Once that is done, restart the application."
+
+Informal: "Type your email and press submit button."
+
+Professional Transformation: "First, enter your registered email address into the input field. Next, click the 'Submit' button."
+
+Informal: "Download setup file and run it."
+
+Professional Transformation: "First, download the installation package. Subsequently, double-click the setup file to launch the installer."
+
+Production Task (10 Minutes)
+
+Write a 3-step sequential instruction using First, Next, and Finally to guide a user through updating their corporate Wi-Fi password on a smartphone.
+
+Student Output Example: "First, open your phone's 'Settings' menu. Next, select 'Wi-Fi' and choose your corporate network. Finally, enter your new password and tap 'Connect'."
+
+2. Language Pattern 2: Visual Comprehension-Check Questions
+
+========================================================================================
+
+LANGUAGE PATTERN 2: VISUAL COMPREHENSION-CHECK QUESTIONS
+
+========================================================================================
+
+Form / Syntax Pattern:
+
+  Do you see + [Visual Screen Element]?
+
+  OR: Does + [Visual Screen Element] + [appear / display] + on your screen?
+
+  OR: Have you located + [Specific Icon / Tab]?
+
+
+
+Communicative Function:
+
+  Verifying that the customer is viewing the correct interface, menu, or dialog box before proceeding to the next step.
+
+
+
+Explanation in Thai (คำอธิบายภาษาไทย):
+
+  หลีกเลี่ยงการถามว่า "Do you understand?" (คุณเข้าใจไหม?) เพราะลูกค้ามักจะตอบว่า "เข้าใจ" แม้ว่าจะกำลังสับสน ประโยคเช็กความเข้าใจที่มีประสิทธิภาพในงาน Tech Support ต้องเป็นการเช็กสิ่งที่ปรากฏบนหน้าจอจริง (Visual Checks) เช่น "Do you see the blue 'Submit' button?" หรือ "Does a confirmation prompt appear on your screen?"
+
+
+
+Contextualized Workplace Examples:
+
+  Example 1: "Does the green 'Connected' icon appear at the bottom of your screen?"
+
+  Example 2: "Do you see the 6-digit verification box on your display?"
+
+  Example 3: "Have you located the 'Network Adapter' tab in your control panel?"
+
+
+
+Common Learner Errors & Corrections:
+
+  x Incorrect: "You understand or not?" (Informal, rude, and culturally inappropriate)
+
+    ✓ Correct: "Does the configuration window appear on your screen now?"
+
+  x Incorrect: "Is it okay?" (Vague check that does not confirm visual alignment)
+
+    ✓ Correct: "Do you see the blue 'Save Settings' button at the bottom right?"
+
+========================================================================================
+
+E. GUIDED EXAMPLES AND MODEL DIALOGUES
+
+Model Dialogue 5.1: Multi-Step Multi-Factor Authentication (MFA) Setup
+
+Workplace Context: IT Helpdesk at BASF (Malaysia) Sdn. Bhd. (JA010).
+
+Interaction Type: Inbound Call — Assisting an Employee with MFA Mobile Enrollment.
+
+========================================================================================
+
+MODEL DIALOGUE 5.1: SEQUENTIAL INSTRUCTIONAL GUIDANCE
+
+========================================================================================
+
+Agent (Mei):     "I would be glad to guide you through setting up your MFA security token, Mr. David. Let's complete this step-by-step together."
+
+                  [Communication Purpose: Lesson 1 Opening & Transition to Step-by-Step Guidance]
+
+
+
+Caller (Mr. David): "Great, thank you! I have my smartphone ready next to my laptop."
+
+
+
+Agent (Mei):     "Perfect. First, please open your laptop browser and navigate to '[suspicious link removed]'. Let me know once the login portal loads."
+
+                  [Communication Purpose: Step 1 - Sequential Marker, Imperative Action & Pause Prompt]
+
+
+
+Caller (Mr. David): [Pause 3 seconds] "Okay, the BASF security portal is open now."
+
+
+
+Agent (Mei):     "Excellent. Next, click the blue button that says 'Register New Device'. Does a QR code display on your laptop screen?"
+
+                  [Communication Purpose: Step 2 - Sequential Marker, Imperative & Visual Check]
+
+
+
+Caller (Mr. David): "Yes, I see a black and white QR code in the center of the page."
+
+
+
+Agent (Mei):     "Wonderful. Subsequently, open the Authenticator application on your smartphone and tap 'Scan QR Code'."
+
+                  [Communication Purpose: Step 3 - Transition Marker & Imperative Action]
+
+
+
+Caller (Mr. David): "Done! My phone just generated a 6-digit passkey."
+
+
+
+Agent (Mei):     "Finally, enter that 6-digit passkey into the prompt box on your laptop and click 'Verify'. Does a green checkmark appear?"
+
+                  [Communication Purpose: Final Step - Sequential Marker, Imperative & Final Visual Check]
+
+
+
+Caller (Mr. David): "Yes! It says 'Authentication Successful'!"
+
+
+
+Agent (Mei):     "Fantastic! Your MFA setup is now complete and your account is secure."
+
+                  [Communication Purpose: Success Confirmation & Closure]
+
+
+
+========================================================================================
+
+ANALYSIS & FORMALITY OPTIONS:
+
+Why This Dialogue is Effective:
+
+  1. Agent Mei delivers exactly ONE action per step, preventing user cognitive overload.
+
+  2. Uses explicit transition markers (*First, Next, Subsequently, Finally*).
+
+  3. Uses specific visual checks (*"Does a QR code display...?", "Does a green checkmark appear...?"*).
+
+
+
+Formality Variations:
+
+  - Standard Professional: "First, please navigate to the portal page."
+
+  - Executive/VIP Line: "When you are ready, kindly select the 'Security Overview' tab at your convenience."
+
+========================================================================================
+
+F. FORMATIVE PRACTICE PAGE & SIMULATED SPEAKING TASKS
+
+Activity 5.1: Knowledge Check & Instruction Identification (15 Minutes)
+
+An agent wants to verify if a caller is looking at the correct settings page. Which question is most effective?
+
+A) "You understand what I said?"
+
+B) "Does the 'Network Properties' dialog box appear on your display?"
+
+C) "Why haven't you clicked the button yet?"
+
+D) "Are you smart enough to find the button?"
+
+Answer: B
+
+Explanation: Option B uses a specific visual check ("Does the 'Network Properties' dialog box appear...?") to verify screen alignment.
+
+Which sequence of transition markers represents the most professional chronological order?
+
+A) First -> Subsequently -> Next -> End
+
+B) First -> Next -> Once that is done -> Finally
+
+C) Then -> First -> After that -> Okay
+
+D) One -> Two -> Three -> Four
+
+Answer: B
+
+Explanation: Option B follows standard professional transition sequencing (First -> Next -> Once that is done -> Finally).
+
+Complete the sentence: "_____ that is completed, enter your new corporate password into the box."
+
+A) Once
+
+B) If
+
+C) Why
+
+D) Where
+
+Answer: A
+
+Explanation: "Once that is completed..." is a standard transition phrase indicating that the previous step must be finished before proceeding.
+
+Activity 5.2: Instruction Re-ordering & Transformation (15 Minutes)
+
+Instructions: Re-order the following scrambled instructions into a logical 3-step sequence using First, Next, and Finally.
+
+Scrambled Steps:
+
+Click 'Connect'.
+
+Open the corporate VPN application icon on your desktop.
+
+Enter your 6-digit security token.
+
+Correct Re-ordered Sequence:
+
+"First, open the corporate VPN application icon on your desktop."
+
+"Next, enter your 6-digit security token."
+
+"Finally, click 'Connect' to establish your secure connection."
+
+Activity 5.3: Simulated Speaking Practice — Guided & Independent Calls
+
+========================================================================================
+
+SIMULATED SPEAKING TASK 5.1: GUIDED INSTRUCTIONAL RESPONSE (PARTIALLY GUIDED)
+
+========================================================================================
+
+Workplace Situation:
+
+  You are a Client Services Executive at iFAST Global Hub (`JA012`).
+
+  An investor calls needing help changing their account email address via the online portal.
+
+
+
+Customer Prerecorded Audio Line:
+
+  [Audio Prompt]: "Hi! I'm logged into my iFAST investor account, but I can't figure out where to update my primary email address."
+
+
+
+Student's Specific Speaking Task:
+
+  Deliver a 45-second instructional response. Guide the client through 3 steps using *First, Next,* and *Finally*. Include imperative verbs (*click, select, enter*) and ask a visual check (*"Does the confirmation box appear?"*).
+
+
+
+Task Parameters:
+
+  - Preparation Time: 45 Seconds
+
+  - Target Response Duration: 35 - 45 Seconds
+
+
+
+Model Spoken Response:
+
+  "I would be glad to guide you through updating your email address. First, click on 'My Profile' at the top right of your portal screen. Next, select 'Contact Preferences' and enter your new email address into the input field. Finally, click 'Save Changes'. Does a green confirmation box appear on your screen?"
+
+
+
+Model Effectiveness Analysis:
+
+  - Clear 3-step structure with explicit markers (*First, Next, Finally*).
+
+  - Uses precise imperative verbs (*click, select, enter, click*).
+
+  - Concludes with a visual check (*"Does a green confirmation box appear...?"*).
+
+
+
+Self-Check Checklist for Students:
+
+  [ ] Did I use transition markers (*First, Next, Finally*)?
+
+  [ ] Did I start action phrases with imperative verbs?
+
+  [ ] Did I include a visual check at the end?
+
+========================================================================================
+
+========================================================================================
+
+SIMULATED SPEAKING TASK 5.2: INDEPENDENT TRANSFER TASK (HIGH AUTONOMY)
+
+========================================================================================
+
+Workplace Situation:
+
+  You are an IT Residential Support Executive at Micro Technology Solution (`JA016`).
+
+  A remote employee calls needing help configuring their corporate VPN gateway client for work-from-home access.
+
+
+
+Customer Prerecorded Audio Line:
+
+  [Audio Prompt]: "Hello, IT Helpdesk? I just installed the VPN software on my home laptop, but I don't know what gateway address to type in."
+
+
+
+Student's Specific Speaking Task:
+
+  Formulate an independent 60-second instructional response. Guide the employee through 3 steps: opening the server settings menu, typing the gateway address ('[suspicious link removed]'), and toggling the auto-connect switch. Include visual checks after step 2 and step 3.
+
+
+
+Task Parameters:
+
+  - Preparation Time: 45 Seconds
+
+  - Target Response Duration: 45 - 60 Seconds
+
+
+
+Model Spoken Response:
+
+  "I can certainly help you configure your VPN gateway client right now. First, please open your VPN application and click the gear icon to access 'Server Settings'. Next, enter '[suspicious link removed]' into the Gateway Address field. Does the server status indicator turn yellow? Great. Finally, toggle the 'Auto-Connect' switch to the ON position and click 'Save'. Does a green 'Gateway Configured' message display on your screen?"
+
+
+
+Acceptable Alternative Variations:
+
+  - "I'd be happy to guide you with your VPN configuration. First, open the VPN client and select 'Add New Gateway'. Next, type '[suspicious link removed]' into the address box. Do you see the gateway listed in your drop-down menu? Excellent. Once that is done, toggle 'Auto-Connect' to ON and click 'Apply'."
+
+
+
+Common Mistakes to Avoid:
+
+  - Do not rush through all three steps without asking a check question.
+
+  - Make sure to pronounce '[suspicious link removed]' clearly letter-by-letter if necessary.
+
+========================================================================================
+
+H. LESSON REVIEW AND TRANSFER
+
+Concise Summary: In Lesson 5, you learned that effective technical instruction relies on the 3-part cycle: Sequential Markers (First, Next, Subsequently, Finally), Imperative Action Verbs (click, select, enter, toggle), and Visual Comprehension Checks (Does the dialog box appear...?). Never ask vague questions like "Do you understand?"; verify screen alignment explicitly.
+
+Essential Expressions & Sentence Patterns Checklist:
+
+[ ] "First, imperative verb target field/button."
+
+[ ] "Next, imperative verb target option."
+
+[ ] "Once that is completed, imperative verb final action."
+
+[ ] "Does the visual screen element appear on your screen?"
+
+[ ] "Please let me know once you have completed that step."
+
+Independent Transfer Task: Record a 60-second instructional response for a new scenario: A customer at Swarovski (JA025) needs help resetting their online employee portal password. Guide them through clicking 'Forgot Password', entering their employee ID, and checking their corporate email for the reset link.
+
+Preview of Next Lesson: In Lesson 6 (Escalating Unresolved Cases and Explaining Next Steps), you will learn how to handle cases that cannot be resolved during the initial call, explaining SLA escalation triggers, transferring tickets to Tier-2 engineering, and managing customer turnaround time expectations professionally.
+
+PROGRESS AND TASK TRACKING UPDATE
+
+x Deliverable 1: Evidence & Design Blueprint (COMPLETED)
+
+/ Deliverable 2: Complete Lesson Materials
+
+x Lesson 1: Professional Customer Enquiries & Call Openings (120 Mins) — COMPLETED
+
+x Lesson 2: Identifying & Clarifying Technical Problems (150 Mins) — COMPLETED
+
+x Lesson 3: Troubleshooting & Explaining Technical Problems (150 Mins) — COMPLETED
+
+x Lesson 4: Handling Complaints & Responding Empathetically (120 Mins) — COMPLETED
+
+x Lesson 5: Giving Clear Instructions & Checking Understanding (120 Mins) — COMPLETED ABOVE
+
+ Lesson 6: Escalating Unresolved Cases & Explaining Next Steps (120 Mins) — NEXT BATCH
+
+ Lesson 7: Occupational Vocabulary, Case Records & Ticket Hygiene (120 Mins)
+
+ Lesson 8: Integrated Support Process, Ticket Logs & Oral Case Summaries (240 Mins)
+
+ Deliverable 3: Assessment Package (Pre-test Form A & Post-test Form B)
+
+ Deliverable 4: Implementation Package (Google Classroom & Asset Lists)
+
+ Deliverable 5: Research Documentation Summary
+
+Lesson 5 has been completed in full student-ready detail. I am ready to generate Lesson 6 (Escalating Unresolved Cases and Explaining Next Steps - 120 Minutes) next. Shall I proceed with Lesson 6?
+
+
+

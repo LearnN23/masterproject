@@ -1,0 +1,640 @@
+DELIVERABLE 2: COMPLETE LESSON MATERIALS (CONTINUED)
+
+LESSON 2: Identifying and Clarifying Technical Problems
+
+A. LESSON OVERVIEW
+
+Lesson Number & Title: Lesson 2: Identifying and Clarifying Technical Problems
+
+Allocated Learning Duration: 150 Minutes (2.5 Hours)
+
+Occupational Relevance: In Malaysian technical helpdesks and BPO centers (e.g., Concentrix JA003, Inphosoft JA009, Micro Technology Solution JA016, Evoxt JA014), frontline agents must isolate technical faults quickly and accurately. Customers often describe problems using vague language ("My app isn't working", "The internet is down"). Support agents need structured diagnostic questioning skills to identify whether an issue is caused by account credentials, software glitches, network connectivity, or hardware errors before attempting troubleshooting.
+
+Measurable Learning Objectives:By the end of this 150-minute lesson, Thai IT undergraduate learners will be able to:
+
+Differentiate between open-ended diagnostic questions (for broad problem gathering) and closed confirmation questions (for pinpointing specific error details).
+
+Construct indirect diagnostic questions ("Could you tell me what error message appears?") to isolate technical faults politely without making the user feel interrogated.
+
+Paraphrase and confirm vague customer statements using reflective check structures ("So if I understand correctly, you can log in, but the dashboard fails to load?").
+
+Perform a 45-second diagnostic clarification spoken response in a simulated support interaction to isolate a user authentication or network connectivity issue, achieving a minimum score of "3" across all rubric criteria.
+
+========================================================================================
+
+LESSON 2 COMMUNICATION FUNCTIONS, VOCABULARY, AND GRAMMAR MATRIX
+
+========================================================================================
+
+Target Communication Functions:
+
+  - Eliciting specific technical error details and system symptoms
+
+  - Asking indirect diagnostic questions to isolate root causes
+
+  - Paraphrasing vague user statements to confirm understanding
+
+  - Clarifying error codes, device parameters, and environment context
+
+
+
+Target Occupational Vocabulary & Acronyms:
+
+  - Error Code, Fault Isolation, Authentication, Timeout, Gateway, Symptom,
+
+    Active Directory, Network Configuration, Server Latency, Credential Freeze.
+
+
+
+Target Sentence Patterns & Grammar:
+
+  - Indirect Diagnostic Questions: "Could you tell me [what error code appears on your screen]?"
+
+  - Polite Clarification Markers: "Would you mind specifying [whether you are on Wi-Fi or Mobile Data]?"
+
+  - Reflective Paraphrasing: "So if I understand correctly, [the app crashes right after you tap login]?"
+
+  - Confirmation Checkers: "Am I correct in assuming that [this problem only happens on your desktop]?"
+
+========================================================================================
+
+Prerequisite Knowledge: Mastery of Call Openings and Credential Verification from Lesson 1.
+
+Materials Needed: Web-based EOP portal access, Audio/Video player, microphone/audio recording interface.
+
+Connection to Curriculum Flow:
+
+Backward Linkage: Builds directly on the professional call opening and identity verification established in Lesson 1.
+
+Forward Linkage: Mastered diagnostic questioning directly enables Lesson 3 (Troubleshooting and Explaining Technical Problems), where agents apply corrective workarounds once the fault is isolated.
+
+B. ATTENTION-GRABBING OPENING HOOK
+
+Workplace Context: Level-1 IT Helpdesk at a Shared Service Center in Cyberjaya, Malaysia.
+
+The Problem / Communication Mistake: An IT support agent named Ken receives a call from an employee reporting: "My portal is broken!" Without asking any clarifying questions, Ken immediately guides the user through a 15-minute complete browser re-installation. At the end of the process, the user reveals: "Oh, I forgot to mention—my home Wi-Fi was turned off." Ken wasted 15 minutes of Average Handling Time (AHT) because he failed to ask basic diagnostic questions to isolate the issue first.
+
+Reflective Question for Students:
+
+What diagnostic questions should Ken have asked in the first 30 seconds?
+
+How can you transform a vague customer complaint into specific technical facts using polite English?
+
+Occupational Importance: In Malaysian contact centers, Average Handling Time (AHT) and First Contact Resolution (FCR) are key performance indicators (KPIs). Jumping straight to solutions without clarifying the problem increases handling time, leads to incorrect troubleshooting, and frustrates customers.
+
+C. COMPLETE INSTRUCTIONAL VIDEO SCRIPT
+
+Video Title: Module 2.1 — Diagnostic Clarification & Fault Isolation Strategies
+
+Target Duration: 10 Minutes (Runtime) + 10 Minutes (Interactive Pauses) = 20 Minutes Total Learning Time
+
+AI Tool Production Note: AI video generation script with split-screen diagnostics and interactive pauses.
+
+========================================================================================
+
+INSTRUCTIONAL VIDEO SCRIPT: MODULE 2.1
+
+========================================================================================
+
+
+
+[SCENE 1: INTRODUCTION & DIAGNOSTIC PURPOSE]
+
+Visual Direction: Split screen showing an IT support floor in Cyberjaya on the left, and a diagnostic flowchart on the right.
+
+On-Screen Text: Lesson 2.1: Diagnostic Clarification & Fault Isolation
+
+Audio / Narrator Script:
+
+"Welcome to Lesson 2. When a customer says 'My system isn't working,' they are giving you a vague symptom, not a diagnosis. Your job as a technical support specialist is to act like a doctor: ask targeted diagnostic questions, isolate the cause, and confirm your understanding before prescribing a solution."
+
+
+
+[SCENE 2: THE 3-STAGE DIAGNOSTIC FRAMEWORK]
+
+Visual Direction: A 3-step funnel diagram appears on screen.
+
+On-Screen Text:
+
+  Stage 1: Open Funnel (Broad Problem Gathering)
+
+  Stage 2: Narrow Probe (Indirect Diagnostic Questions)
+
+  Stage 3: Paraphrase & Confirm (Reflective Verification)
+
+Narrator Script:
+
+"To isolate a fault efficiently, use a 3-stage funnel. First, open the funnel to let the customer describe what happened. Second, narrow your probe using polite indirect questions to gather technical specifics like error codes or device types. Third, paraphrase the issue back to the customer to ensure you are both on the same page."
+
+
+
+[SCENE 3: CONTRAST ANALYSIS - INTERREGATION VS. POLITE PROBING]
+
+Visual Direction: Side-by-side comparison of two agents handling a vague caller.
+
+Left Panel (Red Border - Ineffective Agent Ken):
+
+Caller: "My email won't open!"
+
+Ken (Interrupting): "What error? What browser? Is your internet on? Did you change your password?"
+
+On-Screen Text (Red): 
+
+  X Rapid-fire interrogation
+
+  X Sounds accusatory and aggressive
+
+  X Overwhelms non-technical caller
+
+
+
+Right Panel (Green Border - Effective Agent Maya):
+
+Caller: "My email won't open!"
+
+Maya (Calmly): "I can certainly help you look into that issue. Could you tell me what happens when you try to open your inbox? Does an error code appear on your screen?"
+
+On-Screen Text (Green):
+
+  ✓ Empathetic transition
+
+  ✓ Indirect diagnostic question ("Could you tell me...")
+
+  ✓ Guides user to specific visual symptoms
+
+
+
+[SCENE 4: INTERACTIVE PAUSE & PRACTICE]
+
+Visual Direction: Countdown timer (10 seconds) with audio chime.
+
+On-Screen Text: PRACTICE PAUSE: Convert this direct question into an indirect request: "What is your IP address?"
+
+Narrator Script:
+
+"Pause the video now. How would you ask for a user's IP address politely using an indirect question? Practice saying it out loud."
+
+
+
+[INTERACTIVE PAUSE - 120 SECONDS]
+
+
+
+[SCENE 5: REFLECTIVE PARAPHRASING]
+
+Visual Direction: Text box highlighting the paraphrasing template: "So if I understand correctly, [Symptom], is that right?"
+
+Narrator Script:
+
+"Before moving to troubleshooting, always confirm. Say: 'So if I understand correctly, you can access the website, but the checkout button is unresponsive, is that correct?' This simple check prevents costly troubleshooting mistakes."
+
+
+
+[SCENE 6: LESSON RECAP]
+
+Visual Direction: Summary graphic displaying the 3-stage funnel checklist.
+
+On-Screen Text:
+
+  1. Open -> Let customer describe symptom.
+
+  2. Narrow -> Use "Could you tell me..." for specifics.
+
+  3. Confirm -> Paraphrase to verify before solving.
+
+Narrator Script:
+
+"Mastering diagnostic questions saves time and builds customer confidence. Let's practice these language patterns in Section D!"
+
+========================================================================================
+
+D. EXPLICIT TEACHING OF SENTENCE STRUCTURES AND LANGUAGE USE
+
+1. Language Pattern 1: Indirect Questions for Fault Isolation
+
+========================================================================================
+
+LANGUAGE PATTERN 1: INDIRECT QUESTIONS FOR FAULT ISOLATION
+
+========================================================================================
+
+Form / Syntax Pattern:
+
+  [Polite Lead-in] + [Question Word: what/where/when] + [Subject] + [Verb in Statement Order]?
+
+  Lead-ins: "Could you tell me...", "Would you mind specifying...", "May I ask..."
+
+
+
+Communicative Function:
+
+  Eliciting specific technical error details (error messages, timing, device parameters) without sounding demanding or interrogative.
+
+
+
+Explanation in Thai (คำอธิบายภาษาไทย):
+
+  เมื่อต้องการถามข้อมูลเทคนิคเชิงลึก การใช้คำถามตรงขึ้นต้นด้วย "What is...", "Why did..." อาจฟังดูเหมือนการซักจำลองหรือตำหนิตัวผู้ใช้ ภาษาอังกฤษในสายงาน Tech Support จึงนิยมแปลงเป็น "Indirect Questions" โดยใช้คำขึ้นต้นสุภาพ เช่น "Could you tell me..." หรือ "Would you mind specifying..." แล้วเรียงลำดับประโยคตามหลังแบบประโยคบอกเล่า (Subject + Verb) ห้ามสลับ กริยา-ประธาน
+
+
+
+Contextualized Workplace Examples:
+
+  Example 1: "Could you tell me what error message appears on your screen?"
+
+  Example 2: "Would you mind specifying when this issue first started occurring?"
+
+  Example 3: "May I ask whether you are connecting via mobile app or web browser?"
+
+
+
+Common Learner Errors & Corrections:
+
+  x Incorrect: "Could you tell me what is the error code?" (Word order error: 'is the error code')
+
+    ✓ Correct: "Could you tell me what the error code is?"
+
+  x Incorrect: "What error message you see?" (Missing auxiliary in direct question)
+
+    ✓ Correct: "Could you please describe the error message you see?"
+
+  x Incorrect: "Why your system crashed?" (Abrupt direct question)
+
+    ✓ Correct: "Would you mind telling me what happened right before the system crashed?"
+
+========================================================================================
+
+Substitution / Transformation Exercise (10 Minutes)
+
+Instructions: Transform the following direct questions into polite indirect diagnostic questions.
+
+Direct Question: "What browser are you using?"
+
+Indirect Transformation: "Could you tell me which browser you are currently using?"
+
+Direct Question: "When did the app crash?"
+
+Indirect Transformation: "Would you mind specifying when the application crashed?"
+
+Direct Question: "Is your router connected?"
+
+Indirect Transformation: "May I ask if your router lights are currently illuminated?"
+
+Production Task (10 Minutes)
+
+Write two original indirect diagnostic questions to ask a customer who reports that their online payment portal is frozen.
+
+Student Output Example 1: "Could you tell me if an error message displayed after you clicked the payment button?"
+
+Student Output Example 2: "Would you mind specifying whether you received an SMS OTP verification code?"
+
+2. Language Pattern 2: Reflective Paraphrasing & Confirmation Checking
+
+========================================================================================
+
+LANGUAGE PATTERN 2: REFLECTIVE PARAPHRASING & CONFIRMATION CHECKING
+
+========================================================================================
+
+Form / Syntax Pattern:
+
+  [Reflective Starter] + [Summarized Customer Problem Clause] + [Confirmation Tag]?
+
+  Starters: "So if I understand correctly...", "Just to confirm...", "To make sure I have this right..."
+
+
+
+Communicative Function:
+
+  Restating vague or complex customer descriptions in clear technical terms to verify accurate problem comprehension before initiating troubleshooting.
+
+
+
+Explanation in Thai (คำอธิบายภาษาไทย):
+
+  การทวนความ (Paraphrasing) เป็นทักษะสำคัญในการสื่อสารบริการ เพื่อให้แน่ใจว่าเจ้าหน้าที่เข้าใจปัญหาตรงกับลูกค้าล้านเปอร์เซ็นต์ โดยใช้ประโยคเกริ่นนำ เช่น "So if I understand correctly..." ตามด้วยสรุปอาการปัญหาแบบกระชับ แล้วปิดท้ายด้วยคำถามยืนยัน เช่น "...is that correct?" หรือ "...am I right?"
+
+
+
+Contextualized Workplace Examples:
+
+  Example 1: "So if I understand correctly, your password works on mobile, but you are locked out on desktop; is that correct?"
+
+  Example 2: "Just to confirm, the payment was deducted from your bank, but no order confirmation email arrived, am I right?"
+
+  Example 3: "To make sure I have this right, the connection drops every time you turn on the VPN software?"
+
+
+
+Common Learner Errors & Corrections:
+
+  x Incorrect: "You say app broken, yes?" (Overly casual, lacks professional structure)
+
+    ✓ Correct: "So if I understand correctly, the application freezes upon launch, is that right?"
+
+  x Incorrect: "I know your problem already." (Dismissive of customer context)
+
+    ✓ Correct: "Just to confirm, you are experiencing a gateway timeout error during checkout?"
+
+========================================================================================
+
+E. GUIDED EXAMPLES AND MODEL DIALOGUES
+
+Model Dialogue 2.1: Technical Support Fault Isolation (Mobile App Authentication)
+
+Workplace Context: Technical Service Desk at Concentrix Malaysia (JA003).
+
+Interaction Type: Inbound Call — Mobile Banking App Authentication Error.
+
+========================================================================================
+
+MODEL DIALOGUE 2.1: DIAGNOSTIC FAULT ISOLATION
+
+========================================================================================
+
+Agent (Maya):    "Thank you for calling Concentrix Technical Support. My name is Maya. How may I assist you today?"
+
+                  [Communication Purpose: Lesson 1 Opening & Offer of Assistance]
+
+
+
+Caller (Mr. Roy): "Hi! Your mobile banking app is completely useless! I tried logging in to transfer money, but it won't let me in!"
+
+
+
+Agent (Maya):    "I am sorry to hear that you are having trouble logging in, Mr. Roy. I can certainly help you troubleshoot this issue right now. Could you tell me what happens when you tap the login button?"
+
+                  [Communication Purpose: Empathy & Stage 2 Indirect Diagnostic Question]
+
+
+
+Caller (Mr. Roy): "Well, I type my password, the screen spins for a few seconds, and then a message pops up saying 'Authentication Timeout Code 504'."
+
+
+
+Agent (Maya):    "Thank you for specifying that error code, Mr. Roy. Would you mind telling me if you are connected via Wi-Fi or cellular mobile data?"
+
+                  [Communication Purpose: Narrow Probing Question for Network Fault Isolation]
+
+
+
+Caller (Mr. Roy): "I'm currently connected to my home Wi-Fi network."
+
+
+
+Agent (Maya):    "Understood. So if I understand correctly, your app displays an 'Authentication Timeout 504' error while connected to Wi-Fi; is that right?"
+
+                  [Communication Purpose: Stage 3 Reflective Paraphrasing & Confirmation]
+
+
+
+Caller (Mr. Roy): "Yes, exactly! That's what happens."
+
+
+
+========================================================================================
+
+ANALYSIS & FORMALITY OPTIONS:
+
+Why This Dialogue is Effective:
+
+  1. Agent Maya remains calm and empathetic despite the customer's initial frustration ("useless!").
+
+  2. Maya uses indirect questions ("Could you tell me what happens...", "Would you mind telling me...") to elicit the specific error code (504) and network type (Wi-Fi).
+
+  3. Maya concludes Stage 3 with a precise paraphrasing check ("So if I understand correctly...") to confirm the exact diagnosis before moving to solutions.
+
+
+
+Alternative Phrasing for Clarification:
+
+  - Higher Formality: "Would you kindly specify the exact wording of the error message displayed?"
+
+  - Direct Probe (Standard): "Does this error occur on Wi-Fi, mobile data, or both?"
+
+========================================================================================
+
+F. FORMATIVE PRACTICE PAGE & SIMULATED SPEAKING TASKS
+
+Activity 2.1: Diagnostic Question Classification & MCQ (15 Minutes)
+
+An agent wants to know if a customer's router lights are on. Which indirect question is most grammatically and pragmatically correct?
+
+A) "Could you tell me if the router lights are illuminated?"
+
+B) "Could you tell me are the router lights illuminated?"
+
+C) "Tell me what lights are on router right now."
+
+D) "Why you don't check router lights?"
+
+Answer: A
+
+Explanation: Option A maintains statement word order ("if the router lights are illuminated") following the indirect polite lead-in.
+
+Read the customer statement: "I clicked 'Submit Order', but the page went blank and no invoice came." Select the best reflective paraphrasing response.
+
+A) "Your computer has a virus."
+
+B) "So if I understand correctly, the transaction processed, but the page became unresponsive before displaying an invoice; is that right?"
+
+C) "Give me your invoice number now."
+
+D) "Why did you click submit twice?"
+
+Answer: B
+
+Explanation: Option B restates the vague symptom accurately in professional technical terms and includes a confirmation tag.
+
+Complete the sentence: "Would you mind specifying _____ this error occurs on all web browsers or just Chrome?"
+
+A) weather
+
+B) whether
+
+C) what
+
+D) why
+
+Answer: B
+
+Explanation: "Whether" is used in indirect questions when offering a choice between two alternatives (Wi-Fi vs Mobile Data, All Browsers vs Chrome).
+
+Activity 2.2: Error Correction & Indirect Transformation (15 Minutes)
+
+Instructions: Correct the word order errors in these indirect diagnostic questions.
+
+Incorrect: "Could you tell me where is the router located?"
+
+Correction: "Could you tell me where the router is located?"
+
+Incorrect: "Would you mind telling me why did the screen freeze?"
+
+Correction: "Would you mind telling me why the screen froze?"
+
+Activity 2.3: Simulated Speaking Practice — Guided & Independent Calls
+
+========================================================================================
+
+SIMULATED SPEAKING TASK 2.1: GUIDED DIAGNOSTIC CLARIFICATION (PARTIALLY GUIDED)
+
+========================================================================================
+
+Workplace Situation:
+
+  You are an L1 Tech Support Executive at Evoxt Sdn Bhd (`JA014`).
+
+  A client rings reporting that their cloud control panel is inaccessible.
+
+
+
+Customer Prerecorded Audio Line:
+
+  [Audio Prompt]: "Hi, helpdesk! I'm trying to access my cloud panel, but my browser just says 'Page Cannot Be Displayed'. This is blocking my work!"
+
+
+
+Student's Specific Speaking Task:
+
+  Formulate a 30–45 second diagnostic response. Acknowledge the issue calmly, ask an indirect question about whether they are connected via office VPN, and ask what error code appears when they refresh.
+
+
+
+Task Parameters:
+
+  - Preparation Time: 45 Seconds
+
+  - Target Response Duration: 30 - 45 Seconds
+
+
+
+Model Spoken Response:
+
+  "I understand how frustrating it is to be blocked from your control panel. I can certainly help you troubleshoot this right now. Could you tell me if you are currently connected through the office VPN network? Also, would you mind specifying if any numeric error code displays when you refresh the page?"
+
+
+
+Model Effectiveness Analysis:
+
+  - Demonstrates calm empathy in sentence 1.
+
+  - Uses two indirect questions ("Could you tell me if...", "Would you mind specifying if...") to isolate network and software parameters.
+
+
+
+Self-Check Checklist for Students:
+
+  [ ] Did I acknowledge the user's issue with empathy?
+
+  [ ] Did I use "Could you tell me if..." or "Would you mind specifying..."?
+
+  [ ] Did I maintain correct statement word order in my indirect clauses?
+
+========================================================================================
+
+========================================================================================
+
+SIMULATED SPEAKING TASK 2.2: INDEPENDENT TRANSFER TASK (NETWORK FAULT ISOLATION)
+
+========================================================================================
+
+Workplace Situation:
+
+  You are an IT Support Specialist at Leuze Electronic (`JA023`).
+
+  An employee calls saying their industrial scanner software is failing to upload data.
+
+
+
+Customer Prerecorded Audio Line:
+
+  [Audio Prompt]: "Hello! My warehouse scanner was working fine this morning, but now it refuses to upload any inventory data to the main server!"
+
+
+
+Student's Specific Speaking Task:
+
+  Formulate an independent 45-second diagnostic clarification response. Elicit specific fault parameters (e.g., error lights on the dock, Wi-Fi status, or recent password changes) using indirect diagnostic questions and finish with a paraphrasing check.
+
+
+
+Task Parameters:
+
+  - Preparation Time: 45 Seconds
+
+  - Target Response Duration: 35 - 45 Seconds
+
+
+
+Model Spoken Response:
+
+  "I can definitely assist you with resolving that scanner upload failure. Could you tell me if the green Wi-Fi indicator light on your scanner dock is currently flashing or solid? Also, would you mind specifying if an error message appears on the scanner screen? So if I understand correctly, the scanner reads the barcode, but fails during the server transfer step, is that right?"
+
+
+
+Acceptable Alternative Variations:
+
+  - "I'd be happy to help you look into that upload issue. May I ask whether any warning lights are visible on the scanner unit? Just to confirm, the scanning function works, but data fails to sync with the main inventory database, am I right?"
+
+
+
+Common Mistakes to Avoid:
+
+  - Avoid asking direct, blunt questions like "Is Wi-Fi broken?" or "Did you drop the scanner?".
+
+  - Keep statement word order intact after "Could you tell me...".
+
+========================================================================================
+
+H. LESSON REVIEW AND TRANSFER
+
+Concise Summary: In Lesson 2, you learned the 3-stage diagnostic framework: Open Funnel, Narrow Probe, and Paraphrase & Confirm. Use indirect questions (Could you tell me... / Would you mind specifying...) to gather technical specifics politely without interrogating customers, and always confirm your diagnosis using reflective check structures (So if I understand correctly...).
+
+Essential Expressions & Sentence Patterns Checklist:
+
+[ ] "Could you tell me what error message appears on your screen?"
+
+[ ] "Would you mind specifying whether you are connected via Wi-Fi or mobile data?"
+
+[ ] "May I ask when this issue first started occurring?"
+
+[ ] "So if I understand correctly, Symptom, is that right?"
+
+[ ] "Just to confirm, Summarized Problem, am I right?"
+
+Independent Transfer Task: Record a 45-second diagnostic clarification response for a new scenario: A customer at Credspire (JA019) reports that their payment terminal gateway is rejecting credit cards. Isolate whether the issue affects all cards or just contactless payments using indirect diagnostic questions.
+
+Preview of Next Lesson: In Lesson 3 (Troubleshooting and Explaining Technical Problems), you will learn how to take isolated fault information and guide customers through technical workarounds using conditionals (If you clear your cache, the portal will...) and modal verbs in plain English.
+
+PROGRESS AND TASK TRACKING UPDATE
+
+x Deliverable 1: Evidence & Design Blueprint (COMPLETED)
+
+/ Deliverable 2: Complete Lesson Materials
+
+x Lesson 1: Professional Customer Enquiries & Call Openings (120 Mins) — COMPLETED
+
+x Lesson 2: Identifying & Clarifying Technical Problems (150 Mins) — COMPLETED ABOVE
+
+ Lesson 3: Troubleshooting & Explaining Technical Problems (150 Mins) — NEXT BATCH
+
+ Lesson 4: Handling Complaints & Responding Empathetically (120 Mins)
+
+ Lesson 5: Giving Clear Instructions & Checking Understanding (120 Mins)
+
+ Lesson 6: Escalating Unresolved Cases & Explaining Next Steps (120 Mins)
+
+ Lesson 7: Occupational Vocabulary, Case Records & Ticket Hygiene (120 Mins)
+
+ Lesson 8: Integrated Support Process, Ticket Logs & Oral Case Summaries (240 Mins)
+
+ Deliverable 3: Assessment Package (Pre-test Form A & Post-test Form B)
+
+ Deliverable 4: Implementation Package (Google Classroom & Asset Lists)
+
+ Deliverable 5: Research Documentation Summary
+
+Lesson 2 is complete. I am ready to generate Lesson 3 (Troubleshooting and Explaining Technical Problems - 150 Minutes) next. Shall I proceed with Lesson 3?
+
+
+

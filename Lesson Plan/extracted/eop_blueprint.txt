@@ -1,0 +1,320 @@
+DELIVERABLE 1: EVIDENCE AND DESIGN BLUEPRINT
+Research Project: Development and Evaluation of a Web-Based English for Occupational Purposes (EOP) Learning Module for Enhancing Online Technical Support and Customer Service Communication Skills among Thai Undergraduate IT Students Preparing for Employment in MalaysiaDegree / Target: Master’s Thesis | Fatoni UniversityEmpirical Foundation: \\(N = 29\\) Unique Included Malaysian Job AdvertisementsTotal Planned Instructional Time: 1,140 Minutes (Exactly 19.0 Hours)
+SECTION 1: SUMMARY OF EMPIRICAL JOB ADVERTISEMENT FINDINGS (\\(N = 29\\))
+1.1 Empirical Corpus Overview
+The instructional design of this EOP learning module is strictly grounded in the empirical findings derived from \\(N = 29\\) unique included job advertisements for Thai-speaking Customer Support (CS), Order-to-Cash (OTC), and IT Service Desk roles based in Malaysia. All analyzed roles require daily oral and written English communication within multinational Business Process Outsourcing (BPO) centers, Shared Service Centres (SSCs), or IT helpdesks operating in Kuala Lumpur, Selangor, and Cyberjaya.
+1.2 Summary of Occupational Communication Tasks (\\(N = 29\\))
+Content analysis of the \\(N = 29\\) included job postings revealed 10 primary occupational communication tasks. Tasks 1 through 9 exhibit a 100.0% prevalence rate (\\(29/29\\) ads), establishing them as non-negotiable core competencies for Thai IT graduates seeking employment in Malaysia. Task 10 (Troubleshooting technical issues) exhibits an 86.2% prevalence rate (\\(25/29\\) ads), appearing universally across IT Service Desk positions (\\(10/10\\) ads) and e-Commerce/SaaS support roles (\\(15/19\\) ads).
+========================================================================================
+OCCUPATIONAL COMMUNICATION TASK PREVALENCE IN ANALYZED JOB POSTINGS (N = 29)
+========================================================================================
+1. Responding to customer enquiries                 [f = 29 | 100.0%]  (Core Duty)
+2. Identifying &amp; clarifying technical problems       [f = 29 | 100.0%]  (Core Duty)
+3. Explaining technical information                  [f = 29 | 100.0%]  (Core Duty)
+4. Giving instructions or guidance                   [f = 29 | 100.0%]  (Core Duty)
+5. Handling customer complaints                      [f = 29 | 100.0%]  (Core Duty)
+6. Escalating unresolved cases                       [f = 29 | 100.0%]  (Core Duty)
+7. Documenting cases or updating tickets             [f = 29 | 100.0%]  (Core Duty)
+8. Following up with customers                       [f = 29 | 100.0%]  (Core Duty)
+9. Coordinating with internal teams                  [f = 29 | 100.0%]  (Core Duty)
+10. Troubleshooting technical issues                 [f = 25 |  86.2%]  (IT/SaaS Focus)
+========================================================================================
+1.3 Communicative Language Functions (Explicit vs. Inferred)
+Language functions were coded based on explicit statements in job duty descriptions or analytical inferences derived from required workplace tasks:
+Explicitly Stated Functions: Summarizing and documenting information (\\(100\%\\)), Apologizing and responding to complaints (\\(93.1\%\\)), Escalating cases (\\(93.1\%\\)), Suggesting solutions (\\(89.7\%\\)), Describing symptoms or errors (\\(86.2\%\\)).
+Analytically Inferred Micro-Functions (\\(100\%\\) across all roles): Asking for account information, Asking clarifying questions, Confirming understanding, Requesting repetition, Explaining technical root causes, Giving step-by-step instructions, Checking whether a fix works, Reassuring customers, Requesting internal assistance, and Closing an interaction politely.
+1.4 Macro Skills and Linguistic Resources
+Four Macro Skills (\\(100\%\\) Demand): Listening (aural comprehension of diverse customer accents over VoIP/phone), Reading (visual comprehension of emails, tickets, order forms, SOPs), Writing (graphic production of ticket logs, emails, live chats), and Speaking (oral production for phone calls, internal escalations, and oral case handovers).
+Target Linguistic Resources:
+General Workplace &amp; CS Acronyms: SLA (Service Level Agreement), KPI, FCR (First Contact Resolution), AHT (Average Handling Time), TAT (Turnaround Time), CSAT (Customer Satisfaction).
+Domain Technical Jargon: Active Directory, IP Configuration, VPN Gateway, SAP S/4HANA, Salesforce, Zendesk, Waybill, Reconciliation, Prescription parameters.
+Professional Registers: Empathetic de-escalation register for complaints; directive imperative register for troubleshooting guidance; concise past-tense reporting register for CRM documentation.
+SECTION 2: EMPIRICAL TRACEABILITY MATRIX
+The following matrix establishes strict data lineage connecting empirical evidence from the job advertisement analysis directly to the module's learning objectives, instructional activities, formative tasks, and assessment scenarios.
+Extracted Job Ad Evidence (Job ID / Ref / URL),Occupational Communication Need,Final Module Learning Objective,Lesson &amp; Instructional Activity,Formative Task,Assessment Scenario Alignment,Evidence Type
+&quot;JA001 (01-Owndays.pdf), JA002 (01-Xstar.pdf), JA006 (03-Foundever.pdf)&quot;,&quot;Opening customer interactions, verifying credentials, and setting a polite tone across voice/chat.&quot;,&quot;Students will greet customers professionally, verify account details, and state readiness to assist using appropriate register.&quot;,&quot;Lesson 1: Video 1.1 (Call Openings), Guided Dialogue 1.1 (Credential Verification).&quot;,Formative Task 1.3: Prerecorded call opening &amp; identity verification simulation.,Pre/Post Scenario 1: Professional opening &amp; account verification.,Explicitly Stated in Job Ads
+&quot;JA003 (01-Concentrix.pdf), JA009 (05-Inphosoft.pdf), JA016 (10-MicroTech.pdf)&quot;,&quot;Gathering problem details, isolating fault symptoms, and clarifying ambiguous customer statements.&quot;,&quot;Students will formulate open/closed diagnostic questions, paraphrase user issues, and confirm problem understanding.&quot;,&quot;Lesson 2: Video 2.1 (Diagnostic Clarification), Language Focus 2.2 (Indirect Questions).&quot;,Formative Task 2.4: Simulated call isolating a network authentication error.,Pre/Post Scenario 2: Diagnostic clarification of login failure.,Explicitly Stated in Job Ads
+&quot;JA014 (08-Evoxt.pdf), JA019 (12-Credspire.pdf), JA023 (20-Leuze.pdf)&quot;,&quot;Diagnosing software/hardware faults, suggesting workarounds, and verifying if a fix resolves the issue.&quot;,&quot;Students will explain technical causes in plain English, suggest workarounds, and check solution effectiveness.&quot;,&quot;Lesson 3: Video 3.1 (Troubleshooting), Language Focus 3.2 (Conditionals &amp; Modals).&quot;,Formative Task 3.4: Simulated troubleshooting of application crash/freeze.,Pre/Post Scenario 3: Technical troubleshooting &amp; workaround proposal.,Explicitly Stated in Job Ads
+&quot;JA004 (02-Teleperformance.pdf), JA005 (03-MSIG.pdf), JA021 (14-Brandt.pdf)&quot;,&quot;Managing dissatisfied callers, expressing formal empathy, de-escalating frustration, and offering service recovery.&quot;,&quot;Students will validate customer frustration using empathetic phrasing, apologize for delays, and offer clear recovery options.&quot;,&quot;Lesson 4: Video 4.1 (De-escalation), Model Dialogue 4.2 (Order Delay Recovery).&quot;,Formative Task 4.4: Simulated de-escalation call with an irate customer.,Pre/Post Scenario 4: De-escalating a shipment delay complaint.,Explicitly Stated in Job Ads
+&quot;JA010 (05-BASF.pdf), JA012 (07-iFAST.pdf), JA025 (24-Swarovski.pdf)&quot;,&quot;Providing sequential, step-by-step guidance for software setup, device resets, or order submission.&quot;,&quot;Students will deliver clear, sequential oral/written instructions using imperative verbs and transition markers.&quot;,&quot;Lesson 5: Video 5.1 (Step-by-Step Guidance), Language Focus 5.2 (Imperatives &amp; Sequences).&quot;,Formative Task 5.4: Guided oral instruction for password reset portal.,Pre/Post Scenario 5: Delivering step-by-step system reset instructions.,Explicitly Stated in Job Ads
+&quot;JA008 (04-MichaelPage.pdf), JA017 (10-Hays.pdf), JA027 (17-Two95.pdf)&quot;,&quot;Transferring unresolved P1/P2 incidents to Tier-2 engineering, explaining SLA boundaries and next steps.&quot;,&quot;Students will explain escalation reasons to customers, set realistic SLA expectations, and execute formal handovers.&quot;,&quot;Lesson 6: Video 6.1 (Case Escalations), Language Focus 6.2 (Reporting Verbs &amp; SLA Phrasing).&quot;,Formative Task 6.4: Escalation call informing client of Tier-2 transfer.,Pre/Post Scenario 6: Escalating an unresolved hardware bug to Tier-2.,Explicitly Stated in Job Ads
+&quot;JA015 (09-Cogoport.pdf), JA020 (14-Scicom.pdf), JA022 (19-Corebase.pdf)&quot;,&quot;Applying industry-standard CS/IT acronyms, logging ticket details, and formatting structured case records.&quot;,&quot;Students will apply occupational acronyms (SLA, FCR, AHT) correctly and complete structured CRM ticket logs in English.&quot;,&quot;Lesson 7: Video 7.1 (Ticket Hygiene), Language Focus 7.2 (Past Tense for Case Logs).&quot;,Formative Task 7.4: Written CRM ticket log completion from raw call notes.,Pre/Post Scenario 7: Ticket documentation &amp; case record entry.,Explicitly Stated in Job Ads
+&quot;JA013 (07-Accenture.pdf), JA024 (20-Welsend.pdf), JA028 (16-InterIsland.pdf)&quot;,&quot;Synthesizing case histories, summarizing resolved vs. unresolved steps, and delivering concise oral handovers.&quot;,Students will synthesize case records and deliver a structured 60–90 second oral case summary for shift handovers.,&quot;Lesson 8: Video 8.1 (Oral Case Handovers), Guided Practice 8.2 (Ticket-to-Speech Summaries).&quot;,Formative Task 8.4: Independent oral case summary based on a complex CRM ticket record.,Pre/Post Scenario 8: Delivering an oral case summary from a CRM record.,Explicitly Stated in Job Ads
+&quot;Pedagogical Best Practice (Ellis, 2003; Long, 2015)&quot;,&quot;Spaced repetition, micro-speaking drills, and immediate formative feedback loops.&quot;,Students will self-assess spoken performance using structured rubrics before final recording submission.,All Lessons: Section F (Formative Practice &amp; Self-Check Rubrics).,All Lessons: Self-assessment checklist prior to recording.,Rubric Alignment: 5-criterion analytic rubric.,Pedagogical Recommendation (Methodological Framework)
+SECTION 3: 8-LESSON SEQUENCE AND MEASURABLE LEARNING OBJECTIVES
++---------------------------------------------------------------------------------------------------+
+|                                19-HOUR CURRICULUM ARCHITECTURE                                    |
++---------------------------------------------------------------------------------------------------+
+|  LESSON 1: Professional Customer Enquiries &amp; Call Openings                      (120 Minutes)     |
+|  LESSON 2: Identifying &amp; Clarifying Technical Problems                          (150 Minutes)     |
+|  LESSON 3: Troubleshooting &amp; Explaining Technical Problems                      (150 Minutes)     |
+|  LESSON 4: Handling Complaints &amp; Responding Empathetically                      (120 Minutes)     |
+|  LESSON 5: Giving Clear Instructions &amp; Checking Understanding                    (120 Minutes)     |
+|  LESSON 6: Escalating Unresolved Cases &amp; Explaining Next Steps                  (120 Minutes)     |
+|  LESSON 7: Occupational Vocabulary, Case Records &amp; Ticket Hygiene               (120 Minutes)     |
+|  LESSON 8: Integrated Support Process, Ticket Logs &amp; Oral Case Summaries        (240 Minutes)     |
++---------------------------------------------------------------------------------------------------+
+|  TOTAL PLANNED INSTRUCTIONAL LEARNING TIME                                      1,140 Min (19.0 Hrs)|
++---------------------------------------------------------------------------------------------------+
+Measurable Behavioral Learning Objectives by Lesson
+Lesson 1 (120 Mins): Professional Customer Enquiries &amp; Call Openings
+LO1.1: Identify standard brand greetings and account verification protocols in contact center interactions.
+LO1.2: Formulate polite opening statements and identity verification requests using modal verbs (may, could).
+LO1.3: Perform a 30-second professional call opening and account verification in a simulated customer call.
+Lesson 2 (150 Mins): Identifying &amp; Clarifying Technical Problems
+LO2.1: Differentiate between open-ended diagnostic questions and closed confirmation questions.
+LO2.2: Construct indirect questions (Could you tell me...) to elicit error symptoms without sounding interrogation-like.
+LO2.3: Perform a 45-second diagnostic clarification response to isolate a user authentication fault.
+Lesson 3 (150 Mins): Troubleshooting &amp; Explaining Technical Problems
+LO3.1: Analyze customer error descriptions and classify them into hardware, software, or network categories.
+LO3.2: Explain technical root causes in plain English using conditional structures (If you reset..., the gateway will...).
+LO3.3: Perform a 60-second troubleshooting response proposing a temporary workaround for an application crash.
+Lesson 4 (120 Mins): Handling Complaints &amp; Responding Empathetically
+LO4.1: Identify empathetic de-escalation expressions versus defensive/unhelpful customer responses.
+LO4.2: Formulate formal apologies and reassurance statements (I understand your frustration; rest assured...).
+LO4.3: Perform a 60-second de-escalation response to a customer experiencing a critical shipment delay.
+Lesson 5 (120 Mins): Giving Clear Instructions &amp; Checking Understanding
+LO5.1: Apply imperative verbs and sequential transition markers (First, Next, Subsequently, Finally).
+LO5.2: Construct comprehension-check questions (Does that option appear on your screen?).
+LO5.3: Perform a 60-second instructional spoken response guiding a user through a multi-factor authentication setup.
+Lesson 6 (120 Mins): Escalating Unresolved Cases &amp; Explaining Next Steps
+LO6.1: Explain SLA escalation triggers and Tier-2 transfer protocols clearly to end-users.
+LO6.2: Formulate professional transfer explanations managing customer expectations without assigning internal blame.
+LO6.3: Perform a 60-second escalation speech informing a client that their case is being transferred to Network Operations.
+Lesson 7 (120 Mins): Occupational Vocabulary, Case Records &amp; Ticket Hygiene
+LO7.1: Define and apply key contact center acronyms (SLA, FCR, AHT, TAT, CSAT) in workplace contexts.
+LO7.2: Document structured CRM ticket notes using past-tense diagnostic verbs and professional formatting.
+LO7.3: Produce a complete, grammatically accurate written CRM ticket log from raw customer call transcripts.
+Lesson 8 (240 Mins): Integrated Support Process, Ticket Logs &amp; Oral Case Summaries
+LO8.1: Synthesize complex multi-turn customer interaction logs and CRM records into essential problem/resolution points.
+LO8.2: Structure an oral case summary following the 5-stage framework (Problem \\(\rightarrow\\) Symptoms \\(\rightarrow\\) Actions Taken \\(\rightarrow\\) Current Status \\(\rightarrow\\) Next Step).
+LO8.3: Perform a 90-second professional oral case summary based on a simulated CRM ticket record for a shift handover.
+SECTION 4: MASTER 19-HOUR (1,140-MINUTE) TIME ALLOCATION TABLE
+4.1 Lesson-by-Lesson Activity Time Accounting
+========================================================================================================================
+LESSON 1: PROFESSIONAL CUSTOMER ENQUIRIES AND CALL OPENINGS (TOTAL: 120 MINUTES)
+========================================================================================================================
+Activity ID   Activity Title &amp; Description                                      Output / Artifact             Time (Min)
+------------------------------------------------------------------------------------------------------------------------
+Act 1.1       Opening Hook &amp; Workplace Context Analysis                         Reflective Response             10 Mins
+Act 1.2       Interactive Instructional Video 1.1 (Call Openings &amp; Etiquette)    Video Study &amp; Pauses            15 Mins
+Act 1.3       Explicit Teaching: Modal Verbs &amp; Polite Requests                   Grammar Exercise                20 Mins
+Act 1.4       Guided Model Dialogues &amp; Formality Analysis                      Dialogue Study                  15 Mins
+Act 1.5       Formative Practice: MCQ &amp; Sentence Transformation                Completed Practice              20 Mins
+Act 1.6       Simulated Speaking Task 1.1 (Guided Call Opening)                  Spoken Audio Recording          15 Mins
+Act 1.7       Simulated Speaking Task 1.2 (Independent Verification Call)      Spoken Audio Recording          15 Mins
+Act 1.8       Lesson Review, Essential Expressions &amp; Preview                   Self-Check Checklist            10 Mins
+------------------------------------------------------------------------------------------------------------------------
+SUBTOTAL LESSON 1                                                                                              120 MINUTES
+========================================================================================================================
+========================================================================================================================
+LESSON 2: IDENTIFYING AND CLARIFYING TECHNICAL PROBLEMS (TOTAL: 150 MINUTES)
+========================================================================================================================
+Activity ID   Activity Title &amp; Description                                      Output / Artifact             Time (Min)
+------------------------------------------------------------------------------------------------------------------------
+Act 2.1       Opening Hook: Diagnostic Failure &amp; Miscommunication Case           Reflective Response             10 Mins
+Act 2.2       Interactive Instructional Video 2.1 (Diagnostic Clarification)     Video Study &amp; Pauses            20 Mins
+Act 2.3       Explicit Teaching: Open vs. Closed Questions &amp; Indirect Syntax     Grammar &amp; Syntax Drills         25 Mins
+Act 2.4       Guided Model Dialogues: Diagnostic Questioning Strategies          Dialogue Analysis               20 Mins
+Act 2.5       Formative Practice: Question Classification &amp; Error Correction     Completed Practice              25 Mins
+Act 2.6       Simulated Speaking Task 2.1 (Guided Diagnostic Clarification)      Spoken Audio Recording          20 Mins
+Act 2.7       Simulated Speaking Task 2.2 (Independent Fault Isolation Call)     Spoken Audio Recording          20 Mins
+Act 2.8       Lesson Review, Self-Check Rubric &amp; Transfer Reflection            Self-Check Checklist            10 Mins
+------------------------------------------------------------------------------------------------------------------------
+SUBTOTAL LESSON 2                                                                                              150 MINUTES
+========================================================================================================================
+========================================================================================================================
+LESSON 3: TROUBLESHOOTING AND EXPLAINING TECHNICAL PROBLEMS (TOTAL: 150 MINUTES)
+========================================================================================================================
+Activity ID   Activity Title &amp; Description                                      Output / Artifact             Time (Min)
+------------------------------------------------------------------------------------------------------------------------
+Act 3.1       Opening Hook: Confusing Technical Jargon Scenario                 Reflective Response             10 Mins
+Act 3.2       Interactive Instructional Video 3.1 (Plain English Troubleshooting) Video Study &amp; Pauses            20 Mins
+Act 3.3       Explicit Teaching: Conditionals &amp; Modals for Workarounds           Grammar &amp; Transformation        25 Mins
+Act 3.4       Guided Model Dialogues: Explaining Root Causes &amp; Workarounds       Dialogue Analysis               20 Mins
+Act 3.5       Formative Practice: Matching Symptoms &amp; Workaround Construction  Completed Practice              25 Mins
+Act 3.6       Simulated Speaking Task 3.1 (Guided Workaround Explanation)        Spoken Audio Recording          20 Mins
+Act 3.7       Simulated Speaking Task 3.2 (Independent App Crash Call)           Spoken Audio Recording          20 Mins
+Act 3.8       Lesson Review, Self-Check Rubric &amp; Preview                         Self-Check Checklist            10 Mins
+------------------------------------------------------------------------------------------------------------------------
+SUBTOTAL LESSON 3                                                                                              150 MINUTES
+========================================================================================================================
+========================================================================================================================
+LESSON 4: HANDLING COMPLAINTS AND RESPONDING EMPATHETICALLY (TOTAL: 120 MINUTES)
+========================================================================================================================
+Activity ID   Activity Title &amp; Description                                      Output / Artifact             Time (Min)
+------------------------------------------------------------------------------------------------------------------------
+Act 4.1       Opening Hook: Defensive Agent vs. Angry Customer                  Reflective Response             10 Mins
+Act 4.2       Interactive Instructional Video 4.1 (De-escalation &amp; Empathy)      Video Study &amp; Pauses            15 Mins
+Act 4.3       Explicit Teaching: Empathy Expressions &amp; Formal Apologies        Language Pattern Drills         20 Mins
+Act 4.4       Guided Model Dialogues: Service Recovery &amp; Reassurance             Dialogue Study                  15 Mins
+Act 4.5       Formative Practice: De-escalation Matching &amp; Response Selection    Completed Practice              20 Mins
+Act 4.6       Simulated Speaking Task 4.1 (Guided Complaint Handling)            Spoken Audio Recording          15 Mins
+Act 4.7       Simulated Speaking Task 4.2 (Independent Shipment Delay Call)      Spoken Audio Recording          15 Mins
+Act 4.8       Lesson Review &amp; Self-Assessment Checklist                          Self-Check Checklist            10 Mins
+------------------------------------------------------------------------------------------------------------------------
+SUBTOTAL LESSON 4                                                                                              120 MINUTES
+========================================================================================================================
+========================================================================================================================
+LESSON 5: GIVING CLEAR INSTRUCTIONS AND CHECKING UNDERSTANDING (TOTAL: 120 MINUTES)
+========================================================================================================================
+Activity ID   Activity Title &amp; Description                                      Output / Artifact             Time (Min)
+------------------------------------------------------------------------------------------------------------------------
+Act 5.1       Opening Hook: Multi-Step Setup Confusion                         Reflective Response             10 Mins
+Act 5.2       Interactive Instructional Video 5.1 (Sequential Guidance)          Video Study &amp; Pauses            15 Mins
+Act 5.3       Explicit Teaching: Imperatives &amp; Sequential Transition Markers    Grammar &amp; Transformation        20 Mins
+Act 5.4       Guided Model Dialogues: Multi-Step Software Configuration          Dialogue Study                  15 Mins
+Act 5.5       Formative Practice: Instruction Re-ordering &amp; Checks               Completed Practice              20 Mins
+Act 5.6       Simulated Speaking Task 5.1 (Guided Instructional Response)        Spoken Audio Recording          15 Mins
+Act 5.7       Simulated Speaking Task 5.2 (Independent VPN Setup Guidance)       Spoken Audio Recording          15 Mins
+Act 5.8       Lesson Review &amp; Self-Assessment Checklist                          Self-Check Checklist            10 Mins
+------------------------------------------------------------------------------------------------------------------------
+SUBTOTAL LESSON 5                                                                                              120 MINUTES
+========================================================================================================================
+========================================================================================================================
+LESSON 6: ESCALATING UNRESOLVED CASES AND EXPLAINING NEXT STEPS (TOTAL: 120 MINUTES)
+========================================================================================================================
+Activity ID   Activity Title &amp; Description                                      Output / Artifact             Time (Min)
+------------------------------------------------------------------------------------------------------------------------
+Act 6.1       Opening Hook: Failed Escalation &amp; SLA Breach                       Reflective Response             10 Mins
+Act 6.2       Interactive Instructional Video 6.1 (SLA Escalations &amp; Handovers)   Video Study &amp; Pauses            15 Mins
+Act 6.3       Explicit Teaching: Reporting Verbs &amp; SLA Priority Phrasing         Language Pattern Drills         20 Mins
+Act 6.4       Guided Model Dialogues: Tier-2 Escalation Explanations             Dialogue Study                  15 Mins
+Act 6.5       Formative Practice: Escalation Reason Matching &amp; Scripting        Completed Practice              20 Mins
+Act 6.6       Simulated Speaking Task 6.1 (Guided Escalation Call)               Spoken Audio Recording          15 Mins
+Act 6.7       Simulated Speaking Task 6.2 (Independent Hardware Bug Escalation)  Spoken Audio Recording          15 Mins
+Act 6.8       Lesson Review &amp; Self-Assessment Checklist                          Self-Check Checklist            10 Mins
+------------------------------------------------------------------------------------------------------------------------
+SUBTOTAL LESSON 6                                                                                              120 MINUTES
+========================================================================================================================
+========================================================================================================================
+LESSON 7: OCCUPATIONAL VOCABULARY, CASE RECORDS, AND TICKET HYGIENE (TOTAL: 120 MINUTES)
+========================================================================================================================
+Activity ID   Activity Title &amp; Description                                      Output / Artifact             Time (Min)
+------------------------------------------------------------------------------------------------------------------------
+Act 7.1       Opening Hook: Incomplete Ticket Log Audit                          Reflective Response             10 Mins
+Act 7.2       Interactive Instructional Video 7.1 (CRM Ticket Hygiene &amp; SLA)     Video Study &amp; Pauses            15 Mins
+Act 7.3       Explicit Teaching: Past Tense for Diagnostic Logs &amp; Acronyms       Grammar &amp; Acronym Drills        20 Mins
+Act 7.4       Guided Model Ticket Records &amp; Professional Formatting              Record Analysis                 15 Mins
+Act 7.5       Formative Practice: Acronym Identification &amp; Ticket Editing        Completed Practice              20 Mins
+Act 7.6       Formative Task 7.1 (Guided CRM Ticket Logging from Transcript)     Written Ticket Entry            15 Mins
+Act 7.7       Formative Task 7.2 (Independent CRM Ticket Entry from Raw Call)   Written Ticket Entry            15 Mins
+Act 7.8       Lesson Review &amp; Ticket Formatting Self-Check Checklist             Self-Check Checklist            10 Mins
+------------------------------------------------------------------------------------------------------------------------
+SUBTOTAL LESSON 7                                                                                              120 MINUTES
+========================================================================================================================
+========================================================================================================================
+LESSON 8: INTEGRATING SUPPORT PROCESS, TICKET LOGS &amp; ORAL CASE SUMMARIES (TOTAL: 240 MINUTES)
+========================================================================================================================
+Activity ID   Activity Title &amp; Description                                      Output / Artifact             Time (Min)
+------------------------------------------------------------------------------------------------------------------------
+Act 8.1       Opening Hook: Shift Handover Communication Failure                 Reflective Response             15 Mins
+Act 8.2       Interactive Instructional Video 8.1 (Oral Case Summary Structure)  Video Study &amp; Pauses            30 Mins
+Act 8.3       Explicit Teaching: 5-Stage Oral Summary Framework &amp; Transition Rules Syntax &amp; Reporting Drills    35 Mins
+Act 8.4       Guided Model Oral Summaries &amp; Structural Deconstruction           Analysis of Case Records        30 Mins
+Act 8.5       Formative Practice: Ticket-to-Speech Synthesis &amp; Note Organizing   Completed Outline               30 Mins
+Act 8.6       Simulated Speaking Task 8.1 (Guided Oral Case Summary)             Spoken Audio Recording          30 Mins
+Act 8.7       Simulated Speaking Task 8.2 (Independent Shift Handover Summary)   Spoken Audio Recording          40 Mins
+Act 8.8       Comprehensive Course Synthesis, Self-Check Rubric &amp; Transfer       Master Self-Check               20 Mins
+------------------------------------------------------------------------------------------------------------------------
+SUBTOTAL LESSON 8                                                                                              240 MINUTES
+========================================================================================================================
+4.2 Master Time Arithmetic Verification Table
+========================================================================================================================
+MASTER TIME ALLOCATION &amp; ARITHMETIC VERIFICATION SHEET
+========================================================================================================================
+Lesson Number &amp; Title                                             Minutes Allocated   Hours Equivalent   Cumulative Time
+------------------------------------------------------------------------------------------------------------------------
+Lesson 1: Professional Customer Enquiries &amp; Call Openings            120 Minutes         2.00 Hours        120 Min (2.0 Hrs)
+Lesson 2: Identifying &amp; Clarifying Technical Problems                150 Minutes         2.50 Hours        270 Min (4.5 Hrs)
+Lesson 3: Troubleshooting &amp; Explaining Technical Problems            150 Minutes         2.50 Hours        420 Min (7.0 Hrs)
+Lesson 4: Handling Complaints &amp; Responding Empathetically            120 Minutes         2.00 Hours        540 Min (9.0 Hrs)
+Lesson 5: Giving Clear Instructions &amp; Checking Understanding          120 Minutes         2.00 Hours       660 Min (11.0 Hrs)
+Lesson 6: Escalating Unresolved Cases &amp; Explaining Next Steps        120 Minutes         2.00 Hours       780 Min (13.0 Hrs)
+Lesson 7: Occupational Vocabulary, Case Records &amp; Ticket Hygiene     120 Minutes         2.00 Hours       900 Min (15.0 Hrs)
+Lesson 8: Integrated Support Process, Ticket Logs &amp; Oral Summaries   240 Minutes         4.00 Hours      1,140 Min (19.0 Hrs)
+------------------------------------------------------------------------------------------------------------------------
+TOTAL PLANNED INSTRUCTIONAL TIME                                   1,140 MINUTES        19.00 HOURS     EXACT MATCH (100%)
+========================================================================================================================
+Methodological Accounting Note:The 1,140 minutes represent actual planned student learning time. Assumptions for activity durations account for: (1) video watching (5–8 mins runtime + 7–12 mins interactive pauses), (2) language structure study &amp; transformation drills, (3) formative exercise completion &amp; feedback review, and (4) simulated speaking tasks (2 mins prep + 1 min target recording + 2 mins self-review/re-recording). Research Pre-test (Form A) and Post-test (Form B) are kept strictly separate from these 1,140 instructional minutes.
+SECTION 5: MASTER ASSESSMENT BLUEPRINT
+5.1 Analytic Speaking Assessment Rubric (5 Criteria, 1–5 Scale)
+Evaluated across 5 criteria on a 1–5 scale, producing a score of 5 to 25 points per scenario.
+===================================================================================================================================
+ANALYTIC SPEAKING ASSESSMENT RUBRIC FOR ONLINE TECHNICAL SUPPORT AND CUSTOMER SERVICE
+===================================================================================================================================
+Score  Criterion 1: Task Achievement    Criterion 2: Pragmatic Appropriateness Criterion 3: Occupational Vocab Criterion 4: Grammar Control  Criterion 5: Fluency &amp; Intelligibility
+-----------------------------------------------------------------------------------------------------------------------------------
+5     Completely fulfills all task    Tone is highly professional, empathetic, Uses precise, domain-appropriate Demonstrates excellent control Speech is natural, clear, and easy to
+(High) requirements. All essential    and customer-centered. Perfect register  technical terms, CS acronyms,   of target patterns (modals,  understand. Pauses are natural and do not
+information points provided.     and politeness strategies.               and workplace expressions.      conditionals, imperatives).  impeded flow. Thai accent is intelligible.
+-----------------------------------------------------------------------------------------------------------------------------------
+4     Fulfills all main task          Tone is polite and appropriate. Minor    Uses accurate CS and technical  Good grammatical control with  Clear speech with minor hesitations.
+requirements with clear,        slip in register does not affect         vocabulary with minimal minor errors that do not impair  Easy to understand throughout the
+relevant details.               customer rapport.                        awkward phrasing.               meaning or professional tone. recording.
+-----------------------------------------------------------------------------------------------------------------------------------
+3     Fulfills primary task but lacks Tone is acceptable but somewhat          Uses adequate general vocabulary; Grammatical errors occur but  Noticeable hesitations, self-corrections,
+(Mid) completeness in 1 detail or     rigid or overly formal. Basic politeness limited range of domain-specific key workplace message remains or unnatural pauses. Comprehensible
+elaboration.                    markers present.                         terms or CS acronyms.           understandable to a customer. with minor effort.
+-----------------------------------------------------------------------------------------------------------------------------------
+2     Partially fulfills task; omits  Tone is inappropriate, overly abrupt,    Uses repetitive or incorrect    Frequent grammatical errors    Frequent, prolonged pauses and disfluencies.
+key customer information or     or lacks empathy during customer         terms; relies on generic words  severely distort meaning or    Customer must exert significant effort to
+resolution steps.               complaints/delays.                       or native language structures. create customer confusion.      understand.
+-----------------------------------------------------------------------------------------------------------------------------------
+1     Fails to fulfill task. Response Response is rude, hostile, or completely Vocabulary is inadequate;       Severe grammatical breakdown;  Unintelligible speech or prolonged silence.
+(Low) is irrelevant, off-topic, or    inappropriate for a customer service     frequent incorrect word choices no recognizable sentence       Communication breaks down completely.
+unperformed.                    environment.                             render message unclear.         control.
+===================================================================================================================================
+Policy on Thai Accent: In accordance with International EOP standards, a Thai accent is not penalized if the speech remains intelligible and clear. Assessment focuses on pragmatic effectiveness and communication success rather than native-speaker accent imitation.
+5.2 Critical Review of Rubric
+Strengths: Explicitly measures workplace communicative competence rather than abstract grammar alone; distinguishes pragmatic tone (critical in CS) from technical accuracy.
+Limitations: Requires raters to balance multiple dimensions during a 60–90 second recording; requires pre-rating calibration to maintain inter-rater reliability.
+Evaluability from Audio: All 5 criteria are directly observable from recorded audio files.
+Construct Overlap: Minimal. Criterion 1 evaluates Content, Criterion 2 evaluates Pragmatic Tone, Criterion 3 evaluates Lexicon, Criterion 4 evaluates Syntax, and Criterion 5 evaluates Aural Clarity/Flow.
+Validation Disclaimer: This rubric represents a researcher-designed instrument structured for expert content validation and pilot testing. Empirical reliability coefficients (e.g., Cronbach's \\(\alpha\\), Inter-Rater ICC) will be computed following data collection.
+5.3 Scoring, Aggregation, and Gain Score Framework
++---------------------------------------------------------------------------------------------------+
+|                                 SCORING AGGREGATION MATHEMATICS                                   |
++---------------------------------------------------------------------------------------------------+
+|  1. Single Scenario Maximum Score:    5 Criteria x 5 Points = 25 Points                           |
+|  2. Full Test Maximum Raw Score:      8 Scenarios x 25 Points = 200 Raw Points                   |
+|  3. Mean Scenario Score Formula:      Mean Score = (Sum of 8 Scenario Scores) / 8  [Range: 5-25]  |
+|  4. Percentage Score Formula:         Percentage (%) = (Raw Total Score / 200) x 100             |
+|  5. Pre-to-Post Gain Score Formula:   Delta Score = Post-Test Score - Pre-Test Score             |
++---------------------------------------------------------------------------------------------------+
+Protocol for Missing or Unusable Recordings
+Non-submission / Silence: Scored as \\(1\\) point per criterion (minimum raw score = \\(5\\) per scenario). A score of \\(0\\) is not assigned because the analytic scale operates on a \\(1-5\\) range.
+Unusable Audio (Technical Glitch): The student is prompted to re-record the response under identical standardized preparation conditions.
+Dual-Rater Inter-Rater Reliability Protocol
+Two independent raters score each recording using the rubric.
+Individual ratings are preserved for Inter-Rater Reliability analysis using Intraclass Correlation Coefficients (ICC Two-Way Random, Absolute Agreement) or Cohen's Weighted Kappa (\\(\kappa_w\\)).
+Final reported student score = Average of Rater 1 and Rater 2 scores:\\\text{Final Scenario Score} = \frac{\text{Rater 1 Score} + \text{Rater 2 Score}}{2}\\
+5.4 Parallel-Form Assessment Blueprint (Form A Pre-Test vs. Form B Post-Test)
+Both test forms consist of 8 parallel scenarios sampling the 8 lesson objectives and empirical job ad needs.
+Scenario #,Target Communication Function,Information Load,Form A (Pre-Test) Scenario Focus,Form B (Post-Test) Scenario Focus,Parallel Equivalence Rationale
+S1,Call Opening &amp; Account Verification,Standard (2 Context Points),Inbound call: E-commerce order status check &amp; identity verification.,Inbound call: SaaS subscription renewal &amp; identity verification.,&quot;Equivalent task structure, prompt length (35 words), and credential verification steps.&quot;
+S2,Diagnostic Clarification &amp; Fault Isolation,Moderate (3 Context Points),Technical query: User unable to authenticate on mobile app.,Technical query: User unable to connect to corporate VPN.,Equivalent diagnostic load requiring open/closed questioning and paraphrasing.
+S3,Troubleshooting &amp; Workaround Proposal,High (4 Context Points),System glitch: E-commerce checkout gateway freeze.,System glitch: Inventory portal database sync error.,Parallel technical complexity requiring root cause explanation and workaround proposal.
+S4,Complaint De-escalation &amp; Empathy,High (3 Context Points),Customer complaint: Delayed shipment of optical lenses.,Customer complaint: Delayed hardware shipment for production line.,&quot;Parallel emotional intensity requiring formal apology, empathy, and service recovery.&quot;
+S5,Step-by-Step Instructions &amp; Checks,Moderate (4 Step Sequence),User assistance: Setting up Multi-Factor Authentication (MFA).,User assistance: Configuring email client server settings.,Identical 4-step instructional sequence requiring imperatives and transition markers.
+S6,Case Escalation &amp; Next Steps,High (3 SLA Points),Unresolved issue: Tier-2 escalation for database access bug.,Unresolved issue: Tier-2 escalation for firewall rule conflict.,&quot;Parallel SLA escalation triggers, priority tagging (P2), and next-step explanations.&quot;
+S7,Ticket Documentation &amp; Case Record,Moderate (5 Record Fields),Documentation: Logging a payment reconciliation error call.,Documentation: Logging a user account lock-out incident call.,&quot;Equivalent field structure (Issue, Symptoms, Steps Taken, Root Cause, Status).&quot;
+S8,Integrated Oral Case Summary,High (5 Summary Stages),Shift Handover: Oral summary of a complex regional gateway outage ticket.,Shift Handover: Oral summary of a complex cloud portal migration ticket.,Identical 5-stage oral summary framework based on a structured CRM case record.
+SECTION 6: RESEARCH DOCUMENTATION &amp; ADVISOR APPROVAL LOG
+6.1 Decisions Requiring Advisor / Expert Panel Approval
+Decision ID,Proposed Design Decision,Pedagogical / Methodological Rationale,Status for Advisor Review
+DEC-01,&quot;Allocation of 1,140 instructional minutes across 8 lessons (Lesson 8 allocated 240 mins).&quot;,Reflects the higher cognitive load and task synthesis required for integrated oral case summaries.,Pending Approval
+DEC-02,Use of simulated prerecorded prompts for pre/post-speaking tests.,Ensures standardized testing conditions for all thesis participants without confounding live-actor variables.,Pending Approval
+DEC-03,Non-penalization of intelligible Thai accent in Speaking Rubric Criterion 5.,Aligns with EOP World Englishes paradigm focusing on occupational intelligibility over accent reduction.,Pending Approval
+DEC-04,Use of 5-criterion analytic rubric on a 1–5 scale (Max raw score = 200).,&quot;Provides detailed diagnostic feedback across task, tone, lexicon, syntax, and fluency.&quot;,Pending Approval
+6.2 Methodological Limitations &amp; Unresolved Design Decisions
+Simulation Limitation: Asynchronous simulated speaking tasks evaluate spoken production against pre-recorded prompts rather than spontaneous, reciprocal live customer negotiation.
+Platform Constraints: Automated speech recognition (ASR) is not assumed for qualitative grading; human raters will evaluate recordings using the rubric.
+Equivalence Assumption: While Form A and Form B are designed to be conceptually parallel, empirical equivalence cannot be claimed prior to expert review and pilot testing.
+Progress &amp; Task Tracking Update
+x Deliverable 1: Evidence and Design Blueprint (COMPLETED ABOVE)
+Deliverable 2: Complete Lesson Materials (Lessons 1 to 8 - Student-Ready Learning Packages)
+Deliverable 3: Assessment Package (Pre-test Form A &amp; Post-test Form B)
+Deliverable 4: Implementation Package (Google Classroom &amp; Asset Lists)
+Deliverable 5: Research Documentation Summary
+I am ready to proceed directly to Deliverable 2 (Complete Lesson Materials), generating the student-ready learning packages in manageable, high-depth batches starting with Lesson 1. Shall I proceed with Lesson 1 now?

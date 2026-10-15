@@ -1,0 +1,718 @@
+DELIVERABLE 2: COMPLETE LESSON MATERIALS (CONTINUED)
+
+LESSON 8: Integrated Support Process, Ticket Logs, and Oral Case Summaries
+
+A. LESSON OVERVIEW
+
+Lesson Number & Title: Lesson 8: Integrated Support Process, Ticket Logs, and Oral Case Summaries (Capstone Synthesis Lesson)
+
+Allocated Learning Duration: 240 Minutes (4.0 Hours)
+
+Occupational Relevance: In multinational BPO contact centers and shared service hubs operating in Malaysia (e.g., Accenture JA013, Welsend JA024, InterIsland JA028, BASF JA010, Teleperformance JA004, Scicom JA020), support operations run 24/7 across multiple time zones. During global shift handovers (e.g., transferring active cases from the Kuala Lumpur desk to EMEA or Americas teams), support specialists must synthesize complex, multi-turn CRM ticket logs into clear, professional 60–90 second Oral Case Summaries. Frontline specialists must master the transition from written data to fluent, structured speech, briefing oncoming team members or supervisors on the core incident, diagnostic actions taken, current status, and required pending next steps without reading raw logs verbatim.
+
+Measurable Learning Objectives:By the end of this 240-minute capstone lesson, Thai IT undergraduate learners will be able to:
+
+Synthesize complex multi-turn CRM ticket histories into essential diagnostic facts, filtering out redundant customer chat logs or raw technical transcripts.
+
+Structure a 5-stage oral case summary following the industry-standard handover framework (1. Case Overview \\(\rightarrow\\) 2. Symptom Analysis \\(\rightarrow\\) 3. Actions Taken \\(\rightarrow\\) 4. Current Case Status \\(\rightarrow\\) 5. Pending Next Step).
+
+Apply ticket-to-speech transition markers ("Regarding Ticket ID...", "Initial diagnostics indicated...", "To date, we have executed...", "The case is currently sitting at...", "The required next step is...") to maintain a professional reporting register.
+
+Perform a 90-second professional oral case summary during a simulated shift handover, achieved from a complex P1/P2 CRM ticket record, scoring a minimum of "3" across all rubric criteria.
+
+========================================================================================
+
+LESSON 8 COMMUNICATION FUNCTIONS, VOCABULARY, AND GRAMMAR MATRIX
+
+========================================================================================
+
+Target Communication Functions:
+
+  - Synthesizing complex CRM ticket logs into concise oral shift handover briefings
+
+  - Structuring spoken case summaries using the 5-Stage Oral Handover Framework
+
+  - Reporting past diagnostic actions using active and passive reporting structures
+
+  - Briefing oncoming support agents on pending SLA deadlines and required next steps
+
+
+
+Target Occupational Vocabulary & Acronyms:
+
+  - Shift Handover, Case Synthesis, Ticket-to-Speech, Ongoing Incident, SLA Breach,
+
+    Pending Owner Action, Root Cause Analysis (RCA), Workaround In Place, Tier-2 Handoff,
+
+    Escalation Path, Blocked Status, Incident Log, Shift Briefing.
+
+
+
+Target Sentence Patterns & Grammar:
+
+  - Case Opening Lead-in: "I am briefing you on Ticket ID [#TK-9082] regarding [a server gateway crash]."
+
+  - Reporting Symptoms & Causes: "Initial diagnostic checks confirmed that [the fault stemmed from a memory leak]."
+
+  - Summarizing Diagnostic Actions: "To date, Tier-1 has [cleared the cache, flushed DNS, and issued a patch]."
+
+  - Stating Status & Handoff Action: "The ticket is currently sitting at [P2 Escalated Status], and the required next step is [for Tier-2 to re-index the database within 45 minutes]."
+
+========================================================================================
+
+Prerequisite Knowledge: Mastery of Lessons 1 through 7 (Call Openings, Diagnostics, Troubleshooting, Complaints, Instructions, Escalations, and Ticket Hygiene).
+
+Materials Needed: Web-based EOP portal access, Audio/Video player, CRM Ticket Simulator, Microphone/Audio Recording Interface.
+
+Connection to Curriculum Flow:
+
+Backward Linkage: Synthesizes all linguistic, pragmatic, and technical skills developed across Lessons 1–7 into a final spoken capstone performance.
+
+Forward Linkage: Directs learners directly into Deliverable 3: Parallel-Form Assessment Package (Form A Pre-Test & Form B Post-Test).
+
+B. ATTENTION-GRABBING OPENING HOOK
+
+Workplace Context: Morning Shift Handover Meeting at 08:00 AM in a Regional BPO Service Desk in Kuala Lumpur, Malaysia.
+
+The Problem / Communication Mistake: An outgoing support agent named M turns to the incoming team lead during shift handover and reads a 3-page raw CRM transcript word-for-word in a monotone voice: "At 02:14 AM user said hello my name is John I have problem error code 504 then agent Golf said thank you for calling then user said..." M rambles for 4 minutes, fails to state whether the issue was resolved, and forgets to mention that an SLA breach will occur in 15 minutes. The incoming agent is completely confused, misses the SLA window, and the customer's enterprise server crashes offline.
+
+Reflective Question for Students:
+
+Why is reading a CRM ticket word-for-word during a shift handover dangerous and inefficient?
+
+How can you transform a dense 3-page CRM log into a sharp, 60-second oral briefing that tells the incoming agent exactly what they need to do?
+
+Occupational Importance: In 24/7 global IT operations, shift handovers must be ultra-concise. Incoming agents cannot re-read hundreds of ticket lines. Delivering a structured, 90-second ticket-to-speech summary ensures operational continuity, prevents SLA breaches, and demonstrates high-level workplace leadership.
+
+C. COMPLETE INSTRUCTIONAL VIDEO SCRIPT
+
+Video Title: Module 8.1 — Mastering Oral Case Summaries & Shift Handovers
+
+Target Duration: 12 Minutes (Runtime) + 15 Minutes (Interactive Pauses) = 27 Minutes Total Learning Time
+
+AI Tool Production Note: AI video generation script featuring split-screen CRM ticket views and animated oral briefing frameworks.
+
+========================================================================================
+
+INSTRUCTIONAL VIDEO SCRIPT: MODULE 8.1
+
+========================================================================================
+
+
+
+[SCENE 1: INTRODUCTION & THE ART OF SHIFT HANDOVERS]
+
+Visual Direction: Split screen showing an outgoing Malaysian agent passing a headset and digital tablet to an incoming EMEA agent in a high-tech BPO control room.
+
+On-Screen Text: Lesson 8.1: Capstone — Integrated Support Process & Oral Case Summaries
+
+Audio / Narrator Script:
+
+"Welcome to Lesson 8, the capstone lesson of your course! In 24/7 global support desks in Kuala Lumpur, work never stops. When your shift ends, active tickets must be handed over orally to the next team. Today, you will learn how to turn complex CRM records into crisp, professional 90-second oral case summaries."
+
+
+
+[SCENE 2: THE 5-STAGE ORAL HANDOVER FRAMEWORK]
+
+Visual Direction: A 5-level reporting pyramid animates on screen with clear color coding.
+
+On-Screen Text:
+
+  Stage 1: Case Identification (Ticket ID, Priority, Account)
+
+  Stage 2: Problem & Symptom Summary (Core user complaint & error code)
+
+  Stage 3: Diagnostic Actions Completed (What Tier-1/Tier-2 executed)
+
+  Stage 4: Current Case Status (Resolved / Escalated / Pending)
+
+  Stage 5: Required Next Step & SLA Deadline (Exact action for oncoming agent)
+
+Narrator Script:
+
+"To deliver a flawless oral handover, follow the 5-Stage Reporting Pyramid. Stage 1: State the Ticket ID and Priority. Stage 2: Summarize the core problem. Stage 3: Highlight key actions already completed. Stage 4: State the current ticket status. Stage 5: Clearly define the required next step and remaining SLA time."
+
+
+
+[SCENE 3: CONTRAST ANALYSIS - WORD-FOR-WORD READ VS. SYNTHESIZED ORAL BRIEFING]
+
+Visual Direction: Side-by-side video comparison of two agents during shift handover.
+
+Left Panel (Red Border - Ineffective Agent M):
+
+M (Reading raw ticket transcript off monitor): "At 2 AM user John called said hi my app is broken agent Golf said hello may I have your account ID then user gave ID..."
+
+On-Screen Text (Red): 
+
+  X Reads raw dialogue verbatim
+
+  X Wastes time on trivial greetings
+
+  X Fails to highlight SLA deadline
+
+
+
+Right Panel (Green Border - Effective Agent Pear):
+
+Pear (Standing confident, referring to brief bullet notes): "I am briefing you on Ticket ID #TK-9082, a Priority 2 incident for Corebase Logistics. The user experienced an Authentication Timeout 504 error during checkout. Tier-1 verified credentials and isolated the fault to a database memory congestion. We flushed the DNS cache and applied a temporary workaround. The ticket is currently sitting at P2 Escalated Status with Tier-2, and the required next step is for the incoming desk to verify the database re-index by 09:30 AM before closing."
+
+On-Screen Text (Green):
+
+  ✓ Follows 5-stage framework perfectly
+
+  ✓ Professional ticket-to-speech transitions ("I am briefing you on...", "sitting at P2 status")
+
+  ✓ Highlights exact SLA deadline (09:30 AM)
+
+
+
+[SCENE 4: INTERACTIVE PAUSE & PRACTICE]
+
+Visual Direction: Countdown timer (10 seconds) with audio chime.
+
+On-Screen Text: PRACTICE PAUSE: Convert this raw CRM note into a Stage 5 Handoff line: "Next agent needs to call customer back at 10 AM to check if server works."
+
+Narrator Script:
+
+"Pause the video now. How would you state this handoff line professionally? Practice saying: 'The required next step is to execute a follow-up call with the client at 10:00 AM to verify server stability.'"
+
+
+
+[INTERACTIVE PAUSE - 120 SECONDS]
+
+
+
+[SCENE 5: TICKET-TO-SPEECH TRANSITION MARKERS]
+
+Visual Direction: Highlighted text box showing transition markers: "Regarding Ticket ID...", "Initial diagnostic checks confirmed...", "To date, we have executed...", "The required next step is..."
+
+Narrator Script:
+
+"Use strong transition markers to guide your listener. Phrases like 'Initial checks indicated...' and 'The required next step is...' make your speech sound structured, authoritative, and easy to follow."
+
+
+
+[SCENE 6: LESSON RECAP]
+
+Visual Direction: Summary graphic displaying the capstone reporting checklist.
+
+On-Screen Text:
+
+  RECAP:
+
+  1. Never read raw chat transcripts line-by-line.
+
+  2. Synthesize CRM data into 5 clear stages.
+
+  3. Use professional reporting transitions.
+
+  4. Always highlight the exact SLA deadline and pending action.
+
+Narrator Script:
+
+"Mastering oral case summaries marks your transition into a professional, industry-ready EOP communicator. Let's practice synthesizing tickets in Section D!"
+
+========================================================================================
+
+D. EXPLICIT TEACHING OF SENTENCE STRUCTURES AND LANGUAGE USE
+
+1. Language Pattern 1: The 5-Stage Oral Case Summary Framework
+
+========================================================================================
+
+LANGUAGE PATTERN 1: THE 5-STAGE ORAL CASE SUMMARY FRAMEWORK
+
+========================================================================================
+
+Form / Syntax Pattern:
+
+  Stage 1 (Identification): "I am briefing you on Ticket ID [#TK-XXXX], a [Priority Level] incident for [Account Name]."
+
+  Stage 2 (Symptom):       "The client reported [Core Issue / Error Code] affecting [Impacted Module]."
+
+  Stage 3 (Actions Taken): "Initial diagnostics confirmed [Root Cause], and Tier-1 has executed [Actions Taken]."
+
+  Stage 4 (Current Status): "The ticket is currently sitting at [Pending / Escalated / Workaround Active Status]."
+
+  Stage 5 (Next Step/SLA): "The required next step is for [Target Team/Agent] to [Action] prior to [SLA Deadline]."
+
+
+
+Communicative Function:
+
+  Delivering a structured, 60-to-90-second spoken case summary during shift handovers, team leader briefings, or cross-departmental incident reviews.
+
+
+
+Explanation in Thai (คำอธิบายภาษาไทย):
+
+  โครงสร้างสรุปเคสปากเปล่า (Oral Case Summary) เป็นการแปลงข้อมูลจากบันทึก CRM มาเป็นสปีชรายงานความยาว 60-90 วินาที เพื่อส่งมอบงานระหว่างเปลี่ยนกะ (Shift Handover) ประกอบด้วย 5 ลำดับขั้นที่ต้องพูดเรียงกันเสมอ คือ 1. ระบุหมายเลขและระดับความสำคัญเคส -> 2. สรุปอาการปัญหา -> 3. สรุปสิ่งที่แก้ไขไปแล้ว -> 4. ระบุสถานะปัจจุบัน -> 5. ระบุสิ่งที่กะถัดไปต้องทำต่อพร้อมเส้นตาย SLA
+
+
+
+Contextualized Workplace Examples:
+
+  Example 1: "I am briefing you on Ticket ID #TK-4401, a P2 incident for BASF. The client reported a gateway timeout during report generation. Initial diagnostics confirmed memory congestion, and Tier-1 has executed a DNS flush and cleared local cache. The ticket is currently sitting at Workaround Active status, and the required next step is for the morning desk to verify final database sync by 10:00 AM."
+
+  Example 2: "Briefing on Ticket ID #TK-9912, a P1 Critical case for Teleperformance. The customer experienced a complete payment portal freeze. Tier-1 isolated the fault to a firewall socket block and escalated to Tier-2. The case is currently sitting at P1 Escalated Status, and the required next step is for Network Ops to confirm socket unblocking within 20 minutes."
+
+
+
+Common Learner Errors & Corrections:
+
+  x Incorrect: "This ticket 4401 customer say error code 504 and I try clear cache but not work so you call customer later okay?" (Unstructured, informal, lacks professional framework)
+
+    ✓ Correct: Follow the 5-stage framework strictly using explicit transition lead-ins.
+
+========================================================================================
+
+Substitution / Transformation Exercise (10 Minutes)
+
+Instructions: Re-organize the following scrambled diagnostic facts into a structured 5-Stage Oral Case Summary framework.
+
+Scrambled Case Facts:
+
+SLA deadline is 11:30 AM to check server status.
+
+Ticket ID #TK-1092, Priority 2, Swarovski account.
+
+Action taken: Reinstalled display drivers and cleared temporary files.
+
+Issue: CAD application crashing during 3D rendering.
+
+Status: Pending user verification.
+
+Structured 5-Stage Output:
+
+Stage 1 (ID): "I am briefing you on Ticket ID #TK-1092, a Priority 2 incident for the Swarovski account."
+
+Stage 2 (Symptom): "The client reported that their CAD application was crashing during 3D rendering."
+
+Stage 3 (Actions): "Initial diagnostics isolated the fault to corrupted display drivers, and Tier-1 has reinstalled the drivers and cleared temporary files."
+
+Stage 4 (Status): "The ticket is currently sitting at Pending User Verification status."
+
+Stage 5 (Next Step): "The required next step is for the incoming agent to execute a follow-up verification call by 11:30 AM."
+
+Production Task (10 Minutes)
+
+Write a 5-stage oral case summary script for a ticket involving a locked administrator account at iFAST Global Hub (#TK-8832, P3 Standard, Action: Sent MFA reset link, Status: Pending User Action).
+
+Student Output Example: "I am briefing you on Ticket ID #TK-8832, a Priority 3 standard request for iFAST Global Hub. The client reported an administrator account lockout following password expiration. Tier-1 verified credentials and dispatched a secure MFA reset link to the user's email. The ticket is currently sitting at Pending User Action status, and the required next step is to close the ticket once automated login confirmation is logged."
+
+2. Language Pattern 2: Ticket-to-Speech Transition Markers
+
+========================================================================================
+
+LANGUAGE PATTERN 2: TICKET-TO-SPEECH TRANSITION MARKERS
+
+========================================================================================
+
+Form / Syntax Pattern:
+
+  - Opening Lead-in: "I am briefing you on / Regarding Ticket ID..."
+
+  - Diagnostic Transition: "Initial diagnostic checks confirmed that / Root cause analysis indicated..."
+
+  - Action Reporting: "To date, Tier-1 has executed / Diagnostic steps completed include..."
+
+  - Status Reporting: "The case is currently sitting at / Present ticket status is..."
+
+  - Handover Transition: "The required next step is for [oncoming agent] to / SLA deadline requires..."
+
+
+
+Communicative Function:
+
+  Connecting independent CRM data points into a cohesive, fluid oral narrative during workplace shift handovers.
+
+
+
+Explanation in Thai (คำอธิบายภาษาไทย):
+
+  ในการพูดรายงานสรุปเคส ประโยคเชื่อม (Transition Markers) เป็นหัวใจสำคัญที่ช่วยแปลงข้อมูลดิบจากตาราง CRM ให้กลายเป็นสปีชที่ฟังง่ายและราบรื่น การฝึกใช้คำเชื่อมเหล่านี้จะช่วยให้ผู้เรียนพูดรายงานได้อย่างมั่นใจ เป็นธรรมชาติ และเป็นมืออาชีพ
+
+
+
+Contextualized Workplace Examples:
+
+  Example 1: "Regarding Ticket ID #TK-7701, initial diagnostic checks confirmed a router gateway drop."
+
+  Example 2: "To date, Tier-1 has completed a DNS cache flush, and the case is currently sitting at P2 Escalated status."
+
+  Example 3: "The required next step is for the incoming team to monitor server latency prior to the 12:00 PM SLA window."
+
+
+
+Common Learner Errors & Corrections:
+
+  x Incorrect: "Ticket 7701 router drop. We clear cache. Now Tier-2 look at it." (Choppy, telegraphic fragment speech)
+
+    ✓ Correct: Use full ticket-to-speech transition phrases to construct complete, polished sentences.
+
+========================================================================================
+
+E. GUIDED EXAMPLES AND MODEL ORAL CASE SUMMARIES
+
+Model Oral Summary 8.1: Full 90-Second Shift Handover Speech
+
+Workplace Context: Global Shift Handover Meeting at Accenture Malaysia (JA013).
+
+Source CRM Record: Ticket #TK-9021 (P1 Critical Gateway Outage during Order-to-Cash Batch Processing).
+
+========================================================================================
+
+MODEL ORAL CASE SUMMARY 8.1 (90-SECOND SPOKEN HANDOVER)
+
+========================================================================================
+
+[Spoken Audio Script]:
+
+
+
+"Good morning, team. I am briefing you on Ticket ID #TK-9021, a Priority 1 Critical incident affecting the Accenture Order-to-Cash regional portal. 
+
+
+
+The client reported a complete system freeze during their morning automated payment reconciliation run, displaying 'Server Gateway Timeout Code 504'. This issue was impacting all regional finance users in the Thailand desk.
+
+
+
+Initial diagnostic checks confirmed that the outage was caused by a database lock congestion following an automated patch update last night. To date, Tier-1 has executed a full session reset, cleared temporary server log files, and successfully isolated the blocked database tables.
+
+
+
+The case is currently sitting at P1 Escalated Status with our Senior Database Engineering Pod. A temporary batch workaround has been activated, allowing partial processing.
+
+
+
+The required next step is for the incoming shift lead to verify the final database table re-indexing with Tier-2 at 09:30 AM, and to update the client prior to our 10:00 AM SLA turnaround deadline. 
+
+
+
+Thank you. Are there any questions regarding this handover?"
+
+
+
+========================================================================================
+
+STAGE-BY-STAGE DECONSTRUCTION & ANALYSIS:
+
+  - Stage 1 (0:00 - 0:12): "Good morning, team. I am briefing you on Ticket ID #TK-9021, a Priority 1 Critical incident..." [Clear ID, Priority & Account]
+
+  - Stage 2 (0:13 - 0:30): "The client reported a complete system freeze... Code 504... impacting Thailand desk." [Concise Symptom & Scope]
+
+  - Stage 3 (0:31 - 0:50): "Initial diagnostic checks confirmed... To date, Tier-1 has executed..." [Diagnostic Actions & Cause]
+
+  - Stage 4 (0:51 - 1:05): "The case is currently sitting at P1 Escalated Status... temporary workaround active." [Exact Status]
+
+  - Stage 5 (1:06 - 1:30): "The required next step is for the incoming shift lead to verify... prior to 10:00 AM SLA." [Clear Action & SLA Deadline]
+
+
+
+Formality & Speed Guidelines:
+
+  - Target Word Count: 130 - 150 Words.
+
+  - Target Pace: 100 - 110 Words Per Minute (Calm, clear, deliberate professional delivery).
+
+  - Tone: Objective, authoritative, precise.
+
+========================================================================================
+
+F. FORMATIVE PRACTICE PAGE & SIMULATED SPEAKING TASKS
+
+Activity 8.1: Knowledge Check & Framework Identification (15 Minutes)
+
+What is the primary purpose of an Oral Case Summary during a contact center shift handover?
+
+A) To read every line of the customer's chat transcript aloud.
+
+B) To brief incoming agents on the core incident, actions taken, status, and pending SLA actions in 60–90 seconds.
+
+C) To complain about difficult customers to team members.
+
+D) To convince the customer to close their ticket immediately.
+
+Answer: B
+
+Explanation: Shift handovers synthesize complex ticket histories into actionable 60–90 second briefings to ensure operational continuity.
+
+Which statement correctly fulfills Stage 5 (Required Next Step & SLA) of the Oral Handover Framework?
+
+A) "The customer was very upset on the call."
+
+B) "The required next step is for the incoming desk to verify server stability with Tier-2 prior to the 11:00 AM SLA deadline."
+
+C) "I cleared the browser cache two hours ago."
+
+D) "Ticket ID is #TK-9921."
+
+Answer: B
+
+Explanation: Option B explicitly defines the oncoming agent's action and specifies the exact SLA deadline.
+
+Complete the sentence: "The case is currently _____ at Priority 2 Escalated Status with Network Engineering."
+
+A) sitting
+
+B) walking
+
+C) sleeping
+
+D) jumping
+
+Answer: A
+
+Explanation: "Sitting at Status" is standard BPO reporting terminology used to describe a ticket's current state.
+
+Activity 8.2: Ticket-to-Speech Outline Construction (20 Minutes)
+
+Instructions: Read the CRM ticket record below and complete the 5-stage speech outline notes before recording your summary.
+
+CRM TICKET RECORD:
+
+Ticket ID: #TK-6021 | Priority: P2 High | Account: Teleperformance e-Commerce
+
+Symptom: Merchant checkout button frozen; 'Gateway Error 102' displayed.
+
+Cause: Router DNS blocking payment script.
+
+Action Taken: Tier-1 guided user through updating DNS to [suspicious link removed] and flushing local cache.
+
+Status: Workaround Active / Pending Final Customer Verification.
+
+SLA Deadline: Follow-up required by 02:00 PM.
+
+Student Outline Notes:
+
+Stage 1 (ID): Ticket #TK-6021, Priority 2 High, Teleperformance e-Commerce Account.
+
+Stage 2 (Symptom): Merchant checkout button frozen with Gateway Error 102.
+
+Stage 3 (Action): Isolated router DNS fault; guided user through changing DNS to suspicious link removed and flushing cache.
+
+Stage 4 (Status): Workaround active, pending final verification.
+
+Stage 5 (Next Step/SLA): Incoming agent must conduct verification call by 02:00 PM.
+
+Activity 8.3: Simulated Speaking Tasks (Capstone Handovers)
+
+========================================================================================
+
+SIMULATED SPEAKING TASK 8.1: GUIDED ORAL CASE SUMMARY (PARTIALLY GUIDED)
+
+========================================================================================
+
+Workplace Situation:
+
+  You are an IT Support Specialist at Scicom (`JA020`). You are finishing your morning shift.
+
+  You must deliver a 60–90 second oral case summary to the incoming afternoon shift lead based on Ticket #TK-4402.
+
+
+
+Source Ticket Data (#TK-4402):
+
+  - Account: Scicom Regional SaaS Portal
+
+  - Issue: User account locked due to 3 failed MFA attempts.
+
+  - Action Taken: Verified credentials, dispatched secure MFA reset link via email.
+
+  - Current Status: Pending User Action.
+
+  - Pending Action: Verify user login log in CRM; close ticket if login confirmed by 01:00 PM.
+
+
+
+Student's Specific Speaking Task:
+
+  Deliver a structured 60-second oral case summary covering all 5 stages of the handover framework.
+
+
+
+Task Parameters:
+
+  - Preparation Time: 60 Seconds
+
+  - Target Response Duration: 60 - 75 Seconds
+
+
+
+Model Spoken Response:
+
+  "Good afternoon. I am briefing you on Ticket ID #TK-4402, a Priority 3 standard request for the Scicom Regional SaaS Portal account. The client reported an automated account lockout following three failed MFA authentication attempts. Initial checks confirmed credentials, and Tier-1 dispatched a secure MFA password reset link directly to the user's registered email. The ticket is currently sitting at Pending User Action status. The required next step is for the afternoon desk to verify the user's automated login log in the CRM portal and close the ticket once login is confirmed, prior to the 01:00 PM SLA window."
+
+
+
+Model Effectiveness Analysis:
+
+  - Covers all 5 stages seamlessly in 65 seconds.
+
+  - Uses exact transition markers (*"I am briefing you on...", "Initial checks confirmed...", "currently sitting at...", "The required next step is..."*).
+
+
+
+Self-Check Checklist for Students:
+
+  [ ] Did I state Ticket ID, Priority, and Account Name (Stage 1)?
+
+  [ ] Did I explain the core symptom concisely (Stage 2)?
+
+  [ ] Did I summarize diagnostic actions taken (Stage 3)?
+
+  [ ] Did I state the current ticket status (Stage 4)?
+
+  [ ] Did I define the oncoming agent's next step and SLA deadline (Stage 5)?
+
+========================================================================================
+
+========================================================================================
+
+SIMULATED SPEAKING TASK 8.2: INDEPENDENT SHIFT HANDOVER SUMMARY (HIGH AUTONOMY)
+
+========================================================================================
+
+Workplace Situation:
+
+  You are a Senior Customer Service Executive at BASF (Malaysia) Sdn. Bhd. (`JA010`).
+
+  It is 05:00 PM and you are handing over an unresolved P1 Critical Order-to-Cash incident to the incoming European desk lead.
+
+
+
+Source Complex Ticket Data (#TK-1009):
+
+  - Account: BASF Order-to-Cash (OTC) SAP Platform
+
+  - Priority: P1 Critical (Regional Impact: Thailand & Malaysia Desks)
+
+  - Symptom: Automated SAP billing reconciliation module crashing on batch invoice generation; Error Code 'SAP-RAM-OVERFLOW'.
+
+  - Root Cause: Server memory allocation cap exceeded following overnight database migration.
+
+  - Actions Completed: Tier-1 isolated memory cap glitch; escalated to Tier-3 SAP Infrastructure Engineers. Temporary manual processing workaround enabled for urgent orders.
+
+  - Current Status: P1 Escalated Status with Tier-3 Engineering.
+
+  - Handoff Requirement: Incoming desk lead must attend joint sync call with Tier-3 at 06:00 PM and confirm full SAP module reboot before 07:00 PM SLA breach.
+
+
+
+Student's Specific Speaking Task:
+
+  Formulate an independent 90-second professional shift handover summary speech. Follow the 5-stage framework strictly, maintain a calm, authoritative reporting tone, and highlight the critical 06:00 PM sync call and 07:00 PM SLA breach deadline.
+
+
+
+Task Parameters:
+
+  - Preparation Time: 90 Seconds
+
+  - Target Response Duration: 75 - 90 Seconds
+
+
+
+Model Spoken Response:
+
+  "Good evening, team. I am briefing you on Ticket ID #TK-1009, a Priority 1 Critical incident affecting the BASF Order-to-Cash SAP platform across both Thailand and Malaysia desks.
+
+
+
+  The client reported a total system crash within the automated SAP billing reconciliation module during batch invoice generation, displaying error code 'SAP-RAM-OVERFLOW'. 
+
+
+
+  Root cause analysis confirmed that overnight database migration reduced server memory allocation caps. To date, Tier-1 has isolated the memory glitch, activated a temporary manual processing workaround for urgent invoices, and escalated the core infrastructure bug directly to Tier-3 SAP Engineers.
+
+
+
+  The case is currently sitting at P1 Escalated Status with Tier-3 Infrastructure.
+
+
+
+  The required next steps for the incoming shift lead are twofold: first, attend the mandatory joint technical sync call with Tier-3 at 06:00 PM; and second, verify full SAP module reboot and report generation prior to our 07:00 PM SLA breach window.
+
+
+
+  Thank you. Please let me know if you require any clarification on this file."
+
+
+
+Acceptable Alternative Variations:
+
+  - "I am handing over Ticket #TK-1009, a P1 Critical case for the BASF OTC platform. The issue involves a billing module crash due to memory cap limits. Tier-1 has enabled manual processing and transferred the bug to Tier-3. Current status is P1 Escalated. The incoming lead must join the 06:00 PM engineering sync call and verify module reboot before 07:00 PM."
+
+
+
+Common Mistakes to Avoid:
+
+  - Do not miss the 06:00 PM sync call or 07:00 PM SLA breach detail.
+
+  - Maintain a steady, professional pace (approx. 110 words per minute).
+
+========================================================================================
+
+H. LESSON REVIEW AND COURSE CAPSTONE SYNTHESIS
+
+Concise Summary: In Lesson 8, you mastered the capstone workplace skill of converting complex CRM ticket histories into structured, 90-second Oral Case Summaries. By applying the 5-Stage Reporting Pyramid (Identification \\(\rightarrow\\) Symptom \\(\rightarrow\\) Actions Taken \\(\rightarrow\\) Status \\(\rightarrow\\) Next Step/SLA), you ensure seamless shift handovers and demonstrate industry-ready communicative competence.
+
+Master Essential Expressions & Sentence Patterns Checklist:
+
+[ ] "I am briefing you on Ticket ID #TK-XXXX, a Priority incident for Account."
+
+[ ] "The client reported symptom/error code affecting module."
+
+[ ] "Initial diagnostics confirmed cause, and Tier-1 has executed action."
+
+[ ] "The case is currently sitting at Escalated / Workaround / Pending status."
+
+[ ] "The required next step is for agent to action prior to the SLA deadline."
+
+Course Completion Reflection: Congratulations on completing all 8 instructional lessons (19.0 total learning hours)! You have developed comprehensive EOP communicative competence covering call openings, diagnostic questioning, technical troubleshooting, empathetic complaint handling, step-by-step instruction, case escalations, CRM ticket hygiene, and oral shift handovers.
+
+Next Steps: You are now fully prepared to complete Deliverable 3: Parallel-Form Assessment Package (Form A Pre-Test & Form B Post-Test) to evaluate your overall speaking proficiency gain.
+
+PROGRESS AND TASK TRACKING UPDATE
+
+x Deliverable 1: Evidence & Design Blueprint (19-Hour Time Allocation) (COMPLETED)
+
+x Deliverable 2: Complete Lesson Materials (Lessons 1 to 8) (100% COMPLETED)
+
+x Lesson 1: Professional Customer Enquiries & Call Openings (120 Mins)
+
+x Lesson 2: Identifying & Clarifying Technical Problems (150 Mins)
+
+x Lesson 3: Troubleshooting & Explaining Technical Problems (150 Mins)
+
+x Lesson 4: Handling Complaints & Responding Empathetically (120 Mins)
+
+x Lesson 5: Giving Clear Instructions & Checking Understanding (120 Mins)
+
+x Lesson 6: Escalating Unresolved Cases & Explaining Next Steps (120 Mins)
+
+x Lesson 7: Occupational Vocabulary, Case Records & Ticket Hygiene (120 Mins)
+
+x Lesson 8: Integrated Support Process, Ticket Logs & Oral Case Summaries (240 Mins)
+
+ Deliverable 3: Assessment Package (Pre-test Form A & Post-test Form B) — NEXT TASK
+
+ Deliverable 4: Implementation Package (Google Classroom & Asset Lists)
+
+ Deliverable 5: Research Documentation Summary
+
+All 8 lessons in Deliverable 2 are now 100% complete in full, student-ready detail!
+
+The remaining project tasks are:
+
+Deliverable 3: Assessment Package (Parallel Pre-test Form A & Post-test Form B with prompts, administrator scripts, and scoring sheets)
+
+Deliverable 4: Implementation Package (Google Classroom structure, asset mapping, and instructor guide)
+
+Deliverable 5: Research Documentation Summary (Mapping table, expert approval log, limitations, and lesson sequence record)
+
+Shall I proceed directly to Deliverable 3: Assessment Package (Pre-test Form A & Post-test Form B)?
+
+
+
