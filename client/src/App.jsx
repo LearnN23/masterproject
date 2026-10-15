@@ -15,6 +15,7 @@ import RaterDashboard from './components/RaterDashboard';
 import InstructorDashboard from './components/InstructorDashboard';
 import AdminDashboard from './components/AdminDashboard';
 import ExpertDashboard from './components/ExpertDashboard';
+import LoginPage from './components/LoginPage';
 import { 
   SubmissionReviewList, 
   SubmissionReviewDetail, 
@@ -284,24 +285,85 @@ const Card = ({ children, className = '' }) => (
   </div>
 );
 
+const getRoleDefaultView = (role) => {
+  switch (role) {
+    case 'student':
+    case 'tester':
+      return 'student-dashboard';
+    case 'instructor':
+      return 'instructor-dashboard';
+    case 'rater':
+    case 'rater_1':
+    case 'rater_2':
+      return 'rater-dashboard';
+    case 'admin':
+      return 'admin-dashboard';
+    case 'expert':
+      return 'expert-dashboard';
+    default:
+      return 'student-dashboard';
+  }
+};
+
+const getRoleDefaultActiveView = (role) => {
+  if (role === 'instructor') return 'instructor';
+  if (role === 'rater' || role?.startsWith('rater')) return 'rater';
+  if (role === 'admin') return 'admin';
+  if (role === 'expert') return 'expert';
+  return 'student';
+};
+
 export default function App() {
-  const [currentUser, setCurrentUser] = useState(null); // { id, username, name, role, cohort_group, participant_code }
-  const [activeRoleView, setActiveRoleView] = useState('student'); // 'student' or 'instructor'
-  const [currentView, setCurrentView] = useState('login');
+  const [currentUser, setCurrentUser] = useState(() => {
+    try {
+      const saved = localStorage.getItem('techquest_user') || sessionStorage.getItem('techquest_user');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
+
+  const [activeRoleView, setActiveRoleView] = useState(() => {
+    try {
+      const saved = localStorage.getItem('techquest_user') || sessionStorage.getItem('techquest_user');
+      if (saved) {
+        const u = JSON.parse(saved);
+        return getRoleDefaultActiveView(u.role);
+      }
+    } catch {}
+    return 'student';
+  });
+
+  const [currentView, setCurrentView] = useState(() => {
+    try {
+      const saved = localStorage.getItem('techquest_user') || sessionStorage.getItem('techquest_user');
+      if (saved) {
+        const u = JSON.parse(saved);
+        return getRoleDefaultView(u.role);
+      }
+    } catch {}
+    return 'login';
+  });
+
   const [activeLesson, setActiveLesson] = useState(null);
   const [selectedStudentId, setSelectedStudentId] = useState(null);
   const [selectedSubmission, setSelectedSubmission] = useState(null); 
 
   // Unified Student State with 8-Lesson Progress
-  const [studentState, setStudentState] = useState({
-    id: 'STU-1024',
-    name: 'Nadia Hassan',
-    consent: { status: false, version: 'v1.0', agreedAt: null, method: null },
-    preTestCompleted: false,
-    preTestAudioUrl: null, // Stores actual recorded blob URL
-    postTestCompleted: false,
-    postTestAudioUrl: null, // Stores actual recorded blob URL
-    lessonsProgress: {
+  const [studentState, setStudentState] = useState(() => {
+    let initialUser = null;
+    try {
+      const saved = localStorage.getItem('techquest_user') || sessionStorage.getItem('techquest_user');
+      if (saved) initialUser = JSON.parse(saved);
+    } catch {}
+
+    let initialProgress = {};
+    try {
+      const savedProg = localStorage.getItem('techquest_progress');
+      if (savedProg) initialProgress = JSON.parse(savedProg);
+    } catch {}
+
+    const lessonsProgress = {
       1: { isCompleted: false, sectionsCompleted: { situation: false, learn: false, practice: false, review: false, speaking: false }, reviewScore: null, bestReviewScore: null, speakingPracticeCompleted: false },
       2: { isCompleted: false, sectionsCompleted: { situation: false, learn: false, practice: false, review: false, speaking: false }, reviewScore: null, bestReviewScore: null, speakingPracticeCompleted: false },
       3: { isCompleted: false, sectionsCompleted: { situation: false, learn: false, practice: false, review: false, speaking: false }, reviewScore: null, bestReviewScore: null, speakingPracticeCompleted: false },
@@ -310,14 +372,38 @@ export default function App() {
       6: { isCompleted: false, sectionsCompleted: { situation: false, learn: false, practice: false, review: false, speaking: false }, reviewScore: null, bestReviewScore: null, speakingPracticeCompleted: false },
       7: { isCompleted: false, sectionsCompleted: { situation: false, learn: false, practice: false, review: false, speaking: false }, reviewScore: null, bestReviewScore: null, speakingPracticeCompleted: false },
       8: { isCompleted: false, sectionsCompleted: { situation: false, learn: false, practice: false, review: false, speaking: false }, reviewScore: null, bestReviewScore: null, speakingPracticeCompleted: false },
-    },
-    lesson1State: {
-      isCompleted: false,
-      sectionsCompleted: { situation: false, learn: false, practice: false, review: false, speaking: false },
-      reviewScore: null,
-      bestReviewScore: null,
-      speakingPracticeCompleted: false
+    };
+
+    let preTestCompleted = false;
+    let postTestCompleted = false;
+
+    for (let i = 1; i <= 8; i++) {
+      const key = `lesson_${i}`;
+      if (initialProgress[key]) {
+        lessonsProgress[i] = {
+          isCompleted: initialProgress[key].status === 'completed',
+          sectionsCompleted: initialProgress[key].sections_completed || { situation: false, learn: false, practice: false, review: false, speaking: false },
+          reviewScore: initialProgress[key].review_score ?? null,
+          bestReviewScore: initialProgress[key].best_review_score ?? null,
+          speakingPracticeCompleted: initialProgress[key].status === 'completed'
+        };
+      }
     }
+    if (initialProgress['section_0']?.status === 'completed') preTestCompleted = true;
+    if (initialProgress['section_9']?.status === 'completed') postTestCompleted = true;
+
+    return {
+      id: initialUser?.participant_code || initialUser?.id || 'STU-1001',
+      userId: initialUser?.id || 'usr_stu_01',
+      name: initialUser?.name || 'Somchai Prasert',
+      consent: { status: Boolean(initialUser?.consentAgreed), version: 'v1.0', agreedAt: null, method: null },
+      preTestCompleted,
+      preTestAudioUrl: null,
+      postTestCompleted,
+      postTestAudioUrl: null,
+      lessonsProgress,
+      lesson1State: lessonsProgress[1]
+    };
   });
 
   const [instructorFeedback, setInstructorFeedback] = useState(null);
@@ -348,7 +434,6 @@ export default function App() {
   };
 
   const navigateTo = (view, data = null) => {
-    // Stop any playing speech synthesis when navigating
     window.speechSynthesis.cancel();
     
     // In student mode, enforce consent lock unless bypass is active
@@ -363,37 +448,49 @@ export default function App() {
     window.scrollTo(0,0);
   };
 
-  const handleLogin = (user) => {
+  const handleLogin = (user, progressData = null) => {
     setCurrentUser(user);
-    if (user.role === 'student' || user.role === 'tester') {
-      setActiveRoleView('student');
-      setCurrentView('student-dashboard');
-      setStudentState(prev => ({
+    const targetRole = user.role;
+    const defaultView = getRoleDefaultView(targetRole);
+    const defaultActiveRole = getRoleDefaultActiveView(targetRole);
+
+    setActiveRoleView(defaultActiveRole);
+    setCurrentView(defaultView);
+
+    // Hydrate studentState
+    setStudentState(prev => {
+      const updatedLessons = { ...prev.lessonsProgress };
+      let preComp = prev.preTestCompleted;
+      let postComp = prev.postTestCompleted;
+
+      if (progressData) {
+        for (let i = 1; i <= 8; i++) {
+          const key = `lesson_${i}`;
+          if (progressData[key]) {
+            updatedLessons[i] = {
+              isCompleted: progressData[key].status === 'completed',
+              sectionsCompleted: progressData[key].sections_completed || { situation: false, learn: false, practice: false, review: false, speaking: false },
+              reviewScore: progressData[key].review_score ?? null,
+              bestReviewScore: progressData[key].best_review_score ?? null,
+              speakingPracticeCompleted: progressData[key].status === 'completed'
+            };
+          }
+        }
+        if (progressData['section_0']?.status === 'completed') preComp = true;
+        if (progressData['section_9']?.status === 'completed') postComp = true;
+      }
+
+      return {
         ...prev,
-        id: user.participant_code || 'STU-1024',
-        name: user.name || 'Nadia Hassan'
-      }));
-    } else if (user.role === 'instructor') {
-      setActiveRoleView('instructor');
-      setCurrentView('instructor-dashboard');
-    } else if (user.role === 'rater' || user.role.startsWith('rater')) {
-      setActiveRoleView('rater');
-      setCurrentView('rater-dashboard');
-    } else if (user.role === 'admin') {
-      setActiveRoleView('admin');
-      setCurrentView('admin-dashboard');
-    } else if (user.role === 'expert') {
-      setActiveRoleView('expert');
-      setCurrentView('expert-dashboard');
-      setStudentState(prev => ({
-        ...prev,
-        id: user.participant_code || 'EXPERT-01',
-        name: user.name || 'Prof. Evaluation Expert'
-      }));
-    } else {
-      setActiveRoleView('student');
-      setCurrentView('student-dashboard');
-    }
+        id: user.participant_code || user.id,
+        userId: user.id,
+        name: user.name,
+        consent: { status: Boolean(user.consentAgreed), version: 'v1.0' },
+        lessonsProgress: updatedLessons,
+        preTestCompleted: preComp,
+        postTestCompleted: postComp
+      };
+    });
   };
 
   const handleSelectRoleWalkthrough = (targetRole) => {
@@ -417,6 +514,9 @@ export default function App() {
 
   const handleLogout = () => {
     window.speechSynthesis.cancel();
+    localStorage.removeItem('techquest_user');
+    localStorage.removeItem('techquest_progress');
+    sessionStorage.removeItem('techquest_user');
     setCurrentUser(null);
     setActiveRoleView('student');
     setCurrentView('login');
@@ -426,8 +526,8 @@ export default function App() {
     setStudentState(prev => ({ ...prev, [key]: value }));
   };
 
-  if (!currentUser && currentView === 'login') {
-    return <LoginScreen onLogin={handleLogin} />;
+  if (!currentUser || currentView === 'login') {
+    return <LoginPage onLoginSuccess={handleLogin} />;
   }
 
   return (
@@ -709,150 +809,7 @@ const NavItem = ({ icon: Icon, label, active, onClick, locked }) => (
   </button>
 );
 
-const LoginScreen = ({ onLogin }) => {
-  const primaryRoles = [
-    {
-      id: 'usr_student_nadia',
-      username: 'student',
-      name: 'Nadia Hassan',
-      participant_code: 'STU-1024',
-      role: 'student',
-      cohort_group: 'Group_Main_Study',
-      title: 'Student (Main Study Cohort)',
-      badge: 'Sequential Lock Active',
-      badgeColor: 'bg-blue-100 text-blue-800 border-blue-200',
-      description: 'Strict progression: Consent ➔ Pre-test ➔ Lesson 1 before unlocking Lesson 2. Sees authoritative instructor grades only.',
-      icon: GraduationCap,
-      color: 'bg-blue-600'
-    },
-    {
-      id: 'usr_instructor',
-      username: 'instructor',
-      name: 'Dr. Arisara (Lead Instructor)',
-      participant_code: 'INST-01',
-      role: 'instructor',
-      cohort_group: 'Group_Evaluators',
-      title: 'Course Instructor (Lead Evaluator)',
-      badge: 'Authoritative Scoring',
-      badgeColor: 'bg-indigo-100 text-indigo-800 border-indigo-200',
-      description: 'Grade student spoken recordings using the 25-point analytic rubric. Scores are published to student dashboards and calibrated with raters.',
-      icon: Award,
-      color: 'bg-indigo-600'
-    },
-    {
-      id: 'usr_rater_1',
-      username: 'rater',
-      name: 'Dr. Researcher (Rater 1)',
-      participant_code: 'RATER-1',
-      role: 'rater',
-      cohort_group: 'Group_Evaluators',
-      title: 'Independent Rater (Pilot Phase)',
-      badge: 'Blind Calibration Queue',
-      badgeColor: 'bg-teal-100 text-teal-800 border-teal-200',
-      description: 'Blind evaluation queue active during the pilot and calibration phase. Scores saved internally for inter-rater reliability (ICC).',
-      icon: Mic,
-      color: 'bg-teal-600'
-    },
-    {
-      id: 'usr_expert_prof',
-      username: 'expert',
-      name: 'Prof. Evaluation Expert',
-      participant_code: 'EXPERT-01',
-      role: 'expert',
-      cohort_group: 'Group_Pilot_Experts',
-      title: 'Professor / Thesis Committee',
-      badge: 'Full Walkthrough + Switcher',
-      badgeColor: 'bg-purple-100 text-purple-800 border-purple-200',
-      description: 'Unrestricted inspection. Experience the platform as Student, Instructor, Rater, or Admin, and complete the expert validation instrument.',
-      icon: Sparkles,
-      color: 'bg-purple-600'
-    },
-    {
-      id: 'usr_admin',
-      username: 'admin',
-      name: 'TECHQUEST Lead Admin',
-      participant_code: 'ADMIN-01',
-      role: 'admin',
-      cohort_group: 'Group_Staff',
-      title: 'System Administrator',
-      badge: 'User Management & SPSS',
-      badgeColor: 'bg-rose-100 text-rose-800 border-rose-200',
-      description: 'Manage participant accounts (create/delete), monitor SQLite engine health, and download the official SPSS dataset.',
-      icon: ShieldCheck,
-      color: 'bg-rose-600'
-    }
-  ];
 
-  const secondaryRoles = [
-    { id: 'usr_tester_qa', username: 'tester', name: 'Functional QA Tester', participant_code: 'TEST-001', role: 'tester', cohort_group: 'Group_Pilot', label: 'QA Tester (Zero Lock Bypass)' },
-    { id: 'usr_rater_2', username: 'rater2', name: 'Dr. External Expert (Rater 2)', participant_code: 'RATER-2', role: 'rater_2', cohort_group: 'Group_Evaluators', label: 'Rater 2 (Blind Reliability)' }
-  ];
-
-  return (
-    <div className="min-h-screen bg-slate-100 flex flex-col items-center justify-center p-6">
-      <div className="max-w-2xl w-full bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200">
-        <div className="bg-slate-900 p-8 text-center text-white relative">
-          <div className="w-14 h-14 bg-slate-800 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-inner border border-slate-700">
-            <Headphones className="w-8 h-8 text-teal-400" />
-          </div>
-          <h1 className="text-2xl font-black mb-1">TECHQUEST EOP Platform</h1>
-          <p className="text-blue-300 text-sm font-medium">English for Occupational Purposes | Master's Thesis Research</p>
-        </div>
-
-        <div className="p-8 space-y-6">
-          <div>
-            <h2 className="text-sm font-black uppercase tracking-wider text-slate-500 mb-3">Select User Persona:</h2>
-            <div className="space-y-3">
-              {primaryRoles.map(u => {
-                const IconComponent = u.icon;
-                return (
-                  <button 
-                    key={u.id}
-                    onClick={() => onLogin(u)}
-                    className="w-full flex items-start justify-between p-4 rounded-xl border-2 border-slate-200 hover:border-blue-500 hover:bg-blue-50/40 transition-all text-left group shadow-sm"
-                  >
-                    <div className="flex items-start gap-4">
-                      <div className={`w-11 h-11 rounded-xl ${u.color} text-white flex items-center justify-center shrink-0 shadow-md group-hover:scale-105 transition-transform`}>
-                        <IconComponent className="w-6 h-6" />
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <p className="font-bold text-slate-900 text-base">{u.title}</p>
-                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${u.badgeColor}`}>
-                            {u.badge}
-                          </span>
-                        </div>
-                        <p className="text-xs text-slate-500 font-medium mt-1">{u.description}</p>
-                        <p className="text-[11px] text-slate-400 font-mono mt-1">Identity: <span className="font-bold text-slate-600">{u.name}</span> ({u.participant_code})</p>
-                      </div>
-                    </div>
-                    <ChevronRight className="w-5 h-5 text-slate-300 group-hover:text-blue-600 mt-3 shrink-0 transition-colors" />
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="pt-4 border-t border-slate-200">
-            <h2 className="text-sm font-black uppercase tracking-wider text-slate-500 mb-3">Testing & Pilot Reliability Roles:</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              {secondaryRoles.map(r => (
-                <button
-                  key={r.id}
-                  onClick={() => onLogin(r)}
-                  className="p-3 rounded-lg border border-slate-200 hover:border-teal-500 hover:bg-teal-50/50 transition-all text-left group"
-                >
-                  <p className="text-xs font-bold text-slate-900 group-hover:text-teal-700">{r.label}</p>
-                  <p className="text-[10px] text-slate-500 mt-0.5 font-mono">{r.participant_code}</p>
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 const OrientationView = ({ navigateTo }) => (
   <div className="max-w-3xl mx-auto space-y-8 animate-fade-in">

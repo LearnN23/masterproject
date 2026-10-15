@@ -271,12 +271,16 @@ const DAL = {
     return db.prepare('SELECT id, username, name, participant_code, role, cohort_group, created_at FROM users WHERE id = ?').get(id);
   },
 
-  getUserByUsername(username) {
-    return db.prepare('SELECT * FROM users WHERE username = ? OR participant_code = ?').get(username, username);
+  getUserByUsername(identifier) {
+    if (!identifier) return null;
+    const clean = identifier.trim();
+    return db.prepare('SELECT * FROM users WHERE LOWER(username) = LOWER(?) OR LOWER(participant_code) = LOWER(?)').get(clean, clean);
   },
 
   getUserByParticipantCode(code) {
-    return db.prepare('SELECT id, username, name, participant_code, role, cohort_group, created_at FROM users WHERE participant_code = ?').get(code);
+    if (!code) return null;
+    const clean = code.trim();
+    return db.prepare('SELECT id, username, name, participant_code, role, cohort_group, created_at FROM users WHERE LOWER(participant_code) = LOWER(?)').get(clean);
   },
 
   getAllUsers() {
@@ -431,10 +435,18 @@ const DAL = {
 
   getSubmissions(filter = {}) {
     let sql = `
-      SELECT s.*, u.name as student_name, u.participant_code, l.title as unit_title
+      SELECT s.*, u.name as student_name, u.participant_code,
+             COALESCE(l.title, 
+               CASE 
+                 WHEN s.unit_id = 'section_0' THEN 'Pre-test: Diagnostic Spoken Assessment'
+                 WHEN s.unit_id = 'section_9' THEN 'Post-test: Outcome Spoken Assessment'
+                 WHEN s.unit_id LIKE 'lesson_%' THEN 'Lesson ' || REPLACE(s.unit_id, 'lesson_', '') || ': Practice'
+                 ELSE s.unit_id 
+               END
+             ) as unit_title
       FROM submissions s
       JOIN users u ON s.user_id = u.id
-      JOIN lessons l ON s.unit_id = l.id
+      LEFT JOIN lessons l ON s.unit_id = l.id
     `;
     const params = [];
     if (filter.userId) {
@@ -452,7 +464,9 @@ const DAL = {
       evals.forEach(e => {
         const info = {
           total: e.total_score,
+          total_score: e.total_score,
           percentage: e.total_percentage,
+          total_percentage: e.total_percentage,
           task_achievement: e.task_achievement,
           interactive_comm: e.interactive_comm,
           vocabulary: e.vocabulary,
@@ -475,8 +489,20 @@ const DAL = {
           grades.raterB = info;
         }
       });
+
+      let selfAssessment = {};
+      try {
+        selfAssessment = typeof row.self_assessment === 'string'
+          ? JSON.parse(row.self_assessment || '{}')
+          : (row.self_assessment || {});
+      } catch (e) {
+        selfAssessment = {};
+      }
+
       return {
         ...row,
+        self_assessment: selfAssessment,
+        task_audio_urls: selfAssessment.task_audio_urls || null,
         evaluations: evals,
         grades
       };
@@ -485,10 +511,18 @@ const DAL = {
 
   getSubmissionById(id) {
     const row = db.prepare(`
-      SELECT s.*, u.name as student_name, u.participant_code, l.title as unit_title
+      SELECT s.*, u.name as student_name, u.participant_code,
+             COALESCE(l.title, 
+               CASE 
+                 WHEN s.unit_id = 'section_0' THEN 'Pre-test: Diagnostic Spoken Assessment'
+                 WHEN s.unit_id = 'section_9' THEN 'Post-test: Outcome Spoken Assessment'
+                 WHEN s.unit_id LIKE 'lesson_%' THEN 'Lesson ' || REPLACE(s.unit_id, 'lesson_', '') || ': Practice'
+                 ELSE s.unit_id 
+               END
+             ) as unit_title
       FROM submissions s
       JOIN users u ON s.user_id = u.id
-      JOIN lessons l ON s.unit_id = l.id
+      LEFT JOIN lessons l ON s.unit_id = l.id
       WHERE s.id = ?
     `).get(id);
     if (!row) return null;
@@ -497,7 +531,9 @@ const DAL = {
     evals.forEach(e => {
       const info = {
         total: e.total_score,
+        total_score: e.total_score,
         percentage: e.total_percentage,
+        total_percentage: e.total_percentage,
         task_achievement: e.task_achievement,
         interactive_comm: e.interactive_comm,
         vocabulary: e.vocabulary,
@@ -520,8 +556,20 @@ const DAL = {
         grades.raterB = info;
       }
     });
+
+    let selfAssessment = {};
+    try {
+      selfAssessment = typeof row.self_assessment === 'string'
+        ? JSON.parse(row.self_assessment || '{}')
+        : (row.self_assessment || {});
+    } catch (e) {
+      selfAssessment = {};
+    }
+
     return {
       ...row,
+      self_assessment: selfAssessment,
+      task_audio_urls: selfAssessment.task_audio_urls || null,
       evaluations: evals,
       grades
     };

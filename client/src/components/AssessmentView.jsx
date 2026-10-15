@@ -186,19 +186,32 @@ export default function AssessmentView({ type, navigateTo, studentState, updateS
     const userId = studentState?.id || 'STU-1024';
     const unitId = isPreTest ? 'section_0' : 'section_9';
 
-    // 1. Upload the main recording (or Task 1 / combined)
-    const activeBlob = taskRecordings[currentTask.taskNumber]?.blob || 
-      taskRecordings[1]?.blob || 
-      new Blob([], { type: 'audio/webm' });
-
     try {
       const formData = new FormData();
       formData.append('participant_id', userId);
       formData.append('unit_id', unitId);
-      formData.append('duration_seconds', recordingTime || 30);
-      formData.append('audio_file', activeBlob, `${userId}_${dataKey}.webm`);
+
+      let totalDuration = 0;
+      const taskKeys = Object.keys(taskRecordings).sort((a, b) => Number(a) - Number(b));
+
+      // 1. Upload each individual task audio recording
+      taskKeys.forEach(tNum => {
+        const rec = taskRecordings[tNum];
+        if (rec?.blob) {
+          totalDuration += (rec.duration || 15);
+          formData.append(`task_audio_${tNum}`, rec.blob, `${userId}_${dataKey}_task_${tNum}.webm`);
+        }
+      });
+
+      // Primary fallback audio file (Task 1 or first available recorded task)
+      const primaryRec = taskRecordings[1] || taskRecordings[taskKeys[0]];
+      const primaryBlob = primaryRec?.blob || new Blob([], { type: 'audio/webm' });
+      formData.append('audio_file', primaryBlob, `${userId}_${dataKey}.webm`);
+      formData.append('duration_seconds', totalDuration || recordingTime || 30);
       formData.append('self_assessment', JSON.stringify({
-        completedTasks: Object.keys(taskRecordings).length,
+        completedTasks: taskKeys.length,
+        totalTasks: assessmentData.tasks.length,
+        taskNumbers: taskKeys.map(Number),
         notes: taskNotes
       }));
 
@@ -229,11 +242,11 @@ export default function AssessmentView({ type, navigateTo, studentState, updateS
     // 3. Update React App State
     if (isPreTest) {
       updateStudentState('preTestCompleted', true);
-      const url = taskRecordings[currentTask.taskNumber]?.url || taskRecordings[1]?.url;
+      const url = taskRecordings[1]?.url || Object.values(taskRecordings)[0]?.url;
       if (url) updateStudentState('preTestAudioUrl', url);
     } else {
       updateStudentState('postTestCompleted', true);
-      const url = taskRecordings[currentTask.taskNumber]?.url || taskRecordings[1]?.url;
+      const url = taskRecordings[1]?.url || Object.values(taskRecordings)[0]?.url;
       if (url) updateStudentState('postTestAudioUrl', url);
     }
 
@@ -295,6 +308,7 @@ export default function AssessmentView({ type, navigateTo, studentState, updateS
     );
   }
 
+  const recordedCount = Object.keys(taskRecordings).length;
   const allTasksRecorded = assessmentData.tasks.every(t => taskRecordings[t.taskNumber]);
 
   return (
@@ -626,12 +640,18 @@ export default function AssessmentView({ type, navigateTo, studentState, updateS
                 </button>
               ) : (
                 <button
-                  disabled={!allTasksRecorded || isSubmitting}
+                  disabled={recordedCount === 0 || isSubmitting}
                   onClick={handleSubmitAll}
                   className="px-8 py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-black rounded-xl shadow-md transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                 >
                   <Send className="w-4 h-4" />
-                  <span>{isSubmitting ? 'Uploading Responses...' : `Submit All 4 Tasks (${type})`}</span>
+                  <span>
+                    {isSubmitting 
+                      ? 'Uploading Responses...' 
+                      : allTasksRecorded 
+                        ? `Submit All ${assessmentData.tasks.length} Tasks (${type})` 
+                        : `Submit Recorded (${recordedCount} of ${assessmentData.tasks.length} Tasks)`}
+                  </span>
                 </button>
               )}
             </div>

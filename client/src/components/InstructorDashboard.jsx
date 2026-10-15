@@ -6,7 +6,7 @@ import {
   Sparkles, Check, ChevronRight, Eye, Filter, GraduationCap,
   MessageSquare, Volume2, RotateCcw, AlertCircle
 } from 'lucide-react';
-import { RUBRIC_CRITERIA_25, getCefrRating } from '../data/assessmentsData';
+import { RUBRIC_CRITERIA_25, getCefrRating, ASSESSMENTS_DATA } from '../data/assessmentsData';
 
 export default function InstructorDashboard({ currentUser, navigateTo }) {
   const [activeTab, setActiveTab] = useState('queue'); // 'queue', 'students', 'calibration'
@@ -15,6 +15,7 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
   const [loading, setLoading] = useState(true);
   const [filterType, setFilterType] = useState('all'); // 'all', 'pending', 'graded', 'pre_test', 'post_test', 'formative'
   const [selectedSub, setSelectedSub] = useState(null);
+  const [selectedTaskNumber, setSelectedTaskNumber] = useState(1);
 
   // Instructor Rubric Scoring State (25-point Analytic Scale)
   const [scores, setScores] = useState({
@@ -96,6 +97,13 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
       setIsPlaying(false);
       setCurrentTime(0);
       setSaveSuccess(false);
+
+      if (selectedSub.task_audio_urls) {
+        const keys = Object.keys(selectedSub.task_audio_urls).map(Number).sort((a, b) => a - b);
+        setSelectedTaskNumber(keys.length > 0 ? keys[0] : 1);
+      } else {
+        setSelectedTaskNumber(1);
+      }
     }
   }, [selectedSub?.id]);
 
@@ -185,16 +193,29 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
   const filteredSubmissions = submissions.filter(sub => {
     if (filterType === 'pending') return !sub.grades?.instructor;
     if (filterType === 'graded') return !!sub.grades?.instructor;
-    if (filterType === 'pre_test') return sub.assessment_type === 'pre_test';
-    if (filterType === 'post_test') return sub.assessment_type === 'post_test';
-    if (filterType === 'formative') return sub.assessment_type === 'formative_speaking';
+    if (filterType === 'pre_test') return sub.assessment_type === 'pre_test' || sub.unit_id === 'section_0';
+    if (filterType === 'post_test') return sub.assessment_type === 'post_test' || sub.unit_id === 'section_9';
+    if (filterType === 'formative') return sub.assessment_type === 'formative_speaking' || sub.unit_id?.startsWith('lesson_');
     return true;
   });
 
   // Calculate metrics
   const pendingCount = submissions.filter(s => !s.grades?.instructor).length;
   const gradedCount = submissions.filter(s => !!s.grades?.instructor).length;
-  
+  const preTestCount = submissions.filter(s => s.assessment_type === 'pre_test' || s.unit_id === 'section_0').length;
+  const postTestCount = submissions.filter(s => s.assessment_type === 'post_test' || s.unit_id === 'section_9').length;
+  const lessonsCount = submissions.filter(s => s.assessment_type === 'formative_speaking' || s.unit_id?.startsWith('lesson_')).length;
+
+  // Derive active assessment & task metadata for selected submission
+  const isPreTest = selectedSub?.assessment_type === 'pre_test' || selectedSub?.unit_id === 'section_0';
+  const isPostTest = selectedSub?.assessment_type === 'post_test' || selectedSub?.unit_id === 'section_9';
+  const currentAssessment = isPreTest ? ASSESSMENTS_DATA.pre_test : (isPostTest ? ASSESSMENTS_DATA.post_test : null);
+  const activeTaskMeta = currentAssessment?.tasks?.find(t => t.taskNumber === Number(selectedTaskNumber)) || currentAssessment?.tasks?.[0] || null;
+
+  // Active audio URL for playback (supports multi-task uploads)
+  const taskUrls = selectedSub?.task_audio_urls || {};
+  const activeAudioUrl = taskUrls[selectedTaskNumber] || (selectedTaskNumber === 1 ? selectedSub?.audio_url : null) || selectedSub?.audio_url || selectedSub?.audio_blob_path;
+
   // Calibration discrepancies (>20% difference between instructor and rater on 25-pt scale, i.e., >= 5 points)
   const calibrationDiscrepancies = submissions.filter(s => {
     const instTotal = s.grades?.instructor?.total_score;
@@ -358,10 +379,22 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
                 Graded ({gradedCount})
               </button>
               <button 
+                onClick={() => setFilterType('pre_test')}
+                className={`px-2.5 py-1 rounded-lg font-bold whitespace-nowrap transition-all ${filterType === 'pre_test' ? 'bg-purple-600 text-white' : 'text-slate-600 hover:bg-slate-100'}`}
+              >
+                Pre-Test ({preTestCount})
+              </button>
+              <button 
                 onClick={() => setFilterType('formative')}
                 className={`px-2.5 py-1 rounded-lg font-bold whitespace-nowrap transition-all ${filterType === 'formative' ? 'bg-blue-600 text-white' : 'text-slate-600 hover:bg-slate-100'}`}
               >
-                Lessons 1–8
+                Lessons 1–8 ({lessonsCount})
+              </button>
+              <button 
+                onClick={() => setFilterType('post_test')}
+                className={`px-2.5 py-1 rounded-lg font-bold whitespace-nowrap transition-all ${filterType === 'post_test' ? 'bg-indigo-600 text-white' : 'text-slate-600 hover:bg-slate-100'}`}
+              >
+                Post-Test ({postTestCount})
               </button>
             </div>
 
@@ -375,8 +408,14 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
                 filteredSubmissions.map(sub => {
                   const isSelected = selectedSub?.id === sub.id;
                   const instScore = sub.grades?.instructor;
-                  const raterScore = sub.grades?.rater;
-                  const hasDiscrepancy = instScore && raterScore && Math.abs(instScore.total_score - raterScore.total_score) >= 5;
+                  const raterScore = sub.grades?.rater || sub.grades?.rater1;
+                  const instTotal = instScore ? (instScore.total_score ?? instScore.total) : null;
+                  const instPct = instScore ? (instScore.total_percentage ?? instScore.percentage) : null;
+                  const raterTotal = raterScore ? (raterScore.total_score ?? raterScore.total) : null;
+                  const hasDiscrepancy = instTotal !== null && raterTotal !== null && Math.abs(instTotal - raterTotal) >= 5;
+                  const isPre = sub.assessment_type === 'pre_test' || sub.unit_id === 'section_0';
+                  const isPost = sub.assessment_type === 'post_test' || sub.unit_id === 'section_9';
+                  const taskCount = sub.self_assessment?.completedTasks || (sub.task_audio_urls ? Object.keys(sub.task_audio_urls).length : null);
 
                   return (
                     <div
@@ -388,10 +427,32 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
                           : 'hover:bg-slate-50 border-l-4 border-l-transparent'
                       }`}
                     >
-                      <div className="flex justify-between items-start mb-1">
-                        <span className="text-[11px] font-mono font-bold text-slate-500">
-                          {sub.blind_mask_code || sub.participant_code}
-                        </span>
+                      <div className="flex justify-between items-start mb-1.5">
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <span className="text-[11px] font-mono font-bold text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200">
+                            {sub.blind_mask_code || sub.participant_code}
+                          </span>
+                          {isPre && (
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-100 text-purple-800 border border-purple-200">
+                              Diagnostic Pre-Test
+                            </span>
+                          )}
+                          {isPost && (
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-800 border border-indigo-200">
+                              Outcome Post-Test
+                            </span>
+                          )}
+                          {!isPre && !isPost && (
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 border border-blue-200">
+                              Lesson Practice
+                            </span>
+                          )}
+                          {taskCount > 1 && (
+                            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200">
+                              {taskCount} Tasks
+                            </span>
+                          )}
+                        </div>
                         <span className="text-[10px] text-slate-400">
                           {sub.submitted_at ? new Date(sub.submitted_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''}
                         </span>
@@ -400,11 +461,14 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
                       <h4 className="font-bold text-slate-900 text-xs mb-1 line-clamp-1">
                         {sub.unit_title || sub.unit_id}
                       </h4>
+                      <p className="text-[11px] text-slate-500 font-medium">
+                        Student: {sub.student_name || sub.participant_code}
+                      </p>
 
                       <div className="flex items-center gap-2 mt-2">
-                        {instScore ? (
+                        {instTotal !== null ? (
                           <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-teal-100 text-teal-800 border border-teal-200">
-                            Instructor: {instScore.total_score}/25 ({instScore.total_percentage}%)
+                            Instructor: {instTotal}/25 ({instPct}%)
                           </span>
                         ) : (
                           <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-200 flex items-center gap-1">
@@ -412,9 +476,9 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
                           </span>
                         )}
 
-                        {raterScore && (
+                        {raterTotal !== null && (
                           <span className="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-slate-100 text-slate-600">
-                            Rater: {raterScore.total_score}/25
+                            Rater: {raterTotal}/25
                           </span>
                         )}
 
@@ -460,71 +524,161 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
                       {totalScore} <span className="text-sm font-medium text-slate-400">/ 25</span>
                     </p>
                     <span className="text-[11px] font-bold text-teal-700 bg-teal-50 px-2 py-0.5 rounded border border-teal-200">
-                      CEFR: {cefr} ({percentage}%)
+                      CEFR: {cefr?.cefr || 'A2'} ({percentage}%)
                     </span>
                   </div>
                 </div>
+
+                {/* Multi-Task Switcher & Task Context (For Pre-Test / Post-Test) */}
+                {currentAssessment && (
+                  <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                        <Sparkles className="w-4 h-4 text-indigo-600" />
+                        Assessment Tasks (Select Task to Review Audio)
+                      </span>
+                      <span className="text-[11px] font-semibold text-slate-500">
+                        {selectedSub.self_assessment?.completedTasks || Object.keys(taskUrls).length || 1} of {currentAssessment.tasks.length} Recorded
+                      </span>
+                    </div>
+
+                    {/* Task Tab Buttons */}
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                      {currentAssessment.tasks.map(t => {
+                        const hasAudio = !!(taskUrls[t.taskNumber] || (t.taskNumber === 1 && selectedSub.audio_url));
+                        const isActive = selectedTaskNumber === t.taskNumber;
+                        return (
+                          <button
+                            key={t.taskNumber}
+                            type="button"
+                            onClick={() => {
+                              setSelectedTaskNumber(t.taskNumber);
+                              setIsPlaying(false);
+                              setCurrentTime(0);
+                            }}
+                            className={`p-2.5 rounded-xl text-left transition-all border ${
+                              isActive 
+                                ? 'bg-indigo-600 text-white border-indigo-600 shadow-md' 
+                                : 'bg-white hover:bg-slate-100 text-slate-700 border-slate-200'
+                            }`}
+                          >
+                            <div className="flex items-center justify-between text-xs font-black">
+                              <span>Task {t.taskNumber}</span>
+                              {hasAudio ? (
+                                <span className={`w-2 h-2 rounded-full ${isActive ? 'bg-emerald-300' : 'bg-emerald-500'}`} title="Audio recorded" />
+                              ) : (
+                                <span className={`w-2 h-2 rounded-full ${isActive ? 'bg-slate-400' : 'bg-slate-300'}`} title="No audio file" />
+                              )}
+                            </div>
+                            <p className={`text-[11px] mt-1 font-semibold line-clamp-1 ${isActive ? 'text-indigo-100' : 'text-slate-600'}`}>
+                              {t.title}
+                            </p>
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    {/* Active Task Context & Caller Prompt */}
+                    {activeTaskMeta && (
+                      <div className="bg-white p-3.5 rounded-xl border border-slate-200 space-y-2 text-xs">
+                        <div className="flex items-center justify-between">
+                          <span className="font-bold text-slate-900">
+                            Task {activeTaskMeta.taskNumber}: {activeTaskMeta.title}
+                          </span>
+                          <span className="text-[10px] text-slate-500 font-mono bg-slate-100 px-2 py-0.5 rounded">
+                            {activeTaskMeta.workplaceContext}
+                          </span>
+                        </div>
+                        <div className="bg-slate-50 p-2.5 rounded-lg border border-slate-200/80 text-slate-700 font-medium italic">
+                          <span className="not-italic font-bold text-slate-500 text-[10px] block mb-0.5">Caller / Prompt:</span>
+                          "{activeTaskMeta.customerPromptText}"
+                        </div>
+                        {activeTaskMeta.kpiList && (
+                          <div className="flex flex-wrap gap-1.5 pt-1">
+                            {activeTaskMeta.kpiList.map((kpi, kIdx) => (
+                              <span key={kIdx} className="text-[10px] font-medium bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded border border-indigo-100">
+                                ✓ {kpi}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )}
 
                 {/* Audio Review Player */}
                 <div className="bg-slate-900 text-white rounded-2xl p-5 shadow-inner space-y-4">
                   <div className="flex justify-between items-center text-xs">
                     <span className="flex items-center gap-2 text-teal-400 font-bold">
-                      <Volume2 className="w-4 h-4" /> Single-Take Spoken Response Recording
+                      <Volume2 className="w-4 h-4" /> 
+                      {currentAssessment 
+                        ? `Task ${selectedTaskNumber} Audio Recording` 
+                        : 'Single-Take Spoken Response Recording'}
                     </span>
                     <span className="font-mono text-slate-400">
                       {Math.floor(currentTime)}s / {duration ? Math.floor(duration) : (selectedSub.duration_seconds || 0)}s
                     </span>
                   </div>
 
-                  <audio 
-                    ref={audioRef}
-                    src={selectedSub.audio_url || selectedSub.audio_blob_path}
-                    onTimeUpdate={handleTimeUpdate}
-                    onLoadedMetadata={handleTimeUpdate}
-                    onEnded={() => setIsPlaying(false)}
-                    className="hidden"
-                  />
+                  {activeAudioUrl ? (
+                    <>
+                      <audio 
+                        key={activeAudioUrl}
+                        ref={audioRef}
+                        src={activeAudioUrl}
+                        onTimeUpdate={handleTimeUpdate}
+                        onLoadedMetadata={handleTimeUpdate}
+                        onEnded={() => setIsPlaying(false)}
+                        className="hidden"
+                      />
 
-                  {/* Progress bar */}
-                  <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden relative">
-                    <div 
-                      className="bg-teal-400 h-full rounded-full transition-all duration-100"
-                      style={{ width: `${duration ? (currentTime / duration) * 100 : 0}%` }}
-                    />
-                  </div>
+                      {/* Progress bar */}
+                      <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden relative">
+                        <div 
+                          className="bg-teal-400 h-full rounded-full transition-all duration-100"
+                          style={{ width: `${duration ? (currentTime / duration) * 100 : 0}%` }}
+                        />
+                      </div>
 
-                  {/* Player Controls */}
-                  <div className="flex justify-between items-center pt-1">
-                    <div className="flex items-center gap-3">
-                      <button
-                        onClick={togglePlay}
-                        className="w-10 h-10 rounded-full bg-teal-400 text-slate-950 flex items-center justify-center hover:bg-teal-300 font-bold shadow transition-colors"
-                      >
-                        {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 ml-0.5" />}
-                      </button>
-                      <button
-                        onClick={restartAudio}
-                        className="p-2 text-slate-400 hover:text-white transition-colors"
-                        title="Replay from beginning"
-                      >
-                        <RotateCcw className="w-4 h-4" />
-                      </button>
+                      {/* Player Controls */}
+                      <div className="flex justify-between items-center pt-1">
+                        <div className="flex items-center gap-3">
+                          <button
+                            onClick={togglePlay}
+                            className="w-10 h-10 rounded-full bg-teal-400 text-slate-950 flex items-center justify-center hover:bg-teal-300 font-bold shadow transition-colors"
+                          >
+                            {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 ml-0.5" />}
+                          </button>
+                          <button
+                            onClick={restartAudio}
+                            className="p-2 text-slate-400 hover:text-white transition-colors"
+                            title="Replay from beginning"
+                          >
+                            <RotateCcw className="w-4 h-4" />
+                          </button>
+                        </div>
+
+                        {/* Speed Selector */}
+                        <div className="flex items-center gap-1.5 text-xs bg-slate-800 px-2 py-1 rounded-lg">
+                          <span className="text-slate-400 font-semibold text-[10px]">Speed:</span>
+                          {[0.8, 1.0, 1.2].map(spd => (
+                            <button
+                              key={spd}
+                              onClick={() => handleSpeedChange(spd)}
+                              className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${playbackSpeed === spd ? 'bg-teal-400 text-slate-950' : 'text-slate-300 hover:text-white'}`}
+                            >
+                              {spd}x
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="p-4 bg-slate-800/80 rounded-xl text-center text-xs text-slate-400">
+                      No recording found for Task {selectedTaskNumber}. (Candidate may not have recorded this task).
                     </div>
-
-                    {/* Speed Selector */}
-                    <div className="flex items-center gap-1.5 text-xs bg-slate-800 px-2 py-1 rounded-lg">
-                      <span className="text-slate-400 font-semibold text-[10px]">Speed:</span>
-                      {[0.8, 1.0, 1.2].map(spd => (
-                        <button
-                          key={spd}
-                          onClick={() => handleSpeedChange(spd)}
-                          className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${playbackSpeed === spd ? 'bg-teal-400 text-slate-950' : 'text-slate-300 hover:text-white'}`}
-                        >
-                          {spd}x
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+                  )}
                 </div>
 
                 {/* Authoritative Delivery Notice */}
@@ -782,7 +936,9 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
                     const rater = sub.grades?.rater || sub.grades?.rater1;
                     if (!inst && !rater) return null;
 
-                    const diff = (inst && rater) ? Math.abs(inst.total_score - rater.total_score) : null;
+                    const instTotal = inst ? (inst.total_score ?? inst.total) : null;
+                    const raterTotal = rater ? (rater.total_score ?? rater.total) : null;
+                    const diff = (instTotal !== null && raterTotal !== null) ? Math.abs(instTotal - raterTotal) : null;
                     const exceeds20Pct = diff !== null && diff >= 5;
 
                     return (
@@ -794,15 +950,15 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
                           {sub.unit_title || sub.unit_id}
                         </td>
                         <td className="px-6 py-4 text-center">
-                          {inst ? (
-                            <span className="font-black text-indigo-600">{inst.total_score} / 25</span>
+                          {instTotal !== null ? (
+                            <span className="font-black text-indigo-600">{instTotal} / 25</span>
                           ) : (
                             <span className="text-slate-400 text-xs italic">Awaiting</span>
                           )}
                         </td>
                         <td className="px-6 py-4 text-center">
-                          {rater ? (
-                            <span className="font-black text-teal-600">{rater.total_score} / 25</span>
+                          {raterTotal !== null ? (
+                            <span className="font-black text-teal-600">{raterTotal} / 25</span>
                           ) : (
                             <span className="text-slate-400 text-xs italic">Awaiting</span>
                           )}

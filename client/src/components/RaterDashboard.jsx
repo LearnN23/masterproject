@@ -3,15 +3,17 @@ import {
   Users, Award, CheckCircle2, Clock, Play, Pause, Save, 
   ShieldCheck, FileAudio, HelpCircle, ArrowLeft, Send,
   AlertTriangle, Download, RefreshCw, BarChart3, TrendingUp,
-  Sparkles, Check, ChevronRight, Eye, Filter
+  Sparkles, Check, ChevronRight, Eye, Filter, MessageSquare,
+  Volume2, RotateCcw
 } from 'lucide-react';
-import { RUBRIC_CRITERIA_25, getCefrRating } from '../data/assessmentsData';
+import { RUBRIC_CRITERIA_25, getCefrRating, ASSESSMENTS_DATA } from '../data/assessmentsData';
 
 export default function RaterDashboard({ currentUser }) {
   const [submissions, setSubmissions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filterType, setFilterType] = useState('all'); // all, pending, graded, pre_test, post_test, formative
   const [selectedSub, setSelectedSub] = useState(null);
+  const [selectedTaskNumber, setSelectedTaskNumber] = useState(1);
 
   // Scoring form state
   const [scores, setScores] = useState({
@@ -78,6 +80,13 @@ export default function RaterDashboard({ currentUser }) {
       setSaveSuccess(false);
       setIsPlaying(false);
       setCurrentTime(0);
+
+      if (selectedSub.task_audio_urls) {
+        const keys = Object.keys(selectedSub.task_audio_urls).map(Number).sort((a, b) => a - b);
+        setSelectedTaskNumber(keys.length > 0 ? keys[0] : 1);
+      } else {
+        setSelectedTaskNumber(1);
+      }
     }
   }, [selectedSub]);
 
@@ -142,6 +151,9 @@ export default function RaterDashboard({ currentUser }) {
   const totalSubmissions = submissions.length;
   const pendingRatings = submissions.filter(s => !s.grades?.rater).length;
   const completedRatings = submissions.filter(s => !!s.grades?.rater).length;
+  const preTestCount = submissions.filter(s => s.assessment_type === 'pre_test' || s.unit_id === 'section_0').length;
+  const postTestCount = submissions.filter(s => s.assessment_type === 'post_test' || s.unit_id === 'section_9').length;
+  const lessonsCount = submissions.filter(s => s.assessment_type === 'formative_speaking' || s.unit_id?.startsWith('lesson_')).length;
   const discrepancyCount = submissions.filter(s => {
     const i = s.grades?.instructor?.total;
     const r = s.grades?.rater?.total;
@@ -152,11 +164,20 @@ export default function RaterDashboard({ currentUser }) {
   const filteredSubmissions = submissions.filter(s => {
     if (filterType === 'pending') return !s.grades?.rater;
     if (filterType === 'graded') return !!s.grades?.rater;
-    if (filterType === 'pre_test') return s.assessment_type === 'pre_test';
-    if (filterType === 'post_test') return s.assessment_type === 'post_test';
-    if (filterType === 'formative') return s.assessment_type === 'formative_speaking';
+    if (filterType === 'pre_test') return s.assessment_type === 'pre_test' || s.unit_id === 'section_0';
+    if (filterType === 'post_test') return s.assessment_type === 'post_test' || s.unit_id === 'section_9';
+    if (filterType === 'formative') return s.assessment_type === 'formative_speaking' || s.unit_id?.startsWith('lesson_');
     return true;
   });
+
+  // Multi-task metadata and audio
+  const isPreTest = selectedSub?.assessment_type === 'pre_test' || selectedSub?.unit_id === 'section_0';
+  const isPostTest = selectedSub?.assessment_type === 'post_test' || selectedSub?.unit_id === 'section_9';
+  const currentAssessment = isPreTest ? ASSESSMENTS_DATA.pre_test : (isPostTest ? ASSESSMENTS_DATA.post_test : null);
+  const activeTaskMeta = currentAssessment?.tasks?.find(t => t.taskNumber === Number(selectedTaskNumber)) || currentAssessment?.tasks?.[0] || null;
+
+  const taskUrls = selectedSub?.task_audio_urls || {};
+  const activeAudioUrl = taskUrls[selectedTaskNumber] || (selectedTaskNumber === 1 ? selectedSub?.audio_url : null) || selectedSub?.audio_url || selectedSub?.audio_blob_path;
 
   return (
     <div className="space-y-8 animate-fade-in pb-16">
@@ -255,11 +276,12 @@ export default function RaterDashboard({ currentUser }) {
             {/* Filter Pills */}
             <div className="flex flex-wrap gap-1.5 text-[10px] font-bold">
               {[
-                { key: 'all', label: 'All' },
-                { key: 'pending', label: 'Pending My Score' },
-                { key: 'graded', label: 'Graded by Me' },
-                { key: 'pre_test', label: 'Pre-Test' },
-                { key: 'post_test', label: 'Post-Test' }
+                { key: 'all', label: `All (${totalSubmissions})` },
+                { key: 'pending', label: `Pending My Score (${pendingRatings})` },
+                { key: 'graded', label: `Graded by Me (${completedRatings})` },
+                { key: 'pre_test', label: `Pre-Test (${preTestCount})` },
+                { key: 'formative', label: `Lessons 1–8 (${lessonsCount})` },
+                { key: 'post_test', label: `Post-Test (${postTestCount})` }
               ].map(f => (
                 <button
                   key={f.key}
@@ -286,6 +308,9 @@ export default function RaterDashboard({ currentUser }) {
                   const instGrade = sub.grades?.instructor;
                   const diff = rGrade && instGrade ? Math.abs(rGrade.total - instGrade.total) : null;
                   const isDiscrepant = diff !== null && diff >= 5;
+                  const isPre = sub.assessment_type === 'pre_test' || sub.unit_id === 'section_0';
+                  const isPost = sub.assessment_type === 'post_test' || sub.unit_id === 'section_9';
+                  const taskCount = sub.self_assessment?.completedTasks || (sub.task_audio_urls ? Object.keys(sub.task_audio_urls).length : null);
 
                   return (
                     <div
@@ -297,10 +322,32 @@ export default function RaterDashboard({ currentUser }) {
                           : 'bg-slate-50 hover:bg-slate-100 border-slate-200'
                       }`}
                     >
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="font-mono font-black text-slate-900">
-                          {sub.blind_mask_code || sub.participant_code || 'BLIND-101'}
-                        </span>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <span className="font-mono font-black text-slate-900">
+                            {sub.blind_mask_code || sub.participant_code || 'BLIND-101'}
+                          </span>
+                          {isPre && (
+                            <span className="text-[9px] font-bold px-1.5 py-0.2 rounded-full bg-purple-100 text-purple-800 border border-purple-200">
+                              Diagnostic Pre-Test
+                            </span>
+                          )}
+                          {isPost && (
+                            <span className="text-[9px] font-bold px-1.5 py-0.2 rounded-full bg-indigo-100 text-indigo-800 border border-indigo-200">
+                              Outcome Post-Test
+                            </span>
+                          )}
+                          {!isPre && !isPost && (
+                            <span className="text-[9px] font-bold px-1.5 py-0.2 rounded-full bg-blue-100 text-blue-800 border border-blue-200">
+                              Lesson Practice
+                            </span>
+                          )}
+                          {taskCount > 1 && (
+                            <span className="text-[9px] font-bold px-1.5 py-0.2 rounded bg-amber-50 text-amber-700 border border-amber-200">
+                              {taskCount} Tasks
+                            </span>
+                          )}
+                        </div>
                         {rGrade ? (
                           <span className="font-bold text-emerald-700 bg-emerald-100/70 px-2 py-0.5 rounded text-[10px]">
                             Rater: {rGrade.total}/25
@@ -315,7 +362,7 @@ export default function RaterDashboard({ currentUser }) {
                       <p className="font-semibold text-slate-700 truncate">{sub.unit_title || sub.unit_id}</p>
 
                       <div className="flex items-center justify-between text-[10px] text-slate-500 mt-1.5 pt-1.5 border-t border-slate-200/60">
-                        <span>{sub.duration_seconds || 30}s • {sub.assessment_type}</span>
+                        <span>{sub.duration_seconds || 30}s • Candidate {sub.blind_mask_code || sub.participant_code}</span>
                         {isDiscrepant && (
                           <span className="text-rose-600 font-bold flex items-center gap-0.5">
                             <AlertTriangle className="w-3 h-3" /> Diff {diff} pts
@@ -369,48 +416,147 @@ export default function RaterDashboard({ currentUser }) {
                 </div>
               </div>
 
+              {/* Multi-Task Switcher & Task Context (For Pre-Test / Post-Test) */}
+              {currentAssessment && (
+                <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                      <Sparkles className="w-4 h-4 text-indigo-600" />
+                      Assessment Tasks (Select Task to Review Audio)
+                    </span>
+                    <span className="text-[11px] font-semibold text-slate-500">
+                      {selectedSub.self_assessment?.completedTasks || Object.keys(taskUrls).length || 1} of {currentAssessment.tasks.length} Recorded
+                    </span>
+                  </div>
+
+                  {/* Task Tab Buttons */}
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    {currentAssessment.tasks.map(t => {
+                      const hasAudio = !!(taskUrls[t.taskNumber] || (t.taskNumber === 1 && selectedSub.audio_url));
+                      const isActive = selectedTaskNumber === t.taskNumber;
+                      return (
+                        <button
+                          key={t.taskNumber}
+                          type="button"
+                          onClick={() => {
+                            setSelectedTaskNumber(t.taskNumber);
+                            setIsPlaying(false);
+                            setCurrentTime(0);
+                          }}
+                          className={`p-2.5 rounded-xl text-left transition-all border ${
+                            isActive 
+                              ? 'bg-indigo-600 text-white border-indigo-600 shadow-md' 
+                              : 'bg-white hover:bg-slate-100 text-slate-700 border-slate-200'
+                          }`}
+                        >
+                          <div className="flex items-center justify-between text-xs font-black">
+                            <span>Task {t.taskNumber}</span>
+                            {hasAudio ? (
+                              <span className={`w-2 h-2 rounded-full ${isActive ? 'bg-emerald-300' : 'bg-emerald-500'}`} title="Audio recorded" />
+                            ) : (
+                              <span className={`w-2 h-2 rounded-full ${isActive ? 'bg-slate-400' : 'bg-slate-300'}`} title="No audio file" />
+                            )}
+                          </div>
+                          <p className={`text-[11px] mt-1 font-semibold line-clamp-1 ${isActive ? 'text-indigo-100' : 'text-slate-600'}`}>
+                            {t.title}
+                          </p>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Active Task Context & Caller Prompt */}
+                  {activeTaskMeta && (
+                    <div className="bg-white p-3.5 rounded-xl border border-slate-200 space-y-2 text-xs">
+                      <div className="flex items-center justify-between">
+                        <span className="font-bold text-slate-900">
+                          Task {activeTaskMeta.taskNumber}: {activeTaskMeta.title}
+                        </span>
+                        <span className="text-[10px] text-slate-500 font-mono bg-slate-100 px-2 py-0.5 rounded">
+                          {activeTaskMeta.workplaceContext}
+                        </span>
+                      </div>
+                      <div className="bg-slate-50 p-2.5 rounded-lg border border-slate-200/80 text-slate-700 font-medium italic">
+                        <span className="not-italic font-bold text-slate-500 text-[10px] block mb-0.5">Caller / Prompt:</span>
+                        "{activeTaskMeta.customerPromptText}"
+                      </div>
+                      {activeTaskMeta.kpiList && (
+                        <div className="flex flex-wrap gap-1.5 pt-1">
+                          {activeTaskMeta.kpiList.map((kpi, kIdx) => (
+                            <span key={kIdx} className="text-[10px] font-medium bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded border border-indigo-100">
+                              ✓ {kpi}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+
               {/* AUDIO PLAYER WITH VARIABLE SPEED */}
               <div className="bg-slate-900 text-white p-4 rounded-xl space-y-3">
-                <audio
-                  ref={audioRef}
-                  src={selectedSub.audio_url || '/uploads/audio/demo_nadia_pretest.webm'}
-                  onTimeUpdate={() => setCurrentTime(audioRef.current?.currentTime || 0)}
-                  onLoadedMetadata={() => setDuration(audioRef.current?.duration || 0)}
-                  onEnded={() => setIsPlaying(false)}
-                />
-                <div className="flex items-center justify-between">
-                  <button
-                    onClick={togglePlay}
-                    className="w-10 h-10 rounded-full bg-indigo-600 hover:bg-indigo-700 flex items-center justify-center transition shadow-md"
-                  >
-                    {isPlaying ? <Pause className="w-5 h-5 fill-current" /> : <Play className="w-5 h-5 fill-current ml-0.5" />}
-                  </button>
-
-                  <div className="flex-1 mx-4 space-y-1">
-                    <div className="w-full bg-slate-700 h-1.5 rounded-full overflow-hidden">
-                      <div 
-                        className="bg-indigo-400 h-full transition-all"
-                        style={{ width: duration ? `${(currentTime / duration) * 100}%` : '0%' }}
-                      />
-                    </div>
-                    <div className="flex justify-between text-[11px] font-mono text-slate-400">
-                      <span>{formatSec(currentTime)}</span>
-                      <span>{formatSec(duration || selectedSub.duration_seconds || 30)}</span>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-1 bg-slate-800 p-1 rounded-lg border border-slate-700 text-[10px] font-bold">
-                    {[0.8, 1.0, 1.25].map(s => (
-                      <button
-                        key={s}
-                        onClick={() => handleSpeed(s)}
-                        className={`px-2 py-0.5 rounded transition ${playbackSpeed === s ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-white'}`}
-                      >
-                        {s}x
-                      </button>
-                    ))}
-                  </div>
+                <div className="flex justify-between items-center text-xs">
+                  <span className="flex items-center gap-2 text-teal-400 font-bold">
+                    <Volume2 className="w-4 h-4" /> 
+                    {currentAssessment 
+                      ? `Task ${selectedTaskNumber} Audio Recording` 
+                      : 'Single-Take Spoken Response Recording'}
+                  </span>
+                  <span className="font-mono text-slate-400">
+                    {formatSec(currentTime)} / {formatSec(duration || selectedSub.duration_seconds || 30)}
+                  </span>
                 </div>
+
+                {activeAudioUrl ? (
+                  <>
+                    <audio
+                      key={activeAudioUrl}
+                      ref={audioRef}
+                      src={activeAudioUrl}
+                      onTimeUpdate={() => setCurrentTime(audioRef.current?.currentTime || 0)}
+                      onLoadedMetadata={() => setDuration(audioRef.current?.duration || 0)}
+                      onEnded={() => setIsPlaying(false)}
+                    />
+                    <div className="flex items-center justify-between">
+                      <button
+                        onClick={togglePlay}
+                        className="w-10 h-10 rounded-full bg-indigo-600 hover:bg-indigo-700 flex items-center justify-center transition shadow-md"
+                      >
+                        {isPlaying ? <Pause className="w-5 h-5 fill-current" /> : <Play className="w-5 h-5 fill-current ml-0.5" />}
+                      </button>
+
+                      <div className="flex-1 mx-4 space-y-1">
+                        <div className="w-full bg-slate-700 h-1.5 rounded-full overflow-hidden">
+                          <div 
+                            className="bg-indigo-400 h-full transition-all"
+                            style={{ width: duration ? `${(currentTime / duration) * 100}%` : '0%' }}
+                          />
+                        </div>
+                        <div className="flex justify-between text-[11px] font-mono text-slate-400">
+                          <span>{formatSec(currentTime)}</span>
+                          <span>{formatSec(duration || selectedSub.duration_seconds || 30)}</span>
+                        </div>
+                      </div>
+
+                      <div className="flex gap-1 bg-slate-800 p-1 rounded-lg border border-slate-700 text-[10px] font-bold">
+                        {[0.8, 1.0, 1.25].map(s => (
+                          <button
+                            key={s}
+                            onClick={() => handleSpeed(s)}
+                            className={`px-2 py-0.5 rounded transition ${playbackSpeed === s ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-white'}`}
+                          >
+                            {s}x
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <div className="p-4 bg-slate-800/80 rounded-xl text-center text-xs text-slate-400">
+                    No recording found for Task {selectedTaskNumber}. (Candidate may not have recorded this task).
+                  </div>
+                )}
               </div>
 
               {/* 25-POINT BLUEPRINT RUBRIC CRITERIA */}

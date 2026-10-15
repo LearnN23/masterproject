@@ -104,24 +104,65 @@ app.get('/api/stats', (req, res) => {
   }
 });
 
-// Login / Role Switch Endpoint
+// Login Endpoint (Verifies username/participant_code & password from DB)
 app.post('/api/auth/login', (req, res) => {
-  const { username, role } = req.body;
+  const { username, password, role } = req.body;
+  
+  if (!username && !role) {
+    return res.status(400).json({ error: 'Username or participant code is required' });
+  }
+
   let user = null;
   if (username) {
-    user = DAL.getUserByUsername(username);
+    user = DAL.getUserByUsername(username.trim());
   } else if (role) {
     const users = DAL.getAllUsers();
     user = users.find(u => u.role === role);
   }
 
   if (!user) {
-    return res.status(404).json({ error: 'User or role not found' });
+    return res.status(401).json({ error: 'Invalid username or participant code' });
+  }
+
+  // If password was provided (or required for regular login)
+  if (password !== undefined && password !== null) {
+    if (user.password_hash !== password.trim()) {
+      return res.status(401).json({ error: 'Invalid username or password' });
+    }
   }
 
   const consent = DAL.getConsent(user.id);
   const progress = DAL.getProgress(user.id);
 
+  const safeUser = {
+    id: user.id,
+    username: user.username,
+    name: user.name,
+    participant_code: user.participant_code,
+    role: user.role,
+    cohort_group: user.cohort_group,
+    consentAgreed: consent ? Boolean(consent.consent_status) : false
+  };
+
+  res.json({
+    success: true,
+    user: safeUser,
+    progress
+  });
+});
+
+// Verify Current Session
+app.get('/api/auth/me', (req, res) => {
+  const userId = req.headers['x-user-id'] || req.query.userId;
+  if (!userId) {
+    return res.status(401).json({ error: 'Not authenticated' });
+  }
+  const user = DAL.getUserById(userId);
+  if (!user) {
+    return res.status(404).json({ error: 'User session not found' });
+  }
+  const consent = DAL.getConsent(user.id);
+  const progress = DAL.getProgress(user.id);
   res.json({
     success: true,
     user: {
@@ -210,10 +251,27 @@ app.post('/api/submissions', upload.any(), (req, res) => {
 
   let audioFile = null;
   let audioUrl = null;
+  const taskAudios = {};
+
   if (req.files && req.files.length > 0) {
-    const file = req.files[0];
-    audioFile = file.filename;
-    audioUrl = `/uploads/audio/${file.filename}`;
+    for (const file of req.files) {
+      if (file.fieldname.startsWith('task_audio_')) {
+        const taskNum = file.fieldname.replace('task_audio_', '');
+        taskAudios[taskNum] = `/uploads/audio/${file.filename}`;
+        if (!audioFile) {
+          audioFile = file.filename;
+          audioUrl = `/uploads/audio/${file.filename}`;
+        }
+      } else if (file.fieldname === 'audio_file' && !audioFile) {
+        audioFile = file.filename;
+        audioUrl = `/uploads/audio/${file.filename}`;
+      }
+    }
+    // Fallback to first uploaded file if not set
+    if (!audioFile && req.files[0]) {
+      audioFile = req.files[0].filename;
+      audioUrl = `/uploads/audio/${req.files[0].filename}`;
+    }
   } else {
     audioFile = 'demo-recording.webm';
     audioUrl = '/uploads/audio/demo-recording.webm';
@@ -226,6 +284,10 @@ app.post('/api/submissions', upload.any(), (req, res) => {
       : (req.body.self_assessment || {});
   } catch (e) {
     selfAssessment = {};
+  }
+
+  if (Object.keys(taskAudios).length > 0) {
+    selfAssessment.task_audio_urls = taskAudios;
   }
 
   const submission = DAL.saveSubmission({
@@ -436,7 +498,21 @@ if (fs.existsSync(CLIENT_DIST)) {
   });
 }
 
-// Start Server
-app.listen(PORT, () => {
-  console.log(`TECHQUEST Server running on http://localhost:${PORT}`);
-});
+// Start Server with graceful fallback (e.g. if macOS AirPlay is using 5000)
+function startServer(targetPort) {
+  const server = app.listen(targetPort, () => {
+    console.log(`TECHQUEST Server running on http://localhost:${targetPort}`);
+  });
+
+  server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      const nextPort = targetPort === 5000 ? 5001 : targetPort + 1;
+      console.warn(`[Server] Port ${targetPort} is occupied. Retrying on port ${nextPort}...`);
+      startServer(nextPort);
+    } else {
+      console.error('[Server] Startup error:', err);
+    }
+  });
+}
+
+startServer(Number(PORT));
