@@ -1106,8 +1106,39 @@ const StudentListView = ({ navigateTo }) => (
 );
 
 const InstructorStudentProgress = ({ navigateTo, studentId }) => {
-  const student = MOCK_STUDENTS.find(s => s.id === (studentId || 'STU-001'));
-  
+  const [student, setStudent] = useState(null);
+  const [progress, setProgress] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let isCancelled = false;
+    const fetchStudentData = async () => {
+      setLoading(true);
+      try {
+        const [usersRes, progRes] = await Promise.all([
+          fetch('/api/users'),
+          fetch(`/api/progress/${studentId || 'usr_stu_01'}`)
+        ]);
+        const users = await usersRes.json();
+        const prog = await progRes.json();
+        if (!isCancelled) {
+          const found = (Array.isArray(users) ? users : []).find(u => u.id === studentId || u.participant_code === studentId);
+          setStudent(found || { id: studentId, name: 'Student' });
+          setProgress(prog || {});
+        }
+      } catch (e) {
+        console.warn('Failed loading student data:', e);
+      } finally {
+        if (!isCancelled) setLoading(false);
+      }
+    };
+    fetchStudentData();
+    return () => { isCancelled = true; };
+  }, [studentId]);
+
+  const preTestDone = progress['section_0']?.status === 'completed';
+  const postTestDone = progress['section_9']?.status === 'completed';
+
   return (
     <div className="space-y-6 animate-fade-in">
       <header className="border-b pb-4">
@@ -1119,34 +1150,38 @@ const InstructorStudentProgress = ({ navigateTo, studentId }) => {
             <User className="w-8 h-8" />
           </div>
           <div>
-            <h2 className="text-3xl font-black text-slate-900">{student?.name || 'Student Name'}</h2>
-            <p className="text-slate-500 font-medium">{student?.id || 'STU-000'}</p>
+            <h2 className="text-3xl font-black text-slate-900">{student?.name || (loading ? 'Loading Student...' : 'Student')}</h2>
+            <div className="flex items-center gap-2 mt-1">
+              <span className="text-xs font-mono font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded border border-slate-200">
+                {student?.participant_code || student?.id || studentId}
+              </span>
+              <span className="text-xs text-slate-500 font-medium">
+                Cohort: {student?.cohort_group || 'Group_Main_Study'}
+              </span>
+            </div>
           </div>
         </div>
       </header>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card className="p-6 col-span-1 md:col-span-2 shadow-sm border-slate-200">
-           <h3 className="font-bold text-slate-900 mb-4 flex items-center gap-2"><BookOpen className="w-5 h-5 text-blue-500"/> Module Progress</h3>
+           <h3 className="font-bold text-slate-900 mb-4 flex items-center gap-2"><BookOpen className="w-5 h-5 text-blue-500"/> Real Module Progress</h3>
            <div className="space-y-3">
-             <div className="flex justify-between items-center p-3 bg-slate-50 rounded-lg border border-slate-100">
-               <span className="text-sm font-bold text-slate-700">Lesson 1: Responding to Enquiries</span>
-               <Badge type="success">Completed</Badge>
-             </div>
-             <div className="flex justify-between items-center p-3 bg-slate-50 rounded-lg border border-slate-100">
-               <span className="text-sm font-bold text-slate-700">Lesson 2: Clarifying Technical Problems</span>
-               <Badge type="success">Completed</Badge>
-             </div>
-             <div className="flex justify-between items-center p-3 bg-blue-50 border border-blue-200 rounded-lg">
-               <span className="text-sm font-bold text-blue-900">Lesson 3: Explaining Troubleshooting Procedures</span>
-               <Badge type="primary">In Progress</Badge>
-             </div>
-             {[4,5,6,7,8].map(num => (
-                <div key={num} className="flex justify-between items-center p-3 bg-white rounded-lg border border-slate-100 opacity-60">
-                 <span className="text-sm font-bold text-slate-500">Lesson {num}</span>
-                 <Badge type="default">Locked</Badge>
-               </div>
-             ))}
+             {LESSONS.map(l => {
+               const p = progress[`lesson_${l.id}`];
+               const isComp = p?.status === 'completed';
+               return (
+                 <div key={l.id} className={`flex justify-between items-center p-3 rounded-lg border ${isComp ? 'bg-emerald-50/60 border-emerald-200' : 'bg-slate-50 border-slate-100'}`}>
+                   <div>
+                     <span className="text-sm font-bold text-slate-800">Lesson {l.id}: {l.title}</span>
+                     <p className="text-xs text-slate-500 mt-0.5">{l.focus}</p>
+                   </div>
+                   <Badge type={isComp ? 'success' : 'default'}>
+                     {isComp ? 'Completed' : 'Not Started'}
+                   </Badge>
+                 </div>
+               );
+             })}
            </div>
         </Card>
 
@@ -1155,37 +1190,22 @@ const InstructorStudentProgress = ({ navigateTo, studentId }) => {
             <h3 className="font-bold text-slate-900 mb-4 flex items-center gap-2"><Award className="w-5 h-5 text-indigo-500"/> Formal Assessments</h3>
             <div className="space-y-4">
               <div>
-                <p className="text-xs text-slate-500 font-bold uppercase tracking-wider mb-1">Pre-test Status</p>
-                {student?.preTest ? (
-                   <p className="text-xl font-black text-indigo-600">{student.preTest} <span className="text-sm text-slate-400 font-medium">/ 25</span></p>
+                <p className="text-xs text-slate-500 font-bold uppercase tracking-wider mb-1">Pre-test (Form A)</p>
+                {preTestDone ? (
+                  <Badge type="success">Completed</Badge>
                 ) : (
-                  <Badge type="warning">Pending</Badge>
+                  <Badge type="warning">Pending Submission</Badge>
                 )}
               </div>
               <div className="pt-4 border-t border-slate-100">
-                <p className="text-xs text-slate-500 font-bold uppercase tracking-wider mb-1">Post-test Status</p>
-                {student?.postTest ? (
-                   <p className="text-xl font-black text-indigo-600">{student.postTest} <span className="text-sm text-slate-400 font-medium">/ 25</span></p>
+                <p className="text-xs text-slate-500 font-bold uppercase tracking-wider mb-1">Post-test (Form B)</p>
+                {postTestDone ? (
+                  <Badge type="success">Completed</Badge>
                 ) : (
-                  <Badge type="warning">Pending</Badge>
+                  <Badge type="default">Locked / Pending</Badge>
                 )}
               </div>
             </div>
-          </Card>
-          
-          <Card className="p-6 shadow-sm border-slate-200">
-            <h3 className="font-bold text-slate-900 mb-4 flex items-center gap-2"><Mic className="w-5 h-5 text-teal-500"/> Speaking Submissions</h3>
-            <div className="space-y-3">
-               <div className="flex justify-between items-center">
-                 <span className="text-sm font-medium text-slate-600">Pre-test Recording</span>
-                 <Badge type="success">Reviewed</Badge>
-               </div>
-               <div className="flex justify-between items-center">
-                 <span className="text-sm font-medium text-slate-600">Post-test Recording</span>
-                 <Badge type="warning">Awaiting</Badge>
-               </div>
-            </div>
-             <button onClick={() => navigateTo('review-list')} className="w-full mt-4 bg-slate-900 text-white py-2 rounded-lg text-sm font-bold hover:bg-slate-800 transition">Go to Reviews</button>
           </Card>
         </div>
       </div>
@@ -1246,85 +1266,63 @@ const TestResultsView = ({ type, navigateTo }) => (
 
 // Instructor review components delegated to ./components/InstructorEvaluationSuite
 
-const ModuleOverview = () => (
-  <div className="space-y-6 animate-fade-in pb-12">
-    <header className="border-b pb-4">
-      <h2 className="text-3xl font-black text-slate-900">Module Overview</h2>
-      <p className="text-slate-600 font-medium mt-1">Curriculum structure for all 8 EOP lessons.</p>
-    </header>
-    <Card className="overflow-hidden shadow-sm">
-      <table className="w-full text-left text-sm">
-        <thead className="bg-slate-50 text-slate-400 uppercase text-[10px] font-black tracking-widest border-b border-slate-200">
-          <tr>
-            <th className="px-6 py-4">Lesson</th>
-            <th className="px-6 py-4">Title</th>
-            <th className="px-6 py-4">Communication Skill</th>
-            <th className="px-6 py-4">Language Focus</th>
-            <th className="px-6 py-4">Status</th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-slate-100 bg-white font-medium">
-           <tr className="hover:bg-slate-50">
-              <td className="px-6 py-4 font-bold text-blue-600">Lesson 1</td>
-              <td className="px-6 py-4 font-bold text-slate-900">Responding to Customer Enquiries</td>
-              <td className="px-6 py-4 text-slate-600 text-xs">Customer enquiry</td>
-              <td className="px-6 py-4 text-slate-600 text-xs">Greetings, empathy, questions</td>
-              <td className="px-6 py-4"><Badge type="success">Completed</Badge></td>
+const ModuleOverview = () => {
+  const MODULE_SYLLABUS = [
+    { id: 1, title: 'Responding to Customer Enquiries', company: 'Concentrix', skill: 'Greetings & Empathy', focus: 'Modal verbs, courteous openings, identifying request', task: 'First-contact customer support call simulation' },
+    { id: 2, title: 'Identifying and Clarifying Technical Problems', company: 'Concentrix', skill: 'Probing & Clarification', focus: 'Clarification questions, WH-structures, symptom gathering', task: 'Hardware troubleshooting interview' },
+    { id: 3, title: 'Explaining Troubleshooting Procedures', company: 'Evoxt', skill: 'Step-by-Step Guidance', focus: 'Sequencing words (First, Next, Then), imperative verbs', task: 'Network connectivity diagnosis walkthrough' },
+    { id: 4, title: 'Handling Customer Complaints', company: 'Teleperformance', skill: 'De-escalation & Empathy', focus: 'Apologetic formulas, active listening, reassuring phrasing', task: 'Service outage compensation handling' },
+    { id: 5, title: 'Providing Clear Instructions', company: 'BASF Malaysia', skill: 'Technical Instructions', focus: 'Clear imperatives, confirmation checks, jargon simplification', task: 'Multi-factor authentication (MFA) setup call' },
+    { id: 6, title: 'Escalating Unresolved Issues', company: 'Accenture', skill: 'Tier-2 Escalation & SLAs', focus: 'Professional handoffs, SLA timeframes, priority tagging', task: 'Critical server degradation escalation call' },
+    { id: 7, title: 'Support Tickets and Technical Documentation', company: 'Scicom', skill: 'CRM Documentation', focus: 'Concise incident summaries, troubleshooting logs, KB tags', task: 'Voice-to-ticket summary recording' },
+    { id: 8, title: 'Complete Online Customer Support Interaction', company: 'Accenture & BASF', skill: 'End-to-End Simulation', focus: 'Integrated communication, problem resolution, polite closing', task: 'Full multi-step helpdesk call' },
+  ];
+
+  return (
+    <div className="space-y-6 animate-fade-in pb-12">
+      <header className="border-b pb-4">
+        <span className="text-[10px] font-black uppercase tracking-wider text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded border border-indigo-200">
+          TBLT Curriculum Structure
+        </span>
+        <h2 className="text-3xl font-black text-slate-900 mt-2">Curriculum Module Overview</h2>
+        <p className="text-slate-600 font-medium mt-1">Complete 8-lesson curriculum syllabus designed for Malaysian IT Technical Support workplace readiness.</p>
+      </header>
+      <Card className="overflow-hidden shadow-sm">
+        <table className="w-full text-left text-sm">
+          <thead className="bg-slate-50 text-slate-500 uppercase text-[10px] font-black tracking-widest border-b border-slate-200">
+            <tr>
+              <th className="px-6 py-4">Lesson</th>
+              <th className="px-6 py-4">Title & Context</th>
+              <th className="px-6 py-4">Communication Competency</th>
+              <th className="px-6 py-4">Language Focus</th>
+              <th className="px-6 py-4">Speaking Task</th>
             </tr>
-             <tr className="hover:bg-slate-50">
-              <td className="px-6 py-4 font-bold text-blue-600">Lesson 2</td>
-              <td className="px-6 py-4 font-bold text-slate-900">Identifying and Clarifying Technical Problems</td>
-              <td className="px-6 py-4 text-slate-600 text-xs">Problem clarification</td>
-              <td className="px-6 py-4 text-slate-600 text-xs">Questions, modal verbs</td>
-              <td className="px-6 py-4"><Badge type="primary">In Progress</Badge></td>
-            </tr>
-             <tr className="hover:bg-slate-50 opacity-60">
-              <td className="px-6 py-4 font-bold text-slate-500">Lesson 3</td>
-              <td className="px-6 py-4 font-bold text-slate-700">Explaining Troubleshooting Procedures</td>
-              <td className="px-6 py-4 text-slate-500 text-xs">Troubleshooting</td>
-              <td className="px-6 py-4 text-slate-500 text-xs">Sequencing, instructions</td>
-              <td className="px-6 py-4"><Badge type="default">Locked</Badge></td>
-            </tr>
-            <tr className="hover:bg-slate-50 opacity-60">
-              <td className="px-6 py-4 font-bold text-slate-500">Lesson 4</td>
-              <td className="px-6 py-4 font-bold text-slate-700">Handling Customer Complaints</td>
-              <td className="px-6 py-4 text-slate-500 text-xs">Complaints</td>
-              <td className="px-6 py-4 text-slate-500 text-xs">Empathy, apology</td>
-              <td className="px-6 py-4"><Badge type="default">Locked</Badge></td>
-            </tr>
-            <tr className="hover:bg-slate-50 opacity-60">
-              <td className="px-6 py-4 font-bold text-slate-500">Lesson 5</td>
-              <td className="px-6 py-4 font-bold text-slate-700">Providing Clear Instructions</td>
-              <td className="px-6 py-4 text-slate-500 text-xs">Instructions</td>
-              <td className="px-6 py-4 text-slate-500 text-xs">Imperatives, modal verbs</td>
-              <td className="px-6 py-4"><Badge type="default">Locked</Badge></td>
-            </tr>
-            <tr className="hover:bg-slate-50 opacity-60">
-              <td className="px-6 py-4 font-bold text-slate-500">Lesson 6</td>
-              <td className="px-6 py-4 font-bold text-slate-700">Escalating Unresolved Issues</td>
-              <td className="px-6 py-4 text-slate-500 text-xs">Escalation</td>
-              <td className="px-6 py-4 text-slate-500 text-xs">Professional escalation</td>
-              <td className="px-6 py-4"><Badge type="default">Locked</Badge></td>
-            </tr>
-            <tr className="hover:bg-slate-50 opacity-60">
-              <td className="px-6 py-4 font-bold text-slate-500">Lesson 7</td>
-              <td className="px-6 py-4 font-bold text-slate-700">Support Tickets and Technical Documentation</td>
-              <td className="px-6 py-4 text-slate-500 text-xs">Documentation</td>
-              <td className="px-6 py-4 text-slate-500 text-xs">Technical vocabulary</td>
-              <td className="px-6 py-4"><Badge type="default">Locked</Badge></td>
-            </tr>
-             <tr className="hover:bg-slate-50 opacity-60">
-              <td className="px-6 py-4 font-bold text-slate-500">Lesson 8</td>
-              <td className="px-6 py-4 font-bold text-slate-700">Complete Online Customer Support Interaction</td>
-              <td className="px-6 py-4 text-slate-500 text-xs">Integrated communication</td>
-              <td className="px-6 py-4 text-slate-500 text-xs">Integrated skills</td>
-              <td className="px-6 py-4"><Badge type="default">Locked</Badge></td>
-            </tr>
-        </tbody>
-      </table>
-    </Card>
-  </div>
-);
+          </thead>
+          <tbody className="divide-y divide-slate-100 bg-white font-medium">
+            {MODULE_SYLLABUS.map(m => (
+              <tr key={m.id} className="hover:bg-slate-50/80 transition-colors">
+                <td className="px-6 py-4 font-black text-indigo-600 whitespace-nowrap">Lesson {m.id}</td>
+                <td className="px-6 py-4">
+                  <p className="font-bold text-slate-900">{m.title}</p>
+                  <span className="text-[11px] font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded mt-1 inline-block border border-slate-200">
+                    {m.company}
+                  </span>
+                </td>
+                <td className="px-6 py-4 text-slate-700 text-xs font-semibold">{m.skill}</td>
+                <td className="px-6 py-4 text-slate-600 text-xs leading-relaxed">{m.focus}</td>
+                <td className="px-6 py-4 text-slate-800 text-xs font-medium">
+                  <span className="bg-blue-50 text-blue-700 px-2 py-1 rounded border border-blue-200 inline-block">
+                    {m.task}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </Card>
+    </div>
+  );
+};
 
 // ExpertEvaluation delegated to ExpertEvaluationView in ./components/InstructorEvaluationSuite
 
