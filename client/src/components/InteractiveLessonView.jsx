@@ -258,13 +258,17 @@ export default function InteractiveLessonView({
     }
 
     // Audio upload to backend
+    const uId = studentState?.userId || studentState?.id;
+    const pCode = studentState?.id || studentState?.userId;
+
     if (audioBlob) {
       try {
         const formData = new FormData();
-        formData.append('participant_id', studentState.id);
+        if (uId) formData.append('userId', uId);
+        if (pCode) formData.append('participant_id', pCode);
         formData.append('unit_id', lesson.unitId || `lesson_${lessonId}`);
         formData.append('duration_seconds', recordingTime || 15);
-        formData.append('audio_file', audioBlob, `${studentState.id}_lesson${lessonId}_speaking.webm`);
+        formData.append('audio_file', audioBlob, `${pCode || uId}_lesson${lessonId}_speaking.webm`);
         formData.append('self_assessment', JSON.stringify(selfAssessment));
         await fetch('/api/submissions', { method: 'POST', body: formData });
       } catch (e) {
@@ -278,7 +282,7 @@ export default function InteractiveLessonView({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          userId: studentState.id,
+          userId: uId || pCode,
           unitId: lesson.unitId || `lesson_${lessonId}`,
           status: 'completed',
           sectionsCompleted: curr.sectionsCompleted,

@@ -313,6 +313,53 @@ const getRoleDefaultActiveView = (role) => {
   return 'student';
 };
 
+// Helper to create cleanly isolated student state for a given user and progress map
+const createDefaultStudentState = (user = null, progressData = {}) => {
+  const lessonsProgress = {
+    1: { isCompleted: false, sectionsCompleted: { situation: false, learn: false, practice: false, review: false, speaking: false }, reviewScore: null, bestReviewScore: null, speakingPracticeCompleted: false },
+    2: { isCompleted: false, sectionsCompleted: { situation: false, learn: false, practice: false, review: false, speaking: false }, reviewScore: null, bestReviewScore: null, speakingPracticeCompleted: false },
+    3: { isCompleted: false, sectionsCompleted: { situation: false, learn: false, practice: false, review: false, speaking: false }, reviewScore: null, bestReviewScore: null, speakingPracticeCompleted: false },
+    4: { isCompleted: false, sectionsCompleted: { situation: false, learn: false, practice: false, review: false, speaking: false }, reviewScore: null, bestReviewScore: null, speakingPracticeCompleted: false },
+    5: { isCompleted: false, sectionsCompleted: { situation: false, learn: false, practice: false, review: false, speaking: false }, reviewScore: null, bestReviewScore: null, speakingPracticeCompleted: false },
+    6: { isCompleted: false, sectionsCompleted: { situation: false, learn: false, practice: false, review: false, speaking: false }, reviewScore: null, bestReviewScore: null, speakingPracticeCompleted: false },
+    7: { isCompleted: false, sectionsCompleted: { situation: false, learn: false, practice: false, review: false, speaking: false }, reviewScore: null, bestReviewScore: null, speakingPracticeCompleted: false },
+    8: { isCompleted: false, sectionsCompleted: { situation: false, learn: false, practice: false, review: false, speaking: false }, reviewScore: null, bestReviewScore: null, speakingPracticeCompleted: false },
+  };
+
+  let preTestCompleted = false;
+  let postTestCompleted = false;
+
+  if (progressData) {
+    for (let i = 1; i <= 8; i++) {
+      const key = `lesson_${i}`;
+      if (progressData[key]) {
+        lessonsProgress[i] = {
+          isCompleted: progressData[key].status === 'completed',
+          sectionsCompleted: progressData[key].sections_completed || { situation: false, learn: false, practice: false, review: false, speaking: false },
+          reviewScore: progressData[key].review_score ?? null,
+          bestReviewScore: progressData[key].best_review_score ?? null,
+          speakingPracticeCompleted: progressData[key].status === 'completed'
+        };
+      }
+    }
+    if (progressData['section_0']?.status === 'completed') preTestCompleted = true;
+    if (progressData['section_9']?.status === 'completed') postTestCompleted = true;
+  }
+
+  return {
+    id: user?.participant_code || user?.id || '',
+    userId: user?.id || '',
+    name: user?.name || '',
+    consent: { status: Boolean(user?.consentAgreed), version: 'v1.0', agreedAt: null, method: null },
+    preTestCompleted,
+    preTestAudioUrl: null,
+    postTestCompleted,
+    postTestAudioUrl: null,
+    lessonsProgress,
+    lesson1State: lessonsProgress[1]
+  };
+};
+
 export default function App() {
   const [currentUser, setCurrentUser] = useState(() => {
     try {
@@ -349,7 +396,7 @@ export default function App() {
   const [selectedStudentId, setSelectedStudentId] = useState(null);
   const [selectedSubmission, setSelectedSubmission] = useState(null); 
 
-  // Unified Student State with 8-Lesson Progress
+  // Unified Student State isolated strictly per user account
   const [studentState, setStudentState] = useState(() => {
     let initialUser = null;
     try {
@@ -358,55 +405,39 @@ export default function App() {
     } catch {}
 
     let initialProgress = {};
-    try {
-      const savedProg = localStorage.getItem('techquest_progress');
-      if (savedProg) initialProgress = JSON.parse(savedProg);
-    } catch {}
-
-    const lessonsProgress = {
-      1: { isCompleted: false, sectionsCompleted: { situation: false, learn: false, practice: false, review: false, speaking: false }, reviewScore: null, bestReviewScore: null, speakingPracticeCompleted: false },
-      2: { isCompleted: false, sectionsCompleted: { situation: false, learn: false, practice: false, review: false, speaking: false }, reviewScore: null, bestReviewScore: null, speakingPracticeCompleted: false },
-      3: { isCompleted: false, sectionsCompleted: { situation: false, learn: false, practice: false, review: false, speaking: false }, reviewScore: null, bestReviewScore: null, speakingPracticeCompleted: false },
-      4: { isCompleted: false, sectionsCompleted: { situation: false, learn: false, practice: false, review: false, speaking: false }, reviewScore: null, bestReviewScore: null, speakingPracticeCompleted: false },
-      5: { isCompleted: false, sectionsCompleted: { situation: false, learn: false, practice: false, review: false, speaking: false }, reviewScore: null, bestReviewScore: null, speakingPracticeCompleted: false },
-      6: { isCompleted: false, sectionsCompleted: { situation: false, learn: false, practice: false, review: false, speaking: false }, reviewScore: null, bestReviewScore: null, speakingPracticeCompleted: false },
-      7: { isCompleted: false, sectionsCompleted: { situation: false, learn: false, practice: false, review: false, speaking: false }, reviewScore: null, bestReviewScore: null, speakingPracticeCompleted: false },
-      8: { isCompleted: false, sectionsCompleted: { situation: false, learn: false, practice: false, review: false, speaking: false }, reviewScore: null, bestReviewScore: null, speakingPracticeCompleted: false },
-    };
-
-    let preTestCompleted = false;
-    let postTestCompleted = false;
-
-    for (let i = 1; i <= 8; i++) {
-      const key = `lesson_${i}`;
-      if (initialProgress[key]) {
-        lessonsProgress[i] = {
-          isCompleted: initialProgress[key].status === 'completed',
-          sectionsCompleted: initialProgress[key].sections_completed || { situation: false, learn: false, practice: false, review: false, speaking: false },
-          reviewScore: initialProgress[key].review_score ?? null,
-          bestReviewScore: initialProgress[key].best_review_score ?? null,
-          speakingPracticeCompleted: initialProgress[key].status === 'completed'
-        };
-      }
+    if (initialUser?.id) {
+      try {
+        const savedProg = localStorage.getItem(`techquest_progress_${initialUser.id}`);
+        if (savedProg) initialProgress = JSON.parse(savedProg);
+      } catch {}
     }
-    if (initialProgress['section_0']?.status === 'completed') preTestCompleted = true;
-    if (initialProgress['section_9']?.status === 'completed') postTestCompleted = true;
 
-    return {
-      id: initialUser?.participant_code || initialUser?.id || 'STU-1001',
-      userId: initialUser?.id || 'usr_stu_01',
-      name: initialUser?.name || 'Somchai Prasert',
-      consent: { status: Boolean(initialUser?.consentAgreed), version: 'v1.0', agreedAt: null, method: null },
-      preTestCompleted,
-      preTestAudioUrl: null,
-      postTestCompleted,
-      postTestAudioUrl: null,
-      lessonsProgress,
-      lesson1State: lessonsProgress[1]
-    };
+    return createDefaultStudentState(initialUser, initialProgress);
   });
 
   const [instructorFeedback, setInstructorFeedback] = useState(null);
+
+  // Background sync student progress from SQLite whenever logged in user changes
+  useEffect(() => {
+    if (!currentUser?.id) return;
+    let isCancelled = false;
+    fetch(`/api/progress/${currentUser.id}`)
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to load progress');
+        return res.json();
+      })
+      .then(progressData => {
+        if (!isCancelled && progressData) {
+          try {
+            localStorage.setItem(`techquest_progress_${currentUser.id}`, JSON.stringify(progressData));
+          } catch {}
+          setStudentState(createDefaultStudentState(currentUser, progressData));
+        }
+      })
+      .catch(e => console.warn('Could not refresh student progress:', e));
+
+    return () => { isCancelled = true; };
+  }, [currentUser?.id]);
 
   // Determine if current user bypasses all sequential gates (Tester, Expert/Professor, Admin)
   const isBypass = currentUser && (
@@ -457,40 +488,15 @@ export default function App() {
     setActiveRoleView(defaultActiveRole);
     setCurrentView(defaultView);
 
-    // Hydrate studentState
-    setStudentState(prev => {
-      const updatedLessons = { ...prev.lessonsProgress };
-      let preComp = prev.preTestCompleted;
-      let postComp = prev.postTestCompleted;
+    // Create fresh isolated student state for this specific user
+    const freshState = createDefaultStudentState(user, progressData || {});
+    setStudentState(freshState);
 
-      if (progressData) {
-        for (let i = 1; i <= 8; i++) {
-          const key = `lesson_${i}`;
-          if (progressData[key]) {
-            updatedLessons[i] = {
-              isCompleted: progressData[key].status === 'completed',
-              sectionsCompleted: progressData[key].sections_completed || { situation: false, learn: false, practice: false, review: false, speaking: false },
-              reviewScore: progressData[key].review_score ?? null,
-              bestReviewScore: progressData[key].best_review_score ?? null,
-              speakingPracticeCompleted: progressData[key].status === 'completed'
-            };
-          }
-        }
-        if (progressData['section_0']?.status === 'completed') preComp = true;
-        if (progressData['section_9']?.status === 'completed') postComp = true;
-      }
-
-      return {
-        ...prev,
-        id: user.participant_code || user.id,
-        userId: user.id,
-        name: user.name,
-        consent: { status: Boolean(user.consentAgreed), version: 'v1.0' },
-        lessonsProgress: updatedLessons,
-        preTestCompleted: preComp,
-        postTestCompleted: postComp
-      };
-    });
+    if (user?.id && progressData) {
+      try {
+        localStorage.setItem(`techquest_progress_${user.id}`, JSON.stringify(progressData));
+      } catch {}
+    }
   };
 
   const handleSelectRoleWalkthrough = (targetRole) => {
@@ -514,16 +520,44 @@ export default function App() {
 
   const handleLogout = () => {
     window.speechSynthesis.cancel();
-    localStorage.removeItem('techquest_user');
-    localStorage.removeItem('techquest_progress');
-    sessionStorage.removeItem('techquest_user');
+    try {
+      localStorage.removeItem('techquest_user');
+      localStorage.removeItem('techquest_progress');
+      sessionStorage.removeItem('techquest_user');
+      sessionStorage.removeItem('techquest_progress');
+      if (currentUser?.id) {
+        localStorage.removeItem(`techquest_progress_${currentUser.id}`);
+      }
+    } catch {}
     setCurrentUser(null);
+    setStudentState(createDefaultStudentState(null, {}));
     setActiveRoleView('student');
     setCurrentView('login');
   };
 
+  const handleConsentAgreed = () => {
+    setCurrentUser(prev => {
+      if (!prev) return prev;
+      const updated = { ...prev, consentAgreed: true };
+      try {
+        if (localStorage.getItem('techquest_user')) {
+          localStorage.setItem('techquest_user', JSON.stringify(updated));
+        } else if (sessionStorage.getItem('techquest_user')) {
+          sessionStorage.setItem('techquest_user', JSON.stringify(updated));
+        }
+      } catch {}
+      return updated;
+    });
+  };
+
   const updateStudentState = (key, value) => {
-    setStudentState(prev => ({ ...prev, [key]: value }));
+    setStudentState(prev => {
+      const next = { ...prev, [key]: value };
+      if (key === 'lessonsProgress' && value?.[1]) {
+        next.lesson1State = value[1];
+      }
+      return next;
+    });
   };
 
   if (!currentUser || currentView === 'login') {
@@ -747,7 +781,14 @@ export default function App() {
 
           {/* Core Learning Views */}
           {currentView === 'orientation' && <OrientationView navigateTo={navigateTo} />}
-          {currentView === 'consent' && <ResearchConsentView navigateTo={navigateTo} studentState={studentState} updateStudentState={updateStudentState} />}
+          {currentView === 'consent' && (
+            <ResearchConsentView 
+              navigateTo={navigateTo} 
+              studentState={studentState} 
+              updateStudentState={updateStudentState} 
+              onConsentAgreed={handleConsentAgreed} 
+            />
+          )}
           {currentView === 'pre-test' && <AssessmentView type="Pre-test" navigateTo={navigateTo} studentState={studentState} updateStudentState={updateStudentState} />}
           {currentView === 'post-test' && <AssessmentView type="Post-test" navigateTo={navigateTo} studentState={studentState} updateStudentState={updateStudentState} />}
           {currentView === 'lesson' && (
@@ -845,10 +886,10 @@ const OrientationView = ({ navigateTo }) => (
   </div>
 );
 
-const ResearchConsentView = ({ navigateTo, studentState, updateStudentState }) => {
-  const [isChecked, setIsChecked] = useState(studentState.consent?.status || false);
+const ResearchConsentView = ({ navigateTo, studentState, updateStudentState, onConsentAgreed }) => {
+  const [isChecked, setIsChecked] = useState(studentState?.consent?.status || false);
 
-  const handleAgree = () => {
+  const handleAgree = async () => {
     updateStudentState('consent', {
       status: true,
       version: 'v1.0',
@@ -856,6 +897,21 @@ const ResearchConsentView = ({ navigateTo, studentState, updateStudentState }) =
       method: 'I_AGREE_BUTTON',
       pretest_access_granted: true
     });
+    if (onConsentAgreed) onConsentAgreed();
+
+    const uId = studentState?.userId || studentState?.id;
+    if (uId) {
+      try {
+        await fetch('/api/auth/consent', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId: uId, version: 'v1.0' })
+        });
+      } catch (e) {
+        console.warn('Backend consent sync:', e);
+      }
+    }
+
     navigateTo('pre-test');
   };
 

@@ -183,12 +183,14 @@ export default function AssessmentView({ type, navigateTo, studentState, updateS
   // --- SUBMISSION ---
   const handleSubmitAll = async () => {
     setIsSubmitting(true);
-    const userId = studentState?.id || 'STU-1024';
+    const userId = studentState?.userId || studentState?.id;
+    const participantCode = studentState?.id || studentState?.userId;
     const unitId = isPreTest ? 'section_0' : 'section_9';
 
     try {
       const formData = new FormData();
-      formData.append('participant_id', userId);
+      if (userId) formData.append('userId', userId);
+      if (participantCode) formData.append('participant_id', participantCode);
       formData.append('unit_id', unitId);
 
       let totalDuration = 0;
@@ -199,14 +201,14 @@ export default function AssessmentView({ type, navigateTo, studentState, updateS
         const rec = taskRecordings[tNum];
         if (rec?.blob) {
           totalDuration += (rec.duration || 15);
-          formData.append(`task_audio_${tNum}`, rec.blob, `${userId}_${dataKey}_task_${tNum}.webm`);
+          formData.append(`task_audio_${tNum}`, rec.blob, `${participantCode || userId}_${dataKey}_task_${tNum}.webm`);
         }
       });
 
       // Primary fallback audio file (Task 1 or first available recorded task)
       const primaryRec = taskRecordings[1] || taskRecordings[taskKeys[0]];
       const primaryBlob = primaryRec?.blob || new Blob([], { type: 'audio/webm' });
-      formData.append('audio_file', primaryBlob, `${userId}_${dataKey}.webm`);
+      formData.append('audio_file', primaryBlob, `${participantCode || userId}_${dataKey}.webm`);
       formData.append('duration_seconds', totalDuration || recordingTime || 30);
       formData.append('self_assessment', JSON.stringify({
         completedTasks: taskKeys.length,
@@ -229,7 +231,7 @@ export default function AssessmentView({ type, navigateTo, studentState, updateS
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          userId,
+          userId: userId || participantCode,
           unitId,
           status: 'completed',
           currentSubSection: 'completed'

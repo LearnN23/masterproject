@@ -15,17 +15,25 @@ export default function StudentDashboard({ navigateTo, studentState, isBypass = 
     try {
       const res = await fetch('/api/submissions');
       const data = await res.json();
-      // Match submissions for this student by participant_code or user_id or demo
-      const userCode = studentState?.id || 'STU-1024';
-      const mySubs = data.filter(s => 
-        s.participant_code === userCode || 
-        s.blind_mask_code === userCode || 
-        s.user_id === studentState?.id ||
-        (userCode === 'STU-1024' && s.user_id === 'usr_student_nadia')
+      
+      const participantCode = studentState?.id;
+      const dbUserId = studentState?.userId;
+
+      if (!participantCode && !dbUserId) {
+        setSubmissions([]);
+        return;
+      }
+
+      // Match submissions for this student by participant_code, blind_mask_code, or user_id
+      const mySubs = (Array.isArray(data) ? data : []).filter(s => 
+        (participantCode && (s.participant_code === participantCode || s.blind_mask_code === participantCode)) ||
+        (dbUserId && s.user_id === dbUserId) ||
+        (participantCode && s.user_id === participantCode)
       );
       setSubmissions(mySubs);
     } catch (e) {
       console.warn('Failed to load student submissions:', e);
+      setSubmissions([]);
     } finally {
       setLoadingSubs(false);
     }
@@ -33,7 +41,7 @@ export default function StudentDashboard({ navigateTo, studentState, isBypass = 
 
   useEffect(() => {
     fetchStudentSubmissions();
-  }, [studentState?.id]);
+  }, [studentState?.id, studentState?.userId]);
 
   const LESSON_ITEMS = [
     { id: 1, title: 'Responding to Customer Enquiries', company: 'Concentrix', unitId: 'lesson_1' },
@@ -80,7 +88,7 @@ export default function StudentDashboard({ navigateTo, studentState, isBypass = 
               Student Learning Portal
             </span>
             <span className="text-xs font-mono font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
-              ID: {studentState?.id || 'STU-1024'}
+              ID: {studentState?.id || studentState?.userId || 'N/A'}
             </span>
             {isBypass && (
               <span className="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200 flex items-center gap-1">
@@ -89,7 +97,7 @@ export default function StudentDashboard({ navigateTo, studentState, isBypass = 
             )}
           </div>
           <h1 className="text-3xl font-black text-slate-900 tracking-tight">
-            Welcome, {studentState?.name || 'Nadia Hassan'}!
+            Welcome, {studentState?.name || 'Student'}!
           </h1>
           <p className="text-sm text-slate-600 font-medium mt-1">
             Task-Based Language Teaching (TBLT) English for Technical Support & IT Helpdesk.

@@ -132,13 +132,22 @@ export default function LoginPage({ onLoginSuccess }) {
         throw new Error(data.error || 'Authentication failed. Please check your credentials.');
       }
 
+      // Clean up any legacy unkeyed progress
+      try {
+        localStorage.removeItem('techquest_progress');
+        sessionStorage.removeItem('techquest_progress');
+      } catch {}
+
       if (rememberMe) {
         localStorage.setItem('techquest_user', JSON.stringify(data.user));
-        if (data.progress) {
-          localStorage.setItem('techquest_progress', JSON.stringify(data.progress));
+        if (data.progress && data.user?.id) {
+          localStorage.setItem(`techquest_progress_${data.user.id}`, JSON.stringify(data.progress));
         }
       } else {
         sessionStorage.setItem('techquest_user', JSON.stringify(data.user));
+        if (data.progress && data.user?.id) {
+          sessionStorage.setItem(`techquest_progress_${data.user.id}`, JSON.stringify(data.progress));
+        }
       }
 
       onLoginSuccess(data.user, data.progress);
