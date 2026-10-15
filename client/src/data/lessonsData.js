@@ -176,6 +176,8 @@ export const LESSONS_DATA = {
     category: 'lesson',
     duration: '150 mins',
     company: 'Concentrix Malaysia (JA003) & Evoxt (JA014) — Cyberjaya',
+    googleSlidesUrl: 'https://docs.google.com/presentation/d/1zWKwlLBNcfLxYUwFWSZK19t2i5QInxVDMvt1pGLbyBU/edit?slide=id.p1#slide=id.p1',
+    googleSlidesEmbedUrl: 'https://docs.google.com/presentation/d/1zWKwlLBNcfLxYUwFWSZK19t2i5QInxVDMvt1pGLbyBU/embed?start=false&loop=false&delayms=3000',
     situation: {
       role: 'Tier 1 Diagnostic Support Specialist',
       illustrationType: 'desk_worker_male',
@@ -349,6 +351,8 @@ export const LESSONS_DATA = {
     category: 'lesson',
     duration: '150 mins',
     company: 'Scicom (MSC) Berhad (JA020) — Application Support Desk',
+    googleSlidesUrl: 'https://docs.google.com/presentation/d/15fdaHlZUA7n_4cTZVTzOCVZl2WcX7vyIqWEsQD5oI2g/edit?slide=id.p1#slide=id.p1',
+    googleSlidesEmbedUrl: 'https://docs.google.com/presentation/d/15fdaHlZUA7n_4cTZVTzOCVZl2WcX7vyIqWEsQD5oI2g/embed?start=false&loop=false&delayms=3000',
     situation: {
       role: 'Application Support Desk Specialist',
       illustrationType: 'desk_worker_female',
@@ -519,6 +523,8 @@ export const LESSONS_DATA = {
     category: 'lesson',
     duration: '120 mins',
     company: 'Teleperformance Malaysia (JA004) — Complaint Management Unit',
+    googleSlidesUrl: 'https://docs.google.com/presentation/d/1siA5qv6_nqBdE5t6aQKX6kxXtzrbJ-LE3LGHdTyQUhs/edit?slide=id.p3#slide=id.p3',
+    googleSlidesEmbedUrl: 'https://docs.google.com/presentation/d/1siA5qv6_nqBdE5t6aQKX6kxXtzrbJ-LE3LGHdTyQUhs/embed?start=false&loop=false&delayms=3000',
     situation: {
       role: 'Customer Resolution Specialist',
       illustrationType: 'desk_worker_male',
@@ -681,6 +687,8 @@ export const LESSONS_DATA = {
     category: 'lesson',
     duration: '120 mins',
     company: 'BASF (Malaysia) Sdn. Bhd. (JA010) & iFAST — Cyberjaya IT Helpdesk',
+    googleSlidesUrl: 'https://docs.google.com/presentation/d/1igJoX3mH8XdaB4Px_WH7fc2rIsU6r-fNIfiv5NXa9SM/edit?slide=id.p1#slide=id.p1',
+    googleSlidesEmbedUrl: 'https://docs.google.com/presentation/d/1igJoX3mH8XdaB4Px_WH7fc2rIsU6r-fNIfiv5NXa9SM/embed?start=false&loop=false&delayms=3000',
     situation: {
       role: 'IT Helpdesk Specialist',
       illustrationType: 'desk_worker_female',
@@ -842,6 +850,8 @@ export const LESSONS_DATA = {
     category: 'lesson',
     duration: '120 mins',
     company: 'Accenture Malaysia (JA013) — Level-1 Service Desk',
+    googleSlidesUrl: 'https://docs.google.com/presentation/d/1owGJNCAYLCZAUf_QfO9coch4Ie6j4mtT1k3Nw-8QW6I/edit?slide=id.p3#slide=id.p3',
+    googleSlidesEmbedUrl: 'https://docs.google.com/presentation/d/1owGJNCAYLCZAUf_QfO9coch4Ie6j4mtT1k3Nw-8QW6I/embed?start=false&loop=false&delayms=3000',
     situation: {
       role: 'Level-1 Technical Support Specialist',
       illustrationType: 'desk_worker_male',
@@ -1004,6 +1014,8 @@ export const LESSONS_DATA = {
     category: 'lesson',
     duration: '120 mins',
     company: 'Credspire Support / BASF Shared Service Center (JA010)',
+    googleSlidesUrl: 'https://docs.google.com/presentation/d/1lk1xN3w1_1bigGzIFRxB-9fN55uk5s86_AD-K53WW8s/edit?slide=id.p1#slide=id.p1',
+    googleSlidesEmbedUrl: 'https://docs.google.com/presentation/d/1lk1xN3w1_1bigGzIFRxB-9fN55uk5s86_AD-K53WW8s/embed?start=false&loop=false&delayms=3000',
     situation: {
       role: 'Technical Documentation & Support Specialist',
       illustrationType: 'desk_worker_female',
@@ -1176,6 +1188,8 @@ export const LESSONS_DATA = {
     category: 'lesson',
     duration: '240 mins',
     company: 'Scicom (MSC) Berhad (JA020) & BASF Malaysia (JA010)',
+    googleSlidesUrl: 'https://docs.google.com/presentation/d/1Y7vpq1CkcWrYMG9JKZDZOVuUdkKFIx5_HP6tDXQqvnE/edit?slide=id.p1#slide=id.p1',
+    googleSlidesEmbedUrl: 'https://docs.google.com/presentation/d/1Y7vpq1CkcWrYMG9JKZDZOVuUdkKFIx5_HP6tDXQqvnE/embed?start=false&loop=false&delayms=3000',
     situation: {
       role: 'Senior Technical Support Lead (Outgoing Morning Shift)',
       illustrationType: 'desk_worker_male',
