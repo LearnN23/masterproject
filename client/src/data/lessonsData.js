@@ -14,6 +14,8 @@ export const LESSONS_DATA = {
     category: 'lesson',
     duration: '120 mins',
     company: 'International Tech Support Service Center (Malaysia)',
+    googleSlidesUrl: 'https://docs.google.com/presentation/d/1rze2R49TDK2iXMq5g-eay6fe8dS9FxTUidVdWzVDTzw/edit?slide=id.p1#slide=id.p1',
+    googleSlidesEmbedUrl: 'https://docs.google.com/presentation/d/1rze2R49TDK2iXMq5g-eay6fe8dS9FxTUidVdWzVDTzw/embed?start=false&loop=false&delayms=3000',
     situation: {
       role: 'Tier 1 Technical Support Specialist',
       illustrationType: 'desk_worker_female',

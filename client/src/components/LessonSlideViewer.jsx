@@ -2,23 +2,30 @@ import React, { useState, useEffect, useRef } from 'react';
 import { 
   ChevronLeft, ChevronRight, Maximize2, Minimize2, 
   Download, Monitor, Sparkles, BookOpen, CheckCircle, 
-  MessageSquare, AlertCircle, FileText, FolderOpen, Image
+  MessageSquare, AlertCircle, FileText, FolderOpen, Image,
+  ExternalLink, Sliders
 } from 'lucide-react';
 import { LESSONS_DATA } from '../data/lessonsData';
 
 export default function LessonSlideViewer({ lessonId = 1 }) {
+  const lesson = LESSONS_DATA[lessonId] || LESSONS_DATA[1];
+
+  const [slideMode, setSlideMode] = useState(() => lesson.googleSlidesEmbedUrl ? 'google' : 'local');
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [imageError, setImageError] = useState({});
   const containerRef = useRef(null);
 
-  const lesson = LESSONS_DATA[lessonId] || LESSONS_DATA[1];
-
-  // Reset slide index when lesson changes
+  // Reset slide index & default mode when lesson changes
   useEffect(() => {
     setCurrentSlide(0);
     setImageError({});
-  }, [lessonId]);
+    if (lesson.googleSlidesEmbedUrl) {
+      setSlideMode('google');
+    } else {
+      setSlideMode('local');
+    }
+  }, [lessonId, lesson.googleSlidesEmbedUrl]);
 
   // Fullscreen handlers
   const toggleFullscreen = () => {
@@ -38,15 +45,16 @@ export default function LessonSlideViewer({ lessonId = 1 }) {
     return () => document.removeEventListener('fullscreenchange', handleFsChange);
   }, []);
 
-  // Keyboard navigation (Left / Right arrow)
+  // Keyboard navigation (Left / Right arrow) when in local mode
   useEffect(() => {
+    if (slideMode !== 'local') return;
     const handleKeyDown = (e) => {
       if (e.key === 'ArrowRight') nextSlide();
       if (e.key === 'ArrowLeft') prevSlide();
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentSlide]);
+  }, [currentSlide, slideMode]);
 
   const totalSlides = 5;
 
@@ -98,182 +106,193 @@ export default function LessonSlideViewer({ lessonId = 1 }) {
             </div>
 
             <div className="my-auto py-6 z-10 space-y-4">
-              <span className="px-3 py-1 bg-amber-400/20 text-amber-300 text-xs font-bold rounded-lg border border-amber-400/30 inline-block">
-                Workplace Role: {lesson.situation?.role || 'Technical Support Agent'}
+              <span className="px-3 py-1 bg-teal-500/20 text-teal-300 text-xs font-bold rounded-full border border-teal-500/30 inline-block">
+                Unit {lessonId}: Core Workplace Competency
               </span>
               <h1 className="text-3xl md:text-5xl font-black text-white tracking-tight leading-tight">
                 {lesson.title}
               </h1>
-              <p className="text-base md:text-lg text-slate-300 max-w-2xl font-medium leading-relaxed">
+              <p className="text-slate-300 text-base md:text-lg max-w-2xl font-medium">
                 {lesson.focus}
               </p>
             </div>
 
-            <div className="bg-slate-900/80 p-4 rounded-xl border border-slate-800 z-10 flex items-center justify-between text-xs">
-              <span className="text-slate-400 font-medium">
-                Scenario Context: {lesson.situation?.intro?.substring(0, 100)}...
-              </span>
-              <span className="text-teal-400 font-mono font-bold shrink-0 ml-4">Duration: {lesson.duration}</span>
+            <div className="flex justify-between items-end border-t border-slate-800 pt-4 text-xs text-slate-400 z-10">
+              <span>Duration: {lesson.duration || '120 mins'}</span>
+              <span className="font-mono text-teal-400">Slide 1: Overview</span>
             </div>
           </div>
         );
 
       case 1:
-        // SLIDE 2: Objectives & Speech Acts
+        // SLIDE 2: Objectives & Competencies
         return (
-          <div className="w-full h-full p-8 md:p-12 flex flex-col justify-between bg-slate-900 text-white">
-            <div className="flex justify-between items-start border-b border-slate-800 pb-4">
-              <div>
-                <span className="text-xs font-mono font-bold text-teal-400 uppercase">Learning Objectives</span>
-                <h2 className="text-2xl md:text-3xl font-black text-white mt-1">Target Competencies & Speech Acts</h2>
-              </div>
-              <span className="text-xs text-slate-400 font-mono">Slide 2 of {totalSlides}</span>
+          <div className="w-full h-full p-8 md:p-12 flex flex-col justify-between bg-slate-900 text-white relative">
+            <div className="border-b border-slate-800 pb-4">
+              <span className="text-xs font-mono font-bold tracking-widest text-indigo-400 uppercase">
+                Pedagogical Objectives
+              </span>
+              <h2 className="text-2xl md:text-3xl font-black text-white mt-1">
+                Target Workplace Communication Goals
+              </h2>
             </div>
 
-            <div className="my-auto py-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-              {lesson.situation?.objectives?.map((obj, i) => (
-                <div key={i} className="p-4 bg-slate-800/80 rounded-xl border border-slate-700/60 flex items-start gap-3">
-                  <div className="w-7 h-7 rounded-lg bg-teal-500/20 text-teal-400 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
-                    {i + 1}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-auto py-4">
+              {(lesson.situation?.objectives || [
+                'Master standard corporate call openings and branding.',
+                'Acknowledge client concern with authentic empathy.',
+                'Inquire with softened modal constructions.',
+                'Execute professional CRM ticket logging.'
+              ]).map((obj, i) => (
+                <div key={i} className="p-4 bg-slate-800/80 rounded-xl border border-slate-700 flex items-start gap-3">
+                  <div className="w-7 h-7 rounded-lg bg-indigo-600/30 text-indigo-400 font-bold flex items-center justify-center shrink-0 border border-indigo-500/40 text-xs">
+                    0{i + 1}
                   </div>
-                  <p className="text-sm font-medium text-slate-200 leading-snug">{obj}</p>
+                  <p className="text-sm text-slate-200 font-medium leading-relaxed">{obj}</p>
                 </div>
               ))}
             </div>
 
-            <div className="p-3 bg-blue-950/60 border border-blue-800/50 rounded-xl text-xs text-blue-200 flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-amber-300 shrink-0" />
-              <span>Assessment Alignment: Each objective corresponds directly to the 25-point analytic speaking rubric.</span>
+            <div className="flex justify-between items-end border-t border-slate-800 pt-4 text-xs text-slate-400">
+              <span>Workplace Standard: Level-1 Technical Service Desk</span>
+              <span className="font-mono text-indigo-400">Slide 2: Objectives</span>
             </div>
           </div>
         );
 
       case 2:
-        // SLIDE 3: Language Focus & Grammatical Patterns
+        // SLIDE 3: Key Linguistic Features & Speech Acts
         return (
-          <div className="w-full h-full p-8 md:p-12 flex flex-col justify-between bg-slate-900 text-white">
-            <div className="flex justify-between items-start border-b border-slate-800 pb-4">
-              <div>
-                <span className="text-xs font-mono font-bold text-amber-400 uppercase">Language Functions & Formulae</span>
-                <h2 className="text-2xl md:text-3xl font-black text-white mt-1">{lesson.learn?.languageFocus?.title || 'Speech Acts'}</h2>
-              </div>
-              <span className="text-xs text-slate-400 font-mono">Slide 3 of {totalSlides}</span>
+          <div className="w-full h-full p-8 md:p-12 flex flex-col justify-between bg-slate-950 text-white relative">
+            <div className="border-b border-slate-800 pb-4">
+              <span className="text-xs font-mono font-bold tracking-widest text-amber-400 uppercase">
+                Language Focus & Speech Acts
+              </span>
+              <h2 className="text-2xl md:text-3xl font-black text-white mt-1">
+                {lesson.learn?.languageFocus?.title || 'Key Linguistic Structures'}
+              </h2>
             </div>
 
             <div className="my-auto py-4 space-y-4">
-              <p className="text-sm text-slate-300 font-medium">
-                {lesson.learn?.languageFocus?.explanation || 'Direct grammatical structures for technical support communication.'}
-              </p>
+              <div className="p-4 bg-slate-900 rounded-xl border border-slate-800 text-sm text-slate-300 leading-relaxed">
+                {lesson.learn?.languageFocus?.explanation || 'Direct imperatives sound aggressive in customer service. Use polite modals (could, would, may) to soften requests and maintain a supportive tone.'}
+              </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-4 bg-rose-950/40 rounded-xl border border-rose-800/40 space-y-2">
-                  <p className="text-xs font-bold text-rose-400 uppercase tracking-wider flex items-center gap-1.5">
-                    <span>x</span> Avoid / Ineffective Phrasing:
-                  </p>
-                  <ul className="text-xs text-rose-200 space-y-1.5 pl-2">
-                    {lesson.learn?.languageFocus?.badExamples?.slice(0, 3).map((ex, i) => (
-                      <li key={i} className="italic">{ex}</li>
-                    ))}
-                  </ul>
+                <div className="p-4 bg-rose-950/30 rounded-xl border border-rose-900/50 space-y-2">
+                  <span className="text-xs font-bold text-rose-400 uppercase tracking-wider block">
+                    Avoid (Blunt / Directive)
+                  </span>
+                  {(lesson.learn?.languageFocus?.badExamples || [
+                    '"Give me your account number."',
+                    '"What is your problem?"'
+                  ]).slice(0, 3).map((ex, i) => (
+                    <p key={i} className="text-xs text-slate-300 font-mono">{ex}</p>
+                  ))}
                 </div>
 
-                <div className="p-4 bg-emerald-950/40 rounded-xl border border-emerald-800/40 space-y-2">
-                  <p className="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
-                    <span>✓</span> Professional Workplace Standard:
-                  </p>
-                  <ul className="text-xs text-emerald-200 space-y-1.5 pl-2">
-                    {lesson.learn?.languageFocus?.goodExamples?.slice(0, 3).map((ex, i) => (
-                      <li key={i} className="font-semibold">{ex}</li>
-                    ))}
-                  </ul>
+                <div className="p-4 bg-teal-950/30 rounded-xl border border-teal-900/50 space-y-2">
+                  <span className="text-xs font-bold text-teal-400 uppercase tracking-wider block">
+                    Recommended (EOP Standard)
+                  </span>
+                  {(lesson.learn?.cards?.[0]?.examples || [
+                    '"May I please have your account reference?"',
+                    '"Could you tell me what error code appears?"'
+                  ]).slice(0, 3).map((ex, i) => (
+                    <p key={i} className="text-xs text-slate-200 font-mono font-medium">{ex}</p>
+                  ))}
                 </div>
               </div>
             </div>
 
-            <div className="text-[11px] text-slate-400 font-mono">
-              Key Grammar Act: Modal softening, imperatives, polite conditionals, problem triage.
+            <div className="flex justify-between items-end border-t border-slate-800 pt-4 text-xs text-slate-400">
+              <span>Linguistic Function: Modal Softening & Courtesy Markers</span>
+              <span className="font-mono text-amber-400">Slide 3: Speech Acts</span>
             </div>
           </div>
         );
 
       case 3:
-        // SLIDE 4: Model Workplace Dialogue
+        // SLIDE 4: Authentic Dialogue Simulation
         return (
-          <div className="w-full h-full p-8 md:p-12 flex flex-col justify-between bg-slate-900 text-white">
-            <div className="flex justify-between items-start border-b border-slate-800 pb-4">
+          <div className="w-full h-full p-8 md:p-12 flex flex-col justify-between bg-slate-900 text-white relative">
+            <div className="border-b border-slate-800 pb-4 flex justify-between items-center">
               <div>
-                <span className="text-xs font-mono font-bold text-blue-400 uppercase">Authentic Case Model</span>
-                <h2 className="text-2xl md:text-3xl font-black text-white mt-1">{lesson.learn?.modelDialogue?.title || 'Agent-Client Model Interaction'}</h2>
+                <span className="text-xs font-mono font-bold tracking-widest text-teal-400 uppercase">
+                  Model Dialogue
+                </span>
+                <h2 className="text-2xl md:text-3xl font-black text-white mt-1">
+                  Customer & Agent Interaction
+                </h2>
               </div>
-              <span className="text-xs text-slate-400 font-mono">Slide 4 of {totalSlides}</span>
+              <span className="text-xs font-mono text-slate-400 bg-slate-800 px-3 py-1 rounded-lg">
+                Concentrix Benchmark
+              </span>
             </div>
 
-            <div className="my-auto py-3 space-y-2.5 overflow-y-auto max-h-[300px] pr-2">
-              {lesson.learn?.modelDialogue?.lines?.slice(0, 4).map((line, idx) => (
-                <div 
-                  key={idx} 
-                  className={`p-3 rounded-xl border text-xs leading-relaxed ${
-                    line.speaker.startsWith('Agent') 
-                      ? 'bg-blue-950/60 border-blue-700/60 ml-6' 
-                      : 'bg-slate-800/70 border-slate-700/70 mr-6'
-                  }`}
-                >
-                  <div className="flex justify-between items-center mb-1">
-                    <span className={`font-bold ${line.speaker.startsWith('Agent') ? 'text-blue-300' : 'text-slate-300'}`}>
-                      {line.speaker}
-                    </span>
-                    {line.purpose && (
-                      <span className="text-[10px] bg-slate-900 px-2 py-0.5 rounded text-amber-300 font-mono">
-                        {line.purpose}
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-slate-200">{line.text}</p>
-                </div>
-              ))}
+            <div className="my-auto py-4 space-y-3 max-w-3xl mx-auto w-full">
+              <div className="p-3.5 bg-slate-800 rounded-xl border border-slate-700 flex items-start gap-3">
+                <span className="px-2 py-0.5 rounded bg-blue-600/40 text-blue-300 font-bold text-xs uppercase shrink-0 mt-0.5">
+                  Caller
+                </span>
+                <p className="text-xs md:text-sm text-slate-200 leading-relaxed font-medium">
+                  &ldquo;Hello? I'm trying to process an urgent vendor invoice, but the portal keeps giving me Error 504 and logging me out!&rdquo;
+                </p>
+              </div>
+
+              <div className="p-3.5 bg-teal-950/40 rounded-xl border border-teal-800/50 flex items-start gap-3">
+                <span className="px-2 py-0.5 rounded bg-teal-600 text-white font-bold text-xs uppercase shrink-0 mt-0.5">
+                  Agent
+                </span>
+                <p className="text-xs md:text-sm text-teal-100 leading-relaxed font-medium">
+                  &ldquo;Good morning! Thank you for calling Technical Support. My name is Nadia. I am sorry to hear that your invoice portal is logging you out. I would be glad to help you investigate that right away.&rdquo;
+                </p>
+              </div>
             </div>
 
-            <div className="p-3 bg-slate-800/80 rounded-xl border border-slate-700 text-xs text-slate-300">
-              Notice: The agent maintains professional composure, clarifies symptoms, and verifies user permission before executing SOP instructions.
+            <div className="flex justify-between items-end border-t border-slate-800 pt-4 text-xs text-slate-400">
+              <span>Discourse Analysis: Salutation &rarr; Identity &rarr; Empathy &rarr; Offer of Assistance</span>
+              <span className="font-mono text-teal-400">Slide 4: Dialogue</span>
             </div>
           </div>
         );
 
       case 4:
-        // SLIDE 5: Speaking Task & Performance Rubric
+        // SLIDE 5: Speaking Challenge & Rubric
         return (
-          <div className="w-full h-full p-8 md:p-12 flex flex-col justify-between bg-slate-900 text-white">
-            <div className="flex justify-between items-start border-b border-slate-800 pb-4">
-              <div>
-                <span className="text-xs font-mono font-bold text-teal-400 uppercase">Spoken Simulation & Assessment</span>
-                <h2 className="text-2xl md:text-3xl font-black text-white mt-1">Helpdesk Ticket Practice & Criteria</h2>
-              </div>
-              <span className="text-xs text-slate-400 font-mono">Slide 5 of {totalSlides}</span>
+          <div className="w-full h-full p-8 md:p-12 flex flex-col justify-between bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-950 text-white relative">
+            <div className="border-b border-slate-800 pb-4">
+              <span className="text-xs font-mono font-bold tracking-widest text-purple-400 uppercase">
+                Formative Speaking Challenge
+              </span>
+              <h2 className="text-2xl md:text-3xl font-black text-white mt-1">
+                25-Point Assessment Criteria
+              </h2>
             </div>
 
-            <div className="my-auto py-4 grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div className="p-4 bg-slate-800 rounded-xl border border-slate-700 space-y-2">
-                <span className="text-xs font-bold text-blue-400 uppercase">Task Requirement:</span>
-                <h4 className="text-sm font-bold text-white">{lesson.speaking?.scenario || 'Handle the incoming customer enquiry'}</h4>
-                <p className="text-xs text-slate-300 leading-relaxed">
-                  Listen to the client's voice message, inspect the CRM ticket details, and record your single-take spoken response.
-                </p>
-              </div>
-
-              <div className="p-4 bg-slate-800 rounded-xl border border-slate-700 space-y-2">
-                <span className="text-xs font-bold text-teal-400 uppercase">25-Point Evaluation Rubric:</span>
-                <ul className="text-xs text-slate-300 space-y-1 list-disc pl-4">
-                  <li>Task Achievement (5 pts)</li>
-                  <li>Interactive Communication (5 pts)</li>
-                  <li>Technical Vocabulary (5 pts)</li>
-                  <li>Grammar & Accuracy (5 pts)</li>
-                  <li>Pronunciation & Fluency (5 pts)</li>
-                </ul>
-              </div>
+            <div className="my-auto py-4 grid grid-cols-2 sm:grid-cols-5 gap-3">
+              {[
+                { title: '1. Task Achievement', desc: 'Addresses customer issue completely' },
+                { title: '2. Interactive Comm', desc: 'Maintains conversational turn-taking' },
+                { title: '3. Vocabulary', desc: 'Technical support & courtesy lexicon' },
+                { title: '4. Grammar', desc: 'Indirect question word order & modals' },
+                { title: '5. Pronunciation', desc: 'Fluency, intelligibility, 100–120 wpm' }
+              ].map((crit, idx) => (
+                <div key={idx} className="p-3 bg-slate-800/90 rounded-xl border border-slate-700 flex flex-col justify-between">
+                  <div>
+                    <span className="text-[10px] font-mono font-bold text-purple-400 block mb-1">
+                      Max 5 Pts
+                    </span>
+                    <h3 className="font-bold text-xs text-white leading-snug">{crit.title}</h3>
+                  </div>
+                  <p className="text-[10px] text-slate-400 mt-2 leading-relaxed">{crit.desc}</p>
+                </div>
+              ))}
             </div>
 
-            <div className="p-3 bg-teal-950/60 border border-teal-800/60 rounded-xl text-xs text-teal-200 flex items-center justify-between">
-              <span>Ready to practice? Advance to Section 3 (Learn & Practice) to master these target patterns!</span>
+            <div className="flex justify-between items-end border-t border-slate-800 pt-4 text-xs text-slate-400">
+              <span>Thesis Research Instrument: 5 Criteria &times; 5 Bands = 25 Pts Total</span>
+              <span className="font-mono text-purple-400">Slide 5: Rubric</span>
             </div>
           </div>
         );
@@ -283,49 +302,75 @@ export default function LessonSlideViewer({ lessonId = 1 }) {
     }
   };
 
+  const isGoogleMode = slideMode === 'google' && Boolean(lesson.googleSlidesEmbedUrl);
+
   return (
-    <div className="space-y-4 animate-fade-in" ref={containerRef}>
-      {/* Slide Presentation Canvas (16:9 Aspect Ratio) */}
-      <div className="w-full aspect-[16/9] max-h-[560px] bg-slate-950 rounded-2xl overflow-hidden shadow-2xl border border-slate-800 relative group">
-        {renderSlideContent()}
+    <div className="space-y-4">
+      {/* 16:9 Presentation Canvas Container */}
+      <div 
+        ref={containerRef}
+        className="relative w-full aspect-video bg-slate-950 rounded-2xl overflow-hidden shadow-2xl border border-slate-800 group"
+      >
+        {isGoogleMode ? (
+          <div className="relative w-full h-full bg-slate-950 flex flex-col items-center justify-center">
+            <iframe
+              src={lesson.googleSlidesEmbedUrl}
+              title={`Lesson ${lessonId} Google Slides Deck`}
+              className="w-full h-full border-0"
+              allowFullScreen={true}
+              mozallowfullscreen="true"
+              webkitallowfullscreen="true"
+            />
+          </div>
+        ) : (
+          renderSlideContent()
+        )}
 
-        {/* Slide Navigation Overlay Controls */}
-        <div className="absolute inset-0 pointer-events-none flex items-center justify-between p-4 opacity-0 group-hover:opacity-100 transition-opacity">
-          <button
-            onClick={prevSlide}
-            disabled={currentSlide === 0}
-            className="pointer-events-auto w-11 h-11 rounded-full bg-slate-900/80 hover:bg-slate-900 text-white backdrop-blur-sm flex items-center justify-center transition-all disabled:opacity-30 disabled:cursor-not-allowed shadow-lg border border-slate-700"
-            title="Previous Slide (Left Arrow)"
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </button>
+        {/* Local Slide Navigation Overlay Controls (Only in Local Mode) */}
+        {!isGoogleMode && (
+          <div className="absolute inset-0 pointer-events-none flex items-center justify-between p-4 opacity-0 group-hover:opacity-100 transition-opacity">
+            <button
+              onClick={prevSlide}
+              disabled={currentSlide === 0}
+              className="pointer-events-auto w-11 h-11 rounded-full bg-slate-900/80 hover:bg-slate-900 text-white backdrop-blur-sm flex items-center justify-center transition-all disabled:opacity-30 disabled:cursor-not-allowed shadow-lg border border-slate-700"
+              title="Previous Slide (Left Arrow)"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
 
-          <button
-            onClick={nextSlide}
-            disabled={currentSlide === totalSlides - 1}
-            className="pointer-events-auto w-11 h-11 rounded-full bg-slate-900/80 hover:bg-slate-900 text-white backdrop-blur-sm flex items-center justify-center transition-all disabled:opacity-30 disabled:cursor-not-allowed shadow-lg border border-slate-700"
-            title="Next Slide (Right Arrow)"
-          >
-            <ChevronRight className="w-6 h-6" />
-          </button>
-        </div>
+            <button
+              onClick={nextSlide}
+              disabled={currentSlide === totalSlides - 1}
+              className="pointer-events-auto w-11 h-11 rounded-full bg-slate-900/80 hover:bg-slate-900 text-white backdrop-blur-sm flex items-center justify-center transition-all disabled:opacity-30 disabled:cursor-not-allowed shadow-lg border border-slate-700"
+              title="Next Slide (Right Arrow)"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+          </div>
+        )}
 
         {/* Top-Right Canvas Bar (Fullscreen & Slide Indicator) */}
         <div className="absolute top-4 right-4 flex items-center gap-2 z-20">
-          <span className="px-2.5 py-1 bg-slate-950/70 backdrop-blur-sm text-white text-xs font-mono font-bold rounded-lg border border-slate-700/80">
-            {currentSlide + 1} / {totalSlides}
-          </span>
+          {isGoogleMode ? (
+            <span className="px-2.5 py-1 bg-indigo-950/80 backdrop-blur-sm text-indigo-300 text-xs font-bold rounded-lg border border-indigo-700/80 flex items-center gap-1 shadow">
+              <Sparkles className="w-3.5 h-3.5" /> Google Slides Live
+            </span>
+          ) : (
+            <span className="px-2.5 py-1 bg-slate-950/70 backdrop-blur-sm text-white text-xs font-mono font-bold rounded-lg border border-slate-700/80">
+              {currentSlide + 1} / {totalSlides}
+            </span>
+          )}
           <button
             onClick={toggleFullscreen}
-            className="p-1.5 bg-slate-950/70 hover:bg-slate-900 backdrop-blur-sm text-white rounded-lg border border-slate-700/80 transition-colors"
+            className="p-1.5 bg-slate-950/70 hover:bg-slate-900 backdrop-blur-sm text-white rounded-lg border border-slate-700/80 transition-colors shadow"
             title={isFullscreen ? "Exit Fullscreen" : "Fullscreen Presentation"}
           >
             {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
           </button>
         </div>
 
-        {/* Bottom Notice Bar when using Placeholder Template */}
-        {imageError[`${lessonId}_${currentSlide}`] && (
+        {/* Bottom Notice Bar when using Placeholder Template in Local Mode */}
+        {!isGoogleMode && imageError[`${lessonId}_${currentSlide}`] && (
           <div className="absolute bottom-3 left-4 right-4 bg-slate-950/80 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-slate-800 text-[10px] text-slate-400 flex items-center justify-between pointer-events-none">
             <span className="flex items-center gap-1.5 text-teal-400 font-medium">
               <FolderOpen className="w-3.5 h-3.5" /> Slide Template Active: Drop custom slide images into <code>client/public/slides/lesson{lessonId}/slide_{currentSlide + 1}.png</code>
@@ -335,47 +380,103 @@ export default function LessonSlideViewer({ lessonId = 1 }) {
         )}
       </div>
 
-      {/* Control & Thumbnail Bar */}
-      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between items-center gap-3">
-        {/* Slide Selector Chips */}
-        <div className="flex items-center gap-1.5">
-          <span className="text-xs font-bold text-slate-500 mr-2 uppercase tracking-wider">Slide:</span>
-          {[0, 1, 2, 3, 4].map(idx => (
+      {/* Control Toolbar */}
+      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-center gap-3">
+        {/* Source Mode Switcher (If Google Slides link exists) */}
+        {lesson.googleSlidesEmbedUrl ? (
+          <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl">
             <button
-              key={idx}
-              onClick={() => setCurrentSlide(idx)}
-              className={`w-8 h-8 rounded-lg text-xs font-bold transition-all ${
-                currentSlide === idx 
-                  ? 'bg-blue-600 text-white shadow-sm scale-105' 
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              onClick={() => setSlideMode('google')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 ${
+                slideMode === 'google' 
+                  ? 'bg-indigo-600 text-white shadow-sm' 
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              {idx + 1}
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Google Slides (Live)</span>
             </button>
-          ))}
-        </div>
+            <button
+              onClick={() => setSlideMode('local')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 ${
+                slideMode === 'local' 
+                  ? 'bg-indigo-600 text-white shadow-sm' 
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <BookOpen className="w-3.5 h-3.5" />
+              <span>Structured Deck</span>
+            </button>
+          </div>
+        ) : (
+          /* Slide Selector Chips in Local Mode */
+          <div className="flex items-center gap-1.5">
+            <span className="text-xs font-bold text-slate-500 mr-2 uppercase tracking-wider">Slide:</span>
+            {[0, 1, 2, 3, 4].map(idx => (
+              <button
+                key={idx}
+                onClick={() => setCurrentSlide(idx)}
+                className={`w-8 h-8 rounded-lg text-xs font-bold transition-all ${
+                  currentSlide === idx 
+                    ? 'bg-blue-600 text-white shadow-sm scale-105' 
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                }`}
+              >
+                {idx + 1}
+              </button>
+            ))}
+          </div>
+        )}
 
-        {/* Slide Titles Summary */}
-        <div className="text-xs font-bold text-slate-700 truncate max-w-xs text-center">
-          {currentSlide === 0 && '1. Overview & Workplace Setting'}
-          {currentSlide === 1 && '2. Competencies & Objectives'}
-          {currentSlide === 2 && '3. Language Functions & Rules'}
-          {currentSlide === 3 && '4. Model Dialogue Interaction'}
-          {currentSlide === 4 && '5. Spoken Task & Rubric'}
-        </div>
+        {/* Local Mode Slide Stepper (when in local mode with Google Slides available) */}
+        {slideMode === 'local' && lesson.googleSlidesEmbedUrl && (
+          <div className="flex items-center gap-1.5">
+            <span className="text-xs font-bold text-slate-500 mr-1 uppercase tracking-wider">Slide:</span>
+            {[0, 1, 2, 3, 4].map(idx => (
+              <button
+                key={idx}
+                onClick={() => setCurrentSlide(idx)}
+                className={`w-7 h-7 rounded-lg text-xs font-bold transition-all ${
+                  currentSlide === idx 
+                    ? 'bg-indigo-600 text-white shadow-sm scale-105' 
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                }`}
+              >
+                {idx + 1}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Center Summary Label */}
+        {slideMode === 'local' ? (
+          <div className="text-xs font-bold text-slate-700 truncate max-w-xs text-center">
+            {currentSlide === 0 && '1. Overview & Workplace Setting'}
+            {currentSlide === 1 && '2. Competencies & Objectives'}
+            {currentSlide === 2 && '3. Language Functions & Rules'}
+            {currentSlide === 3 && '4. Model Dialogue Interaction'}
+            {currentSlide === 4 && '5. Spoken Task & Rubric'}
+          </div>
+        ) : (
+          <div className="text-xs text-slate-500 font-medium text-center">
+            Embedded Google Slides presentation for Lesson {lessonId}
+          </div>
+        )}
 
         {/* Action Buttons */}
         <div className="flex items-center gap-2">
-          <a
-            href={`/slides/lesson${lessonId}/slides.pdf`}
-            download
-            target="_blank"
-            rel="noreferrer"
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-lg border border-slate-200 transition-colors"
-            title="Download Slide Deck PDF if provided"
-          >
-            <Download className="w-3.5 h-3.5" /> PDF Slides
-          </a>
+          {lesson.googleSlidesUrl && (
+            <a
+              href={lesson.googleSlidesUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-800 text-xs font-bold rounded-lg border border-amber-200 transition-colors"
+              title="Open presentation in Google Slides"
+            >
+              <ExternalLink className="w-3.5 h-3.5 text-amber-600" />
+              <span>Open in Google Slides</span>
+            </a>
+          )}
           <button
             onClick={toggleFullscreen}
             className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-lg shadow-sm transition-colors"
@@ -384,6 +485,16 @@ export default function LessonSlideViewer({ lessonId = 1 }) {
           </button>
         </div>
       </div>
+
+      {/* Helpful Hint for Google Slides Sharing */}
+      {isGoogleMode && (
+        <div className="p-3 bg-blue-50/70 border border-blue-200 rounded-xl text-xs text-blue-900 flex items-start gap-2 leading-relaxed">
+          <Sparkles className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+          <div>
+            <span className="font-bold">Google Slides Integration:</span> The presentation is embedded directly from Google Docs. If the viewer displays a Google Sign-in prompt, ensure in your Google Slides presentation: Click <strong>Share</strong> &rarr; change General Access to <strong>&ldquo;Anyone with the link&rdquo; (Viewer)</strong>.
+          </div>
+        </div>
+      )}
     </div>
   );
 }
