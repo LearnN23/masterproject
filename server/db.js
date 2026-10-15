@@ -306,13 +306,22 @@ const DAL = {
   updateUser(id, fields = {}) {
     const user = this.getUserById(id);
     if (!user) return null;
-    const name = fields.name !== undefined ? fields.name : user.name;
-    const role = fields.role !== undefined ? fields.role : user.role;
-    const cohort = fields.cohort_group !== undefined ? fields.cohort_group : user.cohort_group;
-    const code = fields.participant_code !== undefined ? fields.participant_code : user.participant_code;
-    db.prepare(`
-      UPDATE users SET name = ?, role = ?, cohort_group = ?, participant_code = ? WHERE id = ?
-    `).run(name, role, cohort, code, id);
+    const name = fields.name !== undefined ? fields.name.trim() : user.name;
+    const username = fields.username !== undefined ? fields.username.trim() : user.username;
+    const role = fields.role !== undefined ? fields.role.trim() : user.role;
+    const cohort = fields.cohort_group !== undefined ? fields.cohort_group.trim() : user.cohort_group;
+    const code = fields.participant_code !== undefined ? fields.participant_code.trim() : user.participant_code;
+    const password = fields.password || fields.password_hash;
+
+    if (password && password.trim()) {
+      db.prepare(`
+        UPDATE users SET name = ?, username = ?, role = ?, cohort_group = ?, participant_code = ?, password_hash = ? WHERE id = ?
+      `).run(name, username, role, cohort, code, password.trim(), id);
+    } else {
+      db.prepare(`
+        UPDATE users SET name = ?, username = ?, role = ?, cohort_group = ?, participant_code = ? WHERE id = ?
+      `).run(name, username, role, cohort, code, id);
+    }
     return this.getUserById(id);
   },
 
