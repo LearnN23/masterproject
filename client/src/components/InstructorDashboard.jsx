@@ -7,10 +7,9 @@ import {
   MessageSquare, Volume2, RotateCcw, AlertCircle
 } from 'lucide-react';
 import { RUBRIC_CRITERIA_25, getCefrRating, ASSESSMENTS_DATA } from '../data/assessmentsData';
-import ScoreCalibrationStudio from './ScoreCalibrationStudio';
 
 export default function InstructorDashboard({ currentUser, navigateTo }) {
-  const [activeTab, setActiveTab] = useState('queue'); // 'queue', 'students', 'calibration'
+  const [activeTab, setActiveTab] = useState('queue'); // 'queue', 'students'
   const [submissions, setSubmissions] = useState([]);
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -217,16 +216,6 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
   const taskUrls = selectedSub?.task_audio_urls || {};
   const activeAudioUrl = taskUrls[selectedTaskNumber] || (selectedTaskNumber === 1 ? selectedSub?.audio_url : null) || selectedSub?.audio_url || selectedSub?.audio_blob_path;
 
-  // Calibration discrepancies (>20% difference between instructor and rater on 25-pt scale, i.e., >= 5 points)
-  const calibrationDiscrepancies = submissions.filter(s => {
-    const instTotal = s.grades?.instructor?.total_score;
-    const raterTotal = s.grades?.rater?.total_score || s.grades?.rater1?.total_score;
-    if (instTotal !== undefined && raterTotal !== undefined) {
-      return Math.abs(instTotal - raterTotal) >= 5;
-    }
-    return false;
-  });
-
   return (
     <div className="space-y-8 animate-fade-in pb-16">
       {/* Header Banner */}
@@ -243,16 +232,6 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
             <p className="text-slate-300 text-sm mt-1 max-w-2xl font-medium">
               Grade spoken responses with the 25-point analytic rubric. Your evaluations are the authoritative scores delivered to student dashboards.
             </p>
-          </div>
-          <div className="flex items-center gap-3">
-            <a 
-              href="/api/export/spss" 
-              target="_blank" 
-              rel="noreferrer"
-              className="flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-bold shadow-md transition-all"
-            >
-              <Download className="w-4 h-4" /> Export SPSS (.csv)
-            </a>
           </div>
         </div>
 
@@ -278,19 +257,6 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
             }`}
           >
             <Users className="w-4 h-4" /> Student Roster & Progress
-          </button>
-          <button
-            onClick={() => setActiveTab('calibration')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
-              activeTab === 'calibration' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-400 hover:text-white hover:bg-slate-800'
-            }`}
-          >
-            <Award className="w-4 h-4" /> Inter-Rater Calibration Matrix
-            {calibrationDiscrepancies.length > 0 && (
-              <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-rose-500 text-white font-black">
-                {calibrationDiscrepancies.length} Alert
-              </span>
-            )}
           </button>
         </div>
       </div>
@@ -325,18 +291,12 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
         </div>
 
         <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-          <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Calibration Alerts</p>
+          <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Formal Tests</p>
           <div className="flex justify-between items-end mt-2">
-            <p className={`text-3xl font-black ${calibrationDiscrepancies.length > 0 ? 'text-rose-600' : 'text-slate-800'}`}>
-              {calibrationDiscrepancies.length}
-            </p>
-            <span className={`text-xs font-bold px-2 py-0.5 rounded-md ${
-              calibrationDiscrepancies.length > 0 ? 'bg-rose-50 text-rose-700' : 'bg-slate-100 text-slate-600'
-            }`}>
-              {calibrationDiscrepancies.length > 0 ? '>20% Diff' : 'Aligned'}
-            </span>
+            <p className="text-3xl font-black text-slate-800">{preTestCount + postTestCount}</p>
+            <span className="text-xs font-bold bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-md">Pre & Post</span>
           </div>
-          <p className="text-xs text-slate-400 mt-2">Instructor vs Rater discrepancy</p>
+          <p className="text-xs text-slate-400 mt-2">Diagnostic & outcome evaluations</p>
         </div>
       </div>
 
@@ -409,11 +369,8 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
                 filteredSubmissions.map(sub => {
                   const isSelected = selectedSub?.id === sub.id;
                   const instScore = sub.grades?.instructor;
-                  const raterScore = sub.grades?.rater || sub.grades?.rater1;
                   const instTotal = instScore ? (instScore.total_score ?? instScore.total) : null;
                   const instPct = instScore ? (instScore.total_percentage ?? instScore.percentage) : null;
-                  const raterTotal = raterScore ? (raterScore.total_score ?? raterScore.total) : null;
-                  const hasDiscrepancy = instTotal !== null && raterTotal !== null && Math.abs(instTotal - raterTotal) >= 5;
                   const isPre = sub.assessment_type === 'pre_test' || sub.unit_id === 'section_0';
                   const isPost = sub.assessment_type === 'post_test' || sub.unit_id === 'section_9';
                   const taskCount = sub.self_assessment?.completedTasks || (sub.task_audio_urls ? Object.keys(sub.task_audio_urls).length : null);
@@ -476,18 +433,6 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
                             <Clock className="w-2.5 h-2.5" /> Needs Review
                           </span>
                         )}
-
-                        {raterTotal !== null && (
-                          <span className="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-slate-100 text-slate-600">
-                            Rater: {raterTotal}/25
-                          </span>
-                        )}
-
-                        {hasDiscrepancy && (
-                          <span className="px-1.5 py-0.5 rounded text-[9px] font-black bg-rose-100 text-rose-700 border border-rose-200" title="Discrepancy >= 20% on 25-pt scale">
-                            ! 20% Diff
-                          </span>
-                        )}
                       </div>
                     </div>
                   );
@@ -524,8 +469,8 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
                     <p className="text-3xl font-black text-indigo-600">
                       {totalScore} <span className="text-sm font-medium text-slate-400">/ 25</span>
                     </p>
-                    <span className="text-[11px] font-bold text-teal-700 bg-teal-50 px-2 py-0.5 rounded border border-teal-200">
-                      CEFR: {cefr?.cefr || 'A2'} ({percentage}%)
+                    <span className={`text-[11px] font-bold px-2 py-0.5 rounded border inline-block mt-1 ${cefr?.badgeClass || 'bg-teal-50 text-teal-700 border-teal-200'}`} title={cefr?.description}>
+                      {cefr?.level} ({totalScore}/25) • {cefr?.cefr}
                     </span>
                   </div>
                 </div>
@@ -703,7 +648,7 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
                         <div className="flex justify-between items-start">
                           <div>
                             <p className="font-bold text-slate-900 text-xs">
-                              {idx + 1}. {crit.label}
+                              {crit.label}
                             </p>
                             <p className="text-[11px] text-slate-500 font-medium">{crit.description}</p>
                           </div>
@@ -900,15 +845,6 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
             </table>
           </div>
         </div>
-      )}
-
-      {/* TAB 3: INTER-RATER CALIBRATION STUDIO */}
-      {activeTab === 'calibration' && (
-        <ScoreCalibrationStudio
-          currentUser={currentUser}
-          submissions={submissions}
-          onRefresh={fetchDashboardData}
-        />
       )}
     </div>
   );

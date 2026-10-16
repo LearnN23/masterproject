@@ -68,6 +68,26 @@ export default function AssessmentView({ type, navigateTo, studentState, updateS
     };
   }, []);
 
+  // Auto-sync postTestStarted when entering Post-test if not already recorded
+  useEffect(() => {
+    if (!isPreTest && !isAlreadyCompleted && !studentState?.postTestStarted) {
+      updateStudentState('postTestStarted', true);
+      const userId = studentState?.userId || studentState?.id;
+      if (userId) {
+        fetch('/api/progress', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            userId,
+            unitId: 'section_9',
+            status: 'in_progress',
+            currentSubSection: 'task_1'
+          })
+        }).catch(err => console.warn(err));
+      }
+    }
+  }, [isPreTest, isAlreadyCompleted, studentState?.postTestStarted]);
+
   // --- TTS PROMPT PLAYBACK ---
   const playPromptAudio = () => {
     if (!('speechSynthesis' in window)) {
@@ -247,6 +267,7 @@ export default function AssessmentView({ type, navigateTo, studentState, updateS
       const url = taskRecordings[1]?.url || Object.values(taskRecordings)[0]?.url;
       if (url) updateStudentState('preTestAudioUrl', url);
     } else {
+      updateStudentState('postTestStarted', true);
       updateStudentState('postTestCompleted', true);
       const url = taskRecordings[1]?.url || Object.values(taskRecordings)[0]?.url;
       if (url) updateStudentState('postTestAudioUrl', url);
@@ -296,6 +317,15 @@ export default function AssessmentView({ type, navigateTo, studentState, updateS
             <span>Return to Dashboard</span>
             <ArrowRight className="w-4 h-4" />
           </button>
+          {!isPreTest && (
+            <button 
+              onClick={() => navigateTo('lesson', { lessonId: 1, mode: 'review', initialSection: 'situation' })}
+              className="px-8 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold shadow-md transition flex items-center gap-2"
+            >
+              <span>Review Lessons (Unlocked)</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          )}
           {isPreTest && (
             <button 
               onClick={() => navigateTo('lesson', { lessonId: 1 })}
@@ -315,6 +345,28 @@ export default function AssessmentView({ type, navigateTo, studentState, updateS
 
   return (
     <div className="max-w-4xl mx-auto space-y-6 animate-fade-in pb-16">
+      {/* CLOSED-BOOK PROTOCOL ACTIVE BANNER FOR POST-TEST */}
+      {!isPreTest && !isAlreadyCompleted && (
+        <div className="bg-amber-500/10 border-2 border-amber-500/30 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-amber-500/20 text-amber-700 rounded-xl shrink-0">
+              <ShieldAlert className="w-5 h-5 text-amber-600" />
+            </div>
+            <div>
+              <p className="text-sm font-black text-amber-950">
+                Closed-Book Research Assessment Protocol Active
+              </p>
+              <p className="text-xs text-amber-800 font-medium">
+                All 8 curriculum lessons and review slide decks are locked. Full review access will automatically be restored upon submission.
+              </p>
+            </div>
+          </div>
+          <span className="text-[10px] uppercase font-black bg-amber-200/80 text-amber-900 px-2.5 py-1 rounded-md border border-amber-300 whitespace-nowrap self-start sm:self-auto">
+            Exam Mode Active
+          </span>
+        </div>
+      )}
+
       {/* HEADER & CONSTRUCT BADGE */}
       <div className="border-b border-slate-200 pb-5">
         <div className="flex flex-wrap items-center justify-between gap-3 mb-2">

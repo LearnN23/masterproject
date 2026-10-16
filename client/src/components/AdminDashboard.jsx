@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Users, UserPlus, Trash2, ShieldCheck, Download, Search, 
   Filter, CheckCircle2, AlertTriangle, RefreshCw, Database,
   FileSpreadsheet, Server, Award, Sparkles, Check, X,
   GraduationCap, Mic, HardDrive, KeyRound, Info, Edit3,
-  Lock, Unlock, ChevronRight, Eye, CheckCircle
+  Lock, Unlock, ChevronRight, Eye, CheckCircle, ListChecks,
+  Scale, TrendingUp, BarChart3, Play, Pause, FileText, ArrowRight, Archive
 } from 'lucide-react';
+import ScoreCalibrationStudio from './ScoreCalibrationStudio';
+import DataExport from './DataExport';
 
 // ============================================================================
 // CANONICAL ROLES & COHORT ARCHITECTURE
@@ -260,13 +263,48 @@ const suggestDefaultPassword = (role) => {
   return 'Pass@2026#1';
 };
 
-export default function AdminDashboard({ currentUser }) {
+export default function AdminDashboard({ currentUser, initialTab = 'cohort', navigateTo }) {
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [users, setUsers] = useState([]);
+  const [cohortData, setCohortData] = useState([]);
+  const [submissions, setSubmissions] = useState([]);
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
+  
+  // User Roster Filter State
   const [searchQuery, setSearchQuery] = useState('');
   const [roleFilter, setRoleFilter] = useState('all');
   const [cohortFilter, setCohortFilter] = useState('all');
+
+  // Cohort Matrix Filter State
+  const [cohortSearch, setCohortSearch] = useState('');
+  const [cohortFilterGroup, setCohortFilterGroup] = useState('all');
+  const [cohortStatusFilter, setCohortStatusFilter] = useState('all');
+
+  // Audio Playback in Cohort Matrix
+  const [playingAudioUrl, setPlayingAudioUrl] = useState(null);
+  const audioPlayerRef = useRef(null);
+
+  useEffect(() => {
+    if (initialTab) {
+      setActiveTab(initialTab);
+    }
+  }, [initialTab]);
+
+  // Audio Handler
+  const handleToggleAudio = (url) => {
+    if (!url) return;
+    if (playingAudioUrl === url) {
+      audioPlayerRef.current?.pause();
+      setPlayingAudioUrl(null);
+    } else {
+      setPlayingAudioUrl(url);
+      if (audioPlayerRef.current) {
+        audioPlayerRef.current.src = url;
+        audioPlayerRef.current.play().catch(e => console.warn('Audio playback error:', e));
+      }
+    }
+  };
 
   // Add User Modal State
   const [showAddModal, setShowAddModal] = useState(false);
@@ -294,18 +332,24 @@ export default function AdminDashboard({ currentUser }) {
   const [feedbackMsg, setFeedbackMsg] = useState({ text: '', type: '' });
   const [deleteConfirmId, setDeleteConfirmId] = useState(null);
 
-  // Load Users & System Stats
+  // Load Users, System Stats, Cohort Progress, Submissions
   const fetchData = async () => {
     setLoading(true);
     try {
-      const [usersRes, statsRes] = await Promise.all([
+      const [usersRes, statsRes, cohortRes, subsRes] = await Promise.all([
         fetch('/api/users'),
-        fetch('/api/stats')
+        fetch('/api/stats'),
+        fetch('/api/cohort-overview'),
+        fetch('/api/submissions')
       ]);
       const usersData = await usersRes.json();
       const statsData = await statsRes.json();
+      const cohortOverview = await cohortRes.json();
+      const subsData = await subsRes.json();
       setUsers(usersData || []);
       setStats(statsData || null);
+      setCohortData(cohortOverview || []);
+      setSubmissions(subsData || []);
     } catch (err) {
       console.error('Failed to load admin data:', err);
       setFeedbackMsg({ text: 'Error loading admin data from server', type: 'error' });
@@ -508,21 +552,414 @@ export default function AdminDashboard({ currentUser }) {
 
   const activeRoleDef = ROLE_DEFINITIONS[newUser.role] || ROLE_DEFINITIONS.student;
 
+  // Cohort Metrics & Aggregations
+  const totalStudents = cohortData.length;
+  const consentedCount = cohortData.filter(s => s.hasConsent).length;
+  const preDualScoredCount = cohortData.filter(s => s.preTest?.isDualScored).length;
+  const postDualScoredCount = cohortData.filter(s => s.postTest?.isDualScored).length;
+  const lessonsCompletedCount = cohortData.filter(s => s.lessons?.allCompleted).length;
+  const totalDiscrepancies = cohortData.filter(s => s.preTest?.isDiscrepant || s.postTest?.isDiscrepant).length;
+
+  const filteredCohort = cohortData.filter(s => {
+    if (cohortSearch.trim()) {
+      const q = cohortSearch.toLowerCase();
+      const matchName = s.name?.toLowerCase().includes(q);
+      const matchCode = s.participant_code?.toLowerCase().includes(q);
+      const matchUser = s.username?.toLowerCase().includes(q);
+      if (!matchName && !matchCode && !matchUser) return false;
+    }
+    if (cohortFilterGroup !== 'all' && s.cohort_group !== cohortFilterGroup) {
+      return false;
+    }
+    if (cohortStatusFilter === 'needs_dual_grading') {
+      const preNeeds = s.preTest?.hasSubmission && !s.preTest?.isDualScored;
+      const postNeeds = s.postTest?.hasSubmission && !s.postTest?.isDualScored;
+      if (!preNeeds && !postNeeds) return false;
+    } else if (cohortStatusFilter === 'discrepancies') {
+      if (!s.preTest?.isDiscrepant && !s.postTest?.isDiscrepant) return false;
+    } else if (cohortStatusFilter === 'completed') {
+      if (!s.postTest?.isDualScored) return false;
+    }
+    return true;
+  });
+
+  const renderCohortTracker = () => (
+    <div className="space-y-6">
+      {/* Cohort Stats Overview */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+          <div className="flex justify-between items-start">
+            <div>
+              <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Research Participants</p>
+              <p className="text-3xl font-black text-slate-900 mt-2">{totalStudents}</p>
+            </div>
+            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+              <Users className="w-5 h-5" />
+            </div>
+          </div>
+          <p className="text-xs text-slate-500 mt-3 font-medium">
+            <span className="font-bold text-emerald-600">{consentedCount}</span> ethics consent signed
+          </p>
+        </div>
+
+        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+          <div className="flex justify-between items-start">
+            <div>
+              <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Pre-Test Dual Graded</p>
+              <p className="text-3xl font-black text-indigo-600 mt-2">{preDualScoredCount}</p>
+            </div>
+            <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold">
+              <Award className="w-5 h-5" />
+            </div>
+          </div>
+          <p className="text-xs text-slate-500 mt-3 font-medium">
+            Diagnostic Form A (Baseline)
+          </p>
+        </div>
+
+        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+          <div className="flex justify-between items-start">
+            <div>
+              <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Post-Test Dual Graded</p>
+              <p className="text-3xl font-black text-emerald-600 mt-2">{postDualScoredCount}</p>
+            </div>
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
+              <CheckCircle2 className="w-5 h-5" />
+            </div>
+          </div>
+          <p className="text-xs text-slate-500 mt-3 font-medium">
+            Outcome Form B (Post-Intervention)
+          </p>
+        </div>
+
+        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+          <div className="flex justify-between items-start">
+            <div>
+              <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Discrepancy Alerts</p>
+              <p className="text-3xl font-black text-rose-600 mt-2">{totalDiscrepancies}</p>
+            </div>
+            <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center font-bold">
+              <AlertTriangle className="w-5 h-5" />
+            </div>
+          </div>
+          <p className="text-xs text-slate-500 mt-3 font-medium">
+            Score Diff ≥ 5 pts (Calibration Needed)
+          </p>
+        </div>
+      </div>
+
+      {/* Cohort Progress & Dual Scoring Table Card */}
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        {/* Table Controls */}
+        <div className="p-6 border-b border-slate-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-slate-50/50">
+          <div>
+            <h2 className="text-lg font-black text-slate-900 flex items-center gap-2">
+              <ListChecks className="w-5 h-5 text-indigo-600" /> Master Cohort Pacing & Dual-Scoring Matrix ({filteredCohort.length})
+            </h2>
+            <p className="text-xs text-slate-500 font-medium mt-0.5">
+              Strict blind separation enforced: only Researcher/Admin sees side-by-side instructor & rater scores
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
+            <div className="relative flex-1 md:w-56">
+              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+              <input 
+                type="text"
+                placeholder="Search participant..."
+                value={cohortSearch}
+                onChange={(e) => setCohortSearch(e.target.value)}
+                className="w-full pl-9 pr-3 py-2 text-xs font-medium border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white"
+              />
+            </div>
+
+            <select
+              value={cohortFilterGroup}
+              onChange={(e) => setCohortFilterGroup(e.target.value)}
+              className="text-xs font-bold py-2 px-3 border border-slate-200 rounded-xl bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            >
+              <option value="all">All Cohort Groups</option>
+              <option value="Group_Main_Study">Main Study (Sequential)</option>
+              <option value="Group_Pilot">Pilot / QA (Bypass)</option>
+            </select>
+
+            <select
+              value={cohortStatusFilter}
+              onChange={(e) => setCohortStatusFilter(e.target.value)}
+              className="text-xs font-bold py-2 px-3 border border-slate-200 rounded-xl bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            >
+              <option value="all">All Statuses</option>
+              <option value="needs_dual_grading">Needs Dual Grading</option>
+              <option value="discrepancies">Discrepancy Alerts (≥5 pts)</option>
+              <option value="completed">Completed & Dual Scored</option>
+            </select>
+
+            <button
+              onClick={fetchData}
+              title="Refresh Cohort Data"
+              className="p-2 border border-slate-200 rounded-xl bg-white text-slate-600 hover:bg-slate-100 transition-colors"
+            >
+              <RefreshCw className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
+        {/* Table Body */}
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-xs">
+            <thead className="bg-slate-50 text-slate-500 uppercase text-[10px] font-black tracking-wider border-b border-slate-200">
+              <tr>
+                <th className="px-4 py-3.5">Participant</th>
+                <th className="px-3 py-3.5 text-center">Consent</th>
+                <th className="px-4 py-3.5">Pre-Test (Diagnostic Form A)</th>
+                <th className="px-4 py-3.5">Lessons 1–8 Progress</th>
+                <th className="px-4 py-3.5">Post-Test (Outcome Form B)</th>
+                <th className="px-3 py-3.5">Overall Stage</th>
+                <th className="px-3 py-3.5 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100 font-medium">
+              {filteredCohort.length === 0 ? (
+                <tr>
+                  <td colSpan="7" className="text-center py-12 text-slate-400">
+                    No participants match current filter criteria.
+                  </td>
+                </tr>
+              ) : (
+                filteredCohort.map((item) => (
+                  <tr key={item.id} className="hover:bg-slate-50/80 transition-colors">
+                    {/* Participant Info */}
+                    <td className="px-4 py-3.5">
+                      <div className="space-y-0.5">
+                        <div className="flex items-center gap-2">
+                          <span className="font-mono font-bold text-slate-900 bg-slate-100 px-1.5 py-0.5 rounded text-[11px]">
+                            {item.participant_code}
+                          </span>
+                          <span className="font-bold text-slate-800">{item.name}</span>
+                        </div>
+                        <div>
+                          {getCohortBadge(item.cohort_group)}
+                        </div>
+                      </div>
+                    </td>
+
+                    {/* Ethics Consent */}
+                    <td className="px-3 py-3.5 text-center">
+                      {item.hasConsent ? (
+                        <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                          <Check className="w-3 h-3 text-emerald-600" /> Signed
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
+                          Pending
+                        </span>
+                      )}
+                    </td>
+
+                    {/* Pre-Test (Form A) */}
+                    <td className="px-4 py-3.5">
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-1.5">
+                          {item.preTest.hasSubmission ? (
+                            <>
+                              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">
+                                Audio Ready
+                              </span>
+                              {item.preTest.audioUrl && (
+                                <button
+                                  type="button"
+                                  onClick={() => handleToggleAudio(item.preTest.audioUrl)}
+                                  className={`p-1 rounded-full text-xs transition ${
+                                    playingAudioUrl === item.preTest.audioUrl 
+                                      ? 'bg-rose-600 text-white animate-pulse' 
+                                      : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+                                  }`}
+                                  title="Play Pre-test Recording"
+                                >
+                                  {playingAudioUrl === item.preTest.audioUrl ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
+                                </button>
+                              )}
+                            </>
+                          ) : (
+                            <span className="text-[10px] text-slate-400 italic">No audio</span>
+                          )}
+                        </div>
+
+                        {item.preTest.hasSubmission && (
+                          <div className="text-[11px] space-y-0.5 font-mono">
+                            <div className="flex items-center justify-between gap-2">
+                              <span className="text-slate-500">Instructor:</span>
+                              <span className={item.preTest.instructorScore !== null ? "font-bold text-slate-900" : "text-amber-600 italic"}>
+                                {item.preTest.instructorScore !== null ? `${item.preTest.instructorScore}/25` : 'Pending'}
+                              </span>
+                            </div>
+                            <div className="flex items-center justify-between gap-2">
+                              <span className="text-slate-500">Rater:</span>
+                              <span className={item.preTest.raterScore !== null ? "font-bold text-teal-700" : "text-amber-600 italic"}>
+                                {item.preTest.raterScore !== null ? `${item.preTest.raterScore}/25` : 'Pending'}
+                              </span>
+                            </div>
+                            {item.preTest.isDualScored && (
+                              <div className="pt-0.5 border-t border-slate-100 flex items-center justify-between">
+                                <span className="text-slate-400 text-[10px]">Diff:</span>
+                                {item.preTest.isDiscrepant ? (
+                                  <span className="text-rose-600 font-black flex items-center gap-0.5 text-[10px] bg-rose-50 px-1 rounded">
+                                    <AlertTriangle className="w-2.5 h-2.5" /> {item.preTest.diff} pts
+                                  </span>
+                                ) : (
+                                  <span className="text-emerald-700 font-bold text-[10px] bg-emerald-50 px-1 rounded">
+                                    ±{item.preTest.diff} pts
+                                  </span>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    </td>
+
+                    {/* Lessons 1–8 Progress */}
+                    <td className="px-4 py-3.5">
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between text-[11px]">
+                          <span className="font-bold text-slate-700">{item.lessons.completedCount} of 8</span>
+                          <span className="text-[10px] text-slate-400 font-mono">
+                            {Math.round((item.lessons.completedCount / 8) * 100)}%
+                          </span>
+                        </div>
+                        <div className="w-28 h-2 bg-slate-100 rounded-full overflow-hidden">
+                          <div 
+                            className={`h-full rounded-full transition-all duration-300 ${
+                              item.lessons.allCompleted ? 'bg-emerald-500' : 'bg-indigo-500'
+                            }`}
+                            style={{ width: `${(item.lessons.completedCount / 8) * 100}%` }}
+                          />
+                        </div>
+                        {item.lessons.allCompleted && (
+                          <span className="text-[9px] font-black uppercase text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200">
+                            Curriculum Complete
+                          </span>
+                        )}
+                      </div>
+                    </td>
+
+                    {/* Post-Test (Form B) */}
+                    <td className="px-4 py-3.5">
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-1.5">
+                          {item.postTest.hasSubmission ? (
+                            <>
+                              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200">
+                                Audio Ready
+                              </span>
+                              {item.postTest.audioUrl && (
+                                <button
+                                  type="button"
+                                  onClick={() => handleToggleAudio(item.postTest.audioUrl)}
+                                  className={`p-1 rounded-full text-xs transition ${
+                                    playingAudioUrl === item.postTest.audioUrl 
+                                      ? 'bg-rose-600 text-white animate-pulse' 
+                                      : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+                                  }`}
+                                  title="Play Post-test Recording"
+                                >
+                                  {playingAudioUrl === item.postTest.audioUrl ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
+                                </button>
+                              )}
+                            </>
+                          ) : (
+                            <span className="text-[10px] text-slate-400 italic">No audio</span>
+                          )}
+                        </div>
+
+                        {item.postTest.hasSubmission && (
+                          <div className="text-[11px] space-y-0.5 font-mono">
+                            <div className="flex items-center justify-between gap-2">
+                              <span className="text-slate-500">Instructor:</span>
+                              <span className={item.postTest.instructorScore !== null ? "font-bold text-slate-900" : "text-amber-600 italic"}>
+                                {item.postTest.instructorScore !== null ? `${item.postTest.instructorScore}/25` : 'Pending'}
+                              </span>
+                            </div>
+                            <div className="flex items-center justify-between gap-2">
+                              <span className="text-slate-500">Rater:</span>
+                              <span className={item.postTest.raterScore !== null ? "font-bold text-teal-700" : "text-amber-600 italic"}>
+                                {item.postTest.raterScore !== null ? `${item.postTest.raterScore}/25` : 'Pending'}
+                              </span>
+                            </div>
+                            {item.postTest.isDualScored && (
+                              <div className="pt-0.5 border-t border-slate-100 flex items-center justify-between">
+                                <span className="text-slate-400 text-[10px]">Diff:</span>
+                                {item.postTest.isDiscrepant ? (
+                                  <span className="text-rose-600 font-black flex items-center gap-0.5 text-[10px] bg-rose-50 px-1 rounded">
+                                    <AlertTriangle className="w-2.5 h-2.5" /> {item.postTest.diff} pts
+                                  </span>
+                                ) : (
+                                  <span className="text-emerald-700 font-bold text-[10px] bg-emerald-50 px-1 rounded">
+                                    ±{item.postTest.diff} pts
+                                  </span>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    </td>
+
+                    {/* Overall Stage */}
+                    <td className="px-3 py-3.5">
+                      <span className={`text-[10px] font-bold px-2 py-1 rounded-lg border whitespace-nowrap block text-center ${
+                        item.overallStage.includes('Complete') 
+                          ? 'bg-emerald-50 text-emerald-800 border-emerald-200' 
+                          : item.overallStage.includes('Lessons') 
+                            ? 'bg-indigo-50 text-indigo-800 border-indigo-200' 
+                            : item.overallStage.includes('Pre-test') 
+                              ? 'bg-purple-50 text-purple-800 border-purple-200' 
+                              : 'bg-slate-100 text-slate-600 border-slate-200'
+                      }`}>
+                        {item.overallStage}
+                      </span>
+                    </td>
+
+                    {/* Actions */}
+                    <td className="px-3 py-3.5 text-right">
+                      <button
+                        type="button"
+                        onClick={() => setActiveTab('calibration')}
+                        className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-bold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 rounded-lg border border-indigo-200 transition"
+                        title="Open in Calibration Studio"
+                      >
+                        <Award className="w-3 h-3" />
+                        <span>Calibrate</span>
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="space-y-8 animate-fade-in pb-16">
+      {/* Hidden Audio Player for Cohort Matrix */}
+      <audio ref={audioPlayerRef} onEnded={() => setPlayingAudioUrl(null)} className="hidden" />
+
       {/* Header Banner */}
       <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-2xl p-8 text-white shadow-xl border border-slate-800">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
             <div className="flex items-center gap-2 mb-2">
               <span className="px-2.5 py-0.5 bg-rose-500/20 text-rose-300 text-xs font-bold rounded-full border border-rose-500/30 flex items-center gap-1">
-                <ShieldCheck className="w-3.5 h-3.5" /> Administrator Console
+                <ShieldCheck className="w-3.5 h-3.5" /> Researcher & Thesis Console
               </span>
-              <span className="text-xs text-slate-400 font-mono">SQLite WAL Engine</span>
+              <span className="text-xs text-slate-400 font-mono">Quasi-Experimental Study</span>
             </div>
-            <h1 className="text-3xl font-black tracking-tight text-white">System & User Management</h1>
+            <h1 className="text-3xl font-black tracking-tight text-white">Researcher Hub & Thesis Analysis</h1>
             <p className="text-slate-300 text-sm mt-1 max-w-2xl font-medium">
-              Manage research participant accounts, auto-bind cohort access groups, and export the official SPSS research dataset.
+              Oversee the full quasi-experimental research study: track participant progression across all units, calibrate dual-rater scores with strict blind isolation, and export SPSS statistical datasets.
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-3">
@@ -541,8 +978,19 @@ export default function AdminDashboard({ currentUser }) {
             >
               <Download className="w-4 h-4" /> Export SPSS (.csv)
             </a>
+            <a 
+              href="/api/backup/download" 
+              download="TECHQUEST_Research_Backup.zip"
+              className="flex items-center gap-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-md transition-all"
+              title="Download complete snapshot: SQLite DB + Audio recordings + Audio Manifest + SPSS dataset in a single ZIP"
+            >
+              <Archive className="w-4 h-4" /> Full Backup (.zip)
+            </a>
             <button
-              onClick={handleOpenAddModal}
+              onClick={() => {
+                setActiveTab('users');
+                handleOpenAddModal();
+              }}
               className="flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold shadow-md transition-all"
             >
               <UserPlus className="w-4 h-4" /> Add New User
@@ -564,8 +1012,88 @@ export default function AdminDashboard({ currentUser }) {
         </div>
       )}
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+      {/* Primary Navigation Tabs */}
+      <div className="flex border-b border-slate-200 gap-2 bg-slate-100/80 p-1.5 rounded-2xl overflow-x-auto shadow-inner">
+        <button
+          onClick={() => setActiveTab('cohort')}
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
+            activeTab === 'cohort'
+              ? 'bg-white text-indigo-700 shadow-sm border border-slate-200 ring-2 ring-indigo-500/10'
+              : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
+          }`}
+        >
+          <ListChecks className="w-4 h-4" />
+          <span>Cohort Progress Tracker</span>
+          <span className="text-[10px] bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded-full font-black">
+            {cohortData.length}
+          </span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('calibration')}
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
+            activeTab === 'calibration'
+              ? 'bg-white text-indigo-700 shadow-sm border border-slate-200 ring-2 ring-indigo-500/10'
+              : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
+          }`}
+        >
+          <Award className="w-4 h-4" />
+          <span>Dual-Rater Calibration Matrix</span>
+          {totalDiscrepancies > 0 && (
+            <span className="text-[10px] bg-rose-100 text-rose-800 px-2 py-0.5 rounded-full font-black flex items-center gap-1">
+              <AlertTriangle className="w-3 h-3 text-rose-600" /> {totalDiscrepancies} Alert{totalDiscrepancies > 1 ? 's' : ''}
+            </span>
+          )}
+        </button>
+
+        <button
+          onClick={() => setActiveTab('export')}
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
+            activeTab === 'export'
+              ? 'bg-white text-indigo-700 shadow-sm border border-slate-200 ring-2 ring-indigo-500/10'
+              : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
+          }`}
+        >
+          <Download className="w-4 h-4" />
+          <span>Research Data & SPSS</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('users')}
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
+            activeTab === 'users'
+              ? 'bg-white text-indigo-700 shadow-sm border border-slate-200 ring-2 ring-indigo-500/10'
+              : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
+          }`}
+        >
+          <Users className="w-4 h-4" />
+          <span>Participant Accounts & System</span>
+          <span className="text-[10px] bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full font-black">
+            {users.length}
+          </span>
+        </button>
+      </div>
+
+      {/* Tab 1: Cohort Progress Tracker */}
+      {activeTab === 'cohort' && renderCohortTracker()}
+
+      {/* Tab 2: Dual-Rater Calibration Matrix */}
+      {activeTab === 'calibration' && (
+        <ScoreCalibrationStudio 
+          currentUser={currentUser} 
+          submissions={submissions} 
+          onRefresh={fetchData} 
+        />
+      )}
+
+      {/* Tab 3: Research Data & SPSS Export */}
+      {activeTab === 'export' && <DataExport />}
+
+      {/* Tab 4: Participant Accounts & System */}
+      {activeTab === 'users' && (
+        <div className="space-y-8">
+          {/* Stats Cards */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
         <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
           <div className="flex justify-between items-start">
             <div>
@@ -805,6 +1333,8 @@ export default function AdminDashboard({ currentUser }) {
           </div>
         </div>
       </div>
+    </div>
+  )}
 
       {/* ========================================================================= */}
       {/* ADD NEW USER MODAL (SMART AUTO-BINDING ROLE WIZARD) */}

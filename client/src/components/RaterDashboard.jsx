@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { 
   Users, Award, CheckCircle2, Clock, Play, Pause, Save, 
   ShieldCheck, FileAudio, HelpCircle, ArrowLeft, Send,
-  AlertTriangle, Download, RefreshCw, BarChart3, TrendingUp,
+  Download, RefreshCw, BarChart3, TrendingUp,
   Sparkles, Check, ChevronRight, Eye, Filter, MessageSquare,
   Volume2, RotateCcw
 } from 'lucide-react';
@@ -154,11 +154,6 @@ export default function RaterDashboard({ currentUser }) {
   const preTestCount = submissions.filter(s => s.assessment_type === 'pre_test' || s.unit_id === 'section_0').length;
   const postTestCount = submissions.filter(s => s.assessment_type === 'post_test' || s.unit_id === 'section_9').length;
   const lessonsCount = submissions.filter(s => s.assessment_type === 'formative_speaking' || s.unit_id?.startsWith('lesson_')).length;
-  const discrepancyCount = submissions.filter(s => {
-    const i = s.grades?.instructor?.total;
-    const r = s.grades?.rater?.total;
-    return i !== undefined && r !== undefined && Math.abs(i - r) >= 5;
-  }).length;
 
   // Filtered submissions
   const filteredSubmissions = submissions.filter(s => {
@@ -238,12 +233,12 @@ export default function RaterDashboard({ currentUser }) {
 
         <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
           <span className="text-[10px] font-black uppercase tracking-wider text-slate-400 block mb-1">
-            Consensus Alerts (&gt;20%)
+            Formal Assessments
           </span>
-          <span className={`text-3xl font-black font-mono ${discrepancyCount > 0 ? 'text-rose-600' : 'text-slate-800'}`}>
-            {discrepancyCount}
+          <span className="text-3xl font-black text-indigo-600 font-mono">
+            {preTestCount + postTestCount}
           </span>
-          <span className="text-[11px] text-slate-500 block mt-1">Calibration flags</span>
+          <span className="text-[11px] text-slate-500 block mt-1">Pre & Post test tasks</span>
         </div>
       </div>
 
@@ -305,9 +300,6 @@ export default function RaterDashboard({ currentUser }) {
                 filteredSubmissions.map((sub) => {
                   const isSelected = selectedSub?.id === sub.id;
                   const rGrade = sub.grades?.rater || sub.grades?.raterB;
-                  const instGrade = sub.grades?.instructor;
-                  const diff = rGrade && instGrade ? Math.abs(rGrade.total - instGrade.total) : null;
-                  const isDiscrepant = diff !== null && diff >= 5;
                   const isPre = sub.assessment_type === 'pre_test' || sub.unit_id === 'section_0';
                   const isPost = sub.assessment_type === 'post_test' || sub.unit_id === 'section_9';
                   const taskCount = sub.self_assessment?.completedTasks || (sub.task_audio_urls ? Object.keys(sub.task_audio_urls).length : null);
@@ -363,11 +355,6 @@ export default function RaterDashboard({ currentUser }) {
 
                       <div className="flex items-center justify-between text-[10px] text-slate-500 mt-1.5 pt-1.5 border-t border-slate-200/60">
                         <span>{sub.duration_seconds || 30}s • Candidate {sub.blind_mask_code || sub.participant_code}</span>
-                        {isDiscrepant && (
-                          <span className="text-rose-600 font-bold flex items-center gap-0.5">
-                            <AlertTriangle className="w-3 h-3" /> Diff {diff} pts
-                          </span>
-                        )}
                       </div>
                     </div>
                   );
@@ -409,8 +396,11 @@ export default function RaterDashboard({ currentUser }) {
                     {totalScore} <span className="text-sm text-slate-400">/ 25</span>
                   </span>
                   {cefrInfo && (
-                    <span className="text-[10px] font-bold text-emerald-600 block">
-                      {cefrInfo.cefr} ({((totalScore / 25) * 100).toFixed(0)}%)
+                    <span 
+                      className={`text-[10px] font-bold px-2 py-0.5 rounded border inline-block mt-1 ${cefrInfo.badgeClass || 'bg-emerald-100 text-emerald-800 border-emerald-300'}`} 
+                      title={cefrInfo.description}
+                    >
+                      {cefrInfo.level} ({totalScore}/25) • {cefrInfo.cefr}
                     </span>
                   )}
                 </div>

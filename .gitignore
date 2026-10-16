@@ -21,8 +21,10 @@ server/data/*.db
 server/data/*.db-shm
 server/data/*.db-wal
 
-# Dynamic User Uploads
+# Dynamic User Uploads & Backups
 server/uploads/audio/submission-*
+backups/*.zip
+!backups/.gitkeep
 
 # Environment variables
 .env

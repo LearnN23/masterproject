@@ -6,7 +6,11 @@
     "start": "node server/index.js",
     "client": "npm --prefix client run dev",
     "server": "npm --prefix server start",
-    "build": "npm --prefix client run build"
+    "build": "npm --prefix client run build",
+    "backup": "node scripts/backup.js",
+    "tunnel": "node scripts/tunnel.js",
+    "tunnel:cf": "node scripts/tunnel.js",
+    "tunnel:lt": "node scripts/tunnel.js --lt"
   },
   "keywords": ["eop", "tblt", "moodle", "rubric", "inter-rater-reliability"],
   "author": "Nasroh",

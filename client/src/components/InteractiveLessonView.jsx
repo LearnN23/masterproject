@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { 
   BookOpen, Mic, Play, Pause, StopCircle, CheckCircle, 
   RotateCcw, ArrowRight, ArrowLeft, Sparkles, 
-  Lightbulb, AlertCircle, Award, Volume2, Check
+  Lightbulb, AlertCircle, Award, Volume2, Check, Lock, FileAudio
 } from 'lucide-react';
 import { LESSONS_DATA } from '../data/lessonsData';
 import LessonSlideViewer from './LessonSlideViewer';
@@ -36,12 +36,172 @@ const formatTime = (seconds) => {
   return `${m}:${s < 10 ? '0' : ''}${s}`;
 };
 
+// Interactive Dialogue Audio Player for Authentic WAV Recordings
+const DialogueAudioPlayer = ({ audioUrl, title }) => {
+  const audioRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+    setIsPlaying(false);
+    setCurrentTime(0);
+    setDuration(0);
+  }, [audioUrl]);
+
+  useEffect(() => {
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+    };
+  }, []);
+
+  const togglePlay = () => {
+    if (!audioRef.current) return;
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      window.speechSynthesis?.cancel();
+      audioRef.current.play().catch(err => {
+        console.warn('Dialogue audio playback error:', err);
+      });
+    }
+  };
+
+  const handleTimeUpdate = () => {
+    if (audioRef.current) {
+      setCurrentTime(audioRef.current.currentTime);
+    }
+  };
+
+  const handleLoadedMetadata = () => {
+    if (audioRef.current) {
+      setDuration(audioRef.current.duration || 0);
+    }
+  };
+
+  const handleSeek = (e) => {
+    const newTime = parseFloat(e.target.value);
+    if (audioRef.current) {
+      audioRef.current.currentTime = newTime;
+      setCurrentTime(newTime);
+    }
+  };
+
+  const handleEnded = () => {
+    setIsPlaying(false);
+    setCurrentTime(0);
+  };
+
+  const restartAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.play().catch(() => {});
+      setIsPlaying(true);
+    }
+  };
+
+  const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
+
+  return (
+    <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white p-4 sm:p-5 rounded-2xl shadow-lg border border-indigo-500/30 my-4 space-y-3">
+      <audio
+        ref={audioRef}
+        src={audioUrl}
+        preload="metadata"
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
+        onTimeUpdate={handleTimeUpdate}
+        onLoadedMetadata={handleLoadedMetadata}
+        onEnded={handleEnded}
+      />
+
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={togglePlay}
+            className="w-12 h-12 rounded-full bg-blue-600 hover:bg-blue-500 text-white flex items-center justify-center shrink-0 shadow-lg transition-transform hover:scale-105 active:scale-95"
+            title={isPlaying ? 'Pause Dialogue' : 'Play Dialogue Audio'}
+          >
+            {isPlaying ? (
+              <Pause className="w-5 h-5 text-white" />
+            ) : (
+              <Play className="w-5 h-5 text-white ml-0.5" />
+            )}
+          </button>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] font-black uppercase tracking-wider bg-blue-500/20 text-blue-300 px-2.5 py-0.5 rounded border border-blue-400/30">
+                Workplace Dialogue Audio
+              </span>
+              {isPlaying && (
+                <span className="flex items-center gap-1 text-[11px] font-bold text-teal-400 animate-pulse">
+                  <Volume2 className="w-3.5 h-3.5" /> Playing Dialogue Audio...
+                </span>
+              )}
+            </div>
+            <h5 className="font-bold text-sm text-white mt-0.5">
+              {title || 'Listen to Authentic Workplace Dialogue'}
+            </h5>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2 text-xs font-mono text-indigo-200 bg-slate-800/80 px-3 py-1.5 rounded-xl border border-slate-700">
+          <span>{formatTime(currentTime)}</span>
+          <span className="text-slate-500">/</span>
+          <span>{formatTime(duration)}</span>
+          <button
+            type="button"
+            onClick={restartAudio}
+            className="p-1 rounded-md text-indigo-300 hover:text-white hover:bg-white/10 transition ml-1"
+            title="Replay from start"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      </div>
+
+      {/* Progress scrubber bar */}
+      <div className="space-y-1">
+        <div className="relative w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+          <div 
+            className="h-full bg-gradient-to-r from-blue-500 to-teal-400 transition-all duration-100" 
+            style={{ width: `${progress}%` }} 
+          />
+        </div>
+        <input
+          type="range"
+          min="0"
+          max={duration || 100}
+          step="0.1"
+          value={currentTime}
+          onChange={handleSeek}
+          className="w-full h-1.5 -mt-2 bg-transparent opacity-0 cursor-pointer block"
+        />
+        <div className="flex justify-between text-[10px] text-slate-400 font-medium px-0.5">
+          <span>0:00</span>
+          <span className="text-slate-500">Click Play to listen & follow dialogue lines below</span>
+          <span>{formatTime(duration)}</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default function InteractiveLessonView({ 
   lessonId = 1, 
   navigateTo, 
   studentState, 
   updateStudentState, 
-  isBypass = false 
+  isBypass = false,
+  mode = null,
+  initialSection = null
 }) {
   const lesson = LESSONS_DATA[lessonId] || LESSONS_DATA[1];
   
@@ -53,16 +213,23 @@ export default function InteractiveLessonView({
     speakingPracticeCompleted: false
   };
 
-  // Determine starting section based on saved progress
-  let defaultSection = 'situation';
-  if (currentLessonProgress.isCompleted) defaultSection = 'results';
-  else if (currentLessonProgress.sectionsCompleted?.review) defaultSection = 'speaking';
-  else if (currentLessonProgress.sectionsCompleted?.practice) defaultSection = 'review';
-  else if (currentLessonProgress.sectionsCompleted?.learn) defaultSection = 'practice';
-  else if (currentLessonProgress.sectionsCompleted?.slides) defaultSection = 'learn';
-  else if (currentLessonProgress.sectionsCompleted?.situation) defaultSection = 'slides';
+  const isCompleted = !!currentLessonProgress.isCompleted;
+  const isReviewMode = isCompleted || mode === 'review';
 
-  const [currentSection, setCurrentSection] = useState(defaultSection);
+  // Determine starting section based on saved progress and review mode
+  const getStartingSection = () => {
+    if (initialSection) return initialSection;
+    if (isReviewMode) return 'situation';
+    if (currentLessonProgress.sectionsCompleted?.review) return 'speaking';
+    if (currentLessonProgress.sectionsCompleted?.practice) return 'review';
+    if (currentLessonProgress.sectionsCompleted?.learn) return 'practice';
+    if (currentLessonProgress.sectionsCompleted?.slides) return 'learn';
+    if (currentLessonProgress.sectionsCompleted?.situation) return 'slides';
+    return 'situation';
+  };
+
+  const [currentSection, setCurrentSection] = useState(getStartingSection);
+  const [existingSubmission, setExistingSubmission] = useState(null);
   const [practiceAnswers, setPracticeAnswers] = useState({});
   const [practiceFeedback, setPracticeFeedback] = useState({});
   const [reviewAnswers, setReviewAnswers] = useState({});
@@ -87,6 +254,38 @@ export default function InteractiveLessonView({
   const streamRef = useRef(null);
   const timerRef = useRef(null);
 
+  // Fetch student's existing submitted audio recording if already completed
+  useEffect(() => {
+    let isMounted = true;
+    const fetchExistingSubmission = async () => {
+      try {
+        const res = await fetch('/api/submissions');
+        const data = await res.json();
+        const pCode = studentState?.id || studentState?.userId;
+        const dbUserId = studentState?.userId;
+        const unitId = lesson.unitId || `lesson_${lessonId}`;
+
+        if (Array.isArray(data) && (pCode || dbUserId)) {
+          const match = data.find(s => 
+            s.unit_id === unitId && 
+            ((pCode && (s.participant_code === pCode || s.blind_mask_code === pCode || s.user_id === pCode)) ||
+             (dbUserId && s.user_id === dbUserId))
+          );
+          if (match && isMounted) {
+            setExistingSubmission(match);
+          }
+        }
+      } catch (e) {
+        console.warn('Could not load existing submission:', e);
+      }
+    };
+
+    if (isCompleted || isReviewMode) {
+      fetchExistingSubmission();
+    }
+    return () => { isMounted = false; };
+  }, [lessonId, studentState?.id, studentState?.userId, isCompleted, isReviewMode]);
+
   // Reset states when switching between lessons
   useEffect(() => {
     window.speechSynthesis.cancel();
@@ -105,13 +304,16 @@ export default function InteractiveLessonView({
     setPromptProgress(0);
     setPromptTime(0);
 
-    let def = 'situation';
-    if (currentLessonProgress.isCompleted) def = 'results';
-    else if (currentLessonProgress.sectionsCompleted?.review) def = 'speaking';
-    else if (currentLessonProgress.sectionsCompleted?.practice) def = 'review';
-    else if (currentLessonProgress.sectionsCompleted?.learn) def = 'practice';
-    else if (currentLessonProgress.sectionsCompleted?.slides) def = 'learn';
-    else if (currentLessonProgress.sectionsCompleted?.situation) def = 'slides';
+    let def = initialSection;
+    if (!def) {
+      if (isReviewMode) def = 'situation';
+      else if (currentLessonProgress.sectionsCompleted?.review) def = 'speaking';
+      else if (currentLessonProgress.sectionsCompleted?.practice) def = 'review';
+      else if (currentLessonProgress.sectionsCompleted?.learn) def = 'practice';
+      else if (currentLessonProgress.sectionsCompleted?.slides) def = 'learn';
+      else if (currentLessonProgress.sectionsCompleted?.situation) def = 'slides';
+      else def = 'situation';
+    }
     setCurrentSection(def);
 
     return () => {
@@ -121,7 +323,7 @@ export default function InteractiveLessonView({
       clearInterval(promptTimerRef.current);
       if (audioUrl) URL.revokeObjectURL(audioUrl);
     };
-  }, [lessonId]);
+  }, [lessonId, initialSection, mode]);
 
   // Audio prompt TTS player
   const togglePlayPrompt = () => {
@@ -227,6 +429,9 @@ export default function InteractiveLessonView({
     const updatedLessons = { ...(studentState.lessonsProgress || {}) };
     const curr = { ...(updatedLessons[lessonId] || { sectionsCompleted: {} }) };
     curr.sectionsCompleted = { ...curr.sectionsCompleted, [section]: true };
+    if (isCompleted) {
+      curr.isCompleted = true;
+    }
     updatedLessons[lessonId] = curr;
     
     updateStudentState('lessonsProgress', updatedLessons);
@@ -242,6 +447,11 @@ export default function InteractiveLessonView({
   };
 
   const completeLesson = async () => {
+    if (isCompleted) {
+      setCurrentSection('results');
+      window.scrollTo(0, 0);
+      return;
+    }
     setIsSubmitting(true);
     markSectionComplete('speaking');
     
@@ -474,6 +684,12 @@ export default function InteractiveLessonView({
               </span>
             </div>
 
+            {/* Audio Dialogue Player */}
+            <DialogueAudioPlayer 
+              audioUrl={lesson.learn.modelDialogue.audioUrl || `/audio_dialogue/lesson_${lessonId}_dialogue.wav`}
+              title={`Audio Dialogue: ${lesson.learn.modelDialogue.title}`}
+            />
+
             <div className="space-y-3 my-4">
               {lesson.learn.modelDialogue.lines.map((l, idx) => (
                 <div key={idx} className={`p-3.5 rounded-xl border ${l.speaker.startsWith('Agent') ? 'bg-blue-50/60 border-blue-200 ml-4' : 'bg-slate-50 border-slate-200 mr-4'}`}>
@@ -624,7 +840,12 @@ export default function InteractiveLessonView({
       
       const updatedLessons = { ...(studentState.lessonsProgress || {}) };
       const curr = { ...(updatedLessons[lessonId] || { sectionsCompleted: {} }) };
-      curr.reviewScore = score;
+      if (isCompleted) {
+        curr.isCompleted = true;
+        curr.reviewScore = Math.max(curr.reviewScore || 0, score);
+      } else {
+        curr.reviewScore = score;
+      }
       if (curr.bestReviewScore === null || score > curr.bestReviewScore) {
         curr.bestReviewScore = score;
       }
@@ -766,6 +987,24 @@ export default function InteractiveLessonView({
           <Badge type="primary">Spoken Interaction</Badge>
         </div>
 
+        {/* Review Mode Banner */}
+        {isCompleted && (
+          <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-emerald-900 flex items-start gap-3 shadow-sm">
+            <CheckCircle className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+            <div className="flex-1">
+              <div className="flex items-center gap-2">
+                <h5 className="font-bold text-sm text-emerald-900">Speaking Activity Completed (Review Mode)</h5>
+                <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded border border-emerald-200">
+                  Submission Finalized
+                </span>
+              </div>
+              <p className="text-xs text-emerald-700 mt-1">
+                Your spoken response for Lesson {lesson.id} has already been recorded and submitted for instructor evaluation. Audio resubmission is disabled. You can review the customer audio prompt, scaffolding formulas, and model dialogues below.
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Customer Call Card */}
         <Card className="p-6 bg-slate-900 text-white border-none shadow-lg">
           <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
@@ -832,77 +1071,119 @@ export default function InteractiveLessonView({
           </div>
         </Card>
 
-        {/* Microphone Audio Recorder */}
-        <Card className="p-8 text-center bg-slate-50 border-2 border-dashed border-slate-300">
-          <p className="text-sm font-bold text-slate-800 mb-1">Record Your Spoken Response</p>
-          <p className="text-xs text-slate-500 mb-6">Press Record, speak into your microphone, and press Stop when finished.</p>
-
-          {recordingState === 'idle' && (
-            <div>
-              <button 
-                onClick={startRecording}
-                className="w-16 h-16 rounded-full bg-red-600 text-white flex items-center justify-center hover:bg-red-700 transition shadow-lg mx-auto"
-              >
-                <Mic className="w-8 h-8" />
-              </button>
-              <p className="text-xs font-bold text-slate-600 mt-3">Click to Start Recording</p>
-            </div>
-          )}
-
-          {recordingState === 'recording' && (
-            <div className="space-y-4">
-              <div className="flex items-center justify-center gap-3">
-                <span className="w-4 h-4 rounded-full bg-red-600 animate-ping"></span>
-                <span className="text-2xl font-black font-mono text-red-600">{formatTime(recordingTime)}</span>
-              </div>
-              <p className="text-xs font-bold text-slate-600">Recording live... Speak clearly.</p>
-              <button 
-                onClick={stopRecording}
-                className="bg-slate-900 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-slate-800 transition flex items-center gap-2 mx-auto shadow-md"
-              >
-                <StopCircle className="w-5 h-5 text-red-400" /> Stop Recording
-              </button>
-            </div>
-          )}
-
-          {recordingState === 'recorded' && (
-            <div className="space-y-4 max-w-md mx-auto">
-              <div className="p-3 bg-teal-50 border border-teal-200 rounded-xl text-teal-800 text-xs font-bold flex items-center justify-center gap-2">
-                <CheckCircle className="w-4 h-4 text-teal-600" /> Recording captured ({formatTime(recordingTime)})
+        {/* Microphone Audio Recorder / Submission Preserved Card */}
+        {isCompleted ? (
+          <Card className="p-6 text-center bg-slate-50 border border-slate-200">
+            <div className="max-w-md mx-auto space-y-4">
+              <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs font-bold flex items-center justify-center gap-2">
+                <CheckCircle className="w-4 h-4 text-emerald-600" /> Spoken response submitted
               </div>
 
-              {audioUrl && (
-                <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+              {existingSubmission?.audio_url ? (
+                <div className="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm space-y-2 text-left">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-slate-500 flex items-center gap-1">
+                    <FileAudio className="w-3.5 h-3.5 text-indigo-600" />
+                    My Recorded Response ({existingSubmission.duration_seconds || 15}s)
+                  </span>
+                  <audio controls src={existingSubmission.audio_url} className="w-full h-8" />
+                </div>
+              ) : audioUrl ? (
+                <div className="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm space-y-2 text-left">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-slate-500 flex items-center gap-1">
+                    <FileAudio className="w-3.5 h-3.5 text-indigo-600" />
+                    Session Audio Recording
+                  </span>
                   <audio controls src={audioUrl} className="w-full h-8" />
+                </div>
+              ) : (
+                <div className="p-3 bg-slate-100 rounded-xl text-slate-500 text-xs font-medium italic">
+                  Spoken recording preserved on research evaluation server.
                 </div>
               )}
 
-              <button 
-                onClick={recordAgain}
-                className="text-xs text-slate-600 hover:text-slate-900 font-bold flex items-center gap-1.5 mx-auto"
-              >
-                <RotateCcw className="w-3.5 h-3.5" /> Re-record Response
-              </button>
+              <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-left flex items-start gap-2.5">
+                <Lock className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                <p className="text-xs text-amber-800 font-medium leading-relaxed">
+                  <strong>Single-Take Protocol:</strong> Audio re-recording and resubmission are blocked to preserve evaluation integrity.
+                </p>
+              </div>
             </div>
-          )}
-        </Card>
+          </Card>
+        ) : (
+          <Card className="p-8 text-center bg-slate-50 border-2 border-dashed border-slate-300">
+            <p className="text-sm font-bold text-slate-800 mb-1">Record Your Spoken Response</p>
+            <p className="text-xs text-slate-500 mb-6">Press Record, speak into your microphone, and press Stop when finished.</p>
+
+            {recordingState === 'idle' && (
+              <div>
+                <button 
+                  onClick={startRecording}
+                  className="w-16 h-16 rounded-full bg-red-600 text-white flex items-center justify-center hover:bg-red-700 transition shadow-lg mx-auto"
+                >
+                  <Mic className="w-8 h-8" />
+                </button>
+                <p className="text-xs font-bold text-slate-600 mt-3">Click to Start Recording</p>
+              </div>
+            )}
+
+            {recordingState === 'recording' && (
+              <div className="space-y-4">
+                <div className="flex items-center justify-center gap-3">
+                  <span className="w-4 h-4 rounded-full bg-red-600 animate-ping"></span>
+                  <span className="text-2xl font-black font-mono text-red-600">{formatTime(recordingTime)}</span>
+                </div>
+                <p className="text-xs font-bold text-slate-600">Recording live... Speak clearly.</p>
+                <button 
+                  onClick={stopRecording}
+                  className="bg-slate-900 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-slate-800 transition flex items-center gap-2 mx-auto shadow-md"
+                >
+                  <StopCircle className="w-5 h-5 text-red-400" /> Stop Recording
+                </button>
+              </div>
+            )}
+
+            {recordingState === 'recorded' && (
+              <div className="space-y-4 max-w-md mx-auto">
+                <div className="p-3 bg-teal-50 border border-teal-200 rounded-xl text-teal-800 text-xs font-bold flex items-center justify-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-teal-600" /> Recording captured ({formatTime(recordingTime)})
+                </div>
+
+                {audioUrl && (
+                  <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+                    <audio controls src={audioUrl} className="w-full h-8" />
+                  </div>
+                )}
+
+                <button 
+                  onClick={recordAgain}
+                  className="text-xs text-slate-600 hover:text-slate-900 font-bold flex items-center gap-1.5 mx-auto"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" /> Re-record Response
+                </button>
+              </div>
+            )}
+          </Card>
+        )}
 
         {/* Self-Assessment Checklist */}
         <Card className="p-6 border-slate-200">
           <h4 className="text-sm font-bold text-slate-900 mb-2 flex items-center gap-2">
             <CheckCircle className="w-4 h-4 text-teal-600"/> Self-Assessment Checklist
           </h4>
-          <p className="text-xs text-slate-500 mb-4">Check the criteria you achieved in your recording before submitting:</p>
+          <p className="text-xs text-slate-500 mb-4">
+            {isCompleted ? 'Criteria evaluated for this speaking challenge:' : 'Check the criteria you achieved in your recording before submitting:'}
+          </p>
           <div className="space-y-2.5">
             {lesson.speaking.checklist.map((item, idx) => {
               const key = idx === 0 ? 'a' : idx === 1 ? 'b' : 'c';
               return (
-                <label key={idx} className="flex items-start gap-3 text-xs text-slate-700 cursor-pointer">
+                <label key={idx} className={`flex items-start gap-3 text-xs ${isCompleted ? 'cursor-default text-slate-800' : 'cursor-pointer text-slate-700'}`}>
                   <input 
                     type="checkbox"
-                    checked={selfAssessment[key]}
+                    checked={isCompleted ? true : selfAssessment[key]}
+                    disabled={isCompleted}
                     onChange={(e) => setSelfAssessment(prev => ({ ...prev, [key]: e.target.checked }))}
-                    className="mt-0.5 rounded text-blue-600 focus:ring-blue-500 w-4 h-4"
+                    className="mt-0.5 rounded text-blue-600 focus:ring-blue-500 w-4 h-4 disabled:opacity-80"
                   />
                   <span>{item}</span>
                 </label>
@@ -918,13 +1199,25 @@ export default function InteractiveLessonView({
           >
             <ArrowLeft className="w-5 h-5"/> Back to Review
           </button>
-          <button 
-            disabled={!isReadyToComplete || isSubmitting}
-            onClick={completeLesson}
-            className="bg-teal-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-teal-700 disabled:bg-slate-300 disabled:cursor-not-allowed shadow-md transition-all flex items-center gap-2"
-          >
-            {isSubmitting ? 'Saving...' : 'Complete Lesson & Save Recording'} <CheckCircle className="w-5 h-5"/>
-          </button>
+          {isCompleted ? (
+            <button 
+              onClick={() => {
+                setCurrentSection('results');
+                window.scrollTo(0, 0);
+              }}
+              className="bg-blue-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-blue-700 shadow-md transition-all flex items-center gap-2"
+            >
+              View Lesson Results <ArrowRight className="w-5 h-5"/>
+            </button>
+          ) : (
+            <button 
+              disabled={!isReadyToComplete || isSubmitting}
+              onClick={completeLesson}
+              className="bg-teal-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-teal-700 disabled:bg-slate-300 disabled:cursor-not-allowed shadow-md transition-all flex items-center gap-2"
+            >
+              {isSubmitting ? 'Saving...' : 'Complete Lesson & Save Recording'} <CheckCircle className="w-5 h-5"/>
+            </button>
+          )}
         </div>
       </div>
     );
@@ -968,6 +1261,17 @@ export default function InteractiveLessonView({
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
             <button 
+              onClick={() => {
+                window.speechSynthesis.cancel();
+                setCurrentSection('situation');
+                window.scrollTo(0, 0);
+              }}
+              className="bg-indigo-600 text-white px-6 py-2.5 rounded-lg font-bold hover:bg-indigo-700 transition flex items-center justify-center gap-2 shadow-sm"
+            >
+              <BookOpen className="w-4 h-4" />
+              <span>Review Lesson & Slides</span>
+            </button>
+            <button 
               onClick={() => navigateTo('student-dashboard')}
               className="px-6 py-2.5 rounded-lg border border-slate-300 text-slate-700 font-bold hover:bg-slate-100 transition"
             >
@@ -1007,51 +1311,70 @@ export default function InteractiveLessonView({
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       {/* Top Header & Section Progress */}
-      {currentSection !== 'results' && (
-        <header className="border-b pb-6">
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-2">
-              <Badge type="primary">Lesson {lesson.id}</Badge>
-              <span className="text-xs text-slate-400 font-medium">({lesson.duration})</span>
-            </div>
-            {isBypass && (
-              <span className="text-[10px] bg-amber-400/20 text-amber-600 font-bold px-2 py-0.5 rounded border border-amber-300">
-                Bypass Active
+      <header className="border-b pb-6">
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center gap-2">
+            <Badge type="primary">Lesson {lesson.id}</Badge>
+            <span className="text-xs text-slate-400 font-medium">({lesson.duration})</span>
+            {isCompleted && (
+              <span className="text-[11px] bg-emerald-50 text-emerald-700 font-bold px-2.5 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1 shadow-sm">
+                <CheckCircle className="w-3.5 h-3.5 text-emerald-600" /> Completed • Review Mode
               </span>
             )}
           </div>
+          {isBypass && (
+            <span className="text-[10px] bg-amber-400/20 text-amber-600 font-bold px-2 py-0.5 rounded border border-amber-300">
+              Bypass Active
+            </span>
+          )}
+        </div>
 
-          <h2 className="text-2xl font-bold text-slate-900">{lesson.title}</h2>
-          <p className="text-sm text-slate-500 font-medium mt-1">Focus: {lesson.focus}</p>
+        <h2 className="text-2xl font-bold text-slate-900">{lesson.title}</h2>
+        <p className="text-sm text-slate-500 font-medium mt-1">Focus: {lesson.focus}</p>
 
-          {/* Section Breadcrumbs */}
-          <div className="flex items-center justify-between mt-6 max-w-xl mx-auto">
-            {sections.map((sec, index) => {
-              const isPast = currentLessonProgress.sectionsCompleted?.[sec.id] || sections.findIndex(s => s.id === currentSection) > index;
-              const isCurrent = currentSection === sec.id;
+        {/* Section Breadcrumbs */}
+        <div className="flex items-center justify-between mt-6 max-w-xl mx-auto">
+          {sections.map((sec, index) => {
+            const isPast = currentLessonProgress.sectionsCompleted?.[sec.id] || sections.findIndex(s => s.id === currentSection) > index;
+            const isCurrent = currentSection === sec.id;
+            const isClickable = isBypass || isReviewMode || isPast || isCurrent;
 
-              return (
-                <div key={sec.id} className="flex flex-col items-center">
-                  <div className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold border-2 transition-all ${
-                    isCurrent 
-                      ? 'bg-blue-600 border-blue-200 text-white shadow-md scale-105' 
-                      : isPast 
-                      ? 'bg-teal-500 border-teal-500 text-white' 
-                      : 'bg-white border-slate-300 text-slate-400'
-                  }`}>
-                    {isPast && !isCurrent ? <Check className="w-4 h-4"/> : index + 1}
-                  </div>
-                  <span className={`text-[10px] mt-1.5 font-bold uppercase tracking-wider ${
-                    isCurrent ? 'text-blue-700' : isPast ? 'text-slate-600' : 'text-slate-400'
-                  }`}>
-                    {sec.label}
-                  </span>
+            return (
+              <button
+                key={sec.id}
+                type="button"
+                disabled={!isClickable}
+                onClick={() => {
+                  if (isClickable) {
+                    window.speechSynthesis.cancel();
+                    setCurrentSection(sec.id);
+                    window.scrollTo(0, 0);
+                  }
+                }}
+                className={`flex flex-col items-center group focus:outline-none transition-transform ${
+                  !isClickable ? 'cursor-not-allowed opacity-40' : 'cursor-pointer hover:scale-105'
+                }`}
+                title={isClickable ? `Jump to ${sec.label}` : 'Complete previous sections to unlock'}
+              >
+                <div className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold border-2 transition-all ${
+                  isCurrent 
+                    ? 'bg-blue-600 border-blue-200 text-white shadow-md ring-2 ring-blue-400/30' 
+                    : isPast 
+                    ? 'bg-teal-500 border-teal-500 text-white group-hover:bg-teal-600' 
+                    : 'bg-white border-slate-300 text-slate-400'
+                }`}>
+                  {isPast && !isCurrent ? <Check className="w-4 h-4"/> : index + 1}
                 </div>
-              );
-            })}
-          </div>
-        </header>
-      )}
+                <span className={`text-[10px] mt-1.5 font-bold uppercase tracking-wider transition-colors ${
+                  isCurrent ? 'text-blue-700' : isPast ? 'text-slate-600 group-hover:text-slate-900' : 'text-slate-400'
+                }`}>
+                  {sec.label}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </header>
 
       {currentSection === 'situation' && renderSituation()}
       {currentSection === 'slides' && renderSlides()}

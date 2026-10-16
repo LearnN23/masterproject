@@ -5,8 +5,9 @@ import {
   Pause, RotateCcw, FileAudio, Check, MessageSquare, AlertCircle
 } from 'lucide-react';
 import { LESSONS_DATA } from '../data/lessonsData';
+import { getCefrRating } from '../data/assessmentsData';
 
-export default function StudentDashboard({ navigateTo, studentState, isBypass = false }) {
+export default function StudentDashboard({ navigateTo, studentState, isBypass = false, onRequestStartPostTest }) {
   const [submissions, setSubmissions] = useState([]);
   const [loadingSubs, setLoadingSubs] = useState(true);
 
@@ -51,8 +52,12 @@ export default function StudentDashboard({ navigateTo, studentState, isBypass = 
     unitId: l.unitId
   }));
 
+  const isPostTestInProgress = studentState?.postTestStarted && !studentState?.postTestCompleted;
+
   const isLessonLocked = (id) => {
     if (isBypass) return false;
+    // Closed-book examination condition: all lessons locked while post-test is in progress
+    if (isPostTestInProgress) return true;
     if (!studentState?.preTestCompleted) return true;
     if (id === 1) return false;
     const prev = studentState?.lessonsProgress?.[id - 1];
@@ -115,6 +120,37 @@ export default function StudentDashboard({ navigateTo, studentState, isBypass = 
         </div>
       </header>
 
+      {/* CLOSED-BOOK POST-TEST IN PROGRESS WARNING BANNER */}
+      {isPostTestInProgress && (
+        <div className="bg-amber-500/10 border-2 border-amber-500/30 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 animate-fade-in shadow-sm">
+          <div className="flex items-start gap-3">
+            <div className="p-2.5 bg-amber-500/20 text-amber-700 rounded-xl shrink-0 mt-0.5">
+              <Lock className="w-5 h-5 text-amber-600" />
+            </div>
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <h4 className="text-sm font-black text-amber-950">
+                  Closed-Book Post-Test in Progress
+                </h4>
+                <span className="text-[10px] bg-amber-200 text-amber-900 font-black uppercase px-2 py-0.5 rounded-full border border-amber-300">
+                  Exam Mode Active
+                </span>
+              </div>
+              <p className="text-xs text-amber-800 font-medium leading-relaxed">
+                In accordance with research protocol, all curriculum lessons and slide decks are locked. You can review all materials freely once you finish and submit your Post-test.
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={() => navigateTo('post-test')}
+            className="px-5 py-2.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl shadow-sm transition whitespace-nowrap flex items-center gap-1.5 shrink-0 self-stretch sm:self-auto justify-center"
+          >
+            <span>Resume Post-Test</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      )}
+
       {/* THREE MILESTONE CARDS */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         {/* Pre-test Card */}
@@ -168,26 +204,59 @@ export default function StudentDashboard({ navigateTo, studentState, isBypass = 
           </p>
           <button 
             disabled={!isBypass && isLessonLocked(currentFocusLesson.id)}
-            onClick={() => navigateTo('lesson', { lessonId: currentFocusLesson.id })}
+            onClick={() => {
+              if (!isBypass && isLessonLocked(currentFocusLesson.id)) {
+                if (isPostTestInProgress) {
+                  alert('Closed-Book Assessment in Progress: Lesson review is locked until your Post-test is completed.');
+                }
+                return;
+              }
+              const isDone = studentState?.lessonsProgress?.[currentFocusLesson.id]?.isCompleted;
+              navigateTo('lesson', { 
+                lessonId: currentFocusLesson.id,
+                mode: isDone ? 'review' : 'study',
+                initialSection: isDone ? 'situation' : undefined
+              });
+            }}
             className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold shadow-sm transition disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-1.5"
           >
-            <span>{allLessonsDone ? 'Review Lesson Materials' : `Continue Lesson ${currentFocusLesson.id}`}</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <span>
+              {isPostTestInProgress
+                ? 'Lesson Review Locked (Post-Test Active)'
+                : studentState?.lessonsProgress?.[currentFocusLesson.id]?.isCompleted 
+                ? `Review Lesson ${currentFocusLesson.id} Materials` 
+                : allLessonsDone 
+                ? 'Review Lesson Materials' 
+                : `Continue Lesson ${currentFocusLesson.id}`}
+            </span>
+            {!(isLessonLocked(currentFocusLesson.id) && !isBypass) && <ArrowRight className="w-3.5 h-3.5" />}
           </button>
         </div>
 
         {/* Post-test Card */}
-        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm border-l-4 border-l-slate-300 space-y-3">
+        <div className={`bg-white p-6 rounded-2xl border shadow-sm border-l-4 space-y-3 ${
+          studentState?.postTestCompleted 
+            ? 'border-slate-200 border-l-emerald-500' 
+            : isPostTestInProgress 
+            ? 'border-amber-300 border-l-amber-500 ring-2 ring-amber-400/20' 
+            : (allLessonsDone || isBypass)
+            ? 'border-slate-200 border-l-emerald-500'
+            : 'border-slate-200 border-l-slate-300'
+        }`}>
           <div className="flex justify-between items-center">
-            <span className="text-[10px] font-black uppercase tracking-wider text-slate-600 bg-slate-100 px-2 py-0.5 rounded">
-              Summative Outcome
+            <span className={`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded ${
+              isPostTestInProgress ? 'text-amber-800 bg-amber-100 font-bold' : 'text-slate-600 bg-slate-100'
+            }`}>
+              {isPostTestInProgress ? 'Exam In Progress' : 'Summative Outcome'}
             </span>
-            <Award className="w-5 h-5 text-slate-400" />
+            <Award className={`w-5 h-5 ${isPostTestInProgress ? 'text-amber-600' : 'text-slate-400'}`} />
           </div>
           <h3 className="font-black text-slate-900 text-lg">Post-Test (Form B)</h3>
           <p className="text-xs text-slate-500 font-medium">
             {studentState?.postTestCompleted
               ? 'Completed! Your learning gain has been calculated.'
+              : isPostTestInProgress
+              ? 'Exam active (Closed-Book). Lesson reviews are locked until submitted.'
               : allLessonsDone || isBypass
               ? 'Unlocked! Ready to evaluate your learning gain.'
               : 'Complete all 8 instructional lessons to unlock.'}
@@ -196,9 +265,17 @@ export default function StudentDashboard({ navigateTo, studentState, isBypass = 
             <span className="inline-block text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-200">
               Completed
             </span>
-          ) : (allLessonsDone || isBypass) ? (
+          ) : isPostTestInProgress ? (
             <button 
               onClick={() => navigateTo('post-test')}
+              className="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-xs font-bold shadow-sm transition flex items-center justify-center gap-1.5"
+            >
+              <span>Resume Post-Test (Form B)</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          ) : (allLessonsDone || isBypass) ? (
+            <button 
+              onClick={() => onRequestStartPostTest ? onRequestStartPostTest() : navigateTo('post-test')}
               className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-sm transition flex items-center justify-center gap-1.5"
             >
               <span>Take Post-Test Form B</span>
@@ -226,6 +303,9 @@ export default function StudentDashboard({ navigateTo, studentState, isBypass = 
         const gainPts = postScore - preScore;
         const gainPct = Math.round((gainPts / 25) * 100);
 
+        const preCefr = getCefrRating(preScore);
+        const postCefr = getCefrRating(postScore);
+
         return (
           <div className="bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-700 rounded-2xl p-6 text-white shadow-lg space-y-3">
             <div className="flex flex-wrap items-center justify-between gap-3">
@@ -244,13 +324,13 @@ export default function StudentDashboard({ navigateTo, studentState, isBypass = 
               <div className="bg-white/10 rounded-xl p-3 border border-white/20">
                 <p className="text-[10px] uppercase font-bold text-emerald-200">Pre-Test Diagnostic</p>
                 <p className="text-xl font-black text-white mt-0.5">{preScore} / 25 ({preGrade.percentage}%)</p>
-                <p className="text-[11px] text-emerald-100 mt-1">Starting proficiency baseline</p>
+                <p className="text-[11px] text-emerald-100 mt-1">{preCefr.level} &bull; {preCefr.cefr}</p>
               </div>
 
               <div className="bg-white/10 rounded-xl p-3 border border-white/20">
                 <p className="text-[10px] uppercase font-bold text-teal-200">Post-Test Summative</p>
                 <p className="text-xl font-black text-white mt-0.5">{postScore} / 25 ({postGrade.percentage}%)</p>
-                <p className="text-[11px] text-teal-100 mt-1">Mastery outcome achievement</p>
+                <p className="text-[11px] text-teal-100 mt-1">{postCefr.level} &bull; {postCefr.cefr}</p>
               </div>
 
               <div className="bg-white/10 rounded-xl p-3 border border-white/20">
@@ -275,11 +355,22 @@ export default function StudentDashboard({ navigateTo, studentState, isBypass = 
           {LESSON_ITEMS.map((lesson) => {
             const isCompleted = studentState?.lessonsProgress?.[lesson.id]?.isCompleted;
             const isLocked = isLessonLocked(lesson.id);
+            const isExamLocked = isPostTestInProgress && isCompleted;
             return (
               <div
                 key={lesson.id}
                 onClick={() => {
-                  if (isBypass || !isLocked) navigateTo('lesson', { lessonId: lesson.id });
+                  if (isLocked) {
+                    if (isPostTestInProgress) {
+                      alert('Closed-Book Assessment in Progress: Lesson review is locked until your Post-test is completed.');
+                    }
+                    return;
+                  }
+                  navigateTo('lesson', { 
+                    lessonId: lesson.id,
+                    mode: isCompleted ? 'review' : 'study',
+                    initialSection: isCompleted ? 'situation' : undefined
+                  });
                 }}
                 className={`p-4 rounded-2xl border transition-all flex flex-col justify-between ${
                   isLocked 
@@ -294,7 +385,11 @@ export default function StudentDashboard({ navigateTo, studentState, isBypass = 
                     <span className="text-[10px] font-black uppercase tracking-wider text-slate-500">
                       Lesson {lesson.id}
                     </span>
-                    {isCompleted ? (
+                    {isExamLocked ? (
+                      <span className="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200 flex items-center gap-1">
+                        <Lock className="w-3 h-3 text-amber-600" /> Exam Lock
+                      </span>
+                    ) : isCompleted ? (
                       <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                     ) : isLocked ? (
                       <Lock className="w-3.5 h-3.5 text-slate-400" />
@@ -310,10 +405,32 @@ export default function StudentDashboard({ navigateTo, studentState, isBypass = 
                   </span>
                 </div>
                 <div className="pt-3 mt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-bold">
-                  <span className={isCompleted ? 'text-emerald-700' : isLocked ? 'text-slate-400' : 'text-indigo-600'}>
-                    {isCompleted ? 'Completed' : isLocked ? 'Locked' : 'Open Lesson'}
-                  </span>
-                  {!isLocked && <ArrowRight className="w-3.5 h-3.5 text-slate-400" />}
+                  {isExamLocked ? (
+                    <div className="flex items-center justify-between w-full">
+                      <span className="text-emerald-700 flex items-center gap-1">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> Completed
+                      </span>
+                      <span className="text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200 flex items-center gap-1 text-[10px]">
+                        <Lock className="w-3 h-3 text-amber-600" /> Locked
+                      </span>
+                    </div>
+                  ) : isCompleted ? (
+                    <div className="flex items-center justify-between w-full">
+                      <span className="text-emerald-700 flex items-center gap-1">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> Completed
+                      </span>
+                      <span className="text-indigo-600 bg-indigo-50 hover:bg-indigo-100 px-2 py-0.5 rounded-md border border-indigo-200 flex items-center gap-1 transition-colors">
+                        Review <ArrowRight className="w-3 h-3" />
+                      </span>
+                    </div>
+                  ) : (
+                    <>
+                      <span className={isLocked ? 'text-slate-400' : 'text-indigo-600'}>
+                        {isLocked ? 'Locked' : 'Open Lesson'}
+                      </span>
+                      {!isLocked && <ArrowRight className="w-3.5 h-3.5 text-slate-400" />}
+                    </>
+                  )}
                 </div>
               </div>
             );
@@ -361,9 +478,19 @@ export default function StudentDashboard({ navigateTo, studentState, isBypass = 
                   </div>
                   <div>
                     {instGrade ? (
-                      <span className="text-xs font-black text-indigo-700 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-200">
-                        Instructor Score: {instGrade.total} / 25 ({instGrade.percentage}%)
-                      </span>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="text-xs font-black text-indigo-700 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-200">
+                          Instructor Score: {instGrade.total} / 25 ({instGrade.percentage}%)
+                        </span>
+                        {(() => {
+                          const cefr = getCefrRating(instGrade.total);
+                          return (
+                            <span className={`text-[11px] font-bold px-2.5 py-0.5 rounded-lg border ${cefr.badgeClass}`} title={cefr.description}>
+                              {cefr.level} &bull; {cefr.cefr}
+                            </span>
+                          );
+                        })()}
+                      </div>
                     ) : preSub ? (
                       <span className="text-xs font-bold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-md border border-amber-200">
                         Submitted — Awaiting Instructor Review
@@ -442,7 +569,7 @@ export default function StudentDashboard({ navigateTo, studentState, isBypass = 
                     </h3>
                   </div>
 
-                  <div>
+                  <div className="flex items-center gap-2">
                     {instGrade ? (
                       <span className="text-xs font-black text-indigo-700 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-200">
                         Instructor Score: {instGrade.total} / 25 ({instGrade.percentage}%)
@@ -455,6 +582,38 @@ export default function StudentDashboard({ navigateTo, studentState, isBypass = 
                       <span className="text-xs text-slate-400 bg-slate-50 px-2.5 py-1 rounded-md">
                         Not yet recorded
                       </span>
+                    )}
+
+                    {studentState?.lessonsProgress?.[lesson.id]?.isCompleted && (
+                      <button
+                        disabled={isLessonLocked(lesson.id)}
+                        onClick={() => {
+                          if (isLessonLocked(lesson.id)) {
+                            if (isPostTestInProgress) {
+                              alert('Closed-Book Assessment in Progress: Lesson review is locked until your Post-test is completed.');
+                            }
+                            return;
+                          }
+                          navigateTo('lesson', { lessonId: lesson.id, mode: 'review', initialSection: 'situation' });
+                        }}
+                        className={`text-xs font-bold px-2.5 py-1 rounded-lg border flex items-center gap-1 transition ${
+                          isLessonLocked(lesson.id)
+                            ? 'text-slate-400 bg-slate-100 border-slate-200 cursor-not-allowed opacity-60'
+                            : 'text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border-indigo-200'
+                        }`}
+                      >
+                        {isLessonLocked(lesson.id) ? (
+                          <>
+                            <Lock className="w-3.5 h-3.5 text-amber-600" />
+                            <span>Exam Locked</span>
+                          </>
+                        ) : (
+                          <>
+                            <BookOpen className="w-3.5 h-3.5 text-indigo-600" />
+                            <span>Review Lesson</span>
+                          </>
+                        )}
+                      </button>
                     )}
                   </div>
                 </div>
@@ -501,13 +660,40 @@ export default function StudentDashboard({ navigateTo, studentState, isBypass = 
                   </div>
                 ) : (
                   <div className="flex items-center justify-between text-xs text-slate-500">
-                    <span>Complete the speaking challenge in Lesson {lesson.id} to record your response.</span>
+                    <span>
+                      {studentState?.lessonsProgress?.[lesson.id]?.isCompleted 
+                        ? `Lesson ${lesson.id} is completed.` 
+                        : `Complete the speaking challenge in Lesson ${lesson.id} to record your response.`}
+                    </span>
                     <button
-                      onClick={() => navigateTo('lesson', { lessonId: lesson.id })}
-                      className="text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1"
+                      disabled={isLessonLocked(lesson.id)}
+                      onClick={() => {
+                        if (isLessonLocked(lesson.id)) {
+                          if (isPostTestInProgress) {
+                            alert('Closed-Book Assessment in Progress: Lesson review is locked until your Post-test is completed.');
+                          }
+                          return;
+                        }
+                        navigateTo('lesson', { 
+                          lessonId: lesson.id,
+                          mode: studentState?.lessonsProgress?.[lesson.id]?.isCompleted ? 'review' : 'study',
+                          initialSection: studentState?.lessonsProgress?.[lesson.id]?.isCompleted ? 'situation' : undefined
+                        });
+                      }}
+                      className={`text-xs font-bold flex items-center gap-1 ${
+                        isLessonLocked(lesson.id)
+                          ? 'text-slate-400 cursor-not-allowed opacity-60'
+                          : 'text-indigo-600 hover:text-indigo-800'
+                      }`}
                     >
-                      <span>Go to Lesson {lesson.id}</span>
-                      <ArrowRight className="w-3 h-3" />
+                      <span>
+                        {isLessonLocked(lesson.id) && isPostTestInProgress
+                          ? `Locked during Post-test`
+                          : studentState?.lessonsProgress?.[lesson.id]?.isCompleted 
+                          ? `Review Lesson ${lesson.id}` 
+                          : `Go to Lesson ${lesson.id}`}
+                      </span>
+                      {!isLessonLocked(lesson.id) && <ArrowRight className="w-3 h-3" />}
                     </button>
                   </div>
                 )}
@@ -534,9 +720,19 @@ export default function StudentDashboard({ navigateTo, studentState, isBypass = 
 
                   <div>
                     {instGrade ? (
-                      <span className="text-xs font-black text-emerald-700 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-200">
-                        Instructor Outcome Score: {instGrade.total} / 25 ({instGrade.percentage}%)
-                      </span>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="text-xs font-black text-emerald-700 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-200">
+                          Instructor Outcome Score: {instGrade.total} / 25 ({instGrade.percentage}%)
+                        </span>
+                        {(() => {
+                          const cefr = getCefrRating(instGrade.total);
+                          return (
+                            <span className={`text-[11px] font-bold px-2.5 py-0.5 rounded-lg border ${cefr.badgeClass}`} title={cefr.description}>
+                              {cefr.level} &bull; {cefr.cefr}
+                            </span>
+                          );
+                        })()}
+                      </div>
                     ) : postSub ? (
                       <span className="text-xs font-bold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-md border border-amber-200">
                         Submitted — Awaiting Instructor Review

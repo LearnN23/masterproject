@@ -251,108 +251,187 @@ export const ASSESSMENTS_DATA = {
 };
 
 // ============================================================================
-// 25-POINT BLUEPRINT ANALYTIC RUBRIC (EOP Blueprint Section 5.1 & Appendix B)
+// 25-POINT SPEAKING ASSESSMENT RUBRIC (Pre-test and Post-test)
+// Updated from Speaking Assessment Rubric (Pre-test and Post-test).docx
 // ============================================================================
 export const RUBRIC_CRITERIA_25 = [
   {
     id: 'task_achievement',
-    label: '1. Task Achievement / Fulfillment',
-    description: 'Effectively completes all workplace requirements, communicates technical facts, error codes, and SLA details completely.',
+    label: '1. Task Achievement',
+    shortLabel: 'Task Achievement',
+    description: 'Fully addresses the issue; completes all required task instructions.',
     bands: {
-      5: 'Completely fulfills all task requirements. All essential information points and technical details provided accurately.',
-      4: 'Fulfills all main task requirements with clear, relevant details; minor non-critical omissions.',
-      3: 'Fulfills primary task but lacks completeness in 1 detail or elaboration; omits secondary diagnostic or SLA details.',
-      2: 'Partially fulfills task; omits key customer information or resolution steps; confuses symptoms or ticket details.',
-      1: 'Fails to fulfill task. Response is irrelevant, off-topic, or unperformed.'
+      5: 'Fully addresses the issue; completes all required task instructions.',
+      4: 'Addresses main issue; minor omissions in task instructions.',
+      3: 'Addresses main issue; misses some key details or required steps.',
+      2: 'Partially addresses the issue; misses several required steps.',
+      1: 'Fails to address the issue; incomplete or irrelevant response.'
     }
   },
   {
     id: 'interactive_comm',
-    label: '2. Interactive Communication & Pragmatic Tone',
-    description: 'Professional customer-service register, empathetic validation, HEAR framework de-escalation, active case ownership.',
+    label: '2. Professional & Pragmatic Appropriateness',
+    shortLabel: 'Professional & Pragmatic Appropriateness',
+    description: 'Consistently polite, professional, and empathetic throughout the call.',
     bands: {
-      5: 'Tone is highly professional, empathetic, and customer-centered. Perfect register throughout with genuine case ownership.',
-      4: 'Tone is polite, respectful, and appropriate. Minor slips in register do not affect rapport.',
-      3: 'Tone is acceptable but somewhat rigid or mechanical. Basic politeness markers present; lacks depth in empathy.',
-      2: 'Tone is inappropriate, overly abrupt, or defensive. Tells customer to "calm down" or blames colleagues.',
-      1: 'Response is rude, hostile, or completely inappropriate for customer service.'
+      5: 'Consistently polite, professional, and empathetic throughout the call.',
+      4: 'Maintains a polite, professional tone with minor lapses in empathy.',
+      3: 'Uses basic polite expressions; tone is generally acceptable but lacks warmth.',
+      2: 'Minimally polite; sounds robotic, blunt, or overly casual.',
+      1: 'Insensitive, dismissive, or inappropriate tone.'
     }
   },
   {
     id: 'vocabulary',
-    label: '3. Occupational & Technical Vocabulary',
-    description: 'Use of domain-specific IT support terms, customer service expressions, acronyms (SLA, FCR, P1), and plain English explanations.',
+    label: '3. Occupational Vocabulary',
+    shortLabel: 'Occupational Vocabulary',
+    description: 'Accurate, varied, and natural technical support and customer service vocabulary.',
     bands: {
-      5: 'Uses precise, domain-appropriate technical terms, CS acronyms, and workplace expressions effortlessly.',
-      4: 'Uses accurate CS and technical vocabulary with minimal awkward phrasing.',
-      3: 'Uses adequate general vocabulary; limited range of domain terms or CS acronyms.',
-      2: 'Uses repetitive or incorrect terms; relies on generic words or L1 Thai structures.',
-      1: 'Vocabulary is inadequate; frequent incorrect word choices render message unclear.'
+      5: 'Accurate, varied, and natural technical support and customer service vocabulary.',
+      4: 'Appropriate occupational vocabulary; minor errors or light repetition.',
+      3: 'Sufficient basic vocabulary; occasional inaccurate or repetitive words.',
+      2: 'Limited vocabulary; frequent inappropriate word choices causing confusion.',
+      1: 'Very limited or largely incorrect vocabulary; unclear response.'
     }
   },
   {
     id: 'grammar',
-    label: '4. Grammatical Control & Target Structures',
-    description: 'Polite modal verbs (may/could), indirect question word order, First Conditional workarounds, and passive reporting verbs.',
+    label: '4. Grammatical Accuracy',
+    shortLabel: 'Grammatical Accuracy',
+    description: 'Accurate and appropriate grammatical structures; control of sentence patterns.',
     bands: {
-      5: 'Flawless control of target patterns (modals, indirect questions, conditionals). Zero major grammatical errors.',
-      4: 'Good grammatical control with minor errors that do not impair meaning or cause misunderstanding.',
-      3: 'Grammatical errors occur (inconsistent indirect word order or conditional verb forms) but core workplace message remains understandable.',
-      2: 'Frequent grammatical errors severely distort meaning or create confusion (missing verbs, broken tenses).',
-      1: 'Severe grammatical breakdown; no recognizable sentence control.'
+      5: 'Accurate and appropriate grammatical structures; negligible errors.',
+      4: 'Mostly accurate structures; minor errors do not affect meaning.',
+      3: 'Generally understandable; noticeable errors affecting clarity.',
+      2: 'Frequent grammatical errors interfering with meaning.',
+      1: 'Persistent grammatical errors; response very difficult to follow.'
     }
   },
   {
     id: 'pronunciation_fluency',
-    label: '5. Pronunciation, Fluency & Intelligibility',
-    description: 'Pacing (100–120 wpm), smooth flow, minimal unnatural pauses. Non-penalization of intelligible Thai accent under CEFR B2.',
+    label: '5. Pronunciation and Fluency',
+    shortLabel: 'Pronunciation and Fluency',
+    description: 'Clear, smooth delivery; natural pacing; minimal hesitation; consistent clarity.',
     bands: {
-      5: 'Speech is natural, fluent, and easy to understand (100–120 wpm). Natural intonation. Thai accent is fully intelligible.',
-      4: 'Clear speech with minor hesitations that do not impede comprehension. Easy to understand throughout.',
-      3: 'Noticeable hesitations, self-corrections, or choppy pacing. Comprehensible with minor listener effort.',
-      2: 'Frequent, prolonged pauses and disfluencies. Heavy mispronunciations force significant listener effort.',
-      1: 'Unintelligible speech or prolonged silence. Communication breaks down completely.'
+      5: 'Clear, smooth delivery; natural pacing; minimal hesitation; consistent clarity.',
+      4: 'Clear speech; generally smooth delivery; occasional brief hesitation.',
+      3: 'Understandable delivery; noticeable hesitation, uneven pacing, or minor errors.',
+      2: 'Frequent hesitation: disrupted pacing; pronunciation affects understanding.',
+      1: 'Speech difficult to follow; severe pronunciation problems; prolonged hesitation.'
     }
   }
 ];
 
-// CEFR Level Mapping (Appendix B Section 4.3)
+// ============================================================================
+// PERFORMANCE LEVEL MAPPING (Score Range 1–25)
+// Direct extraction from Speaking Assessment Rubric (Pre-test and Post-test).docx
+// ============================================================================
+export const PERFORMANCE_LEVELS_25 = [
+  {
+    level: 'Excellent',
+    scoreRange: '21-25',
+    minScore: 21,
+    maxScore: 25,
+    description: 'Does a fantastic job in every area, speaking smoothly and clearly with almost no mistakes.',
+    cefr: 'B2.2 / C1',
+    badgeClass: 'bg-emerald-100 text-emerald-800 border-emerald-300',
+    badgeColor: 'emerald'
+  },
+  {
+    level: 'Very Good',
+    scoreRange: '16-20',
+    minScore: 16,
+    maxScore: 20,
+    description: 'Shows strong skills overall, making only small mistakes that do not disrupt communication.',
+    cefr: 'B2.1',
+    badgeClass: 'bg-blue-100 text-blue-800 border-blue-300',
+    badgeColor: 'blue'
+  },
+  {
+    level: 'Good',
+    scoreRange: '11-15',
+    minScore: 11,
+    maxScore: 15,
+    description: 'Meets the basic requirements and gets the main job done, though noticeable mistakes still happen.',
+    cefr: 'B1.2',
+    badgeClass: 'bg-indigo-100 text-indigo-800 border-indigo-300',
+    badgeColor: 'indigo'
+  },
+  {
+    level: 'Fair',
+    scoreRange: '6-10',
+    minScore: 6,
+    maxScore: 10,
+    description: 'Only gets part of the job done; frequent mistakes make communication tricky.',
+    cefr: 'B1.1',
+    badgeClass: 'bg-amber-100 text-amber-800 border-amber-300',
+    badgeColor: 'amber'
+  },
+  {
+    level: 'Poor',
+    scoreRange: '1-5',
+    minScore: 1,
+    maxScore: 5,
+    description: 'Struggles across the board and fails to meet basic standards.',
+    cefr: 'A2',
+    badgeClass: 'bg-rose-100 text-rose-800 border-rose-300',
+    badgeColor: 'rose'
+  }
+];
+
+// Resolves rating details given raw score (out of 25)
 export function getCefrRating(totalRawScore, maxScore = 25) {
-  const percentage = (totalRawScore / maxScore) * 100;
-  if (percentage >= 90) {
+  const score = Math.round(Number(totalRawScore) || 0);
+
+  if (score >= 21) {
     return {
+      level: 'Excellent',
+      label: 'Excellent',
+      scoreRange: '21-25',
+      description: 'Does a fantastic job in every area, speaking smoothly and clearly with almost no mistakes.',
       cefr: 'B2.2 / C1',
-      label: 'Advanced / Job-Ready Specialist',
-      recommendation: 'Direct BPO Deployment',
-      badgeColor: 'emerald'
+      badgeColor: 'emerald',
+      badgeClass: 'bg-emerald-100 text-emerald-800 border-emerald-300'
     };
-  } else if (percentage >= 75) {
+  } else if (score >= 16) {
     return {
+      level: 'Very Good',
+      label: 'Very Good',
+      scoreRange: '16-20',
+      description: 'Shows strong skills overall, making only small mistakes that do not disrupt communication.',
       cefr: 'B2.1',
-      label: 'Proficient / Deployable Support Agent',
-      recommendation: 'Deployable under Mentor Supervision',
-      badgeColor: 'blue'
+      badgeColor: 'blue',
+      badgeClass: 'bg-blue-100 text-blue-800 border-blue-300'
     };
-  } else if (percentage >= 60) {
+  } else if (score >= 11) {
     return {
+      level: 'Good',
+      label: 'Good',
+      scoreRange: '11-15',
+      description: 'Meets the basic requirements and gets the main job done, though noticeable mistakes still happen.',
       cefr: 'B1.2',
-      label: 'Intermediate Support Agent',
-      recommendation: 'Requires On-the-Job Supervision',
-      badgeColor: 'amber'
+      badgeColor: 'indigo',
+      badgeClass: 'bg-indigo-100 text-indigo-800 border-indigo-300'
     };
-  } else if (percentage >= 40) {
+  } else if (score >= 6) {
     return {
+      level: 'Fair',
+      label: 'Fair',
+      scoreRange: '6-10',
+      description: 'Only gets part of the job done; frequent mistakes make communication tricky.',
       cefr: 'B1.1',
-      label: 'Developing Support Agent',
-      recommendation: 'Requires Remedial Language Training',
-      badgeColor: 'orange'
+      badgeColor: 'amber',
+      badgeClass: 'bg-amber-100 text-amber-800 border-amber-300'
     };
   } else {
     return {
+      level: 'Poor',
+      label: 'Poor',
+      scoreRange: '1-5',
+      description: 'Struggles across the board and fails to meet basic standards.',
       cefr: 'A2',
-      label: 'Novice Support Agent',
-      recommendation: 'Unprepared for Frontline Voice Operations',
-      badgeColor: 'red'
+      badgeColor: 'rose',
+      badgeClass: 'bg-rose-100 text-rose-800 border-rose-300'
     };
   }
 }

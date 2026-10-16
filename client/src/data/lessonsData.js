@@ -80,6 +80,7 @@ export const LESSONS_DATA = {
       modelDialogue: {
         title: 'Model Dialogue 1.1: Call Opening & Empathy',
         context: 'Customer contacts support because their accounting software crashed before saving.',
+        audioUrl: '/audio_dialogue/lesson_1_dialogue.wav',
         lines: [
           { speaker: 'Agent (Nadia)', text: 'Thank you for calling Technical Support. My name is Nadia. How may I help you today?', purpose: 'Professional greeting & offer of help' },
           { speaker: 'Caller (Sarah)', text: 'Hi Nadia, my accounting portal just crashed and I was right in the middle of month-end reporting! I think I lost everything!', purpose: 'Customer expressing distress' },
@@ -242,6 +243,7 @@ export const LESSONS_DATA = {
       modelDialogue: {
         title: 'Model Dialogue 2.1: Fault Isolation (Mobile App)',
         context: 'Customer Mr. Roy calls Concentrix technical support reporting that mobile banking is broken.',
+        audioUrl: '/audio_dialogue/lesson_2_dialogue.wav',
         lines: [
           { speaker: 'Agent (Maya)', text: 'Thank you for calling Concentrix Technical Support. My name is Maya. How may I assist you today?', purpose: 'Call opening & offer of help' },
           { speaker: 'Caller (Mr. Roy)', text: 'Hi! Your mobile banking app is completely useless! I tried logging in to transfer money, but it won\'t let me in!', purpose: 'Vague customer complaint' },
@@ -417,6 +419,7 @@ export const LESSONS_DATA = {
       modelDialogue: {
         title: 'Model Dialogue 3.1: E-Commerce Admin Crash Workaround',
         context: 'An online store owner calls Scicom support because inventory export crashes the portal.',
+        audioUrl: '/audio_dialogue/lesson_3_dialogue.wav',
         lines: [
           { speaker: 'Agent (Danial)', text: 'Thank you for calling Application Support. My name is Danial. How may I assist you today?', purpose: 'Call opening' },
           { speaker: 'Caller (Brenda)', text: 'Danial, every time I click "Export Inventory to CSV", the screen turns grey and crashes! I need to ship orders now!', purpose: 'Critical business issue' },
@@ -590,6 +593,7 @@ export const LESSONS_DATA = {
       modelDialogue: {
         title: 'Model Dialogue 4.1: Duplicate Credit Card Charge',
         context: 'Customer Mr. Tan calls Teleperformance shouting about being billed twice for software.',
+        audioUrl: '/audio_dialogue/lesson_4_dialogue.wav',
         lines: [
           { speaker: 'Caller (Mr. Tan)', text: 'I just checked my credit card bill and you charged me TWICE for my monthly subscription! Your billing system is a disaster! I want my money back right now or I\'m calling my lawyer!', purpose: 'Irate customer outburst' },
           { speaker: 'Agent (Kevin)', text: 'I completely understand how concerning a duplicate charge is on your credit card statement, Mr. Tan, and I sincerely apologize for the frustration this has caused you.', purpose: 'Hear + Empathize + Sincere Apology' },
@@ -753,6 +757,7 @@ export const LESSONS_DATA = {
       modelDialogue: {
         title: 'Model Dialogue 5.1: Multi-Factor Authentication (MFA) Setup',
         context: 'Agent assists an employee at BASF Malaysia with enrolling in Microsoft Authenticator.',
+        audioUrl: '/audio_dialogue/lesson_5_dialogue.wav',
         lines: [
           { speaker: 'Agent (Aina)', text: 'Thank you for calling IT Helpdesk. My name is Aina. How may I assist you today?', purpose: 'Call opening' },
           { speaker: 'Caller (Hassan)', text: 'Hi Aina, I just got a company mobile phone and I need help setting up my MFA login for office email.', purpose: 'Request for multi-step guidance' },
@@ -917,6 +922,7 @@ export const LESSONS_DATA = {
       modelDialogue: {
         title: 'Model Dialogue 6.1: Escalating a P1 Payroll Outage',
         context: 'HR Manager calls Accenture Service Desk because the payroll database froze during staff payouts.',
+        audioUrl: '/audio_dialogue/lesson_6_dialogue.wav',
         lines: [
           { speaker: 'Agent (Zack)', text: 'Thank you for calling IT Service Desk. My name is Zack. How may I assist you today?', purpose: 'Call opening' },
           { speaker: 'Caller (Datin Linda)', text: 'Zack, our automated payroll run failed halfway through executing monthly staff salaries! 500 employees haven\'t been paid! This is a complete business emergency!', purpose: 'P1 Business emergency' },
@@ -1084,6 +1090,7 @@ export const LESSONS_DATA = {
       modelDialogue: {
         title: 'Model Dialogue 7.1: Quality Assurance Ticket Audit',
         context: 'QA Coach reviews Ticket #TK-3091 with support agent Golf at Credspire Support.',
+        audioUrl: '/audio_dialogue/lesson_7_dialogue.wav',
         lines: [
           { speaker: 'QA Coach', text: 'Golf, let\'s examine your ticket notes for the merchant portal account lockout call. What did you write in the Action Taken field?', purpose: 'Audit review' },
           { speaker: 'Agent (Golf)', text: 'I wrote: "1. Verified merchant ID #M-9021. 2. Isolated 3 consecutive failed login attempts triggering automated security lockout. 3. Dispatched reset link to registered email. 4. Confirmed user regained portal access."', purpose: 'Clean past-tense documentation' },
@@ -1256,6 +1263,7 @@ export const LESSONS_DATA = {
       modelDialogue: {
         title: 'Model Dialogue 8.1: Morning-to-Afternoon Shift Handover',
         context: 'Outgoing lead Nadia briefs incoming afternoon lead Vikram at Scicom Cyberjaya.',
+        audioUrl: '/audio_dialogue/lesson_8_dialogue.wav',
         lines: [
           { speaker: 'Vikram (Incoming Lead)', text: 'Hi Nadia, good job on the morning queue. What critical tickets do you have for the afternoon handover?', purpose: 'Handover opening' },
           { speaker: 'Nadia (Outgoing Lead)', text: 'Good afternoon, Vikram. I am briefing you on Ticket ID #TK-4402, a Priority 3 standard request for the Scicom Regional SaaS Portal account. The client reported an automated account lockout following three failed MFA authentication attempts.', purpose: 'Stage 1 Case Overview & Stage 2 Symptom' },

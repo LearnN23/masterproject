@@ -7,7 +7,11 @@ import {
   BarChart3, 
   TrendingUp, 
   Scale, 
-  RefreshCw 
+  RefreshCw,
+  Archive,
+  ShieldCheck,
+  CheckCircle2,
+  HardDrive
 } from 'lucide-react';
 
 export default function DataExport() {
@@ -75,6 +79,15 @@ export default function DataExport() {
             <Download className="w-4 h-4" />
             Download SPSS CSV
           </a>
+          <a
+            href="/api/backup/download"
+            download="TECHQUEST_Research_Backup.zip"
+            className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 rounded-xl text-xs shadow-md transition-all"
+            title="Download complete snapshot: SQLite DB + Audio recordings + Audio Manifest + SPSS dataset in a single ZIP"
+          >
+            <Archive className="w-4 h-4" />
+            Full Backup (.zip)
+          </a>
         </div>
       </div>
 
@@ -119,6 +132,64 @@ export default function DataExport() {
           </div>
           <div className="text-[11px] text-slate-500 mt-1">
             {discrepancies.length > 0 ? 'Require rater consensus' : 'High rater concordance'}
+          </div>
+        </div>
+      </div>
+
+      {/* Complete Research Archive & Audio Backup Card */}
+      <div className="bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-900 text-white rounded-2xl p-6 border border-indigo-900/60 shadow-md">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="space-y-2.5 max-w-2xl">
+            <div className="flex items-center gap-2">
+              <span className="px-2.5 py-0.5 bg-indigo-500/20 text-indigo-300 text-xs font-bold rounded-full border border-indigo-500/30 flex items-center gap-1">
+                <ShieldCheck className="w-3.5 h-3.5" /> Complete Thesis Audit Package
+              </span>
+              <span className="text-xs text-slate-400 font-mono">1-Click ZIP Archive</span>
+            </div>
+            <h3 className="text-lg font-black text-white">Full Research Backup & Audio Audit Archive</h3>
+            <p className="text-xs text-slate-300 leading-relaxed font-medium">
+              Self-contained snapshot designed for thesis committee defense audits and zero-loss disaster recovery. Contains:
+            </p>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-300 pt-1">
+              <li className="flex items-center gap-1.5 font-medium">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <span><strong>SQLite Database</strong> (checkpointed techquest.db)</span>
+              </li>
+              <li className="flex items-center gap-1.5 font-medium">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <span><strong>All Student Voice Files</strong> (raw recordings)</span>
+              </li>
+              <li className="flex items-center gap-1.5 font-medium">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <span><strong>Candidate-Mapped Audio</strong> (STU-1001_PreTest.webm)</span>
+              </li>
+              <li className="flex items-center gap-1.5 font-medium">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <span><strong>Audio Manifest & Audit Guide</strong> (audio_manifest.csv)</span>
+              </li>
+              <li className="flex items-center gap-1.5 font-medium">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <span><strong>SPSS / Jamovi Dataset</strong> (CSV)</span>
+              </li>
+              <li className="flex items-center gap-1.5 font-medium">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <span><strong>Participants Roster & Cohorts</strong> (CSV)</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="flex flex-col sm:flex-row md:flex-col gap-2.5 w-full md:w-auto shrink-0">
+            <a
+              href="/api/backup/download"
+              download="TECHQUEST_Research_Backup.zip"
+              className="flex items-center justify-center gap-2 px-5 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-lg transition-all"
+            >
+              <Download className="w-4 h-4" />
+              <span>Download Full Backup (.zip)</span>
+            </a>
+            <p className="text-[10px] text-slate-400 text-center font-mono">
+              CLI command: <code className="bg-slate-800 px-1.5 py-0.5 rounded text-indigo-300">npm run backup</code>
+            </p>
           </div>
         </div>
       </div>

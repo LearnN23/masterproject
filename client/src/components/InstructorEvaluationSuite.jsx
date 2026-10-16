@@ -416,11 +416,14 @@ export function SubmissionReviewDetail({ submission, navigateTo, studentState })
             {cefrInfo && (
               <div className="pt-1 space-y-1">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-indigo-300">CEFR Readiness:</span>
-                  <span className="font-black text-amber-300">{cefrInfo.cefr}</span>
+                  <span className="text-indigo-300">Performance Level:</span>
+                  <span className="font-black text-amber-300">{cefrInfo.level} ({cefrInfo.scoreRange})</span>
                 </div>
-                <p className="text-[11px] text-indigo-200">{cefrInfo.label}</p>
-                <p className="text-[10px] text-emerald-300 font-semibold">{cefrInfo.recommendation}</p>
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-indigo-300">CEFR Benchmark:</span>
+                  <span className="font-semibold text-emerald-300">{cefrInfo.cefr}</span>
+                </div>
+                <p className="text-[11px] text-indigo-200 leading-snug">{cefrInfo.description}</p>
               </div>
             )}
           </div>

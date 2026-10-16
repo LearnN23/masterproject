@@ -550,8 +550,8 @@ export default function ScoreCalibrationStudio({ currentUser, submissions: propS
                             <span className="font-black text-indigo-700 bg-indigo-50 px-2.5 py-0.5 rounded-lg border border-indigo-200">
                               {instTotal} / 25
                             </span>
-                            <span className="text-[10px] text-indigo-500 font-bold mt-0.5">
-                              {instCefr?.cefr}
+                            <span className="text-[10px] text-indigo-600 font-bold mt-0.5">
+                              {instCefr?.level} ({instCefr?.cefr})
                             </span>
                           </div>
                         ) : (
@@ -566,8 +566,8 @@ export default function ScoreCalibrationStudio({ currentUser, submissions: propS
                             <span className="font-black text-teal-700 bg-teal-50 px-2.5 py-0.5 rounded-lg border border-teal-200">
                               {raterTotal} / 25
                             </span>
-                            <span className="text-[10px] text-teal-500 font-bold mt-0.5">
-                              {raterCefr?.cefr}
+                            <span className="text-[10px] text-teal-600 font-bold mt-0.5">
+                              {raterCefr?.level} ({raterCefr?.cefr})
                             </span>
                           </div>
                         ) : (
@@ -806,7 +806,7 @@ export default function ScoreCalibrationStudio({ currentUser, submissions: propS
                   <div className="flex items-center gap-2">
                     <span className="text-xs font-bold text-slate-500">Calibrated Outcome:</span>
                     <span className="px-3 py-1 bg-purple-600 text-white rounded-xl text-xs font-black shadow-sm">
-                      {liveCalibratedTotal} / 25 ({Math.round((liveCalibratedTotal / 25) * 100)}%) &bull; {liveCefr.cefr}
+                      {liveCalibratedTotal} / 25 ({Math.round((liveCalibratedTotal / 25) * 100)}%) &bull; {liveCefr.level} ({liveCefr.cefr})
                     </span>
                   </div>
                 </div>

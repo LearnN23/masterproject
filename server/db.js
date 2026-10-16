@@ -378,9 +378,14 @@ const DAL = {
     const sectionsJson = JSON.stringify(progressUpdate.sections_completed || {});
 
     if (existing) {
+      // Never downgrade an already completed unit back to in_progress or not_started
+      const finalStatus = (existing.status === 'completed' && progressUpdate.status && progressUpdate.status !== 'completed')
+        ? 'completed'
+        : (progressUpdate.status || existing.status);
+
       db.prepare(`
         UPDATE student_progress
-        SET status = COALESCE(?, status),
+        SET status = ?,
             current_sub_section = COALESCE(?, current_sub_section),
             sections_completed = COALESCE(?, sections_completed),
             review_score = COALESCE(?, review_score),
@@ -389,12 +394,12 @@ const DAL = {
             updated_at = ?
         WHERE user_id = ? AND unit_id = ?
       `).run(
-        progressUpdate.status || null,
+        finalStatus,
         progressUpdate.current_sub_section || null,
         sectionsJson,
         progressUpdate.review_score !== undefined ? progressUpdate.review_score : null,
         progressUpdate.review_score !== undefined ? progressUpdate.review_score : null,
-        progressUpdate.status || null,
+        finalStatus,
         now,
         now,
         userId,
@@ -769,6 +774,106 @@ const DAL = {
         calibration_notes: r1.calibration_notes || r2.calibration_notes || '',
         r1_notes: r1.strengths ? `${r1.strengths} | ${r1.areas_for_improvement}` : '',
         r2_notes: r2.strengths ? `${r2.strengths} | ${r2.areas_for_improvement}` : ''
+      };
+    });
+  },
+
+  getCohortOverview() {
+    const students = db.prepare(`
+      SELECT id, username, name, participant_code, cohort_group, created_at
+      FROM users
+      WHERE role = 'student'
+      ORDER BY participant_code ASC
+    `).all();
+
+    const consents = db.prepare('SELECT user_id, consent_status, agreed_at FROM research_consent').all();
+    const consentMap = {};
+    consents.forEach(c => { consentMap[c.user_id] = Boolean(c.consent_status); });
+
+    const progressRows = db.prepare('SELECT user_id, unit_id, status, review_score FROM student_progress').all();
+    const progressMap = {};
+    progressRows.forEach(p => {
+      if (!progressMap[p.user_id]) progressMap[p.user_id] = {};
+      progressMap[p.user_id][p.unit_id] = p;
+    });
+
+    const subs = this.getSubmissions();
+    const subsByUserAndUnit = {};
+    subs.forEach(s => {
+      const key = `${s.user_id}_${s.unit_id}`;
+      if (!subsByUserAndUnit[key] || (s.grades && Object.keys(s.grades).length > Object.keys(subsByUserAndUnit[key].grades || {}).length)) {
+        subsByUserAndUnit[key] = s;
+      }
+    });
+
+    return students.map(st => {
+      const uProgress = progressMap[st.id] || {};
+      
+      let completedLessons = 0;
+      for (let i = 1; i <= 8; i++) {
+        const uId = `lesson_${i}`;
+        if (uProgress[uId] && uProgress[uId].status === 'completed') {
+          completedLessons++;
+        }
+      }
+
+      const preSub = subsByUserAndUnit[`${st.id}_section_0`];
+      const preInstGrade = preSub?.grades?.instructor || preSub?.grades?.raterA || null;
+      const preRaterGrade = preSub?.grades?.rater || preSub?.grades?.raterB || null;
+      const preDiff = (preInstGrade && preRaterGrade) ? Math.abs(preInstGrade.total - preRaterGrade.total) : null;
+
+      const postSub = subsByUserAndUnit[`${st.id}_section_9`];
+      const postInstGrade = postSub?.grades?.instructor || postSub?.grades?.raterA || null;
+      const postRaterGrade = postSub?.grades?.rater || postSub?.grades?.raterB || null;
+      const postDiff = (postInstGrade && postRaterGrade) ? Math.abs(postInstGrade.total - postRaterGrade.total) : null;
+
+      let stage = 'Consent Pending';
+      if (consentMap[st.id]) {
+        stage = 'Consent Signed';
+        if (preSub) {
+          stage = (preInstGrade && preRaterGrade) ? 'Pre-test Dual Graded' : 'Pre-test Submitted';
+          if (completedLessons > 0) {
+            stage = `Lessons (${completedLessons}/8)`;
+            if (completedLessons === 8) {
+              stage = 'Lessons Complete';
+              if (postSub) {
+                stage = (postInstGrade && postRaterGrade) ? 'Study Completed & Dual Graded' : 'Post-test Submitted';
+              }
+            }
+          }
+        }
+      }
+
+      return {
+        ...st,
+        hasConsent: Boolean(consentMap[st.id]),
+        preTest: {
+          status: uProgress['section_0']?.status || 'not_started',
+          hasSubmission: Boolean(preSub),
+          submissionId: preSub?.id || null,
+          audioUrl: preSub?.audio_url || null,
+          instructorScore: preInstGrade ? preInstGrade.total : null,
+          raterScore: preRaterGrade ? preRaterGrade.total : null,
+          isDualScored: Boolean(preInstGrade && preRaterGrade),
+          diff: preDiff,
+          isDiscrepant: preDiff !== null && preDiff >= 5
+        },
+        lessons: {
+          completedCount: completedLessons,
+          allCompleted: completedLessons === 8
+        },
+        postTest: {
+          status: uProgress['section_9']?.status || 'not_started',
+          hasSubmission: Boolean(postSub),
+          submissionId: postSub?.id || null,
+          audioUrl: postSub?.audio_url || null,
+          instructorScore: postInstGrade ? postInstGrade.total : null,
+          raterScore: postRaterGrade ? postRaterGrade.total : null,
+          isDualScored: Boolean(postInstGrade && postRaterGrade),
+          diff: postDiff,
+          isDiscrepant: postDiff !== null && postDiff >= 5
+        },
+        overallStage: stage
       };
     });
   },

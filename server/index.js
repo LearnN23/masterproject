@@ -104,6 +104,16 @@ app.get('/api/stats', (req, res) => {
   }
 });
 
+// Cohort Progress & Dual-Rating Overview for Admin/Researcher
+app.get('/api/cohort-overview', (req, res) => {
+  try {
+    const overview = DAL.getCohortOverview();
+    res.json(overview);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Login Endpoint (Verifies username/participant_code & password from DB)
 app.post('/api/auth/login', (req, res) => {
   const { username, password, role } = req.body;
@@ -534,10 +544,38 @@ app.get('/api/export/credentials', (req, res) => {
   res.download(targetPath, 'techquest_users_credentials.csv');
 });
 
+// --- COMPLETE RESEARCH BACKUP ARCHIVE DOWNLOAD ---
+app.get('/api/backup/download', (req, res) => {
+  try {
+    const { createResearchBackupArchive } = require('./backupService');
+    const result = createResearchBackupArchive();
+    
+    res.setHeader('Content-Type', 'application/zip');
+    res.setHeader('Content-Disposition', `attachment; filename="${result.zipFilename}"`);
+    res.download(result.zipPath, result.zipFilename, (err) => {
+      if (err) {
+        console.error('[Backup Download] Error streaming zip:', err);
+      }
+    });
+  } catch (err) {
+    console.error('[Backup Download Error]', err);
+    res.status(500).json({ error: 'Failed to generate backup archive: ' + err.message });
+  }
+});
+
 // Serve direct slides folder from client/public/slides so newly dropped slides work immediately
 const CLIENT_PUBLIC_SLIDES = path.join(__dirname, '..', 'client', 'public', 'slides');
 if (fs.existsSync(CLIENT_PUBLIC_SLIDES)) {
   app.use('/slides', express.static(CLIENT_PUBLIC_SLIDES));
+}
+
+// Serve dialogue audio files directly
+const AUDIO_DIALOGUE_DIR = path.join(__dirname, '..', 'client', 'public', 'audio_dialogue');
+const ROOT_AUDIO_DIALOGUE = path.join(__dirname, '..', 'audio_dialogue');
+if (fs.existsSync(AUDIO_DIALOGUE_DIR)) {
+  app.use('/audio_dialogue', express.static(AUDIO_DIALOGUE_DIR));
+} else if (fs.existsSync(ROOT_AUDIO_DIALOGUE)) {
+  app.use('/audio_dialogue', express.static(ROOT_AUDIO_DIALOGUE));
 }
 
 // Serve compiled client frontend
@@ -545,7 +583,12 @@ const CLIENT_DIST = path.join(__dirname, '..', 'client', 'dist');
 if (fs.existsSync(CLIENT_DIST)) {
   app.use(express.static(CLIENT_DIST));
   app.use((req, res, next) => {
-    if (req.path.startsWith('/api') || req.path.startsWith('/uploads') || req.path.startsWith('/slides')) {
+    if (
+      req.path.startsWith('/api') || 
+      req.path.startsWith('/uploads') || 
+      req.path.startsWith('/slides') || 
+      req.path.startsWith('/audio_dialogue')
+    ) {
       return next();
     }
     res.sendFile(path.join(CLIENT_DIST, 'index.html'));

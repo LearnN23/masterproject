@@ -5,15 +5,17 @@ import {
   Settings, LogOut, MessageSquare, Award, BookCheck, Info,
   Headphones, Send, RotateCcw, User, GraduationCap, ArrowRight,
   ShieldCheck, ListChecks, ArrowLeft, ThumbsUp, Lightbulb, UserCheck, CheckSquare,
-  BarChart3, FileAudio, ChevronLeft, Download, Sparkles
+  BarChart3, FileAudio, ChevronLeft, Download, Sparkles, TrendingUp, Archive
 } from 'lucide-react';
 import InteractiveLessonView from './components/InteractiveLessonView';
 import AssessmentView from './components/AssessmentView';
+import PostTestReadinessModal from './components/PostTestReadinessModal';
 import DataExport from './components/DataExport';
 import StudentDashboard from './components/StudentDashboard';
 import RaterDashboard from './components/RaterDashboard';
 import InstructorDashboard from './components/InstructorDashboard';
 import AdminDashboard from './components/AdminDashboard';
+import ScoreCalibrationStudio from './components/ScoreCalibrationStudio';
 import ExpertDashboard from './components/ExpertDashboard';
 import LoginPage from './components/LoginPage';
 import { 
@@ -327,6 +329,7 @@ const createDefaultStudentState = (user = null, progressData = {}) => {
   };
 
   let preTestCompleted = false;
+  let postTestStarted = false;
   let postTestCompleted = false;
 
   if (progressData) {
@@ -343,6 +346,9 @@ const createDefaultStudentState = (user = null, progressData = {}) => {
       }
     }
     if (progressData['section_0']?.status === 'completed') preTestCompleted = true;
+    if (progressData['section_9']?.status === 'in_progress' || progressData['section_9']?.status === 'completed') {
+      postTestStarted = true;
+    }
     if (progressData['section_9']?.status === 'completed') postTestCompleted = true;
   }
 
@@ -353,6 +359,7 @@ const createDefaultStudentState = (user = null, progressData = {}) => {
     consent: { status: Boolean(user?.consentAgreed), version: 'v1.0', agreedAt: null, method: null },
     preTestCompleted,
     preTestAudioUrl: null,
+    postTestStarted,
     postTestCompleted,
     postTestAudioUrl: null,
     lessonsProgress,
@@ -393,8 +400,10 @@ export default function App() {
   });
 
   const [activeLesson, setActiveLesson] = useState(null);
+  const [lessonParams, setLessonParams] = useState(null);
   const [selectedStudentId, setSelectedStudentId] = useState(null);
   const [selectedSubmission, setSelectedSubmission] = useState(null); 
+  const [showPostTestModal, setShowPostTestModal] = useState(false);
 
   // Unified Student State isolated strictly per user account
   const [studentState, setStudentState] = useState(() => {
@@ -448,9 +457,13 @@ export default function App() {
     currentUser.cohort_group === 'Group_Pilot'
   );
 
+  const isPostTestInProgress = studentState.postTestStarted && !studentState.postTestCompleted;
+
   // Sequential gate verification for lessons 1 to 8
   const isLessonLocked = (lessonNum) => {
     if (isBypass) return false;
+    // Closed-book examination condition: all lessons locked while post-test is in progress
+    if (studentState.postTestStarted && !studentState.postTestCompleted) return true;
     if (!studentState.preTestCompleted) return true;
     if (lessonNum === 1) return false;
     const prev = studentState.lessonsProgress?.[lessonNum - 1];
@@ -464,6 +477,39 @@ export default function App() {
     return !l8?.isCompleted;
   };
 
+  const handleConfirmStartPostTest = async () => {
+    setShowPostTestModal(false);
+    updateStudentState('postTestStarted', true);
+
+    const userId = studentState?.userId || currentUser?.id;
+    if (userId) {
+      try {
+        const saved = localStorage.getItem(`techquest_progress_${userId}`) || '{}';
+        const prog = JSON.parse(saved);
+        prog['section_9'] = { ...(prog['section_9'] || {}), status: 'in_progress', current_sub_section: 'task_1' };
+        localStorage.setItem(`techquest_progress_${userId}`, JSON.stringify(prog));
+      } catch {}
+    }
+
+    try {
+      await fetch('/api/progress', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId,
+          unitId: 'section_9',
+          status: 'in_progress',
+          currentSubSection: 'task_1'
+        })
+      });
+    } catch (err) {
+      console.warn('Failed to sync post-test in_progress status:', err);
+    }
+
+    setCurrentView('post-test');
+    window.scrollTo(0, 0);
+  };
+
   const navigateTo = (view, data = null) => {
     window.speechSynthesis.cancel();
     
@@ -472,8 +518,27 @@ export default function App() {
       setCurrentView('consent');
       return;
     }
+
+    // Closed-book post-test guard: prevent opening lesson when post-test is in progress
+    if (view === 'lesson' && studentState.postTestStarted && !studentState.postTestCompleted && !isBypass) {
+      alert('Closed-Book Assessment in Progress: Lesson review is locked until your Post-test is completed.');
+      setCurrentView('post-test');
+      return;
+    }
+
+    // Post-test entry prompt: if post-test not started yet, show readiness modal
+    if (view === 'post-test' && !studentState.postTestStarted && !studentState.postTestCompleted && !isBypass) {
+      setShowPostTestModal(true);
+      return;
+    }
+
     setCurrentView(view);
-    if (data && data.lessonId) setActiveLesson(data.lessonId);
+    if (data && data.lessonId) {
+      setActiveLesson(data.lessonId);
+      setLessonParams(data);
+    } else if (view !== 'lesson') {
+      setLessonParams(null);
+    }
     if (data && data.studentId) setSelectedStudentId(data.studentId);
     if (data && data.submission) setSelectedSubmission(data.submission);
     window.scrollTo(0,0);
@@ -626,23 +691,41 @@ export default function App() {
                 <span>Learning Modules</span>
                 {isBypass && <span className="text-[9px] text-teal-400 font-bold bg-teal-400/10 px-1.5 py-0.5 rounded">All Unlocked</span>}
               </div>
-              {LESSONS.map(l => (
-                <NavItem 
-                  key={l.id} 
-                  icon={BookOpen} 
-                  label={`Lesson ${l.id}`} 
-                  active={currentView === 'lesson' && activeLesson === l.id} 
-                  onClick={() => navigateTo('lesson', { lessonId: l.id })}
-                  locked={isLessonLocked(l.id)} 
-                />
-              ))}
+              {LESSONS.map(l => {
+                const isCompleted = studentState?.lessonsProgress?.[l.id]?.isCompleted;
+                const isLocked = isLessonLocked(l.id);
+                const isExamLocked = isPostTestInProgress && isCompleted;
+                return (
+                  <NavItem 
+                    key={l.id} 
+                    icon={BookOpen} 
+                    label={`Lesson ${l.id}`} 
+                    active={currentView === 'lesson' && activeLesson === l.id} 
+                    onClick={() => navigateTo('lesson', { 
+                      lessonId: l.id,
+                      mode: isCompleted ? 'review' : 'study',
+                      initialSection: isCompleted ? 'situation' : undefined
+                    })}
+                    locked={isLocked} 
+                    completed={isCompleted && !isLocked}
+                    isExamLocked={isExamLocked}
+                  />
+                );
+              })}
               
               <div className="pt-4 pb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">Assessments</div>
               <NavItem 
                 icon={Mic} 
                 label="Post-test" 
                 active={currentView === 'post-test'} 
-                onClick={() => navigateTo('post-test')} 
+                onClick={() => {
+                  if (isPostTestLocked()) return;
+                  if (!studentState.postTestStarted && !studentState.postTestCompleted && !isBypass) {
+                    setShowPostTestModal(true);
+                  } else {
+                    navigateTo('post-test');
+                  }
+                }} 
                 locked={isPostTestLocked()} 
               />
               <NavItem icon={Award} label="My Results & Grades" active={currentView === 'student-dashboard'} onClick={() => navigateTo('student-dashboard')} />
@@ -655,11 +738,9 @@ export default function App() {
               <NavItem icon={Mic} label="Audio Grading Queue" active={currentView === 'instructor-dashboard'} onClick={() => navigateTo('instructor-dashboard')} />
               <NavItem icon={Users} label="Student Roster" active={currentView === 'students' || currentView === 'student-progress'} onClick={() => navigateTo('students')} />
               
-              <div className="pt-4 pb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">Research Analytics</div>
+              <div className="pt-4 pb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">Assessment Outcomes</div>
               <NavItem icon={BarChart3} label="Pre-test Results" active={currentView === 'pre-test-results'} onClick={() => navigateTo('pre-test-results')} />
               <NavItem icon={BarChart3} label="Post-test Results" active={currentView === 'post-test-results'} onClick={() => navigateTo('post-test-results')} />
-              <NavItem icon={Award} label="Calibration Matrix" active={currentView === 'instructor-results'} onClick={() => navigateTo('instructor-results')} />
-              <NavItem icon={Download} label="Research Data & SPSS" active={currentView === 'data-export'} onClick={() => navigateTo('data-export')} />
               
               <div className="pt-4 pb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">Curriculum</div>
               <NavItem icon={BookCheck} label="Module Overview" active={currentView === 'module-overview'} onClick={() => navigateTo('module-overview')} />
@@ -675,17 +756,21 @@ export default function App() {
               <div className="pt-4 pb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">Research Reference</div>
               <NavItem icon={BookCheck} label="Module Overview" active={currentView === 'module-overview'} onClick={() => navigateTo('module-overview')} />
               <NavItem icon={Search} label="Research Context" active={currentView === 'research'} onClick={() => navigateTo('research')} />
-              <NavItem icon={Download} label="Export SPSS CSV" active={false} onClick={() => window.open('/api/export/spss', '_blank')} />
             </>
           )}
 
           {activeRoleView === 'admin' && (
             <>
-              <NavItem icon={LayoutDashboard} label="Admin Console" active={currentView === 'admin-dashboard'} onClick={() => navigateTo('admin-dashboard')} />
-              <NavItem icon={Users} label="User Management" active={currentView === 'admin-dashboard'} onClick={() => navigateTo('admin-dashboard')} />
-              <div className="pt-4 pb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">Data & Exports</div>
+              <NavItem icon={LayoutDashboard} label="Master Cohort Tracker" active={currentView === 'admin-dashboard'} onClick={() => navigateTo('admin-dashboard')} />
+              <NavItem icon={Award} label="Dual-Rater Calibration" active={currentView === 'calibration-matrix'} onClick={() => navigateTo('calibration-matrix')} />
+              <NavItem icon={BarChart3} label="Pre-test Results" active={currentView === 'pre-test-results'} onClick={() => navigateTo('pre-test-results')} />
+              <NavItem icon={BarChart3} label="Post-test Results" active={currentView === 'post-test-results'} onClick={() => navigateTo('post-test-results')} />
+              <NavItem icon={TrendingUp} label="Pre-to-Post Gains" active={currentView === 'instructor-results'} onClick={() => navigateTo('instructor-results')} />
+              
+              <div className="pt-4 pb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">Research Data & Ethics</div>
               <NavItem icon={Download} label="Research Data & SPSS" active={currentView === 'data-export'} onClick={() => navigateTo('data-export')} />
-              <NavItem icon={Download} label="Export SPSS CSV" active={false} onClick={() => window.open('/api/export/spss', '_blank')} />
+              <NavItem icon={Archive} label="Full Research Backup (.zip)" active={false} onClick={() => window.open('/api/backup/download', '_blank')} />
+              <NavItem icon={Users} label="Participant Accounts" active={currentView === 'admin-users'} onClick={() => navigateTo('admin-users')} />
               <NavItem icon={Search} label="Research Context" active={currentView === 'research'} onClick={() => navigateTo('research')} />
             </>
           )}
@@ -773,10 +858,19 @@ export default function App() {
           )}
 
           {/* Dashboards */}
-          {currentView === 'student-dashboard' && <StudentDashboard navigateTo={navigateTo} studentState={studentState} isBypass={isBypass} />}
+          {currentView === 'student-dashboard' && (
+            <StudentDashboard 
+              navigateTo={navigateTo} 
+              studentState={studentState} 
+              isBypass={isBypass} 
+              onRequestStartPostTest={() => setShowPostTestModal(true)} 
+            />
+          )}
           {currentView === 'instructor-dashboard' && <InstructorDashboard currentUser={currentUser} navigateTo={navigateTo} />}
           {currentView === 'rater-dashboard' && <RaterDashboard currentUser={currentUser} />}
-          {currentView === 'admin-dashboard' && <AdminDashboard currentUser={currentUser} />}
+          {currentView === 'admin-dashboard' && <AdminDashboard currentUser={currentUser} initialTab="cohort" navigateTo={navigateTo} />}
+          {currentView === 'admin-users' && <AdminDashboard currentUser={currentUser} initialTab="users" navigateTo={navigateTo} />}
+          {currentView === 'calibration-matrix' && <ScoreCalibrationStudio currentUser={currentUser} />}
           {currentView === 'expert-dashboard' && <ExpertDashboard currentUser={currentUser} onSelectRoleWalkthrough={handleSelectRoleWalkthrough} navigateTo={navigateTo} />}
 
           {/* Core Learning Views */}
@@ -798,6 +892,8 @@ export default function App() {
               studentState={studentState} 
               updateStudentState={updateStudentState} 
               isBypass={isBypass} 
+              mode={lessonParams?.mode}
+              initialSection={lessonParams?.initialSection}
             />
           )}
           {currentView === 'results' && <StudentResultsView />}
@@ -829,11 +925,18 @@ export default function App() {
           {currentView === 'research' && <ResearchContext />}
         </div>
       </main>
+
+      {/* Closed-Book Post-Test Readiness Confirmation Modal */}
+      <PostTestReadinessModal 
+        isOpen={showPostTestModal} 
+        onClose={() => setShowPostTestModal(false)} 
+        onConfirm={handleConfirmStartPostTest} 
+      />
     </div>
   );
 }
 
-const NavItem = ({ icon: Icon, label, active, onClick, locked }) => (
+const NavItem = ({ icon: Icon, label, active, onClick, locked, completed = false, isExamLocked = false }) => (
   <button 
     onClick={onClick}
     disabled={locked}
@@ -844,9 +947,17 @@ const NavItem = ({ icon: Icon, label, active, onClick, locked }) => (
   >
     <div className="flex items-center gap-3">
       <Icon className="w-4 h-4" />
-      {label}
+      <span>{label}</span>
     </div>
-    {locked && <span className="text-[10px] uppercase font-bold text-slate-500">Locked</span>}
+    {locked ? (
+      <span className="text-[10px] uppercase font-bold text-slate-500">
+        {isExamLocked ? 'Exam Lock' : 'Locked'}
+      </span>
+    ) : completed ? (
+      <span className="text-[9px] uppercase font-bold text-emerald-400 bg-emerald-950/70 border border-emerald-500/30 px-1.5 py-0.5 rounded">
+        Review
+      </span>
+    ) : null}
   </button>
 );
 
