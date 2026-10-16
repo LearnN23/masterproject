@@ -265,9 +265,9 @@ app.post('/api/submissions', upload.any(), (req, res) => {
 
   if (req.files && req.files.length > 0) {
     for (const file of req.files) {
-      if (file.fieldname.startsWith('task_audio_')) {
-        const taskNum = file.fieldname.replace('task_audio_', '');
-        taskAudios[taskNum] = `/uploads/audio/${file.filename}`;
+      if (file.fieldname.startsWith('task_audio_') || file.fieldname.startsWith('turn_audio_')) {
+        const key = file.fieldname.replace(/^(task_audio_|turn_audio_)/, '');
+        taskAudios[key] = `/uploads/audio/${file.filename}`;
         if (!audioFile) {
           audioFile = file.filename;
           audioUrl = `/uploads/audio/${file.filename}`;

@@ -4,6 +4,8 @@
  * Sourced directly from Master's Thesis Curriculum Design & Lesson Plan deliverables
  */
 
+import { LOOP_TASKS_DATA } from './loopTasksData';
+
 export const LESSONS_DATA = {
   1: {
     id: 1,
@@ -1353,3 +1355,16 @@ export const LESSONS_DATA = {
     }
   }
 };
+
+// Enrich all 8 lessons with authoritative Audio Loop Tasks from loopTasksData
+Object.keys(LOOP_TASKS_DATA).forEach(id => {
+  if (LESSONS_DATA[id]) {
+    LESSONS_DATA[id].loopTask = LOOP_TASKS_DATA[id];
+    LESSONS_DATA[id].speaking = LOOP_TASKS_DATA[id];
+    if (LESSONS_DATA[id].learn && LOOP_TASKS_DATA[id].preTask) {
+      LESSONS_DATA[id].learn.vocabulary = LOOP_TASKS_DATA[id].preTask.vocabulary;
+      LESSONS_DATA[id].learn.usefulExpressions = LOOP_TASKS_DATA[id].preTask.usefulExpressions;
+    }
+  }
+});
+

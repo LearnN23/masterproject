@@ -145,6 +145,42 @@ function createResearchBackupArchive(destZipPath = null) {
         clean(organizedFilename),
         fileExists ? 'AVAILABLE' : 'FILE_NOT_FOUND'
       ].join(','));
+
+      // If submission contains multi-task or multi-turn recordings in self_assessment.task_audio_urls
+      let selfAssessment = {};
+      try {
+        selfAssessment = typeof sub.self_assessment === 'string' ? JSON.parse(sub.self_assessment) : (sub.self_assessment || {});
+      } catch (e) {}
+
+      if (selfAssessment.task_audio_urls && typeof selfAssessment.task_audio_urls === 'object') {
+        for (const [key, tUrl] of Object.entries(selfAssessment.task_audio_urls)) {
+          const tRaw = path.basename(tUrl);
+          if (tRaw && tRaw !== rawFilename) {
+            const tSrc = path.join(uploadsDir, tRaw);
+            const tExists = fs.existsSync(tSrc);
+            const tExt = path.extname(tRaw) || '.webm';
+            const tOrgName = `${sub.participant_code || 'CODE'}_${safeUnit}_${key}_${safeName}${tExt}`;
+            if (tExists) {
+              fs.copyFileSync(tSrc, path.join(audioRawSubdir, tRaw));
+              fs.copyFileSync(tSrc, path.join(audioOrgSubdir, tOrgName));
+              audioFilesCopied++;
+            }
+            manifestRows.push([
+              clean(sub.participant_code),
+              clean(sub.student_name),
+              clean(sub.cohort_group),
+              clean(sub.unit_id),
+              clean(`${sub.unit_title || sub.unit_id} (${key})`),
+              clean(sub.assessment_type),
+              sub.duration_seconds || 0,
+              clean(sub.submitted_at),
+              clean(tRaw),
+              clean(tOrgName),
+              tExists ? 'AVAILABLE' : 'FILE_NOT_FOUND'
+            ].join(','));
+          }
+        }
+      }
     }
 
     const manifestCsv = [manifestHeaders.join(','), ...manifestRows].join('\r\n');

@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { LESSONS_DATA } from '../data/lessonsData';
 import LessonSlideViewer from './LessonSlideViewer';
+import AudioLoopTaskPlayer from './AudioLoopTaskPlayer';
 
 // Shared UI components
 const Card = ({ children, className = '' }) => (
@@ -718,6 +719,83 @@ export default function InteractiveLessonView({
             )}
           </Card>
         )}
+
+        {/* Target Vocabulary: Customer Language vs. Technical Support Terms */}
+        {lesson.learn.vocabulary && lesson.learn.vocabulary.length > 0 && (
+          <Card className="p-6 md:col-span-2 border-l-4 border-l-emerald-500 shadow-sm">
+            <div className="flex items-center justify-between mb-3 border-b pb-3">
+              <div>
+                <h4 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                  <BookOpen className="w-4 h-4 text-emerald-600" />
+                  Customer Everyday Language vs. Technical Support Terms
+                </h4>
+                <p className="text-xs text-slate-500 font-medium mt-0.5">
+                  Translating informal user phrases into precise technical diagnostic terms
+                </p>
+              </div>
+              <span className="text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full">
+                Target Vocabulary
+              </span>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs">
+                <thead>
+                  <tr className="bg-slate-50 border-b border-slate-200 text-slate-700 font-bold">
+                    <th className="p-3">Customer Everyday Phrasing</th>
+                    <th className="p-3">Technical Support Term</th>
+                    <th className="p-3">Workplace Meaning & Context</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {lesson.learn.vocabulary.map((v, i) => (
+                    <tr key={i} className="hover:bg-slate-50/60 transition">
+                      <td className="p-3 text-rose-700 italic font-semibold">"{v.customerPhrase}"</td>
+                      <td className="p-3 font-bold text-indigo-700 font-mono">{v.technicalTerm}</td>
+                      <td className="p-3 text-slate-600 font-medium">{v.meaning}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Card>
+        )}
+
+        {/* Useful Expressions Matrix */}
+        {lesson.learn.usefulExpressions && lesson.learn.usefulExpressions.length > 0 && (
+          <Card className="p-6 md:col-span-2 border-l-4 border-l-teal-500 shadow-sm">
+            <div className="flex items-center justify-between mb-3 border-b pb-3">
+              <div>
+                <h4 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-teal-600" />
+                  Useful Call Handling Expressions Matrix
+                </h4>
+                <p className="text-xs text-slate-500 font-medium mt-0.5">
+                  Standard frontline communication phrases categorized by function
+                </p>
+              </div>
+              <span className="text-[10px] font-bold bg-teal-50 text-teal-700 border border-teal-200 px-2 py-0.5 rounded-full">
+                Helpdesk Phrases
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {lesson.learn.usefulExpressions.map((cat, i) => (
+                <div key={i} className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                  <p className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-teal-500"></span>
+                    {cat.category}
+                  </p>
+                  <ul className="text-xs text-slate-700 space-y-1.5 pl-3 list-disc">
+                    {cat.examples.map((ex, j) => (
+                      <li key={j} className="italic text-slate-800 font-medium">"{ex}"</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </Card>
+        )}
       </div>
 
       <div className="flex justify-between mt-8 items-center pt-4 border-t border-slate-200">
@@ -965,7 +1043,7 @@ export default function InteractiveLessonView({
               onClick={() => handleNext('speaking')} 
               className="bg-blue-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-blue-700 flex items-center gap-2 shadow-md transition-all"
             >
-              Proceed to Speaking Challenge <ArrowRight className="w-5 h-5"/>
+              Proceed to Audio Loop Task <ArrowRight className="w-5 h-5"/>
             </button>
           </div>
         )}
@@ -973,253 +1051,39 @@ export default function InteractiveLessonView({
     );
   };
 
-  // Section 5: Speaking Challenge
+  // Section 5: Audio Loop Task (Multi-Turn Simulation)
   const renderSpeaking = () => {
-    const isReadyToComplete = recordingState === 'recorded' && Object.values(selfAssessment).filter(Boolean).length >= 2;
-
     return (
-      <div className="space-y-6 animate-fade-in">
-        <div className="flex justify-between items-center border-b pb-4">
-          <div>
-            <h3 className="text-2xl font-bold text-slate-900">{lesson.speaking.title}</h3>
-            <p className="text-sm text-slate-500 font-medium mt-1">{lesson.speaking.workplace}</p>
-          </div>
-          <Badge type="primary">Spoken Interaction</Badge>
-        </div>
-
-        {/* Review Mode Banner */}
-        {isCompleted && (
-          <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-emerald-900 flex items-start gap-3 shadow-sm">
-            <CheckCircle className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
-            <div className="flex-1">
-              <div className="flex items-center gap-2">
-                <h5 className="font-bold text-sm text-emerald-900">Speaking Activity Completed (Review Mode)</h5>
-                <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded border border-emerald-200">
-                  Submission Finalized
-                </span>
-              </div>
-              <p className="text-xs text-emerald-700 mt-1">
-                Your spoken response for Lesson {lesson.id} has already been recorded and submitted for instructor evaluation. Audio resubmission is disabled. You can review the customer audio prompt, scaffolding formulas, and model dialogues below.
-              </p>
-            </div>
-          </div>
-        )}
-
-        {/* Customer Call Card */}
-        <Card className="p-6 bg-slate-900 text-white border-none shadow-lg">
-          <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
-            <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></span>
-              <p className="text-sm font-bold text-slate-300">Inbound Call: {lesson.speaking.customerName}</p>
-            </div>
-            <span className="text-xs font-mono bg-slate-800 px-2 py-0.5 rounded text-slate-400">
-              Duration Target: {lesson.speaking.timeLimit}s
-            </span>
-          </div>
-
-          <div className="space-y-3">
-            <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold">Customer Audio Prompt:</p>
-            <p className="text-base text-white font-medium italic bg-slate-800/80 p-4 rounded-xl border border-slate-700">
-              "{lesson.speaking.audioPrompt}"
-            </p>
-
-            {/* In-Browser SpeechSynthesis Audio Player */}
-            <div className="bg-slate-800/60 p-3 rounded-xl border border-slate-700 flex items-center gap-4">
-              <button
-                onClick={togglePlayPrompt}
-                className="w-10 h-10 rounded-full bg-blue-600 hover:bg-blue-500 text-white flex items-center justify-center shrink-0 shadow-md transition"
-              >
-                {isPlayingPrompt ? <Pause className="w-5 h-5"/> : <Play className="w-5 h-5 ml-0.5"/>}
-              </button>
-              <div className="flex-1">
-                <div className="flex justify-between text-xs text-slate-400 mb-1">
-                  <span className="font-bold flex items-center gap-1 text-teal-300">
-                    <Volume2 className="w-3.5 h-3.5"/> {isPlayingPrompt ? 'Playing Customer Voice...' : 'Play Customer Prompt'}
-                  </span>
-                  <span>{formatTime(promptTime)}</span>
-                </div>
-                <div className="h-1.5 bg-slate-700 rounded-full overflow-hidden">
-                  <div className="h-full bg-teal-400 transition-all duration-100" style={{ width: `${promptProgress}%` }}></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Card>
-
-        {/* Task Objective */}
-        <Card className="p-6 border-l-4 border-l-blue-600">
-          <h4 className="font-bold text-slate-900 text-sm mb-2">Your Task:</h4>
-          <p className="text-sm text-slate-700 font-medium leading-relaxed">{lesson.speaking.taskGoal}</p>
-
-          <div className="mt-4 pt-4 border-t border-slate-200">
-            <button 
-              onClick={() => setShowHint(!showHint)}
-              className="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1"
-            >
-              <Lightbulb className="w-4 h-4 text-amber-500" />
-              {showHint ? 'Hide Response Scaffolding' : 'Show Scaffolding & Sentence Starters'}
-            </button>
-
-            {showHint && (
-              <div className="mt-3 p-4 bg-amber-50/70 border border-amber-200 rounded-xl space-y-2 text-xs text-amber-900 animate-fade-in">
-                <p className="font-bold uppercase tracking-wider text-[10px] text-amber-700">Recommended Sentence Formulas:</p>
-                {lesson.speaking.hints.map((h, i) => (
-                  <p key={i}>• {h}</p>
-                ))}
-              </div>
-            )}
-          </div>
-        </Card>
-
-        {/* Microphone Audio Recorder / Submission Preserved Card */}
-        {isCompleted ? (
-          <Card className="p-6 text-center bg-slate-50 border border-slate-200">
-            <div className="max-w-md mx-auto space-y-4">
-              <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs font-bold flex items-center justify-center gap-2">
-                <CheckCircle className="w-4 h-4 text-emerald-600" /> Spoken response submitted
-              </div>
-
-              {existingSubmission?.audio_url ? (
-                <div className="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm space-y-2 text-left">
-                  <span className="text-[10px] font-black uppercase tracking-wider text-slate-500 flex items-center gap-1">
-                    <FileAudio className="w-3.5 h-3.5 text-indigo-600" />
-                    My Recorded Response ({existingSubmission.duration_seconds || 15}s)
-                  </span>
-                  <audio controls src={existingSubmission.audio_url} className="w-full h-8" />
-                </div>
-              ) : audioUrl ? (
-                <div className="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm space-y-2 text-left">
-                  <span className="text-[10px] font-black uppercase tracking-wider text-slate-500 flex items-center gap-1">
-                    <FileAudio className="w-3.5 h-3.5 text-indigo-600" />
-                    Session Audio Recording
-                  </span>
-                  <audio controls src={audioUrl} className="w-full h-8" />
-                </div>
-              ) : (
-                <div className="p-3 bg-slate-100 rounded-xl text-slate-500 text-xs font-medium italic">
-                  Spoken recording preserved on research evaluation server.
-                </div>
-              )}
-
-              <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-left flex items-start gap-2.5">
-                <Lock className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-                <p className="text-xs text-amber-800 font-medium leading-relaxed">
-                  <strong>Single-Take Protocol:</strong> Audio re-recording and resubmission are blocked to preserve evaluation integrity.
-                </p>
-              </div>
-            </div>
-          </Card>
-        ) : (
-          <Card className="p-8 text-center bg-slate-50 border-2 border-dashed border-slate-300">
-            <p className="text-sm font-bold text-slate-800 mb-1">Record Your Spoken Response</p>
-            <p className="text-xs text-slate-500 mb-6">Press Record, speak into your microphone, and press Stop when finished.</p>
-
-            {recordingState === 'idle' && (
-              <div>
-                <button 
-                  onClick={startRecording}
-                  className="w-16 h-16 rounded-full bg-red-600 text-white flex items-center justify-center hover:bg-red-700 transition shadow-lg mx-auto"
-                >
-                  <Mic className="w-8 h-8" />
-                </button>
-                <p className="text-xs font-bold text-slate-600 mt-3">Click to Start Recording</p>
-              </div>
-            )}
-
-            {recordingState === 'recording' && (
-              <div className="space-y-4">
-                <div className="flex items-center justify-center gap-3">
-                  <span className="w-4 h-4 rounded-full bg-red-600 animate-ping"></span>
-                  <span className="text-2xl font-black font-mono text-red-600">{formatTime(recordingTime)}</span>
-                </div>
-                <p className="text-xs font-bold text-slate-600">Recording live... Speak clearly.</p>
-                <button 
-                  onClick={stopRecording}
-                  className="bg-slate-900 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-slate-800 transition flex items-center gap-2 mx-auto shadow-md"
-                >
-                  <StopCircle className="w-5 h-5 text-red-400" /> Stop Recording
-                </button>
-              </div>
-            )}
-
-            {recordingState === 'recorded' && (
-              <div className="space-y-4 max-w-md mx-auto">
-                <div className="p-3 bg-teal-50 border border-teal-200 rounded-xl text-teal-800 text-xs font-bold flex items-center justify-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-teal-600" /> Recording captured ({formatTime(recordingTime)})
-                </div>
-
-                {audioUrl && (
-                  <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
-                    <audio controls src={audioUrl} className="w-full h-8" />
-                  </div>
-                )}
-
-                <button 
-                  onClick={recordAgain}
-                  className="text-xs text-slate-600 hover:text-slate-900 font-bold flex items-center gap-1.5 mx-auto"
-                >
-                  <RotateCcw className="w-3.5 h-3.5" /> Re-record Response
-                </button>
-              </div>
-            )}
-          </Card>
-        )}
-
-        {/* Self-Assessment Checklist */}
-        <Card className="p-6 border-slate-200">
-          <h4 className="text-sm font-bold text-slate-900 mb-2 flex items-center gap-2">
-            <CheckCircle className="w-4 h-4 text-teal-600"/> Self-Assessment Checklist
-          </h4>
-          <p className="text-xs text-slate-500 mb-4">
-            {isCompleted ? 'Criteria evaluated for this speaking challenge:' : 'Check the criteria you achieved in your recording before submitting:'}
-          </p>
-          <div className="space-y-2.5">
-            {lesson.speaking.checklist.map((item, idx) => {
-              const key = idx === 0 ? 'a' : idx === 1 ? 'b' : 'c';
-              return (
-                <label key={idx} className={`flex items-start gap-3 text-xs ${isCompleted ? 'cursor-default text-slate-800' : 'cursor-pointer text-slate-700'}`}>
-                  <input 
-                    type="checkbox"
-                    checked={isCompleted ? true : selfAssessment[key]}
-                    disabled={isCompleted}
-                    onChange={(e) => setSelfAssessment(prev => ({ ...prev, [key]: e.target.checked }))}
-                    className="mt-0.5 rounded text-blue-600 focus:ring-blue-500 w-4 h-4 disabled:opacity-80"
-                  />
-                  <span>{item}</span>
-                </label>
-              );
-            })}
-          </div>
-        </Card>
-
-        <div className="flex justify-between items-center pt-4 border-t border-slate-200">
-          <button 
-            onClick={() => setCurrentSection('review')} 
-            className="text-slate-500 hover:text-slate-900 font-bold flex items-center gap-2 transition"
-          >
-            <ArrowLeft className="w-5 h-5"/> Back to Review
-          </button>
-          {isCompleted ? (
-            <button 
-              onClick={() => {
-                setCurrentSection('results');
-                window.scrollTo(0, 0);
-              }}
-              className="bg-blue-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-blue-700 shadow-md transition-all flex items-center gap-2"
-            >
-              View Lesson Results <ArrowRight className="w-5 h-5"/>
-            </button>
-          ) : (
-            <button 
-              disabled={!isReadyToComplete || isSubmitting}
-              onClick={completeLesson}
-              className="bg-teal-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-teal-700 disabled:bg-slate-300 disabled:cursor-not-allowed shadow-md transition-all flex items-center gap-2"
-            >
-              {isSubmitting ? 'Saving...' : 'Complete Lesson & Save Recording'} <CheckCircle className="w-5 h-5"/>
-            </button>
-          )}
-        </div>
-      </div>
+      <AudioLoopTaskPlayer
+        lessonId={lessonId}
+        lesson={lesson}
+        loopTask={lesson.loopTask}
+        isCompleted={isCompleted}
+        studentState={studentState}
+        existingSubmission={existingSubmission}
+        onSubmitSuccess={() => {
+          const updatedLessons = { ...(studentState?.lessonsProgress || {}) };
+          const curr = { ...(updatedLessons[lessonId] || { sectionsCompleted: {} }) };
+          curr.isCompleted = true;
+          curr.speakingPracticeCompleted = true;
+          curr.sectionsCompleted = { ...curr.sectionsCompleted, speaking: true };
+          updatedLessons[lessonId] = curr;
+          if (updateStudentState) {
+            updateStudentState('lessonsProgress', updatedLessons);
+            if (lessonId === 1) {
+              updateStudentState('lesson1State', curr);
+            }
+          }
+        }}
+        onProceedToResults={() => {
+          setCurrentSection('results');
+          window.scrollTo(0, 0);
+        }}
+        onBack={() => {
+          setCurrentSection('review');
+          window.scrollTo(0, 0);
+        }}
+      />
     );
   };
 
@@ -1304,7 +1168,7 @@ export default function InteractiveLessonView({
     { id: 'learn', label: 'Learn' },
     { id: 'practice', label: 'Practice' },
     { id: 'review', label: 'Review' },
-    { id: 'speaking', label: 'Speaking' },
+    { id: 'speaking', label: 'Audio Loop Task' },
     { id: 'results', label: 'Results' }
   ];
 

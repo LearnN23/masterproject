@@ -624,9 +624,20 @@ export default function StudentDashboard({ navigateTo, studentState, isBypass = 
                     <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-2">
                       <span className="text-[10px] font-black uppercase tracking-wider text-slate-500 flex items-center gap-1">
                         <FileAudio className="w-3.5 h-3.5 text-indigo-600" />
-                        My Lesson {lesson.id} Speaking Recording ({sub.duration_seconds || 28}s)
+                        My Lesson {lesson.id} Spoken Recording ({sub.duration_seconds || 28}s)
                       </span>
-                      {sub.audio_url ? (
+                      {sub.task_audio_urls && Object.keys(sub.task_audio_urls).length > 1 ? (
+                        <div className="space-y-2 pt-1">
+                          {Object.entries(sub.task_audio_urls).map(([turnKey, url]) => (
+                            <div key={turnKey} className="space-y-1">
+                              <span className="text-[10px] font-bold text-slate-700 block">
+                                {turnKey.replace('turn_', 'Turn ')} Audio:
+                              </span>
+                              <audio controls src={url} className="w-full h-7" />
+                            </div>
+                          ))}
+                        </div>
+                      ) : sub.audio_url ? (
                         <audio controls src={sub.audio_url} className="w-full h-8" />
                       ) : (
                         <p className="text-slate-400 italic">Spoken recording saved on research server</p>

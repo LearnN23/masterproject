@@ -7,6 +7,7 @@ import {
   MessageSquare, Volume2, RotateCcw, AlertCircle
 } from 'lucide-react';
 import { RUBRIC_CRITERIA_25, getCefrRating, ASSESSMENTS_DATA } from '../data/assessmentsData';
+import { LESSONS_DATA } from '../data/lessonsData';
 
 export default function InstructorDashboard({ currentUser, navigateTo }) {
   const [activeTab, setActiveTab] = useState('queue'); // 'queue', 'students'
@@ -99,8 +100,13 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
       setSaveSuccess(false);
 
       if (selectedSub.task_audio_urls) {
-        const keys = Object.keys(selectedSub.task_audio_urls).map(Number).sort((a, b) => a - b);
+        const keys = Object.keys(selectedSub.task_audio_urls)
+          .map(k => Number(String(k).replace('turn_', '')))
+          .filter(n => !isNaN(n))
+          .sort((a, b) => a - b);
         setSelectedTaskNumber(keys.length > 0 ? keys[0] : 1);
+      } else if (selectedSub.unit_id?.startsWith('lesson_')) {
+        setSelectedTaskNumber(2);
       } else {
         setSelectedTaskNumber(1);
       }
@@ -209,12 +215,23 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
   // Derive active assessment & task metadata for selected submission
   const isPreTest = selectedSub?.assessment_type === 'pre_test' || selectedSub?.unit_id === 'section_0';
   const isPostTest = selectedSub?.assessment_type === 'post_test' || selectedSub?.unit_id === 'section_9';
+  const isLesson = selectedSub?.unit_id?.startsWith('lesson_');
+  const lessonNum = isLesson ? parseInt(selectedSub.unit_id.replace('lesson_', ''), 10) : null;
+  const currentLesson = lessonNum ? LESSONS_DATA[lessonNum] : null;
+  const lessonStudentTurns = currentLesson?.loopTask?.turns?.filter(t => t.isStudent) || [];
+
   const currentAssessment = isPreTest ? ASSESSMENTS_DATA.pre_test : (isPostTest ? ASSESSMENTS_DATA.post_test : null);
   const activeTaskMeta = currentAssessment?.tasks?.find(t => t.taskNumber === Number(selectedTaskNumber)) || currentAssessment?.tasks?.[0] || null;
+  const activeStudentTurn = isLesson ? (lessonStudentTurns.find(t => t.turnNumber === Number(selectedTaskNumber)) || lessonStudentTurns[0]) : null;
 
-  // Active audio URL for playback (supports multi-task uploads)
+  // Active audio URL for playback (supports multi-task and multi-turn uploads)
   const taskUrls = selectedSub?.task_audio_urls || {};
-  const activeAudioUrl = taskUrls[selectedTaskNumber] || (selectedTaskNumber === 1 ? selectedSub?.audio_url : null) || selectedSub?.audio_url || selectedSub?.audio_blob_path;
+  let activeAudioUrl = null;
+  if (isLesson) {
+    activeAudioUrl = taskUrls[`turn_${selectedTaskNumber}`] || taskUrls[selectedTaskNumber] || (selectedTaskNumber === 2 ? selectedSub?.audio_url : null) || selectedSub?.audio_url || selectedSub?.audio_blob_path;
+  } else {
+    activeAudioUrl = taskUrls[selectedTaskNumber] || (selectedTaskNumber === 1 ? selectedSub?.audio_url : null) || selectedSub?.audio_url || selectedSub?.audio_blob_path;
+  }
 
   return (
     <div className="space-y-8 animate-fade-in pb-16">
@@ -553,6 +570,80 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
                   </div>
                 )}
 
+                {/* Multi-Turn Switcher & Turn Context (For Lessons 1–8 Audio Loop Task) */}
+                {isLesson && lessonStudentTurns.length > 0 && (
+                  <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                        <Sparkles className="w-4 h-4 text-indigo-600" />
+                        Audio Loop Simulation Turns (Select Turn to Review Audio)
+                      </span>
+                      <span className="text-[11px] font-semibold text-slate-500">
+                        {Object.keys(taskUrls).length || lessonStudentTurns.length} Turns Recorded
+                      </span>
+                    </div>
+
+                    {/* Turn Tab Buttons */}
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                      {lessonStudentTurns.map(st => {
+                        const hasAudio = !!(taskUrls[`turn_${st.turnNumber}`] || taskUrls[st.turnNumber] || (st.turnNumber === 2 && selectedSub.audio_url));
+                        const isActive = selectedTaskNumber === st.turnNumber;
+                        return (
+                          <button
+                            key={st.turnNumber}
+                            type="button"
+                            onClick={() => {
+                              setSelectedTaskNumber(st.turnNumber);
+                              setIsPlaying(false);
+                              setCurrentTime(0);
+                            }}
+                            className={`p-2.5 rounded-xl text-left transition-all border ${
+                              isActive 
+                                ? 'bg-indigo-600 text-white border-indigo-600 shadow-md' 
+                                : 'bg-white hover:bg-slate-100 text-slate-700 border-slate-200'
+                            }`}
+                          >
+                            <div className="flex items-center justify-between text-xs font-black">
+                              <span>Turn {st.turnNumber}</span>
+                              {hasAudio ? (
+                                <span className={`w-2 h-2 rounded-full ${isActive ? 'bg-emerald-300' : 'bg-emerald-500'}`} title="Audio recorded" />
+                              ) : (
+                                <span className={`w-2 h-2 rounded-full ${isActive ? 'bg-slate-400' : 'bg-slate-300'}`} title="No audio file" />
+                              )}
+                            </div>
+                            <p className={`text-[11px] mt-1 font-semibold line-clamp-1 ${isActive ? 'text-indigo-100' : 'text-slate-600'}`}>
+                              {st.missionTitle || `Student Response Turn ${st.turnNumber}`}
+                            </p>
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    {/* Active Turn Context & Mission */}
+                    {activeStudentTurn && (
+                      <div className="bg-white p-3.5 rounded-xl border border-slate-200 space-y-2 text-xs">
+                        <div className="flex items-center justify-between">
+                          <span className="font-bold text-slate-900">
+                            Turn {activeStudentTurn.turnNumber}: {activeStudentTurn.missionTitle || 'Student Spoken Response'}
+                          </span>
+                          <span className="text-[10px] text-slate-500 font-mono bg-slate-100 px-2 py-0.5 rounded">
+                            Target: {activeStudentTurn.timeLimit}s
+                          </span>
+                        </div>
+                        <p className="text-slate-700 font-medium leading-relaxed">
+                          {activeStudentTurn.missionGoal}
+                        </p>
+                        {activeStudentTurn.hints && activeStudentTurn.hints.length > 0 && (
+                          <div className="p-2.5 bg-amber-50 rounded-lg border border-amber-200/60 text-[11px] text-amber-900">
+                            <span className="font-bold text-amber-800 block mb-0.5">Scaffolding Guidance:</span>
+                            {activeStudentTurn.hints[0]}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 {/* Audio Review Player */}
                 <div className="bg-slate-900 text-white rounded-2xl p-5 shadow-inner space-y-4">
                   <div className="flex justify-between items-center text-xs">
@@ -560,6 +651,8 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
                       <Volume2 className="w-4 h-4" /> 
                       {currentAssessment 
                         ? `Task ${selectedTaskNumber} Audio Recording` 
+                        : isLesson
+                        ? `Turn ${selectedTaskNumber} Spoken Recording`
                         : 'Single-Take Spoken Response Recording'}
                     </span>
                     <span className="font-mono text-slate-400">
