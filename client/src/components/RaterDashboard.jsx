@@ -6,7 +6,7 @@ import {
   Sparkles, Check, ChevronRight, Eye, Filter, MessageSquare,
   Volume2, RotateCcw
 } from 'lucide-react';
-import { RUBRIC_CRITERIA_25, getCefrRating, ASSESSMENTS_DATA } from '../data/assessmentsData';
+import { RUBRIC_CRITERIA_25, RUBRIC_TASKS_20, getCefrRating, ASSESSMENTS_DATA } from '../data/assessmentsData';
 import { LESSONS_DATA } from '../data/lessonsData';
 
 export default function RaterDashboard({ currentUser }) {
@@ -16,7 +16,10 @@ export default function RaterDashboard({ currentUser }) {
   const [selectedSub, setSelectedSub] = useState(null);
   const [selectedTaskNumber, setSelectedTaskNumber] = useState(1);
 
-  // Scoring form state
+  // 20-Point Operational Task Scores (Tasks 1-4, max 5 pts each)
+  const [taskScores, setTaskScores] = useState({ 1: 0, 2: 0, 3: 0, 4: 0 });
+
+  // 25-Point Criteria Scoring form state (fallback)
   const [scores, setScores] = useState({
     task_achievement: 0,
     interactive_comm: 0,
@@ -62,6 +65,16 @@ export default function RaterDashboard({ currentUser }) {
     if (selectedSub) {
       const rGrade = selectedSub.grades?.rater || selectedSub.grades?.raterB;
       if (rGrade) {
+        if (rGrade.task_scores) {
+          setTaskScores({
+            1: rGrade.task_scores[1] || 0,
+            2: rGrade.task_scores[2] || 0,
+            3: rGrade.task_scores[3] || 0,
+            4: rGrade.task_scores[4] || 0
+          });
+        } else {
+          setTaskScores({ 1: 0, 2: 0, 3: 0, 4: 0 });
+        }
         setScores({
           task_achievement: rGrade.task_achievement || 0,
           interactive_comm: rGrade.interactive_comm || 0,
@@ -75,6 +88,7 @@ export default function RaterDashboard({ currentUser }) {
           suggestions: rGrade.suggestions || ''
         });
       } else {
+        setTaskScores({ 1: 0, 2: 0, 3: 0, 4: 0 });
         setScores({ task_achievement: 0, interactive_comm: 0, vocabulary: 0, grammar: 0, pronunciation_fluency: 0 });
         setFeedback({ strengths: '', improvements: '', suggestions: '' });
       }
@@ -119,11 +133,25 @@ export default function RaterDashboard({ currentUser }) {
     return `${m}:${s < 10 ? '0' : ''}${s}`;
   };
 
-  const totalScore = Object.values(scores).reduce((a, b) => a + b, 0);
-  const cefrInfo = totalScore > 0 ? getCefrRating(totalScore, 25) : null;
+  const isPreOrPostTest = selectedSub?.assessment_type === 'pre_test' || 
+                          selectedSub?.assessment_type === 'post_test' || 
+                          selectedSub?.unit_id === 'section_0' || 
+                          selectedSub?.unit_id === 'section_9';
+
+  const totalScore = isPreOrPostTest
+    ? ((taskScores[1] || 0) + (taskScores[2] || 0) + (taskScores[3] || 0) + (taskScores[4] || 0))
+    : Object.values(scores).reduce((a, b) => a + b, 0);
+
+  const maxScore = isPreOrPostTest ? 20 : 25;
+  const cefrInfo = totalScore > 0 ? getCefrRating(totalScore, maxScore) : null;
 
   const handleScoreChange = (critId, val) => {
     setScores(prev => ({ ...prev, [critId]: val }));
+    setSaveSuccess(false);
+  };
+
+  const handleTaskScoreChange = (taskNum, val) => {
+    setTaskScores(prev => ({ ...prev, [taskNum]: val }));
     setSaveSuccess(false);
   };
 
@@ -138,6 +166,7 @@ export default function RaterDashboard({ currentUser }) {
           submission_id: selectedSub.id,
           raterType: 'rater',
           rater_role: 'rater',
+          taskScores,
           scores,
           strengths: feedback.strengths,
           improvements: feedback.improvements,
@@ -410,14 +439,14 @@ export default function RaterDashboard({ currentUser }) {
                     Rater Score
                   </span>
                   <span className="text-3xl font-mono font-black text-indigo-600">
-                    {totalScore} <span className="text-sm text-slate-400">/ 25</span>
+                    {totalScore} <span className="text-sm text-slate-400">/ {maxScore}</span>
                   </span>
                   {cefrInfo && (
                     <span 
                       className={`text-[10px] font-bold px-2 py-0.5 rounded border inline-block mt-1 ${cefrInfo.badgeClass || 'bg-emerald-100 text-emerald-800 border-emerald-300'}`} 
                       title={cefrInfo.description}
                     >
-                      {cefrInfo.level} ({totalScore}/25) • {cefrInfo.cefr}
+                      {cefrInfo.level} ({totalScore}/{maxScore}) • {cefrInfo.cefr}
                     </span>
                   )}
                 </div>
@@ -642,45 +671,136 @@ export default function RaterDashboard({ currentUser }) {
                 )}
               </div>
 
-              {/* 25-POINT BLUEPRINT RUBRIC CRITERIA */}
+              {/* RUBRIC CRITERIA: 20-POINT OPERATIONAL (PRE/POST TEST) OR 25-POINT BLUEPRINT (FALLBACK) */}
               <div className="space-y-4">
-                <h4 className="text-xs font-black uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-                  <Award className="w-4 h-4 text-indigo-600" />
-                  <span>Analytic Rubric Evaluation (5 Criteria x 5 Bands)</span>
-                </h4>
-
-                <div className="space-y-3.5">
-                  {RUBRIC_CRITERIA_25.map((crit) => {
-                    const val = scores[crit.id] || 0;
-                    return (
-                      <div key={crit.id} className="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-2">
-                        <div className="flex justify-between items-center">
-                          <span className="font-bold text-slate-900 text-xs">{crit.label}</span>
-                          <span className="font-mono font-black text-indigo-600 text-xs">
-                            {val > 0 ? `${val} / 5` : 'Not Rated'}
-                          </span>
-                        </div>
-                        <p className="text-[11px] text-slate-500">{crit.description}</p>
-
-                        <div className="grid grid-cols-5 gap-1.5 pt-1">
-                          {[1, 2, 3, 4, 5].map((b) => (
-                            <button
-                              key={b}
-                              onClick={() => handleScoreChange(crit.id, b)}
-                              className={`py-1.5 rounded-lg text-xs font-bold transition ${
-                                val === b
-                                  ? 'bg-indigo-600 text-white shadow-sm ring-1 ring-indigo-400'
-                                  : 'bg-white text-slate-700 border border-slate-300 hover:border-indigo-400'
-                              }`}
-                            >
-                              Band {b}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    );
-                  })}
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xs font-black uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                    <Award className="w-4 h-4 text-indigo-600" />
+                    <span>
+                      {isPreOrPostTest 
+                        ? 'Operational Task Rubric (4 Tasks x 5 Points = 20 Points Total)' 
+                        : 'Analytic Rubric Evaluation (5 Criteria x 5 Bands)'}
+                    </span>
+                  </h4>
+                  <span className="text-[11px] font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">
+                    Max Score: {maxScore} pts
+                  </span>
                 </div>
+
+                {isPreOrPostTest ? (
+                  /* 20-Point Operational Tasks Rubric */
+                  <div className="space-y-3.5">
+                    {RUBRIC_TASKS_20.map((taskItem) => {
+                      const taskVal = taskScores[taskItem.taskNumber] || 0;
+                      const isTaskActive = selectedTaskNumber === taskItem.taskNumber;
+                      const hasTaskAudio = !!(taskUrls[taskItem.taskNumber] || (taskItem.taskNumber === 1 && selectedSub.audio_url));
+
+                      return (
+                        <div 
+                          key={taskItem.taskNumber} 
+                          className={`p-3.5 rounded-xl border transition-all space-y-2.5 ${
+                            isTaskActive ? 'bg-indigo-50/40 border-indigo-300 ring-1 ring-indigo-200' : 'bg-slate-50 border-slate-200'
+                          }`}
+                        >
+                          <div className="flex justify-between items-start">
+                            <div>
+                              <div className="flex items-center gap-2">
+                                <span className="font-bold text-slate-900 text-xs">
+                                  {taskItem.title}
+                                </span>
+                                {hasTaskAudio && (
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      setSelectedTaskNumber(taskItem.taskNumber);
+                                      setIsPlaying(false);
+                                      setCurrentTime(0);
+                                    }}
+                                    className={`text-[10px] px-1.5 py-0.5 rounded flex items-center gap-1 font-semibold transition ${
+                                      isTaskActive 
+                                        ? 'bg-indigo-600 text-white' 
+                                        : 'bg-indigo-100 text-indigo-700 hover:bg-indigo-200'
+                                    }`}
+                                    title="Listen to this task's recording"
+                                  >
+                                    <Volume2 className="w-3 h-3" />
+                                    <span>{isTaskActive ? 'Playing in Player' : 'Review Audio'}</span>
+                                  </button>
+                                )}
+                              </div>
+                              <p className="text-[11px] text-slate-500 mt-0.5">{taskItem.criteria}</p>
+                            </div>
+                            <span className="font-mono font-black text-indigo-600 text-xs shrink-0 ml-2">
+                              {taskVal > 0 ? `${taskVal} / 5` : 'Not Rated'}
+                            </span>
+                          </div>
+
+                          <div className="grid grid-cols-5 gap-1.5 pt-1">
+                            {[1, 2, 3, 4, 5].map((b) => (
+                              <button
+                                key={b}
+                                onClick={() => handleTaskScoreChange(taskItem.taskNumber, b)}
+                                className={`py-1.5 rounded-lg text-xs font-bold transition ${
+                                  taskVal === b
+                                    ? 'bg-indigo-600 text-white shadow-sm ring-1 ring-indigo-400'
+                                    : 'bg-white text-slate-700 border border-slate-300 hover:border-indigo-400'
+                                }`}
+                              >
+                                Band {b}
+                              </button>
+                            ))}
+                          </div>
+
+                          {taskVal > 0 && taskItem.bands?.[taskVal] && (
+                            <p className="text-[11px] text-slate-700 italic bg-white p-2 rounded-lg border border-slate-200">
+                              <span className="font-bold not-italic text-slate-600">Band {taskVal}:</span> "{taskItem.bands[taskVal]}"
+                            </p>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  /* 25-Point Criteria Blueprint Rubric */
+                  <div className="space-y-3.5">
+                    {RUBRIC_CRITERIA_25.map((crit) => {
+                      const val = scores[crit.id] || 0;
+                      return (
+                        <div key={crit.id} className="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-2">
+                          <div className="flex justify-between items-center">
+                            <span className="font-bold text-slate-900 text-xs">{crit.label}</span>
+                            <span className="font-mono font-black text-indigo-600 text-xs">
+                              {val > 0 ? `${val} / 5` : 'Not Rated'}
+                            </span>
+                          </div>
+                          <p className="text-[11px] text-slate-500">{crit.description}</p>
+
+                          <div className="grid grid-cols-5 gap-1.5 pt-1">
+                            {[1, 2, 3, 4, 5].map((b) => (
+                              <button
+                                key={b}
+                                onClick={() => handleScoreChange(crit.id, b)}
+                                className={`py-1.5 rounded-lg text-xs font-bold transition ${
+                                  val === b
+                                    ? 'bg-indigo-600 text-white shadow-sm ring-1 ring-indigo-400'
+                                    : 'bg-white text-slate-700 border border-slate-300 hover:border-indigo-400'
+                                }`}
+                              >
+                                Band {b}
+                              </button>
+                            ))}
+                          </div>
+
+                          {val > 0 && crit.bands?.[val] && (
+                            <p className="text-[11px] text-slate-700 italic bg-white p-2 rounded-lg border border-slate-200">
+                              <span className="font-bold not-italic text-slate-600">Band {val}:</span> "{crit.bands[val]}"
+                            </p>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
 
               {/* QUALITATIVE RATER COMMENTS */}
@@ -716,7 +836,14 @@ export default function RaterDashboard({ currentUser }) {
                     Rater evaluation saved to SQLite for calibration!
                   </span>
                 ) : (
-                  <span className="text-[11px] text-slate-400">Total Raw Score: {totalScore} / 25</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[11px] font-bold text-slate-700">Total Raw Score: {totalScore} / {maxScore}</span>
+                    {cefrInfo && (
+                      <span className={`px-2 py-0.5 rounded text-[10px] font-black border ${cefrInfo.badgeClass}`}>
+                        {cefrInfo.cefr} ({cefrInfo.level})
+                      </span>
+                    )}
+                  </div>
                 )}
 
                 <button

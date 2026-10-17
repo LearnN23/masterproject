@@ -36,10 +36,16 @@ export default function AssessmentView({ type, navigateTo, studentState, updateS
   const recordingTimerRef = useRef(null);
   const prepTimerRef = useRef(null);
 
+  const promptAudioRef = useRef(null);
+
   // Reset timers when task changes
   useEffect(() => {
     clearInterval(prepTimerRef.current);
     clearInterval(recordingTimerRef.current);
+    if (promptAudioRef.current) {
+      promptAudioRef.current.pause();
+      promptAudioRef.current.currentTime = 0;
+    }
     window.speechSynthesis?.cancel();
     setIsPlayingPrompt(false);
 
@@ -61,6 +67,9 @@ export default function AssessmentView({ type, navigateTo, studentState, updateS
     return () => {
       clearInterval(prepTimerRef.current);
       clearInterval(recordingTimerRef.current);
+      if (promptAudioRef.current) {
+        promptAudioRef.current.pause();
+      }
       if (streamRef.current) {
         streamRef.current.getTracks().forEach(t => t.stop());
       }
@@ -88,29 +97,50 @@ export default function AssessmentView({ type, navigateTo, studentState, updateS
     }
   }, [isPreTest, isAlreadyCompleted, studentState?.postTestStarted]);
 
-  // --- TTS PROMPT PLAYBACK ---
+  // --- REAL AUDIO PROMPT PLAYBACK WITH TTS FALLBACK ---
   const playPromptAudio = () => {
-    if (!('speechSynthesis' in window)) {
-      alert('SpeechSynthesis is not supported in this browser.');
-      return;
-    }
     if (isPlayingPrompt) {
-      window.speechSynthesis.cancel();
+      if (promptAudioRef.current) {
+        promptAudioRef.current.pause();
+        promptAudioRef.current.currentTime = 0;
+      }
+      window.speechSynthesis?.cancel();
       setIsPlayingPrompt(false);
       return;
     }
 
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(currentTask.customerPromptText);
-    utterance.lang = 'en-US';
-    utterance.rate = 0.95; // Natural BPO caller cadence
-    utterance.pitch = 1.0;
+    const audioPath = isPreTest 
+      ? `/audio_prompts/pre_test_task_${currentTask.taskNumber}.wav`
+      : `/audio_prompts/post_test_task_${currentTask.taskNumber}.wav`;
 
-    utterance.onstart = () => setIsPlayingPrompt(true);
-    utterance.onend = () => setIsPlayingPrompt(false);
-    utterance.onerror = () => setIsPlayingPrompt(false);
+    if (!promptAudioRef.current) {
+      promptAudioRef.current = new Audio();
+    }
+    const audio = promptAudioRef.current;
+    audio.src = audioPath;
 
-    window.speechSynthesis.speak(utterance);
+    audio.onplay = () => setIsPlayingPrompt(true);
+    audio.onended = () => setIsPlayingPrompt(false);
+    audio.onerror = () => {
+      // Fallback to SpeechSynthesis if file is unavailable
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(currentTask.customerPromptText);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.95;
+        utterance.pitch = 1.0;
+        utterance.onstart = () => setIsPlayingPrompt(true);
+        utterance.onend = () => setIsPlayingPrompt(false);
+        utterance.onerror = () => setIsPlayingPrompt(false);
+        window.speechSynthesis.speak(utterance);
+      } else {
+        setIsPlayingPrompt(false);
+      }
+    };
+
+    audio.play().catch(() => {
+      audio.onerror();
+    });
   };
 
   // --- PREPARATION TIMER ---

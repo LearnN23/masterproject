@@ -6,7 +6,7 @@ import {
   Sparkles, Check, ChevronRight, Eye, Filter, GraduationCap,
   MessageSquare, Volume2, RotateCcw, AlertCircle
 } from 'lucide-react';
-import { RUBRIC_CRITERIA_25, getCefrRating, ASSESSMENTS_DATA } from '../data/assessmentsData';
+import { RUBRIC_CRITERIA_25, RUBRIC_TASKS_20, getCefrRating, ASSESSMENTS_DATA } from '../data/assessmentsData';
 import { LESSONS_DATA } from '../data/lessonsData';
 
 export default function InstructorDashboard({ currentUser, navigateTo }) {
@@ -18,7 +18,10 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
   const [selectedSub, setSelectedSub] = useState(null);
   const [selectedTaskNumber, setSelectedTaskNumber] = useState(1);
 
-  // Instructor Rubric Scoring State (25-point Analytic Scale)
+  // 20-Point Operational Tasks State (Tasks 1-4, max 5 pts each)
+  const [taskScores, setTaskScores] = useState({ 1: 0, 2: 0, 3: 0, 4: 0 });
+
+  // Instructor Rubric Scoring State (25-point Analytic Scale Fallback)
   const [scores, setScores] = useState({
     task_achievement: 0,
     interactive_comm: 0,
@@ -72,6 +75,16 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
     if (selectedSub) {
       const instGrade = selectedSub.grades?.instructor;
       if (instGrade) {
+        if (instGrade.task_scores) {
+          setTaskScores({
+            1: instGrade.task_scores[1] || 0,
+            2: instGrade.task_scores[2] || 0,
+            3: instGrade.task_scores[3] || 0,
+            4: instGrade.task_scores[4] || 0
+          });
+        } else {
+          setTaskScores({ 1: 0, 2: 0, 3: 0, 4: 0 });
+        }
         setScores({
           task_achievement: instGrade.task_achievement || 0,
           interactive_comm: instGrade.interactive_comm || 0,
@@ -86,6 +99,7 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
         });
       } else {
         // Reset scores
+        setTaskScores({ 1: 0, 2: 0, 3: 0, 4: 0 });
         setScores({
           task_achievement: 0,
           interactive_comm: 0,
@@ -147,12 +161,23 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
   };
 
   // Score calculations
-  const totalScore = Object.values(scores).reduce((a, b) => a + b, 0);
-  const percentage = Math.round((totalScore / 25) * 100);
-  const cefr = getCefrRating(totalScore);
+  const isPreOrPostTest = selectedSub?.assessment_type === 'pre_test' || 
+                          selectedSub?.assessment_type === 'post_test' || 
+                          selectedSub?.unit_id === 'section_0' || 
+                          selectedSub?.unit_id === 'section_9';
+  const maxScore = isPreOrPostTest ? 20 : 25;
+  const totalScore = isPreOrPostTest
+    ? ((taskScores[1] || 0) + (taskScores[2] || 0) + (taskScores[3] || 0) + (taskScores[4] || 0))
+    : Object.values(scores).reduce((a, b) => a + b, 0);
+  const percentage = Math.round((totalScore / maxScore) * 100);
+  const cefr = getCefrRating(totalScore, maxScore);
 
   const handleScoreChange = (criterionId, val) => {
     setScores(prev => ({ ...prev, [criterionId]: val }));
+  };
+
+  const handleTaskScoreChange = (taskNum, val) => {
+    setTaskScores(prev => ({ ...prev, [taskNum]: val }));
   };
 
   const handleSaveEvaluation = async () => {
@@ -165,6 +190,7 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
         submissionId: selectedSub.id,
         raterId: currentUser?.id || 'usr_instructor',
         raterRole: 'instructor', // Authoritative role whose grade is received by student
+        taskScores,
         taskAchievement: scores.task_achievement,
         interactiveComm: scores.interactive_comm,
         vocabulary: scores.vocabulary,
@@ -484,10 +510,10 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
                   <div className="text-right">
                     <p className="text-xs text-slate-500 font-bold uppercase tracking-wider">Total Score</p>
                     <p className="text-3xl font-black text-indigo-600">
-                      {totalScore} <span className="text-sm font-medium text-slate-400">/ 25</span>
+                      {totalScore} <span className="text-sm font-medium text-slate-400">/ {maxScore}</span>
                     </p>
                     <span className={`text-[11px] font-bold px-2 py-0.5 rounded border inline-block mt-1 ${cefr?.badgeClass || 'bg-teal-50 text-teal-700 border-teal-200'}`} title={cefr?.description}>
-                      {cefr?.level} ({totalScore}/25) • {cefr?.cefr}
+                      {cefr?.level} ({totalScore}/{maxScore}) • {cefr?.cefr}
                     </span>
                   </div>
                 </div>
@@ -728,48 +754,129 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
                   </div>
                 </div>
 
-                {/* 25-Point Analytic Rubric Sliders / Buttons */}
+                {/* Rubric Evaluation: 20-Point Operational (Pre/Post Test) or 25-Point Blueprint (Fallback) */}
                 <div className="space-y-4">
-                  <h3 className="font-black text-slate-900 text-sm flex items-center gap-2">
-                    <Award className="w-4 h-4 text-indigo-600" /> 25-Point Analytic Speaking Rubric
-                  </h3>
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-black text-slate-900 text-sm flex items-center gap-2">
+                      <Award className="w-4 h-4 text-indigo-600" />
+                      <span>
+                        {isPreOrPostTest 
+                          ? 'Operational Speaking Rubric (4 Tasks x 5 Points = 20 Points Total)' 
+                          : '25-Point Analytic Speaking Rubric'}
+                      </span>
+                    </h3>
+                    <span className="text-xs font-mono font-bold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded border border-indigo-200">
+                      Max: {maxScore} pts
+                    </span>
+                  </div>
 
-                  {RUBRIC_CRITERIA_25.map((crit, idx) => {
-                    const currentVal = scores[crit.id] || 0;
-                    return (
-                      <div key={crit.id} className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <p className="font-bold text-slate-900 text-xs">
-                              {crit.label}
-                            </p>
-                            <p className="text-[11px] text-slate-500 font-medium">{crit.description}</p>
+                  {isPreOrPostTest ? (
+                    <div className="space-y-3.5">
+                      {RUBRIC_TASKS_20.map((taskItem) => {
+                        const taskVal = taskScores[taskItem.taskNumber] || 0;
+                        const isTaskActive = selectedTaskNumber === taskItem.taskNumber;
+                        const hasTaskAudio = !!(selectedSub.task_audio_urls?.[taskItem.taskNumber] || (taskItem.taskNumber === 1 && selectedSub.audio_url));
+
+                        return (
+                          <div 
+                            key={taskItem.taskNumber} 
+                            className={`p-4 rounded-xl border transition-all space-y-2.5 ${
+                              isTaskActive ? 'bg-indigo-50/40 border-indigo-300 ring-1 ring-indigo-200' : 'bg-slate-50 border-slate-200'
+                            }`}
+                          >
+                            <div className="flex justify-between items-start">
+                              <div>
+                                <div className="flex items-center gap-2">
+                                  <p className="font-bold text-slate-900 text-xs">
+                                    {taskItem.title}
+                                  </p>
+                                  {hasTaskAudio && (
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        setSelectedTaskNumber(taskItem.taskNumber);
+                                        setIsPlaying(false);
+                                        setCurrentTime(0);
+                                      }}
+                                      className={`text-[10px] px-2 py-0.5 rounded flex items-center gap-1 font-semibold transition ${
+                                        isTaskActive ? 'bg-indigo-600 text-white' : 'bg-indigo-100 text-indigo-700 hover:bg-indigo-200'
+                                      }`}
+                                    >
+                                      <Volume2 className="w-3 h-3" />
+                                      <span>{isTaskActive ? 'In Player' : 'Review Audio'}</span>
+                                    </button>
+                                  )}
+                                </div>
+                                <p className="text-[11px] text-slate-500 font-medium mt-0.5">{taskItem.criteria}</p>
+                              </div>
+                              <span className="text-xs font-black text-indigo-700 bg-white px-2 py-0.5 rounded border border-slate-200 shrink-0 ml-2">
+                                {taskVal > 0 ? `${taskVal} / 5` : 'Not Rated'}
+                              </span>
+                            </div>
+
+                            <div className="grid grid-cols-5 gap-2 pt-1">
+                              {[1, 2, 3, 4, 5].map(pt => (
+                                <button
+                                  key={pt}
+                                  type="button"
+                                  onClick={() => handleTaskScoreChange(taskItem.taskNumber, pt)}
+                                  className={`py-1.5 rounded-lg text-xs font-bold border transition-all ${
+                                    taskVal === pt 
+                                      ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm ring-1 ring-indigo-400' 
+                                      : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100'
+                                  }`}
+                                >
+                                  Band {pt}
+                                </button>
+                              ))}
+                            </div>
+
+                            {taskVal > 0 && taskItem.bands?.[taskVal] && (
+                              <p className="text-[11px] text-slate-700 italic bg-white p-2 rounded-lg border border-slate-200">
+                                <span className="font-bold not-italic text-slate-600">Band {taskVal}:</span> "{taskItem.bands[taskVal]}"
+                              </p>
+                            )}
                           </div>
-                          <span className="text-xs font-black text-indigo-700 bg-white px-2 py-0.5 rounded border border-slate-200">
-                            {currentVal} / 5
-                          </span>
-                        </div>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    RUBRIC_CRITERIA_25.map((crit, idx) => {
+                      const currentVal = scores[crit.id] || 0;
+                      return (
+                        <div key={crit.id} className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                          <div className="flex justify-between items-start">
+                            <div>
+                              <p className="font-bold text-slate-900 text-xs">
+                                {crit.label}
+                              </p>
+                              <p className="text-[11px] text-slate-500 font-medium">{crit.description}</p>
+                            </div>
+                            <span className="text-xs font-black text-indigo-700 bg-white px-2 py-0.5 rounded border border-slate-200">
+                              {currentVal} / 5
+                            </span>
+                          </div>
 
-                        {/* 1-5 Rating Selector */}
-                        <div className="grid grid-cols-5 gap-2 pt-1">
-                          {[1, 2, 3, 4, 5].map(pt => (
-                            <button
-                              key={pt}
-                              type="button"
-                              onClick={() => handleScoreChange(crit.id, pt)}
-                              className={`py-1.5 rounded-lg text-xs font-bold border transition-all ${
-                                currentVal === pt 
-                                  ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm' 
-                                  : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100'
-                              }`}
-                            >
-                              {pt} pt{pt > 1 ? 's' : ''}
-                            </button>
-                          ))}
+                          <div className="grid grid-cols-5 gap-2 pt-1">
+                            {[1, 2, 3, 4, 5].map(pt => (
+                              <button
+                                key={pt}
+                                type="button"
+                                onClick={() => handleScoreChange(crit.id, pt)}
+                                className={`py-1.5 rounded-lg text-xs font-bold border transition-all ${
+                                  currentVal === pt 
+                                    ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm' 
+                                    : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100'
+                                }`}
+                              >
+                                {pt} pt{pt > 1 ? 's' : ''}
+                              </button>
+                            ))}
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })
+                  )}
                 </div>
 
                 {/* Qualitative Feedback Textareas */}
@@ -874,9 +981,9 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
                 <tr>
                   <th className="px-6 py-4">Participant Code & Name</th>
                   <th className="px-6 py-4">Cohort Group</th>
-                  <th className="px-6 py-4 text-center">Pre-Test (25)</th>
+                  <th className="px-6 py-4 text-center">Pre-Test (20)</th>
                   <th className="px-6 py-4 text-center">Formative Submissions</th>
-                  <th className="px-6 py-4 text-center">Post-Test (25)</th>
+                  <th className="px-6 py-4 text-center">Post-Test (20)</th>
                   <th className="px-6 py-4">Status</th>
                 </tr>
               </thead>
@@ -903,7 +1010,7 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
                       </td>
                       <td className="px-6 py-4 text-center font-bold">
                         {preScore !== undefined ? (
-                          <span className="text-indigo-600 font-black">{preScore}/25</span>
+                          <span className="text-indigo-600 font-black">{preScore}/20</span>
                         ) : preTestSub ? (
                           <span className="text-amber-600 text-xs">Pending Review</span>
                         ) : (
@@ -917,7 +1024,7 @@ export default function InstructorDashboard({ currentUser, navigateTo }) {
                       </td>
                       <td className="px-6 py-4 text-center font-bold">
                         {postScore !== undefined ? (
-                          <span className="text-teal-600 font-black">{postScore}/25</span>
+                          <span className="text-teal-600 font-black">{postScore}/20</span>
                         ) : postTestSub ? (
                           <span className="text-amber-600 text-xs">Pending Review</span>
                         ) : (

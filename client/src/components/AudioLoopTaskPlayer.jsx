@@ -45,6 +45,18 @@ export default function AudioLoopTaskPlayer({
   const [promptTime, setPromptTime] = useState(0);
   const [promptProgress, setPromptProgress] = useState(0);
 
+  // Full Model Dialogue Player state
+  const [isPlayingFullDialogue, setIsPlayingFullDialogue] = useState(false);
+  const [dialogueTime, setDialogueTime] = useState(0);
+  const [dialogueDuration, setDialogueDuration] = useState(0);
+  const fullDialogueAudioRef = useRef(null);
+  const fullDialogueLessonIdRef = useRef(null);
+  const promptAudioElementRef = useRef(null);
+
+  // Single Turn Model Dialogue Audio Player state (Review mode)
+  const [playingTurnAudioNum, setPlayingTurnAudioNum] = useState(null);
+  const singleTurnAudioRef = useRef(null);
+
   // Checklist state: { [itemIdx]: boolean }
   const [checklistState, setChecklistState] = useState({});
   const [showCheatSheet, setShowCheatSheet] = useState(false);
@@ -100,6 +112,15 @@ export default function AudioLoopTaskPlayer({
   useEffect(() => {
     return () => {
       window.speechSynthesis.cancel();
+      if (promptAudioElementRef.current) {
+        promptAudioElementRef.current.pause();
+      }
+      if (fullDialogueAudioRef.current) {
+        fullDialogueAudioRef.current.pause();
+      }
+      if (singleTurnAudioRef.current) {
+        singleTurnAudioRef.current.pause();
+      }
       if (streamRef.current) {
         streamRef.current.getTracks().forEach(track => track.stop());
       }
@@ -143,10 +164,14 @@ export default function AudioLoopTaskPlayer({
   };
 
   // ==========================================
-  // CUSTOMER PROMPT SPEECH SYNTHESIS PLAYER
+  // CUSTOMER PROMPT AUDIO PLAYER (WAV with TTS Fallback)
   // ==========================================
   const togglePlayCustomerAudio = (text, turnIdx) => {
     if (isPlayingPrompt && playingTurnIndex === turnIdx) {
+      if (promptAudioElementRef.current) {
+        promptAudioElementRef.current.pause();
+        promptAudioElementRef.current.currentTime = 0;
+      }
       window.speechSynthesis.cancel();
       setIsPlayingPrompt(false);
       setPlayingTurnIndex(null);
@@ -154,47 +179,185 @@ export default function AudioLoopTaskPlayer({
       return;
     }
 
+    if (promptAudioElementRef.current) {
+      promptAudioElementRef.current.pause();
+    }
+    if (fullDialogueAudioRef.current) {
+      fullDialogueAudioRef.current.pause();
+      setIsPlayingFullDialogue(false);
+    }
     window.speechSynthesis.cancel();
     clearInterval(promptTimerRef.current);
 
-    const utterance = new SpeechSynthesisUtterance(text);
-    const voices = window.speechSynthesis.getVoices();
-    const engVoices = voices.filter(v => v.lang.startsWith('en-'));
-    if (engVoices.length > 0) {
-      // Pick a natural voice if available
-      utterance.voice = engVoices[0];
-    }
-    utterance.rate = 0.95;
-    const estimatedDuration = Math.max(text.split(' ').length * 0.45, 5);
+    const turnObj = turns[turnIdx];
+    const turnNumber = turnObj?.turnNumber || (turnIdx + 1);
+    const audioSrc = `/audio_turns/lesson_${lessonId}_turn_${turnNumber}.wav`;
 
-    utterance.onstart = () => {
+    if (!promptAudioElementRef.current) {
+      promptAudioElementRef.current = new Audio();
+    }
+    const audio = promptAudioElementRef.current;
+    audio.src = audioSrc;
+
+    audio.onplay = () => {
       setIsPlayingPrompt(true);
       setPlayingTurnIndex(turnIdx);
       setPromptTime(0);
       setPromptProgress(0);
-      promptTimerRef.current = setInterval(() => {
-        setPromptTime(prev => {
-          const next = prev + 0.1;
-          setPromptProgress(Math.min((next / estimatedDuration) * 100, 100));
-          return next;
-        });
-      }, 100);
     };
 
-    utterance.onend = () => {
+    audio.ontimeupdate = () => {
+      if (audio.duration) {
+        setPromptTime(audio.currentTime);
+        setPromptProgress((audio.currentTime / audio.duration) * 100);
+      }
+    };
+
+    audio.onended = () => {
       setIsPlayingPrompt(false);
       setPlayingTurnIndex(null);
       setPromptProgress(100);
-      clearInterval(promptTimerRef.current);
     };
 
-    utterance.onerror = () => {
+    audio.onerror = () => {
+      // Fallback to SpeechSynthesis
+      const utterance = new SpeechSynthesisUtterance(text);
+      const voices = window.speechSynthesis.getVoices();
+      const engVoices = voices.filter(v => v.lang.startsWith('en-'));
+      if (engVoices.length > 0) {
+        utterance.voice = engVoices[0];
+      }
+      utterance.rate = 0.95;
+      const estimatedDuration = Math.max(text.split(' ').length * 0.45, 5);
+
+      utterance.onstart = () => {
+        setIsPlayingPrompt(true);
+        setPlayingTurnIndex(turnIdx);
+        setPromptTime(0);
+        setPromptProgress(0);
+        promptTimerRef.current = setInterval(() => {
+          setPromptTime(prev => {
+            const next = prev + 0.1;
+            setPromptProgress(Math.min((next / estimatedDuration) * 100, 100));
+            return next;
+          });
+        }, 100);
+      };
+
+      utterance.onend = () => {
+        setIsPlayingPrompt(false);
+        setPlayingTurnIndex(null);
+        setPromptProgress(100);
+        clearInterval(promptTimerRef.current);
+      };
+
+      utterance.onerror = () => {
+        setIsPlayingPrompt(false);
+        setPlayingTurnIndex(null);
+        clearInterval(promptTimerRef.current);
+      };
+
+      window.speechSynthesis.speak(utterance);
+    };
+
+    audio.play().catch(() => {
+      audio.onerror();
+    });
+  };
+
+  // Full Model Dialogue Player (Native Audio)
+  const togglePlayFullDialogue = () => {
+    // Immediately stop single turn audio if active
+    if (singleTurnAudioRef.current) {
+      singleTurnAudioRef.current.pause();
+      setPlayingTurnAudioNum(null);
+    }
+    if (promptAudioElementRef.current) {
+      promptAudioElementRef.current.pause();
       setIsPlayingPrompt(false);
-      setPlayingTurnIndex(null);
-      clearInterval(promptTimerRef.current);
+    }
+    window.speechSynthesis.cancel();
+
+    if (!fullDialogueAudioRef.current || fullDialogueLessonIdRef.current !== lessonId) {
+      if (fullDialogueAudioRef.current) {
+        fullDialogueAudioRef.current.pause();
+      }
+      const audio = new Audio(`/audio_loop_dialogue/lesson_${lessonId}_dialogue.wav`);
+      fullDialogueLessonIdRef.current = lessonId;
+
+      audio.onplay = () => setIsPlayingFullDialogue(true);
+      audio.onpause = () => setIsPlayingFullDialogue(false);
+      audio.onended = () => {
+        setIsPlayingFullDialogue(false);
+        setDialogueTime(0);
+      };
+      audio.ontimeupdate = () => {
+        setDialogueTime(audio.currentTime || 0);
+      };
+      audio.onloadedmetadata = () => {
+        setDialogueDuration(audio.duration || 0);
+      };
+      fullDialogueAudioRef.current = audio;
+    }
+
+    if (isPlayingFullDialogue) {
+      fullDialogueAudioRef.current.pause();
+    } else {
+      fullDialogueAudioRef.current.play().catch(e => {
+        console.warn('Could not play full dialogue audio:', e);
+      });
+    }
+  };
+
+  // Play/Pause single line from Model Dialogue (Review Mode)
+  const togglePlaySingleTurnAudio = (turnNum, text) => {
+    // If this turn is already playing, PAUSE it
+    if (playingTurnAudioNum === turnNum && singleTurnAudioRef.current) {
+      singleTurnAudioRef.current.pause();
+      setPlayingTurnAudioNum(null);
+      return;
+    }
+
+    // Stop any full dialogue currently playing
+    if (fullDialogueAudioRef.current) {
+      fullDialogueAudioRef.current.pause();
+      setIsPlayingFullDialogue(false);
+    }
+    // Stop any customer prompt currently playing
+    if (promptAudioElementRef.current) {
+      promptAudioElementRef.current.pause();
+      setIsPlayingPrompt(false);
+    }
+    // Stop any previously playing single turn audio
+    if (singleTurnAudioRef.current) {
+      singleTurnAudioRef.current.pause();
+      singleTurnAudioRef.current.currentTime = 0;
+    }
+    window.speechSynthesis.cancel();
+
+    const audio = new Audio(`/audio_turns/lesson_${lessonId}_turn_${turnNum}.wav`);
+    audio.onplay = () => setPlayingTurnAudioNum(turnNum);
+    audio.onpause = () => {
+      setPlayingTurnAudioNum(prev => (prev === turnNum ? null : prev));
+    };
+    audio.onended = () => {
+      setPlayingTurnAudioNum(null);
+    };
+    audio.onerror = () => {
+      // Fallback to SpeechSynthesis
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'en-US';
+      u.onend = () => setPlayingTurnAudioNum(null);
+      u.onerror = () => setPlayingTurnAudioNum(null);
+      window.speechSynthesis.speak(u);
+      setPlayingTurnAudioNum(turnNum);
     };
 
-    window.speechSynthesis.speak(utterance);
+    singleTurnAudioRef.current = audio;
+    audio.play().catch(e => {
+      console.warn('Could not play single turn audio, falling back to TTS:', e);
+      audio.onerror();
+    });
   };
 
   // ==========================================
@@ -298,26 +461,6 @@ export default function AudioLoopTaskPlayer({
       if (pCode) formData.append('participant_id', pCode);
       formData.append('unit_id', lesson?.unitId || `lesson_${lessonId}`);
 
-      // Calculate total duration
-      let totalDuration = 0;
-      Object.values(turnRecordings).forEach(rec => {
-        totalDuration += (rec.duration || 20);
-      });
-      formData.append('duration_seconds', totalDuration || 45);
-
-      // Attach turn recordings
-      studentTurns.forEach((st, idx) => {
-        const rec = turnRecordings[st.turnNumber];
-        if (rec?.blob) {
-          const filename = `${pCode || uId}_lesson${lessonId}_turn_${st.turnNumber}.webm`;
-          formData.append(`turn_audio_turn_${st.turnNumber}`, rec.blob, filename);
-          // Set primary audio_file to first student turn
-          if (idx === 0) {
-            formData.append('audio_file', rec.blob, filename);
-          }
-        }
-      });
-
       // Self assessment metadata
       const meta = {
         checklist: checklistState,
@@ -325,12 +468,8 @@ export default function AudioLoopTaskPlayer({
         completedCount: recordedCount,
         submittedAt: new Date().toISOString()
       };
-      formData.append('self_assessment', JSON.stringify(meta));
 
-      // 1. Post submission
-      await fetch('/api/submissions', { method: 'POST', body: formData });
-
-      // 2. Mark progress in SQLite
+      // 1. Mark progress & self-assessment in SQLite (Formative Practice Lab - No heavy audio storage bloat)
       const updatedLessons = { ...(studentState.lessonsProgress || {}) };
       const curr = { ...(updatedLessons[lessonId] || { sectionsCompleted: {} }) };
       curr.isCompleted = true;
@@ -346,7 +485,8 @@ export default function AudioLoopTaskPlayer({
           unitId: lesson?.unitId || `lesson_${lessonId}`,
           status: 'completed',
           sectionsCompleted: curr.sectionsCompleted,
-          reviewScore: curr.reviewScore || 100
+          reviewScore: curr.reviewScore || 100,
+          selfAssessment: meta
         })
       });
 
@@ -532,27 +672,105 @@ export default function AudioLoopTaskPlayer({
               </span>
             </div>
 
+            {/* Native Full Model Dialogue Audio Player */}
+            <div className="bg-indigo-950/80 border border-indigo-700/60 p-4 rounded-xl flex flex-col gap-3">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={togglePlayFullDialogue}
+                    className="w-11 h-11 rounded-full bg-amber-400 hover:bg-amber-300 text-slate-950 flex items-center justify-center shrink-0 shadow-md transition transform hover:scale-105 cursor-pointer"
+                    title={isPlayingFullDialogue ? 'Pause Dialogue' : 'Play Full Dialogue'}
+                  >
+                    {isPlayingFullDialogue ? <Pause className="w-5 h-5 fill-current" /> : <Play className="w-5 h-5 fill-current ml-0.5" />}
+                  </button>
+                  <div>
+                    <p className="text-xs font-bold text-white flex items-center gap-1.5">
+                      <Volume2 className="w-4 h-4 text-amber-400" />
+                      <span>{isPlayingFullDialogue ? 'Playing Full Best Practice Dialogue...' : 'Listen to Full Native Model Dialogue'}</span>
+                    </p>
+                    <p className="text-[10px] text-indigo-300 mt-0.5">
+                      Authentic 2-voice workplace conversation (Customer + Professional Support Agent)
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 self-end sm:self-auto">
+                  <span className="text-[10px] font-mono text-indigo-300">
+                    {formatTime(dialogueTime)} / {formatTime(dialogueDuration || 0)}
+                  </span>
+                  <span className="text-[10px] font-mono font-bold bg-indigo-800 text-indigo-200 px-2.5 py-1 rounded-lg border border-indigo-700">
+                    Gemini Neural Voice
+                  </span>
+                </div>
+              </div>
+
+              {/* Progress timeline */}
+              <div 
+                className="w-full bg-indigo-900/80 rounded-full h-1.5 overflow-hidden cursor-pointer"
+                onClick={(e) => {
+                  if (fullDialogueAudioRef.current && dialogueDuration > 0) {
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+                    fullDialogueAudioRef.current.currentTime = ratio * dialogueDuration;
+                    setDialogueTime(fullDialogueAudioRef.current.currentTime);
+                  }
+                }}
+              >
+                <div 
+                  className="bg-amber-400 h-full rounded-full transition-all duration-100"
+                  style={{ width: `${dialogueDuration ? (dialogueTime / dialogueDuration) * 100 : 0}%` }}
+                />
+              </div>
+            </div>
+
             <div className="space-y-3 pt-1">
               {task.postTask?.modelDialogue?.map((item, idx) => {
                 const isAgent = item.speaker.toLowerCase().includes('agent') || item.speaker.toLowerCase().includes('golf') || item.speaker.toLowerCase().includes('mei') || item.speaker.toLowerCase().includes('pear');
+                const isTurnPlaying = playingTurnAudioNum === item.turn;
                 return (
                   <div
                     key={idx}
-                    className={`p-4 rounded-xl border ${
-                      isAgent
+                    className={`p-4 rounded-xl border transition-all ${
+                      isTurnPlaying
+                        ? 'bg-indigo-950/90 border-amber-400/80 ring-2 ring-amber-400/40 shadow-lg'
+                        : isAgent
                         ? 'bg-blue-600/30 border-blue-400/40 ml-4 sm:ml-8'
                         : 'bg-slate-800/80 border-slate-700 mr-4 sm:mr-8'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-1.5">
-                      <span className={`text-xs font-black ${isAgent ? 'text-amber-300' : 'text-slate-300'}`}>
+                      <span className={`text-xs font-black ${isTurnPlaying ? 'text-amber-400' : isAgent ? 'text-amber-300' : 'text-slate-300'}`}>
                         Turn {item.turn}: {item.speaker}
                       </span>
-                      {item.purpose && (
-                        <span className="text-[10px] font-mono bg-black/40 px-2 py-0.5 rounded text-indigo-200 border border-indigo-700/50">
-                          {item.purpose}
-                        </span>
-                      )}
+                      <div className="flex items-center gap-2">
+                        {item.purpose && (
+                          <span className="text-[10px] font-mono bg-black/40 px-2 py-0.5 rounded text-indigo-200 border border-indigo-700/50">
+                            {item.purpose}
+                          </span>
+                        )}
+                        <button
+                          type="button"
+                          onClick={() => togglePlaySingleTurnAudio(item.turn, item.text)}
+                          className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold transition border cursor-pointer ${
+                            isTurnPlaying
+                              ? 'bg-amber-400 text-slate-950 border-amber-300 ring-2 ring-amber-400/50 shadow-md font-black'
+                              : 'bg-white/10 hover:bg-white/20 text-indigo-200 hover:text-white border-white/10'
+                          }`}
+                          title={isTurnPlaying ? 'Pause playback' : 'Listen to this line'}
+                        >
+                          {isTurnPlaying ? (
+                            <>
+                              <Pause className="w-3 h-3 text-slate-950 fill-current" />
+                              <span>Pause</span>
+                            </>
+                          ) : (
+                            <>
+                              <Play className="w-3 h-3 text-amber-300 fill-current ml-0.5" />
+                              <span>Listen</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
                     </div>
                     <p className="text-sm font-medium leading-relaxed italic text-white">
                       "{item.text}"

@@ -3,9 +3,9 @@ import {
   Users, Award, CheckCircle2, Clock, Play, Pause, Save, 
   ShieldCheck, FileAudio, HelpCircle, ArrowLeft, Send,
   AlertTriangle, Download, RefreshCw, BarChart3, TrendingUp,
-  Sparkles, Check, ChevronRight
+  Sparkles, Check, ChevronRight, Volume2
 } from 'lucide-react';
-import { RUBRIC_CRITERIA_25, getCefrRating } from '../data/assessmentsData';
+import { RUBRIC_CRITERIA_25, RUBRIC_TASKS_20, getCefrRating, ASSESSMENTS_DATA } from '../data/assessmentsData';
 
 // --- RECORDED AUDIO PLAYER WITH VARIABLE SPEED ---
 export function AudioReviewPlayer({ src }) {
@@ -174,7 +174,7 @@ export function SubmissionReviewList({ navigateTo, onSelectSubmission, studentSt
                     <td className="px-6 py-4">
                       {r1 ? (
                         <span className="font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded text-xs border border-indigo-200">
-                          {r1.total}/25 ({r1.percentage}%)
+                          {r1.total}/{r1.max_score || (sub.assessment_type === 'pre_test' || sub.assessment_type === 'post_test' || sub.unit_id === 'section_0' || sub.unit_id === 'section_9' ? 20 : 25)} ({r1.percentage}%)
                         </span>
                       ) : (
                         <span className="text-xs text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-200 font-bold">
@@ -185,7 +185,7 @@ export function SubmissionReviewList({ navigateTo, onSelectSubmission, studentSt
                     <td className="px-6 py-4">
                       {r2 ? (
                         <span className="font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded text-xs border border-indigo-200">
-                          {r2.total}/25 ({r2.percentage}%)
+                          {r2.total}/{r2.max_score || (sub.assessment_type === 'pre_test' || sub.assessment_type === 'post_test' || sub.unit_id === 'section_0' || sub.unit_id === 'section_9' ? 20 : 25)} ({r2.percentage}%)
                         </span>
                       ) : (
                         <span className="text-xs text-slate-400 bg-slate-100 px-2 py-0.5 rounded font-bold">
@@ -231,10 +231,12 @@ export function SubmissionReviewList({ navigateTo, onSelectSubmission, studentSt
 }
 
 // ============================================================================
-// 2. SUBMISSION REVIEW DETAIL & 25-POINT RUBRIC
+// 2. SUBMISSION REVIEW DETAIL & OPERATIONAL / BLUEPRINT RUBRIC
 // ============================================================================
 export function SubmissionReviewDetail({ submission, navigateTo, studentState }) {
   const [activeRaterRole, setActiveRaterRole] = useState('rater_1'); // rater_1 or rater_2
+  const [selectedTaskNumber, setSelectedTaskNumber] = useState(1);
+  const [taskScores, setTaskScores] = useState({ 1: 0, 2: 0, 3: 0, 4: 0 });
   const [scores, setScores] = useState({
     task_achievement: 0,
     interactive_comm: 0,
@@ -251,6 +253,16 @@ export function SubmissionReviewDetail({ submission, navigateTo, studentState })
     if (submission && submission.grades) {
       const g = activeRaterRole === 'rater_1' ? submission.grades.raterA : submission.grades.raterB;
       if (g) {
+        if (g.task_scores) {
+          setTaskScores({
+            1: g.task_scores[1] || 0,
+            2: g.task_scores[2] || 0,
+            3: g.task_scores[3] || 0,
+            4: g.task_scores[4] || 0
+          });
+        } else {
+          setTaskScores({ 1: 0, 2: 0, 3: 0, 4: 0 });
+        }
         setScores({
           task_achievement: g.task_achievement || 0,
           interactive_comm: g.interactive_comm || 0,
@@ -264,17 +276,36 @@ export function SubmissionReviewDetail({ submission, navigateTo, studentState })
           suggestions: g.suggestions || ''
         });
       } else {
+        setTaskScores({ 1: 0, 2: 0, 3: 0, 4: 0 });
         setScores({ task_achievement: 0, interactive_comm: 0, vocabulary: 0, grammar: 0, pronunciation_fluency: 0 });
         setFeedback({ strengths: '', improvements: '', suggestions: '' });
       }
     }
   }, [submission, activeRaterRole]);
 
-  const totalScore = Object.values(scores).reduce((a, b) => a + b, 0);
-  const cefrInfo = totalScore > 0 ? getCefrRating(totalScore, 25) : null;
+  const isPreOrPostTest = submission?.assessment_type === 'pre_test' || 
+                          submission?.assessment_type === 'post_test' || 
+                          submission?.unit_id === 'section_0' || 
+                          submission?.unit_id === 'section_9';
+  const isPreTest = submission?.assessment_type === 'pre_test' || submission?.unit_id === 'section_0';
+  const isPostTest = submission?.assessment_type === 'post_test' || submission?.unit_id === 'section_9';
+  const currentAssessment = isPreTest ? ASSESSMENTS_DATA.pre_test : (isPostTest ? ASSESSMENTS_DATA.post_test : null);
+  const taskUrls = submission?.task_audio_urls || {};
+
+  const maxScore = isPreOrPostTest ? 20 : 25;
+  const totalScore = isPreOrPostTest
+    ? ((taskScores[1] || 0) + (taskScores[2] || 0) + (taskScores[3] || 0) + (taskScores[4] || 0))
+    : Object.values(scores).reduce((a, b) => a + b, 0);
+
+  const cefrInfo = totalScore > 0 ? getCefrRating(totalScore, maxScore) : null;
 
   const handleScoreChange = (critId, val) => {
     setScores(prev => ({ ...prev, [critId]: val }));
+    setSaveSuccess(false);
+  };
+
+  const handleTaskScoreChange = (taskNum, val) => {
+    setTaskScores(prev => ({ ...prev, [taskNum]: val }));
     setSaveSuccess(false);
   };
 
@@ -291,6 +322,7 @@ export function SubmissionReviewDetail({ submission, navigateTo, studentState })
           submission_id: subId,
           rater_id: activeRaterRole,
           raterType: activeRaterRole,
+          taskScores,
           scores: {
             task_achievement: scores.task_achievement,
             interactive_comm: scores.interactive_comm,
@@ -311,13 +343,17 @@ export function SubmissionReviewDetail({ submission, navigateTo, studentState })
     }
   };
 
-  const audioSrc = submission?.audio_url || 
+  const audioSrc = taskUrls[selectedTaskNumber] || 
+    (selectedTaskNumber === 1 ? submission?.audio_url : null) || 
+    submission?.audio_url || 
     (studentState?.postTestAudioUrl || studentState?.preTestAudioUrl || '/uploads/audio/demo_nadia_pretest.webm');
+
+  const activeTaskMeta = currentAssessment?.tasks?.find(t => t.taskNumber === Number(selectedTaskNumber)) || currentAssessment?.tasks?.[0] || null;
 
   // Check discrepancy if both raters scored
   const r1Total = submission?.grades?.raterA?.total;
   const r2Total = submission?.grades?.raterB?.total;
-  const hasDiscrepancy = r1Total !== undefined && r2Total !== undefined && Math.abs(r1Total - r2Total) >= 5;
+  const hasDiscrepancy = r1Total !== undefined && r2Total !== undefined && Math.abs(r1Total - r2Total) >= (maxScore * 0.2);
 
   return (
     <div className="max-w-5xl mx-auto space-y-6 animate-fade-in pb-16">
@@ -360,7 +396,7 @@ export function SubmissionReviewDetail({ submission, navigateTo, studentState })
           <AlertTriangle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
           <div className="text-xs text-rose-900 font-medium">
             <span className="font-bold block text-sm">Inter-Rater Discrepancy Flag (&gt; 20% Variance Detected)</span>
-            Rater 1 gave <span className="font-bold">{r1Total}/25</span> and Rater 2 gave <span className="font-bold">{r2Total}/25</span> (Difference: {Math.abs(r1Total - r2Total)} points). Per thesis research protocol DEC-04, a consensus calibration review is recommended prior to final statistical export.
+            Rater 1 gave <span className="font-bold">{r1Total}/{maxScore}</span> and Rater 2 gave <span className="font-bold">{r2Total}/{maxScore}</span> (Difference: {Math.abs(r1Total - r2Total)} points). Per thesis research protocol DEC-04, a consensus calibration review is recommended prior to final statistical export.
           </div>
         </div>
       )}
@@ -384,15 +420,59 @@ export function SubmissionReviewDetail({ submission, navigateTo, studentState })
             <div className="border-t border-slate-100 pt-3 text-xs space-y-1.5 text-slate-600">
               <p><span className="font-bold text-slate-500">Unit:</span> {submission?.unit_title || 'Pre-test Form A'}</p>
               <p><span className="font-bold text-slate-500">Duration:</span> {submission?.duration_seconds || 30} seconds</p>
+              <p><span className="font-bold text-slate-500">Tasks Recorded:</span> {Object.keys(taskUrls).length || 1} of 4</p>
               <p><span className="font-bold text-slate-500">Submitted:</span> {submission?.submitted_at ? new Date(submission.submitted_at).toLocaleDateString() : 'Active Session'}</p>
             </div>
           </div>
+
+          {/* Task Audio Switcher (For Pre-test / Post-test) */}
+          {currentAssessment && (
+            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 space-y-2.5">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                  <Volume2 className="w-3.5 h-3.5 text-indigo-600" />
+                  <span>Select Task Audio</span>
+                </span>
+                <span className="text-[10px] font-mono text-slate-500">Task {selectedTaskNumber} / 4</span>
+              </div>
+              <div className="grid grid-cols-4 gap-1.5">
+                {[1, 2, 3, 4].map(tNum => {
+                  const hasAudio = !!(taskUrls[tNum] || (tNum === 1 && submission?.audio_url));
+                  const isActive = selectedTaskNumber === tNum;
+                  return (
+                    <button
+                      key={tNum}
+                      type="button"
+                      onClick={() => setSelectedTaskNumber(tNum)}
+                      className={`p-2 rounded-xl text-center text-xs font-bold transition border ${
+                        isActive
+                          ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm'
+                          : 'bg-white hover:bg-slate-100 text-slate-700 border-slate-200'
+                      }`}
+                    >
+                      <div className="flex items-center justify-center gap-1">
+                        <span>T{tNum}</span>
+                        {hasAudio && (
+                          <span className={`w-1.5 h-1.5 rounded-full ${isActive ? 'bg-emerald-300' : 'bg-emerald-500'}`} />
+                        )}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+              {activeTaskMeta && (
+                <p className="text-[11px] text-slate-600 italic bg-white p-2 rounded-lg border border-slate-200">
+                  <strong className="not-italic text-slate-800">Task {activeTaskMeta.taskNumber}:</strong> {activeTaskMeta.title}
+                </p>
+              )}
+            </div>
+          )}
 
           {/* Audio Player Card */}
           <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
             <h4 className="text-xs font-black uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
               <FileAudio className="w-4 h-4 text-indigo-600" />
-              <span>Spoken Audio Recording</span>
+              <span>{isPreOrPostTest ? `Task ${selectedTaskNumber} Audio Recording` : 'Spoken Audio Recording'}</span>
             </h4>
             <AudioReviewPlayer src={audioSrc} />
           </div>
@@ -402,14 +482,14 @@ export function SubmissionReviewDetail({ submission, navigateTo, studentState })
             <div className="flex justify-between items-end border-b border-indigo-800 pb-3">
               <div>
                 <span className="text-[10px] font-black uppercase tracking-widest text-indigo-300">
-                  Total Score ({activeRaterRole})
+                  Total Score ({activeRaterRole === 'rater_1' ? 'Rater 1' : 'Rater 2'})
                 </span>
                 <p className="text-4xl font-black font-mono">
-                  {totalScore} <span className="text-lg text-indigo-400">/ 25</span>
+                  {totalScore} <span className="text-lg text-indigo-400">/ {maxScore}</span>
                 </p>
               </div>
               <span className="text-sm font-bold text-indigo-200 font-mono">
-                {((totalScore / 25) * 100).toFixed(0)}%
+                {((totalScore / maxScore) * 100).toFixed(0)}%
               </span>
             </div>
 
@@ -429,60 +509,136 @@ export function SubmissionReviewDetail({ submission, navigateTo, studentState })
           </div>
         </div>
 
-        {/* Right Column: 25-Point Blueprint Rubric */}
+        {/* Right Column: 20-Point Operational or 25-Point Blueprint Rubric */}
         <div className="lg:col-span-2 space-y-6">
           <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
-            <div className="border-b border-slate-200 pb-4">
-              <h3 className="text-xl font-black text-slate-900">
-                25-Point Blueprint Analytic Rubric
-              </h3>
-              <p className="text-xs text-slate-500 font-medium mt-0.5">
-                Evaluated across 5 criteria (1–5 scale, Max raw score = 25 points).
-              </p>
+            <div className="border-b border-slate-200 pb-4 flex justify-between items-start">
+              <div>
+                <h3 className="text-xl font-black text-slate-900">
+                  {isPreOrPostTest ? 'Operational Task Rubric (4 Tasks x 5 Points)' : '25-Point Blueprint Analytic Rubric'}
+                </h3>
+                <p className="text-xs text-slate-500 font-medium mt-0.5">
+                  {isPreOrPostTest 
+                    ? 'Evaluated across 4 authentic tasks (1–5 scale, Max raw score = 20 points).'
+                    : 'Evaluated across 5 criteria (1–5 scale, Max raw score = 25 points).'}
+                </p>
+              </div>
+              <span className="text-xs font-mono font-bold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg border border-indigo-200">
+                Max: {maxScore} pts
+              </span>
             </div>
 
-            <div className="space-y-5">
-              {RUBRIC_CRITERIA_25.map((crit) => {
-                const selectedVal = scores[crit.id] || 0;
-                return (
-                  <div key={crit.id} className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
-                    <div>
-                      <div className="flex items-center justify-between">
-                        <h4 className="font-bold text-slate-900 text-sm">{crit.label}</h4>
-                        <span className="font-mono font-black text-indigo-600 text-sm">
-                          {selectedVal > 0 ? `${selectedVal} / 5` : 'Not Rated'}
-                        </span>
+            {isPreOrPostTest ? (
+              /* 20-Point Operational Rubric */
+              <div className="space-y-4">
+                {RUBRIC_TASKS_20.map((taskItem) => {
+                  const taskVal = taskScores[taskItem.taskNumber] || 0;
+                  const isTaskActive = selectedTaskNumber === taskItem.taskNumber;
+                  const hasTaskAudio = !!(taskUrls[taskItem.taskNumber] || (taskItem.taskNumber === 1 && submission?.audio_url));
+
+                  return (
+                    <div 
+                      key={taskItem.taskNumber} 
+                      className={`p-4 rounded-xl border transition-all space-y-3 ${
+                        isTaskActive ? 'bg-indigo-50/40 border-indigo-300 ring-1 ring-indigo-200' : 'bg-slate-50 border-slate-200'
+                      }`}
+                    >
+                      <div>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <h4 className="font-bold text-slate-900 text-sm">{taskItem.title}</h4>
+                            {hasTaskAudio && (
+                              <button
+                                type="button"
+                                onClick={() => setSelectedTaskNumber(taskItem.taskNumber)}
+                                className={`text-[10px] px-2 py-0.5 rounded flex items-center gap-1 font-semibold transition ${
+                                  isTaskActive ? 'bg-indigo-600 text-white' : 'bg-indigo-100 text-indigo-700 hover:bg-indigo-200'
+                                }`}
+                              >
+                                <Volume2 className="w-3 h-3" />
+                                <span>{isTaskActive ? 'Selected' : 'Play Audio'}</span>
+                              </button>
+                            )}
+                          </div>
+                          <span className="font-mono font-black text-indigo-600 text-sm">
+                            {taskVal > 0 ? `${taskVal} / 5` : 'Not Rated'}
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-500 mt-0.5">{taskItem.criteria}</p>
                       </div>
-                      <p className="text-xs text-slate-500 mt-0.5">{crit.description}</p>
-                    </div>
 
-                    {/* Band Selection Buttons */}
-                    <div className="grid grid-cols-5 gap-2">
-                      {[1, 2, 3, 4, 5].map((val) => (
-                        <button
-                          key={val}
-                          onClick={() => handleScoreChange(crit.id, val)}
-                          className={`py-2 rounded-lg text-xs font-black transition-all ${
-                            selectedVal === val
-                              ? 'bg-indigo-600 text-white shadow-sm ring-2 ring-indigo-400'
-                              : 'bg-white text-slate-700 border border-slate-300 hover:border-indigo-400'
-                          }`}
-                        >
-                          Band {val}
-                        </button>
-                      ))}
-                    </div>
+                      {/* Band Selection Buttons */}
+                      <div className="grid grid-cols-5 gap-2">
+                        {[1, 2, 3, 4, 5].map((val) => (
+                          <button
+                            key={val}
+                            onClick={() => handleTaskScoreChange(taskItem.taskNumber, val)}
+                            className={`py-2 rounded-lg text-xs font-black transition-all ${
+                              taskVal === val
+                                ? 'bg-indigo-600 text-white shadow-sm ring-2 ring-indigo-400'
+                                : 'bg-white text-slate-700 border border-slate-300 hover:border-indigo-400'
+                            }`}
+                          >
+                            Band {val}
+                          </button>
+                        ))}
+                      </div>
 
-                    {/* Descriptor of selected band */}
-                    {selectedVal > 0 && crit.bands && (
-                      <p className="text-[11px] text-slate-600 italic bg-white p-2.5 rounded-lg border border-slate-200 font-medium">
-                        "{crit.bands[selectedVal]}"
-                      </p>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
+                      {/* Descriptor of selected band */}
+                      {taskVal > 0 && taskItem.bands?.[taskVal] && (
+                        <p className="text-[11px] text-slate-600 italic bg-white p-2.5 rounded-lg border border-slate-200 font-medium">
+                          <span className="font-bold not-italic text-slate-700">Band {taskVal}:</span> "{taskItem.bands[taskVal]}"
+                        </p>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              /* 25-Point Criteria Rubric */
+              <div className="space-y-5">
+                {RUBRIC_CRITERIA_25.map((crit) => {
+                  const selectedVal = scores[crit.id] || 0;
+                  return (
+                    <div key={crit.id} className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+                      <div>
+                        <div className="flex items-center justify-between">
+                          <h4 className="font-bold text-slate-900 text-sm">{crit.label}</h4>
+                          <span className="font-mono font-black text-indigo-600 text-sm">
+                            {selectedVal > 0 ? `${selectedVal} / 5` : 'Not Rated'}
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-500 mt-0.5">{crit.description}</p>
+                      </div>
+
+                      {/* Band Selection Buttons */}
+                      <div className="grid grid-cols-5 gap-2">
+                        {[1, 2, 3, 4, 5].map((val) => (
+                          <button
+                            key={val}
+                            onClick={() => handleScoreChange(crit.id, val)}
+                            className={`py-2 rounded-lg text-xs font-black transition-all ${
+                              selectedVal === val
+                                ? 'bg-indigo-600 text-white shadow-sm ring-2 ring-indigo-400'
+                                : 'bg-white text-slate-700 border border-slate-300 hover:border-indigo-400'
+                            }`}
+                          >
+                            Band {val}
+                          </button>
+                        ))}
+                      </div>
+
+                      {/* Descriptor of selected band */}
+                      {selectedVal > 0 && crit.bands && (
+                        <p className="text-[11px] text-slate-600 italic bg-white p-2.5 rounded-lg border border-slate-200 font-medium">
+                          "{crit.bands[selectedVal]}"
+                        </p>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
           {/* Qualitative Evaluator Feedback */}
@@ -533,7 +689,9 @@ export function SubmissionReviewDetail({ submission, navigateTo, studentState })
                   Score saved to SQLite database successfully!
                 </span>
               ) : (
-                <span className="text-[11px] text-slate-400">All 5 criteria must be rated</span>
+                <span className="text-[11px] text-slate-400">
+                  {isPreOrPostTest ? 'All 4 tasks can be rated' : 'All 5 criteria must be rated'}
+                </span>
               )}
 
               <button
@@ -600,7 +758,7 @@ export function InstructorResultsComparison() {
             <p className="text-xs text-slate-500 font-medium">BPO Technical Support Communication Cohort</p>
           </div>
           <span className="px-3 py-1 bg-emerald-100 text-emerald-800 text-xs font-black rounded-lg border border-emerald-200">
-            +6.0 Points Gain (+24.0%)
+            +6.0 Points Gain (+30.0%)
           </span>
         </div>
 
@@ -609,25 +767,25 @@ export function InstructorResultsComparison() {
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 block mb-1">
               Pre-Test Baseline (Form A)
             </span>
-            <span className="text-4xl font-black text-slate-800 font-mono">14</span>
-            <span className="text-sm text-slate-400 font-bold"> / 25</span>
-            <p className="text-xs font-bold text-amber-600 mt-2">CEFR B1.2 (Intermediate)</p>
+            <span className="text-4xl font-black text-slate-800 font-mono">11</span>
+            <span className="text-sm text-slate-400 font-bold"> / 20</span>
+            <p className="text-xs font-bold text-amber-600 mt-2">CEFR B1.1 (Developing)</p>
           </div>
 
           <div className="bg-indigo-50 p-5 rounded-xl border border-indigo-200">
             <span className="text-xs font-bold uppercase tracking-wider text-indigo-700 block mb-1">
               Post-Test Outcome (Form B)
             </span>
-            <span className="text-4xl font-black text-indigo-600 font-mono">20</span>
-            <span className="text-sm text-indigo-300 font-bold"> / 25</span>
-            <p className="text-xs font-bold text-emerald-600 mt-2">CEFR B2.2 (Job-Ready)</p>
+            <span className="text-4xl font-black text-indigo-600 font-mono">17</span>
+            <span className="text-sm text-indigo-300 font-bold"> / 20</span>
+            <p className="text-xs font-bold text-emerald-600 mt-2">CEFR B2.1 (Deployable)</p>
           </div>
 
           <div className="col-span-2 sm:col-span-1 bg-emerald-50 p-5 rounded-xl border border-emerald-200 flex flex-col justify-center">
             <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 block mb-1">
               Empirical Learning Gain (Δ)
             </span>
-            <span className="text-3xl font-black text-emerald-700 font-mono">+24.0%</span>
+            <span className="text-3xl font-black text-emerald-700 font-mono">+30.0%</span>
             <p className="text-[11px] text-emerald-600 font-medium mt-1">Statistically Significant (p &lt; 0.05)</p>
           </div>
         </div>

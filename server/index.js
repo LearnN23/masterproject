@@ -372,6 +372,7 @@ app.post('/api/grades', (req, res) => {
     grammar: req.body.grammar,
     pronunciationFluency: req.body.pronunciationFluency,
     scores,
+    taskScores: req.body.taskScores || req.body.task_scores,
     strengths,
     areasForImprovement,
     suggestions,
@@ -469,19 +470,28 @@ app.get('/api/export/spss', (req, res) => {
     'Assessment_Type',
     'Submitted_At',
     'Duration_Seconds',
-    'R1_Task_Achievement',
-    'R1_Interactive_Comm',
-    'R1_Vocabulary',
-    'R1_Grammar',
-    'R1_Pronunciation_Fluency',
-    'R1_Total_25',
+    'Max_Score',
+    'R1_Task1_Score',
+    'R1_Task2_Score',
+    'R1_Task3_Score',
+    'R1_Task4_Score',
+    'R1_Criteria_Task_Achievement',
+    'R1_Criteria_Interactive_Comm',
+    'R1_Criteria_Vocabulary',
+    'R1_Criteria_Grammar',
+    'R1_Criteria_Pronunciation_Fluency',
+    'R1_Total_Score',
     'R1_Percentage',
-    'R2_Task_Achievement',
-    'R2_Interactive_Comm',
-    'R2_Vocabulary',
-    'R2_Grammar',
-    'R2_Pronunciation_Fluency',
-    'R2_Total_25',
+    'R2_Task1_Score',
+    'R2_Task2_Score',
+    'R2_Task3_Score',
+    'R2_Task4_Score',
+    'R2_Criteria_Task_Achievement',
+    'R2_Criteria_Interactive_Comm',
+    'R2_Criteria_Vocabulary',
+    'R2_Criteria_Grammar',
+    'R2_Criteria_Pronunciation_Fluency',
+    'R2_Total_Score',
     'R2_Percentage',
     'Score_Difference_Pts',
     'Difference_Exceeds_20Pct',
@@ -500,6 +510,11 @@ app.get('/api/export/spss', (req, res) => {
     clean(row.assessment_type),
     clean(row.submitted_at),
     row.duration_seconds || 0,
+    row.max_score,
+    row.r1_t1,
+    row.r1_t2,
+    row.r1_t3,
+    row.r1_t4,
     row.r1_task,
     row.r1_comm,
     row.r1_lex,
@@ -507,6 +522,10 @@ app.get('/api/export/spss', (req, res) => {
     row.r1_pron,
     row.r1_total,
     row.r1_pct,
+    row.r2_t1,
+    row.r2_t2,
+    row.r2_t3,
+    row.r2_t4,
     row.r2_task,
     row.r2_comm,
     row.r2_lex,
@@ -560,6 +579,18 @@ app.get('/api/backup/download', (req, res) => {
   } catch (err) {
     console.error('[Backup Download Error]', err);
     res.status(500).json({ error: 'Failed to generate backup archive: ' + err.message });
+  }
+});
+
+// --- ADMIN SYSTEM DATA RESET & REFRESH ---
+app.post('/api/admin/reset-data', (req, res) => {
+  try {
+    const { scope = 'all', userId = null, includeConsent = false } = req.body || {};
+    const result = DAL.resetData({ scope, userId, includeConsent });
+    res.json(result);
+  } catch (err) {
+    console.error('[Admin Reset Error]:', err);
+    res.status(500).json({ error: 'Failed to reset system data: ' + err.message });
   }
 });
 

@@ -130,12 +130,15 @@ function initSchema() {
     );
   `);
 
-  // Safe migrations for dual-rater calibration tracking
+  // Safe migrations for dual-rater calibration tracking & 20-point task scoring
   try {
     db.exec(`ALTER TABLE evaluations ADD COLUMN is_calibrated INTEGER DEFAULT 0;`);
   } catch (e) {}
   try {
     db.exec(`ALTER TABLE evaluations ADD COLUMN calibration_notes TEXT;`);
+  } catch (e) {}
+  try {
+    db.exec(`ALTER TABLE evaluations ADD COLUMN task_scores TEXT;`);
   } catch (e) {}
 }
 
@@ -501,7 +504,8 @@ const DAL = {
           graded_at: e.graded_at,
           rater_role: e.rater_role,
           is_calibrated: Boolean(e.is_calibrated),
-          calibration_notes: e.calibration_notes || null
+          calibration_notes: e.calibration_notes || null,
+          task_scores: e.task_scores ? JSON.parse(e.task_scores) : null
         };
         grades[e.rater_role] = info;
         if (e.rater_role === 'instructor' || e.rater_role === 'rater_1') {
@@ -623,8 +627,20 @@ const DAL = {
     const voc = parseCriterion(data.vocabulary, scores.vocabulary);
     const gr = parseCriterion(data.grammar, scores.grammar);
     const pf = parseCriterion(data.pronunciationFluency, scores.pronunciation_fluency);
-    const total = ta + ic + voc + gr + pf;
-    const pct = Number(((total / 25) * 100).toFixed(1));
+    let total = ta + ic + voc + gr + pf;
+    let pct = Number(((total / 25) * 100).toFixed(1));
+    let taskScoresStr = null;
+
+    if (data.taskScores && typeof data.taskScores === 'object') {
+      const ts = data.taskScores;
+      taskScoresStr = JSON.stringify(ts);
+      const t1 = Math.min(Math.max(Number(ts[1] || ts.task_1 || 0), 0), 5);
+      const t2 = Math.min(Math.max(Number(ts[2] || ts.task_2 || 0), 0), 5);
+      const t3 = Math.min(Math.max(Number(ts[3] || ts.task_3 || 0), 0), 5);
+      const t4 = Math.min(Math.max(Number(ts[4] || ts.task_4 || 0), 0), 5);
+      total = t1 + t2 + t3 + t4;
+      pct = Number(((total / 20) * 100).toFixed(1));
+    }
 
     const isCalibrated = data.isCalibrated ? 1 : 0;
     const calibrationNotes = data.calibrationNotes !== undefined ? String(data.calibrationNotes) : null;
@@ -656,12 +672,13 @@ const DAL = {
             suggestions = ?,
             graded_at = ?,
             is_calibrated = CASE WHEN ? = 1 THEN 1 ELSE is_calibrated END,
-            calibration_notes = COALESCE(?, calibration_notes)
+            calibration_notes = COALESCE(?, calibration_notes),
+            task_scores = COALESCE(?, task_scores)
         WHERE id = ?
       `).run(
         ta, ic, voc, gr, pf, total, pct,
         strengths || '', areasForImprovement || '', suggestions || '', now,
-        isCalibrated, calibrationNotes,
+        isCalibrated, calibrationNotes, taskScoresStr,
         existing.id
       );
     } else {
@@ -671,13 +688,13 @@ const DAL = {
           id, submission_id, rater_id, rater_role,
           task_achievement, interactive_comm, vocabulary, grammar, pronunciation_fluency,
           total_score, total_percentage, strengths, areas_for_improvement, suggestions, graded_at,
-          is_calibrated, calibration_notes
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          is_calibrated, calibration_notes, task_scores
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `).run(
         id, submissionId, raterId, raterRole || 'rater_1',
         ta, ic, voc, gr, pf, total, pct,
         strengths || '', areasForImprovement || '', suggestions || '', now,
-        isCalibrated, calibrationNotes
+        isCalibrated, calibrationNotes, taskScoresStr
       );
     }
 
@@ -737,12 +754,29 @@ const DAL = {
       const r1 = evals.find(e => e.rater_role === 'rater_1' || e.rater_role === 'instructor') || {};
       const r2 = evals.find(e => e.rater_role === 'rater_2' || e.rater_role === 'rater') || {};
 
+      const isPreOrPost = sub.assessment_type === 'pre_test' || sub.assessment_type === 'post_test' || sub.unit_id === 'section_0' || sub.unit_id === 'section_9';
+      const maxScore = isPreOrPost ? 20 : 25;
+
+      let r1TaskScores = {};
+      try {
+        if (r1.task_scores) {
+          r1TaskScores = typeof r1.task_scores === 'string' ? JSON.parse(r1.task_scores) : r1.task_scores;
+        }
+      } catch (e) {}
+
+      let r2TaskScores = {};
+      try {
+        if (r2.task_scores) {
+          r2TaskScores = typeof r2.task_scores === 'string' ? JSON.parse(r2.task_scores) : r2.task_scores;
+        }
+      } catch (e) {}
+
       let diff = '';
       let diffFlag = 'NO';
       if (r1.total_score !== undefined && r2.total_score !== undefined) {
         diff = Math.abs(r1.total_score - r2.total_score);
-        // Flag discrepancy > 20% of 25 pts = 5 points
-        if (diff >= 5) {
+        // Flag discrepancy > 20% of max score (4 pts on 20-pt scale, 5 pts on 25-pt scale)
+        if (diff >= (maxScore * 0.2)) {
           diffFlag = 'YES (Consensus Review Required)';
         }
       }
@@ -754,6 +788,11 @@ const DAL = {
         assessment_type: sub.assessment_type,
         submitted_at: sub.submitted_at,
         duration_seconds: sub.duration_seconds,
+        max_score: maxScore,
+        r1_t1: r1TaskScores[1] ?? '',
+        r1_t2: r1TaskScores[2] ?? '',
+        r1_t3: r1TaskScores[3] ?? '',
+        r1_t4: r1TaskScores[4] ?? '',
         r1_task: r1.task_achievement ?? '',
         r1_comm: r1.interactive_comm ?? '',
         r1_lex: r1.vocabulary ?? '',
@@ -761,6 +800,10 @@ const DAL = {
         r1_pron: r1.pronunciation_fluency ?? '',
         r1_total: r1.total_score ?? '',
         r1_pct: r1.total_percentage ?? '',
+        r2_t1: r2TaskScores[1] ?? '',
+        r2_t2: r2TaskScores[2] ?? '',
+        r2_t3: r2TaskScores[3] ?? '',
+        r2_t4: r2TaskScores[4] ?? '',
         r2_task: r2.task_achievement ?? '',
         r2_comm: r2.interactive_comm ?? '',
         r2_lex: r2.vocabulary ?? '',
@@ -856,7 +899,7 @@ const DAL = {
           raterScore: preRaterGrade ? preRaterGrade.total : null,
           isDualScored: Boolean(preInstGrade && preRaterGrade),
           diff: preDiff,
-          isDiscrepant: preDiff !== null && preDiff >= 5
+          isDiscrepant: preDiff !== null && preDiff >= 4
         },
         lessons: {
           completedCount: completedLessons,
@@ -871,7 +914,7 @@ const DAL = {
           raterScore: postRaterGrade ? postRaterGrade.total : null,
           isDualScored: Boolean(postInstGrade && postRaterGrade),
           diff: postDiff,
-          isDiscrepant: postDiff !== null && postDiff >= 5
+          isDiscrepant: postDiff !== null && postDiff >= 4
         },
         overallStage: stage
       };
@@ -899,6 +942,172 @@ const DAL = {
       expertEvals,
       dbEngine: 'SQLite WAL mode (Native Node.js 24 DatabaseSync)'
     };
+  },
+
+  // --- DATA RESET & REFRESH (ADMIN MAINTENANCE) ---
+  resetData({ scope = 'all', userId = null, includeConsent = false }) {
+    const uploadsDir = path.join(__dirname, 'uploads', 'audio');
+    let deletedFiles = 0;
+
+    const removeAudioFile = (filepathOrUrl) => {
+      if (!filepathOrUrl) return;
+      try {
+        const basename = path.basename(filepathOrUrl);
+        // Only delete uploaded files, never touch demo or lesson audio
+        if (basename.startsWith('submission-')) {
+          const fullPath = path.join(uploadsDir, basename);
+          if (fs.existsSync(fullPath)) {
+            fs.unlinkSync(fullPath);
+            deletedFiles++;
+          }
+        }
+      } catch (err) {
+        console.warn('[Reset] Error deleting audio file:', err.message);
+      }
+    };
+
+    let deletedSubmissions = 0;
+    let deletedEvaluations = 0;
+    let deletedProgressRecords = 0;
+    let deletedBadges = 0;
+    let deletedConsentRecords = 0;
+
+    db.exec('BEGIN TRANSACTION;');
+    try {
+      if (scope === 'all') {
+        // Collect all submissions to delete audio files
+        const subs = db.prepare('SELECT id, audio_file_path, audio_url, self_assessment FROM submissions').all();
+        for (const s of subs) {
+          removeAudioFile(s.audio_file_path);
+          removeAudioFile(s.audio_url);
+          try {
+            const meta = JSON.parse(s.self_assessment || '{}');
+            if (meta.task_audio_urls) {
+              Object.values(meta.task_audio_urls).forEach(removeAudioFile);
+            }
+          } catch (_) {}
+        }
+
+        // Clean any lingering submission-*.webm files in uploads directory
+        if (fs.existsSync(uploadsDir)) {
+          const lingering = fs.readdirSync(uploadsDir);
+          for (const f of lingering) {
+            if (f.startsWith('submission-')) {
+              try {
+                fs.unlinkSync(path.join(uploadsDir, f));
+                deletedFiles++;
+              } catch (_) {}
+            }
+          }
+        }
+
+        const evCount = db.prepare('SELECT COUNT(*) as count FROM evaluations').get().count;
+        const subCount = db.prepare('SELECT COUNT(*) as count FROM submissions').get().count;
+        const progCount = db.prepare('SELECT COUNT(*) as count FROM student_progress').get().count;
+        const badgeCount = db.prepare('SELECT COUNT(*) as count FROM badges').get().count;
+
+        db.exec('DELETE FROM evaluations;');
+        db.exec('DELETE FROM submissions;');
+        db.exec('DELETE FROM student_progress;');
+        db.exec('DELETE FROM badges;');
+
+        if (includeConsent) {
+          const cCount = db.prepare('SELECT COUNT(*) as count FROM research_consent').get().count;
+          db.exec('DELETE FROM research_consent;');
+          deletedConsentRecords = cCount;
+        }
+
+        deletedEvaluations = evCount;
+        deletedSubmissions = subCount;
+        deletedProgressRecords = progCount;
+        deletedBadges = badgeCount;
+
+      } else if (scope === 'tests_only') {
+        const subs = db.prepare("SELECT id, audio_file_path, audio_url, self_assessment FROM submissions WHERE unit_id IN ('section_0', 'section_9') OR assessment_type IN ('pre_test', 'post_test')").all();
+        
+        for (const s of subs) {
+          removeAudioFile(s.audio_file_path);
+          removeAudioFile(s.audio_url);
+        }
+
+        const subIds = subs.map(s => s.id);
+        if (subIds.length > 0) {
+          const idPlaceholders = subIds.map(() => '?').join(',');
+          const evDel = db.prepare(`DELETE FROM evaluations WHERE submission_id IN (${idPlaceholders})`).run(...subIds);
+          deletedEvaluations = evDel.changes;
+          const subDel = db.prepare(`DELETE FROM submissions WHERE id IN (${idPlaceholders})`).run(...subIds);
+          deletedSubmissions = subDel.changes;
+        }
+
+        const progDel = db.prepare("DELETE FROM student_progress WHERE unit_id IN ('section_0', 'section_9')").run();
+        deletedProgressRecords = progDel.changes;
+
+      } else if (scope === 'lessons_only') {
+        const progDel = db.prepare("DELETE FROM student_progress WHERE unit_id NOT IN ('section_0', 'section_9')").run();
+        deletedProgressRecords = progDel.changes;
+
+        const formativeSubs = db.prepare("SELECT id, audio_file_path, audio_url, self_assessment FROM submissions WHERE assessment_type = 'formative_speaking'").all();
+        for (const s of formativeSubs) {
+          removeAudioFile(s.audio_file_path);
+          removeAudioFile(s.audio_url);
+        }
+        if (formativeSubs.length > 0) {
+          const subDel = db.prepare("DELETE FROM submissions WHERE assessment_type = 'formative_speaking'").run();
+          deletedSubmissions = subDel.changes;
+        }
+
+        const badgeDel = db.prepare('DELETE FROM badges;').run();
+        deletedBadges = badgeDel.changes;
+
+      } else if (scope === 'single_user' && userId) {
+        const subs = db.prepare('SELECT id, audio_file_path, audio_url, self_assessment FROM submissions WHERE user_id = ?').all(userId);
+        for (const s of subs) {
+          removeAudioFile(s.audio_file_path);
+          removeAudioFile(s.audio_url);
+        }
+
+        const subIds = subs.map(s => s.id);
+        if (subIds.length > 0) {
+          const idPlaceholders = subIds.map(() => '?').join(',');
+          const evDel = db.prepare(`DELETE FROM evaluations WHERE submission_id IN (${idPlaceholders})`).run(...subIds);
+          deletedEvaluations = evDel.changes;
+          const subDel = db.prepare(`DELETE FROM submissions WHERE id IN (${idPlaceholders})`).run(...subIds);
+          deletedSubmissions = subDel.changes;
+        }
+
+        const progDel = db.prepare('DELETE FROM student_progress WHERE user_id = ?').run(userId);
+        deletedProgressRecords = progDel.changes;
+
+        const badgeDel = db.prepare('DELETE FROM badges WHERE user_id = ?').run(userId);
+        deletedBadges = badgeDel.changes;
+
+        if (includeConsent) {
+          const cDel = db.prepare('DELETE FROM research_consent WHERE user_id = ?').run(userId);
+          deletedConsentRecords = cDel.changes;
+        }
+      }
+
+      db.exec('COMMIT;');
+
+      try {
+        db.exec('VACUUM;');
+      } catch (_) {}
+
+      return {
+        success: true,
+        scope,
+        userId: userId || null,
+        deletedSubmissions,
+        deletedEvaluations,
+        deletedProgressRecords,
+        deletedBadges,
+        deletedConsentRecords,
+        deletedFiles
+      };
+    } catch (err) {
+      db.exec('ROLLBACK;');
+      throw err;
+    }
   }
 };
 

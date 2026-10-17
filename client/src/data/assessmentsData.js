@@ -379,10 +379,128 @@ export const PERFORMANCE_LEVELS_25 = [
   }
 ];
 
-// Resolves rating details given raw score (out of 25)
-export function getCefrRating(totalRawScore, maxScore = 25) {
+// ============================================================================
+// 20-POINT OPERATIONAL RUBRIC (Pre-test and Post-test: 4 Tasks x 5 Points)
+// Extracted from Deliverable 3 BPO Assessment Package & Advisor Sign-off DEC-04
+// ============================================================================
+export const RUBRIC_TASKS_20 = [
+  {
+    taskNumber: 1,
+    title: 'Task 1: Call Opening & Credential Verification',
+    shortLabel: 'Call Opening & Verification',
+    criteria: 'Professional brand salutation, agent introduction, polite offer of help, and modal credential verification.',
+    maxScore: 5,
+    bands: {
+      5: 'Exceeds workplace standard: Flawless brand greeting, warmth, and natural polite modal verification.',
+      4: 'Meets workplace standard: Polite professional greeting and accurate credential check with minor hesitation.',
+      3: 'Approaching standard: Basic greeting present, but modal phrasing is mechanical or missing 1 detail.',
+      2: 'Below workplace standard: Blunt, informal, or demanding tone without proper verification etiquette.',
+      1: 'Unsatisfactory: Incomplete, missing verification, or completely unprofessional tone.'
+    }
+  },
+  {
+    taskNumber: 2,
+    title: 'Task 2: Diagnostic Fault Isolation & Paraphrasing',
+    shortLabel: 'Fault Isolation & Paraphrasing',
+    criteria: 'Empathetic validation of caller frustration, indirect diagnostic questions (statement order), and reflective check.',
+    maxScore: 5,
+    bands: {
+      5: 'Exceeds workplace standard: Calm empathy, perfect indirect question syntax, and accurate reflective paraphrasing.',
+      4: 'Meets workplace standard: Good empathy and clear diagnostic probing; minor word order slips in indirect questions.',
+      3: 'Approaching standard: Asks diagnostic questions but omits reflective check or sounds robotic.',
+      2: 'Below workplace standard: Uses direct inverted questions; lacks empathy; confuses diagnostic facts.',
+      1: 'Unsatisfactory: Completely fails to isolate problem or dismisses caller complaint.'
+    }
+  },
+  {
+    taskNumber: 3,
+    title: 'Task 3: Technical Workaround & De-escalation',
+    shortLabel: 'Workaround & De-escalation',
+    criteria: 'HEAR de-escalation framework (empathy, corporate apology, personal ownership), plain English, and First Conditional.',
+    maxScore: 5,
+    bands: {
+      5: 'Exceeds workplace standard: Sincere formal corporate apology, active personal ownership, and clear First Conditional workaround.',
+      4: 'Meets workplace standard: Polite de-escalation with accurate technical explanation and collaborative verification.',
+      3: 'Approaching standard: Offers workaround but apology is weak or conditional structure has grammatical errors.',
+      2: 'Below workplace standard: Defensive tone; tells caller to "calm down"; inaccurate technical explanation.',
+      1: 'Unsatisfactory: Hostile, unhelpful, or completely fails to address caller escalation.'
+    }
+  },
+  {
+    taskNumber: 4,
+    title: 'Task 4: CRM Ticket Synthesis & Shift Handover',
+    shortLabel: 'CRM Synthesis & Handover',
+    criteria: '5-Stage Handover Framework (ID -> Symptom -> Actions -> Current Status -> Next Step & SLA countdown).',
+    maxScore: 5,
+    bands: {
+      5: 'Exceeds workplace standard: Concise coverage of all 5 stages within time limit with exact ticket ID and SLA window.',
+      4: 'Meets workplace standard: Clear briefing covering all stages; minor delay or omission of secondary detail.',
+      3: 'Approaching standard: Covers main issue but misses SLA deadline countdown or next owner transition.',
+      2: 'Below workplace standard: Disorganized structure; reads raw ticket fields; misses critical escalation pod.',
+      1: 'Unsatisfactory: Inaudible, severely fragmented, or fails to deliver structured handover briefing.'
+    }
+  }
+];
+
+// Resolves rating details given raw score (out of 20 or 25)
+export function getCefrRating(totalRawScore, maxScore = 20) {
   const score = Math.round(Number(totalRawScore) || 0);
 
+  if (maxScore === 20) {
+    if (score >= 18) {
+      return {
+        level: 'Excellent / Job-Ready',
+        label: 'Excellent',
+        scoreRange: '18-20',
+        description: 'Demonstrates exemplary BPO communicative competence; direct deployment ready.',
+        cefr: 'B2.2 / C1',
+        badgeColor: 'emerald',
+        badgeClass: 'bg-emerald-100 text-emerald-800 border-emerald-300'
+      };
+    } else if (score >= 15) {
+      return {
+        level: 'Very Good / Deployable',
+        label: 'Very Good',
+        scoreRange: '15-17',
+        description: 'Strong overall workplace performance; deployable under mentor supervision.',
+        cefr: 'B2.1',
+        badgeColor: 'blue',
+        badgeClass: 'bg-blue-100 text-blue-800 border-blue-300'
+      };
+    } else if (score >= 12) {
+      return {
+        level: 'Good / Intermediate',
+        label: 'Good',
+        scoreRange: '12-14',
+        description: 'Meets basic operational requirements; requires on-the-job supervision.',
+        cefr: 'B1.2',
+        badgeColor: 'indigo',
+        badgeClass: 'bg-indigo-100 text-indigo-800 border-indigo-300'
+      };
+    } else if (score >= 8) {
+      return {
+        level: 'Fair / Developing',
+        label: 'Fair',
+        scoreRange: '8-11',
+        description: 'Developing communication skills; requires targeted remedial language practice.',
+        cefr: 'B1.1',
+        badgeColor: 'amber',
+        badgeClass: 'bg-amber-100 text-amber-800 border-amber-300'
+      };
+    } else {
+      return {
+        level: 'Poor / Novice',
+        label: 'Poor',
+        scoreRange: '0-7',
+        description: 'Struggles across basic communication parameters; unprepared for voice support.',
+        cefr: 'A2',
+        badgeColor: 'rose',
+        badgeClass: 'bg-rose-100 text-rose-800 border-rose-300'
+      };
+    }
+  }
+
+  // Fallback 25-point scale
   if (score >= 21) {
     return {
       level: 'Excellent',

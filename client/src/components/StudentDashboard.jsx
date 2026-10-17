@@ -300,11 +300,12 @@ export default function StudentDashboard({ navigateTo, studentState, isBypass = 
         const hasGain = preScore !== null && postScore !== null;
         if (!hasGain) return null;
 
+        const maxScore = preGrade.max_score || postGrade.max_score || 20;
         const gainPts = postScore - preScore;
-        const gainPct = Math.round((gainPts / 25) * 100);
+        const gainPct = Math.round((gainPts / maxScore) * 100);
 
-        const preCefr = getCefrRating(preScore);
-        const postCefr = getCefrRating(postScore);
+        const preCefr = getCefrRating(preScore, maxScore);
+        const postCefr = getCefrRating(postScore, maxScore);
 
         return (
           <div className="bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-700 rounded-2xl p-6 text-white shadow-lg space-y-3">
@@ -323,13 +324,13 @@ export default function StudentDashboard({ navigateTo, studentState, isBypass = 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
               <div className="bg-white/10 rounded-xl p-3 border border-white/20">
                 <p className="text-[10px] uppercase font-bold text-emerald-200">Pre-Test Diagnostic</p>
-                <p className="text-xl font-black text-white mt-0.5">{preScore} / 25 ({preGrade.percentage}%)</p>
+                <p className="text-xl font-black text-white mt-0.5">{preScore} / {maxScore} ({preGrade.percentage}%)</p>
                 <p className="text-[11px] text-emerald-100 mt-1">{preCefr.level} &bull; {preCefr.cefr}</p>
               </div>
 
               <div className="bg-white/10 rounded-xl p-3 border border-white/20">
                 <p className="text-[10px] uppercase font-bold text-teal-200">Post-Test Summative</p>
-                <p className="text-xl font-black text-white mt-0.5">{postScore} / 25 ({postGrade.percentage}%)</p>
+                <p className="text-xl font-black text-white mt-0.5">{postScore} / {maxScore} ({postGrade.percentage}%)</p>
                 <p className="text-[11px] text-teal-100 mt-1">{postCefr.level} &bull; {postCefr.cefr}</p>
               </div>
 
@@ -338,7 +339,7 @@ export default function StudentDashboard({ navigateTo, studentState, isBypass = 
                 <p className="text-sm font-bold text-white mt-0.5">
                   {gainPts > 0 ? 'Statistically Significant Communicative Gain' : 'Consistent Proficiency Demonstrated'}
                 </p>
-                <p className="text-[11px] text-amber-100 mt-1">Grounded in 25-Point Analytic Rubric</p>
+                <p className="text-[11px] text-amber-100 mt-1">Grounded in 20-Point Operational Rubric</p>
               </div>
             </div>
           </div>
@@ -480,10 +481,10 @@ export default function StudentDashboard({ navigateTo, studentState, isBypass = 
                     {instGrade ? (
                       <div className="flex flex-wrap items-center gap-2">
                         <span className="text-xs font-black text-indigo-700 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-200">
-                          Instructor Score: {instGrade.total} / 25 ({instGrade.percentage}%)
+                          Instructor Score: {instGrade.total} / {instGrade.max_score || 20} ({instGrade.percentage}%)
                         </span>
                         {(() => {
-                          const cefr = getCefrRating(instGrade.total);
+                          const cefr = getCefrRating(instGrade.total, instGrade.max_score || 20);
                           return (
                             <span className={`text-[11px] font-bold px-2.5 py-0.5 rounded-lg border ${cefr.badgeClass}`} title={cefr.description}>
                               {cefr.level} &bull; {cefr.cefr}
@@ -511,7 +512,18 @@ export default function StudentDashboard({ navigateTo, studentState, isBypass = 
                         <FileAudio className="w-3.5 h-3.5 text-indigo-600" />
                         My Spoken Recording ({preSub.duration_seconds || 18}s)
                       </span>
-                      {preSub.audio_url ? (
+                      {preSub.task_audio_urls && Object.keys(preSub.task_audio_urls).length > 1 ? (
+                        <div className="space-y-1.5 pt-1">
+                          {Object.entries(preSub.task_audio_urls).map(([tNum, url]) => (
+                            <div key={tNum} className="space-y-0.5">
+                              <span className="text-[10px] font-bold text-slate-700 block">
+                                Task {tNum}:
+                              </span>
+                              <audio controls src={url} className="w-full h-7" />
+                            </div>
+                          ))}
+                        </div>
+                      ) : preSub.audio_url ? (
                         <audio controls src={preSub.audio_url} className="w-full h-8" />
                       ) : (
                         <p className="text-slate-400 italic">Audio recording preserved on server</p>
@@ -527,6 +539,16 @@ export default function StudentDashboard({ navigateTo, studentState, isBypass = 
                           </span>
                           <span className="text-[10px] text-slate-500">{instGrade.graded_at ? new Date(instGrade.graded_at).toLocaleDateString() : 'Recent'}</span>
                         </div>
+                        {instGrade.task_scores && (
+                          <div className="grid grid-cols-4 gap-1.5 py-1">
+                            {[1, 2, 3, 4].map(tNum => (
+                              <div key={tNum} className="bg-white p-1.5 rounded-lg border border-indigo-100 text-center">
+                                <span className="text-[10px] font-semibold text-slate-500 block">Task {tNum}</span>
+                                <span className="font-mono font-bold text-indigo-600 text-xs">{instGrade.task_scores[tNum] || 0} / 5</span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                         {instGrade.strengths && (
                           <p className="text-slate-700"><strong className="text-emerald-700">Strengths:</strong> {instGrade.strengths}</p>
                         )}
@@ -733,10 +755,10 @@ export default function StudentDashboard({ navigateTo, studentState, isBypass = 
                     {instGrade ? (
                       <div className="flex flex-wrap items-center gap-2">
                         <span className="text-xs font-black text-emerald-700 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-200">
-                          Instructor Outcome Score: {instGrade.total} / 25 ({instGrade.percentage}%)
+                          Instructor Outcome Score: {instGrade.total} / {instGrade.max_score || 20} ({instGrade.percentage}%)
                         </span>
                         {(() => {
-                          const cefr = getCefrRating(instGrade.total);
+                          const cefr = getCefrRating(instGrade.total, instGrade.max_score || 20);
                           return (
                             <span className={`text-[11px] font-bold px-2.5 py-0.5 rounded-lg border ${cefr.badgeClass}`} title={cefr.description}>
                               {cefr.level} &bull; {cefr.cefr}
@@ -763,7 +785,18 @@ export default function StudentDashboard({ navigateTo, studentState, isBypass = 
                         <FileAudio className="w-3.5 h-3.5 text-indigo-600" />
                         My Post-Test Recording ({postSub.duration_seconds || 30}s)
                       </span>
-                      {postSub.audio_url ? (
+                      {postSub.task_audio_urls && Object.keys(postSub.task_audio_urls).length > 1 ? (
+                        <div className="space-y-1.5 pt-1">
+                          {Object.entries(postSub.task_audio_urls).map(([tNum, url]) => (
+                            <div key={tNum} className="space-y-0.5">
+                              <span className="text-[10px] font-bold text-slate-700 block">
+                                Task {tNum}:
+                              </span>
+                              <audio controls src={url} className="w-full h-7" />
+                            </div>
+                          ))}
+                        </div>
+                      ) : postSub.audio_url ? (
                         <audio controls src={postSub.audio_url} className="w-full h-8" />
                       ) : (
                         <p className="text-slate-400 italic">Saved on server</p>
@@ -778,6 +811,16 @@ export default function StudentDashboard({ navigateTo, studentState, isBypass = 
                           </span>
                           <span className="text-[10px] text-slate-500">{instGrade.graded_at ? new Date(instGrade.graded_at).toLocaleDateString() : 'Recent'}</span>
                         </div>
+                        {instGrade.task_scores && (
+                          <div className="grid grid-cols-4 gap-1.5 py-1">
+                            {[1, 2, 3, 4].map(tNum => (
+                              <div key={tNum} className="bg-white p-1.5 rounded-lg border border-emerald-100 text-center">
+                                <span className="text-[10px] font-semibold text-slate-500 block">Task {tNum}</span>
+                                <span className="font-mono font-bold text-emerald-600 text-xs">{instGrade.task_scores[tNum] || 0} / 5</span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                         {instGrade.strengths && (
                           <p className="text-slate-700"><strong className="text-emerald-700">Strengths:</strong> {instGrade.strengths}</p>
                         )}

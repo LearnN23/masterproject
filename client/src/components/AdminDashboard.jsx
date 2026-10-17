@@ -5,7 +5,8 @@ import {
   FileSpreadsheet, Server, Award, Sparkles, Check, X,
   GraduationCap, Mic, HardDrive, KeyRound, Info, Edit3,
   Lock, Unlock, ChevronRight, Eye, CheckCircle, ListChecks,
-  Scale, TrendingUp, BarChart3, Play, Pause, FileText, ArrowRight, Archive
+  Scale, TrendingUp, BarChart3, Play, Pause, FileText, ArrowRight, Archive,
+  RotateCcw
 } from 'lucide-react';
 import ScoreCalibrationStudio from './ScoreCalibrationStudio';
 import DataExport from './DataExport';
@@ -331,6 +332,77 @@ export default function AdminDashboard({ currentUser, initialTab = 'cohort', nav
   const [submitting, setSubmitting] = useState(false);
   const [feedbackMsg, setFeedbackMsg] = useState({ text: '', type: '' });
   const [deleteConfirmId, setDeleteConfirmId] = useState(null);
+
+  // Reset / Refresh Data Modal State
+  const [showResetModal, setShowResetModal] = useState(false);
+  const [resetScope, setResetScope] = useState('all'); // 'all' | 'tests_only' | 'lessons_only' | 'single_user'
+  const [selectedStudentForReset, setSelectedStudentForReset] = useState('');
+  const [selectedStudentName, setSelectedStudentName] = useState('');
+  const [includeConsentReset, setIncludeConsentReset] = useState(false);
+  const [isResetting, setIsResetting] = useState(false);
+
+  const handleOpenResetModal = (scope = 'all', studentId = '', studentName = '') => {
+    setResetScope(scope);
+    if (studentId) {
+      setSelectedStudentForReset(studentId);
+      setSelectedStudentName(studentName || '');
+    } else {
+      const firstStudent = users.find(u => u.role === 'student');
+      setSelectedStudentForReset(firstStudent?.id || '');
+      setSelectedStudentName(firstStudent?.name || '');
+    }
+    setIncludeConsentReset(false);
+    setShowResetModal(true);
+  };
+
+  const handleExecuteReset = async () => {
+    setIsResetting(true);
+    try {
+      const res = await fetch('/api/admin/reset-data', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          scope: resetScope,
+          userId: resetScope === 'single_user' ? selectedStudentForReset : null,
+          includeConsent: includeConsentReset
+        })
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || 'Failed to reset data');
+      }
+
+      // Clear client localStorage cache for clean state
+      try {
+        if (resetScope === 'all') {
+          Object.keys(localStorage).forEach(key => {
+            if (key.startsWith('techquest_progress')) {
+              localStorage.removeItem(key);
+            }
+          });
+        } else if (resetScope === 'single_user' && selectedStudentForReset) {
+          localStorage.removeItem(`techquest_progress_${selectedStudentForReset}`);
+        }
+      } catch (_) {}
+
+      setFeedbackMsg({
+        type: 'success',
+        text: `Data Reset Complete! Wiped ${data.deletedSubmissions || 0} oral submissions, ${data.deletedEvaluations || 0} rater evaluations, ${data.deletedProgressRecords || 0} progress records, and ${data.deletedFiles || 0} audio recordings.`
+      });
+
+      setShowResetModal(false);
+      await fetchData();
+    } catch (err) {
+      console.error('Reset execution error:', err);
+      setFeedbackMsg({
+        type: 'error',
+        text: `Reset Failed: ${err.message}`
+      });
+    } finally {
+      setIsResetting(false);
+    }
+  };
 
   // Load Users, System Stats, Cohort Progress, Submissions
   const fetchData = async () => {
@@ -790,13 +862,13 @@ export default function AdminDashboard({ currentUser, initialTab = 'cohort', nav
                             <div className="flex items-center justify-between gap-2">
                               <span className="text-slate-500">Instructor:</span>
                               <span className={item.preTest.instructorScore !== null ? "font-bold text-slate-900" : "text-amber-600 italic"}>
-                                {item.preTest.instructorScore !== null ? `${item.preTest.instructorScore}/25` : 'Pending'}
+                                {item.preTest.instructorScore !== null ? `${item.preTest.instructorScore}/20` : 'Pending'}
                               </span>
                             </div>
                             <div className="flex items-center justify-between gap-2">
                               <span className="text-slate-500">Rater:</span>
                               <span className={item.preTest.raterScore !== null ? "font-bold text-teal-700" : "text-amber-600 italic"}>
-                                {item.preTest.raterScore !== null ? `${item.preTest.raterScore}/25` : 'Pending'}
+                                {item.preTest.raterScore !== null ? `${item.preTest.raterScore}/20` : 'Pending'}
                               </span>
                             </div>
                             {item.preTest.isDualScored && (
@@ -877,13 +949,13 @@ export default function AdminDashboard({ currentUser, initialTab = 'cohort', nav
                             <div className="flex items-center justify-between gap-2">
                               <span className="text-slate-500">Instructor:</span>
                               <span className={item.postTest.instructorScore !== null ? "font-bold text-slate-900" : "text-amber-600 italic"}>
-                                {item.postTest.instructorScore !== null ? `${item.postTest.instructorScore}/25` : 'Pending'}
+                                {item.postTest.instructorScore !== null ? `${item.postTest.instructorScore}/20` : 'Pending'}
                               </span>
                             </div>
                             <div className="flex items-center justify-between gap-2">
                               <span className="text-slate-500">Rater:</span>
                               <span className={item.postTest.raterScore !== null ? "font-bold text-teal-700" : "text-amber-600 italic"}>
-                                {item.postTest.raterScore !== null ? `${item.postTest.raterScore}/25` : 'Pending'}
+                                {item.postTest.raterScore !== null ? `${item.postTest.raterScore}/20` : 'Pending'}
                               </span>
                             </div>
                             {item.postTest.isDualScored && (
@@ -921,16 +993,27 @@ export default function AdminDashboard({ currentUser, initialTab = 'cohort', nav
                     </td>
 
                     {/* Actions */}
-                    <td className="px-3 py-3.5 text-right">
-                      <button
-                        type="button"
-                        onClick={() => setActiveTab('calibration')}
-                        className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-bold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 rounded-lg border border-indigo-200 transition"
-                        title="Open in Calibration Studio"
-                      >
-                        <Award className="w-3 h-3" />
-                        <span>Calibrate</span>
-                      </button>
+                    <td className="px-3 py-3.5 text-right whitespace-nowrap">
+                      <div className="flex items-center justify-end gap-1.5">
+                        <button
+                          type="button"
+                          onClick={() => setActiveTab('calibration')}
+                          className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-bold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 rounded-lg border border-indigo-200 transition cursor-pointer"
+                          title="Open in Calibration Studio"
+                        >
+                          <Award className="w-3 h-3" />
+                          <span>Calibrate</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleOpenResetModal('single_user', item.id, item.name)}
+                          className="inline-flex items-center gap-1 px-2 py-1 text-[11px] font-bold text-rose-700 bg-rose-50 hover:bg-rose-100 rounded-lg border border-rose-200 transition cursor-pointer"
+                          title={`Reset test recordings & progress for ${item.name}`}
+                        >
+                          <RotateCcw className="w-3 h-3 text-rose-600" />
+                          <span>Reset</span>
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))
@@ -941,6 +1024,213 @@ export default function AdminDashboard({ currentUser, initialTab = 'cohort', nav
       </div>
     </div>
   );
+
+  const renderMaintenanceView = () => {
+    const totalSubs = submissions.length;
+    const preSubs = submissions.filter(s => s.assessment_type === 'pre_test').length;
+    const postSubs = submissions.filter(s => s.assessment_type === 'post_test').length;
+    const formativeSubs = submissions.filter(s => s.assessment_type === 'formative_speaking').length;
+    const totalEvals = stats?.totalEvaluations || 0;
+
+    return (
+      <div className="space-y-8 animate-fade-in">
+        {/* Top Overview Banner */}
+        <div className="bg-gradient-to-br from-slate-900 to-indigo-950 text-white rounded-2xl p-6 shadow-lg border border-slate-800">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-[10px] font-black uppercase tracking-widest text-rose-400 bg-rose-500/20 px-2.5 py-0.5 rounded-full border border-rose-500/30 flex items-center gap-1">
+                  <Database className="w-3 h-3" /> System Maintenance Console
+                </span>
+                <span className="text-xs text-slate-400 font-mono">SQLite WAL Engine</span>
+              </div>
+              <h3 className="text-xl font-black text-white">Data Clean Up & Test Data Refresh</h3>
+              <p className="text-xs text-slate-300 mt-1 max-w-2xl leading-relaxed">
+                Refresh test records, audio submissions, dual-rater score matrices, and student lesson progress after testing cycles. User logins and staff roles remain permanently preserved.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => handleOpenResetModal('all')}
+              className="flex items-center gap-2 px-5 py-2.5 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-xs font-black shadow-lg transition transform hover:scale-105 cursor-pointer shrink-0"
+            >
+              <RotateCcw className="w-4 h-4" />
+              <span>Full System Clean Up</span>
+            </button>
+          </div>
+
+          {/* Telemetry Pills */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-6 border-t border-slate-800/80">
+            <div className="bg-slate-800/60 p-3.5 rounded-xl border border-slate-700/60">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Oral Test Recordings</span>
+              <span className="text-xl font-black text-white mt-0.5 block">{totalSubs}</span>
+              <span className="text-[10px] text-indigo-300 font-mono mt-0.5 block">
+                {preSubs} Pre / {postSubs} Post / {formativeSubs} Loop
+              </span>
+            </div>
+            <div className="bg-slate-800/60 p-3.5 rounded-xl border border-slate-700/60">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Rater Evaluations</span>
+              <span className="text-xl font-black text-white mt-0.5 block">{totalEvals}</span>
+              <span className="text-[10px] text-teal-300 font-mono mt-0.5 block">20 & 25-pt Rubric Grades</span>
+            </div>
+            <div className="bg-slate-800/60 p-3.5 rounded-xl border border-slate-700/60">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Active Participants</span>
+              <span className="text-xl font-black text-white mt-0.5 block">{cohortData.length}</span>
+              <span className="text-[10px] text-emerald-300 font-mono mt-0.5 block">Main Study & Pilot</span>
+            </div>
+            <div className="bg-slate-800/60 p-3.5 rounded-xl border border-slate-700/60">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Completed Curricula</span>
+              <span className="text-xl font-black text-white mt-0.5 block">
+                {cohortData.filter(s => s.lessons?.allCompleted).length}
+              </span>
+              <span className="text-[10px] text-amber-300 font-mono mt-0.5 block">All 8 Lessons Done</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Clean Up Action Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Card 1: Tests Only */}
+          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between space-y-4 hover:border-indigo-300 transition-all">
+            <div className="space-y-3">
+              <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center font-bold">
+                <Mic className="w-5 h-5" />
+              </div>
+              <div>
+                <h4 className="text-base font-black text-slate-900">Reset Oral Tests & Scores</h4>
+                <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                  Deletes Pre-test & Post-test oral recordings, rater scores, and marks test sections as not started.
+                </p>
+              </div>
+              <div className="bg-purple-50/60 p-3 rounded-xl border border-purple-100 text-[11px] text-purple-900 space-y-1">
+                <div className="flex items-center gap-1.5 font-bold">
+                  <Check className="w-3.5 h-3.5 text-purple-600" /> Preserves Lessons 1–8 Progress
+                </div>
+                <div className="flex items-center gap-1.5 font-bold">
+                  <Check className="w-3.5 h-3.5 text-purple-600" /> Preserves Review Quiz Scores
+                </div>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => handleOpenResetModal('tests_only')}
+              className="w-full py-2.5 px-4 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs font-bold transition shadow-sm flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span>Reset Oral Tests Only</span>
+            </button>
+          </div>
+
+          {/* Card 2: Lessons Only */}
+          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between space-y-4 hover:border-indigo-300 transition-all">
+            <div className="space-y-3">
+              <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold">
+                <BookOpen className="w-5 h-5" />
+              </div>
+              <div>
+                <h4 className="text-base font-black text-slate-900">Reset Lesson Modules 1–8</h4>
+                <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                  Locks Lessons 2–8, clears review quiz scores, completed sub-sections, loop tasks, and gamification badges.
+                </p>
+              </div>
+              <div className="bg-amber-50/60 p-3 rounded-xl border border-amber-100 text-[11px] text-amber-900 space-y-1">
+                <div className="flex items-center gap-1.5 font-bold">
+                  <Check className="w-3.5 h-3.5 text-amber-600" /> Preserves Pre-test & Post-test Audio
+                </div>
+                <div className="flex items-center gap-1.5 font-bold">
+                  <Check className="w-3.5 h-3.5 text-amber-600" /> Preserves Rater Evaluation Grades
+                </div>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => handleOpenResetModal('lessons_only')}
+              className="w-full py-2.5 px-4 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-xs font-bold transition shadow-sm flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span>Reset Modules 1–8 Only</span>
+            </button>
+          </div>
+
+          {/* Card 3: Complete Factory Reset */}
+          <div className="bg-gradient-to-b from-rose-50/50 to-white p-6 rounded-2xl border border-rose-200 shadow-sm flex flex-col justify-between space-y-4 hover:border-rose-400 transition-all">
+            <div className="space-y-3">
+              <div className="w-10 h-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center font-bold">
+                <Trash2 className="w-5 h-5" />
+              </div>
+              <div>
+                <div className="flex items-center gap-1.5">
+                  <h4 className="text-base font-black text-rose-950">Factory Reset Clean Slate</h4>
+                  <span className="text-[10px] font-black uppercase tracking-wider bg-rose-200 text-rose-900 px-1.5 py-0.5 rounded">All Data</span>
+                </div>
+                <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                  Wipes ALL test recordings, rater evaluations, lesson progress, quiz scores, and badges for a brand-new testing batch.
+                </p>
+              </div>
+              <div className="bg-rose-100/60 p-3 rounded-xl border border-rose-200 text-[11px] text-rose-950 space-y-1">
+                <div className="flex items-center gap-1.5 font-bold">
+                  <ShieldCheck className="w-3.5 h-3.5 text-rose-700" /> Keeps All 33 User Accounts & Passwords
+                </div>
+                <div className="flex items-center gap-1.5 font-bold">
+                  <ShieldCheck className="w-3.5 h-3.5 text-rose-700" /> Ready for New Testing Cohort Immediately
+                </div>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => handleOpenResetModal('all')}
+              className="w-full py-2.5 px-4 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-black transition shadow-md flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span>Full System Clean Up</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Section 4: Single Participant Reset Console */}
+        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+          <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div>
+              <h4 className="text-base font-black text-slate-900">Individual Participant Reset Console</h4>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Reset submissions and progress for a single student who needs to retake a test or redo a module
+              </p>
+            </div>
+            <span className="text-xs bg-slate-100 text-slate-700 px-3 py-1 rounded-full font-bold">
+              Selective Reset
+            </span>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center gap-3">
+            <select
+              value={selectedStudentForReset}
+              onChange={(e) => {
+                setSelectedStudentForReset(e.target.value);
+                const s = users.find(u => u.id === e.target.value);
+                setSelectedStudentName(s?.name || '');
+              }}
+              className="w-full sm:flex-1 text-xs font-bold py-2.5 px-3 border border-slate-300 rounded-xl bg-white text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            >
+              {users.filter(u => u.role === 'student').map(s => (
+                <option key={s.id} value={s.id}>
+                  {s.participant_code} — {s.name} ({s.cohort_group})
+                </option>
+              ))}
+            </select>
+
+            <button
+              type="button"
+              onClick={() => handleOpenResetModal('single_user', selectedStudentForReset, selectedStudentName)}
+              className="w-full sm:w-auto px-5 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <RotateCcw className="w-4 h-4 text-rose-600" />
+              <span>Reset Selected Student</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="space-y-8 animate-fade-in pb-16">
@@ -987,11 +1277,19 @@ export default function AdminDashboard({ currentUser, initialTab = 'cohort', nav
               <Archive className="w-4 h-4" /> Full Backup (.zip)
             </a>
             <button
+              type="button"
+              onClick={() => handleOpenResetModal('all')}
+              className="flex items-center gap-2 px-4 py-2.5 bg-rose-700 hover:bg-rose-600 text-white rounded-xl text-xs font-bold shadow-md transition-all border border-rose-500/40 cursor-pointer"
+              title="Clean up test submissions, rater evaluations, and student progress"
+            >
+              <RotateCcw className="w-4 h-4 text-rose-200" /> Clean Up / Reset Data
+            </button>
+            <button
               onClick={() => {
                 setActiveTab('users');
                 handleOpenAddModal();
               }}
-              className="flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold shadow-md transition-all"
+              className="flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold shadow-md transition-all cursor-pointer"
             >
               <UserPlus className="w-4 h-4" /> Add New User
             </button>
@@ -1016,7 +1314,7 @@ export default function AdminDashboard({ currentUser, initialTab = 'cohort', nav
       <div className="flex border-b border-slate-200 gap-2 bg-slate-100/80 p-1.5 rounded-2xl overflow-x-auto shadow-inner">
         <button
           onClick={() => setActiveTab('cohort')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer ${
             activeTab === 'cohort'
               ? 'bg-white text-indigo-700 shadow-sm border border-slate-200 ring-2 ring-indigo-500/10'
               : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
@@ -1031,7 +1329,7 @@ export default function AdminDashboard({ currentUser, initialTab = 'cohort', nav
 
         <button
           onClick={() => setActiveTab('calibration')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer ${
             activeTab === 'calibration'
               ? 'bg-white text-indigo-700 shadow-sm border border-slate-200 ring-2 ring-indigo-500/10'
               : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
@@ -1048,7 +1346,7 @@ export default function AdminDashboard({ currentUser, initialTab = 'cohort', nav
 
         <button
           onClick={() => setActiveTab('export')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer ${
             activeTab === 'export'
               ? 'bg-white text-indigo-700 shadow-sm border border-slate-200 ring-2 ring-indigo-500/10'
               : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
@@ -1060,7 +1358,7 @@ export default function AdminDashboard({ currentUser, initialTab = 'cohort', nav
 
         <button
           onClick={() => setActiveTab('users')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer ${
             activeTab === 'users'
               ? 'bg-white text-indigo-700 shadow-sm border border-slate-200 ring-2 ring-indigo-500/10'
               : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
@@ -1071,6 +1369,18 @@ export default function AdminDashboard({ currentUser, initialTab = 'cohort', nav
           <span className="text-[10px] bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full font-black">
             {users.length}
           </span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('maintenance')}
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer ${
+            activeTab === 'maintenance'
+              ? 'bg-white text-rose-700 shadow-sm border border-slate-200 ring-2 ring-rose-500/10'
+              : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
+          }`}
+        >
+          <Database className="w-4 h-4 text-rose-600" />
+          <span>Data Clean Up & Maintenance</span>
         </button>
       </div>
 
@@ -1335,6 +1645,9 @@ export default function AdminDashboard({ currentUser, initialTab = 'cohort', nav
       </div>
     </div>
   )}
+
+      {/* Tab 5: Data Clean Up & Maintenance */}
+      {activeTab === 'maintenance' && renderMaintenanceView()}
 
       {/* ========================================================================= */}
       {/* ADD NEW USER MODAL (SMART AUTO-BINDING ROLE WIZARD) */}
@@ -1629,6 +1942,145 @@ export default function AdminDashboard({ currentUser, initialTab = 'cohort', nav
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* DATA RESET & CLEAN UP CONFIRMATION MODAL */}
+      {/* ========================================================================= */}
+      {showResetModal && (
+        <div className="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 animate-scale-up space-y-5">
+            <div className="flex items-start justify-between">
+              <div className="flex items-center gap-3">
+                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${
+                  resetScope === 'all' ? 'bg-rose-100 text-rose-600' : 'bg-amber-100 text-amber-700'
+                }`}>
+                  <RotateCcw className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-black text-slate-900">
+                    {resetScope === 'all' && 'Confirm Full System Reset'}
+                    {resetScope === 'tests_only' && 'Reset Test Submissions & Scores'}
+                    {resetScope === 'lessons_only' && 'Reset Lesson Modules 1–8'}
+                    {resetScope === 'single_user' && `Reset Participant: ${selectedStudentName || 'Selected Student'}`}
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    Review the changes before applying this irreversible cleanup
+                  </p>
+                </div>
+              </div>
+              <button 
+                type="button"
+                onClick={() => setShowResetModal(false)}
+                className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Scope Details Card */}
+            <div className={`p-4 rounded-2xl border text-xs leading-relaxed space-y-2 ${
+              resetScope === 'all'
+                ? 'bg-rose-50 border-rose-200 text-rose-950'
+                : resetScope === 'tests_only'
+                ? 'bg-purple-50 border-purple-200 text-purple-950'
+                : resetScope === 'lessons_only'
+                ? 'bg-amber-50 border-amber-200 text-amber-950'
+                : 'bg-indigo-50 border-indigo-200 text-indigo-950'
+            }`}>
+              <div className="font-bold flex items-center gap-1.5">
+                <AlertTriangle className="w-4 h-4 text-current shrink-0" />
+                <span>The following data will be permanently wiped:</span>
+              </div>
+              <ul className="list-disc pl-5 space-y-1 text-[11px]">
+                {resetScope === 'all' && (
+                  <>
+                    <li>All Pre-test & Post-test oral recordings & audio files on disk</li>
+                    <li>All Dual-Rater 20-point & 25-point evaluation score rubrics</li>
+                    <li>All Student progress records (Lessons 1–8 reset to locked)</li>
+                    <li>All Review quiz scores and gamification badges</li>
+                  </>
+                )}
+                {resetScope === 'tests_only' && (
+                  <>
+                    <li>All Pre-test & Post-test oral audio submissions & disk files</li>
+                    <li>All Dual-Rater evaluation rubrics and scores</li>
+                    <li>Pre-test and Post-test status reset to "not started"</li>
+                    <li className="font-semibold text-emerald-800">Lessons 1–8 progress & quiz scores will be KEPT</li>
+                  </>
+                )}
+                {resetScope === 'lessons_only' && (
+                  <>
+                    <li>All Lesson 1–8 progress records (reset to locked)</li>
+                    <li>All review quiz scores and loop task practice submissions</li>
+                    <li>All earned gamification badges</li>
+                    <li className="font-semibold text-emerald-800">Pre-test & Post-test oral submissions and rater grades will be KEPT</li>
+                  </>
+                )}
+                {resetScope === 'single_user' && (
+                  <>
+                    <li>All audio recordings and test submissions for {selectedStudentName}</li>
+                    <li>All evaluation grades assigned to this student</li>
+                    <li>All lesson progress and quiz scores for this student</li>
+                  </>
+                )}
+              </ul>
+            </div>
+
+            {/* Safety Reminder */}
+            <div className="bg-slate-50 border border-slate-200 p-3 rounded-xl flex items-center gap-2.5 text-[11px] text-slate-600">
+              <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+              <span>
+                <strong>Account Preservation:</strong> All participant accounts, staff logins, passwords, and assigned roles remain safe and intact.
+              </span>
+            </div>
+
+            {/* Optional Consent Reset */}
+            <label className="flex items-center gap-2.5 p-2 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-50 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={includeConsentReset}
+                onChange={(e) => setIncludeConsentReset(e.target.checked)}
+                className="w-4 h-4 rounded text-rose-600 focus:ring-rose-500 border-slate-300"
+              />
+              <span>Also reset Research Ethics Consent (participants must re-sign consent on next login)</span>
+            </label>
+
+            {/* Actions */}
+            <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
+              <button
+                type="button"
+                disabled={isResetting}
+                onClick={() => setShowResetModal(false)}
+                className="px-4 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                disabled={isResetting}
+                onClick={handleExecuteReset}
+                className={`px-6 py-2.5 rounded-xl text-xs font-black text-white shadow-md transition flex items-center gap-2 cursor-pointer ${
+                  resetScope === 'all'
+                    ? 'bg-rose-600 hover:bg-rose-700'
+                    : 'bg-indigo-600 hover:bg-indigo-700'
+                }`}
+              >
+                {isResetting ? (
+                  <>
+                    <RefreshCw className="w-4 h-4 animate-spin" />
+                    <span>Resetting Data...</span>
+                  </>
+                ) : (
+                  <>
+                    <RotateCcw className="w-4 h-4" />
+                    <span>Confirm & Execute Reset</span>
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         </div>
       )}

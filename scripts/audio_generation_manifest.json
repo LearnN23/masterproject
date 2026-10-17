@@ -1,0 +1,260 @@
+{
+  "pre_test": [
+    {
+      "taskNumber": 1,
+      "customerPromptText": "Hello? Is this OWNDAYS Customer Care? I placed an order online three days ago, but I haven't received any tracking update yet."
+    },
+    {
+      "taskNumber": 2,
+      "customerPromptText": "Hi, helpdesk! Your banking portal is completely useless! I tried logging in to process an urgent vendor payment, but the screen just freezes and won't let me in!"
+    },
+    {
+      "taskNumber": 3,
+      "customerPromptText": "This is unacceptable! My customers are trying to pay on my online store, but the checkout button is completely dead! I am losing hundreds of dollars every hour and nobody is fixing it!"
+    },
+    {
+      "taskNumber": 4,
+      "customerPromptText": "This is Shift Lead Sarah. I am ready for your P1 case handover briefing for Ticket TK-9021. Please proceed."
+    }
+  ],
+  "post_test": [
+    {
+      "taskNumber": 1,
+      "customerPromptText": "Hello? Is this Foundever Customer Care? I'm calling because I see an extra subscription charge on my monthly bill that I didn't authorize."
+    },
+    {
+      "taskNumber": 2,
+      "customerPromptText": "Hi, helpdesk! I'm trying to launch my cloud management panel, but the page just sits there loading forever and eventually says 'Connection Lost'!"
+    },
+    {
+      "taskNumber": 3,
+      "customerPromptText": "This is completely unacceptable! My employee was hospitalized in Bangkok and we submitted an emergency claim five days ago! Nobody responded and we are stranded!"
+    },
+    {
+      "taskNumber": 4,
+      "customerPromptText": "Good evening. European desk lead Julian here. I am ready for your P1 handover briefing for BASF Ticket TK-1009. Please go ahead."
+    }
+  ],
+  "loop_tasks": {
+    "1": [
+      {
+        "turn": 1,
+        "speaker": "Customer (Sarah)",
+        "text": "Hi, IT Service Desk? This is Sarah from Marketing. I can't log into the company portal at all! The screen keeps throwing an error, and I have an urgent client report due in 10 minutes. Please help!",
+        "purpose": "Customer expressing urgency and distress"
+      },
+      {
+        "turn": 2,
+        "speaker": "Agent (Golf)",
+        "text": "Good morning, Concentrix IT Service Desk. My name is Golf. I completely understand this is urgent, Sarah, and I will be glad to assist you with logging in right away. To access your profile, may I please verify your Employee ID and workstation name?",
+        "purpose": "Brand Salutation + Empathy + Modal Verification"
+      },
+      {
+        "turn": 3,
+        "speaker": "Customer (Sarah)",
+        "text": "Thanks for checking. My Employee ID is MK-4092, on laptop DESKTOP-MKT04. The exact red text on the screen says 'Invalid Credentials or Account Locked', but I'm completely sure I typed my password correctly!",
+        "purpose": "Customer provides credentials and diagnostic error"
+      },
+      {
+        "turn": 4,
+        "speaker": "Agent (Golf)",
+        "text": "Thank you for confirming those details, Sarah. Please allow me just a moment while I pull up your account record. First, I have just unlocked your account on our server. Next, could you please make sure your Caps Lock key is off, and try logging in again? If needed, I can also trigger an immediate password reset to your mobile.",
+        "purpose": "Courtesy Hold + Sequential Instructions + Resolution Offer"
+      }
+    ],
+    "2": [
+      {
+        "turn": 1,
+        "speaker": "Customer",
+        "text": "Hi, helpdesk? Look, I'm trying to log into the company portal to submit my urgent report, but it's completely broken! The screen just gave me some weird error and won't let me in. I really need to send this within the next twenty minutes!",
+        "purpose": "Vague emotional complaint under time pressure"
+      },
+      {
+        "turn": 2,
+        "speaker": "Agent (Golf)",
+        "text": "I understand how critical this submission is for you, and I can certainly help you resolve this right away. To diagnose the problem, could you please read me the exact error message or code displayed on your screen?",
+        "purpose": "Empathy + Indirect Diagnostic Probing"
+      },
+      {
+        "turn": 3,
+        "speaker": "Customer",
+        "text": "Let me check... Okay, a pop-up says 'Authentication Timeout - Error 504 Gateway'. But I'm sure I typed my password correctly, and my laptop is connected to my home Wi-Fi.",
+        "purpose": "Caller provides specific diagnostic facts"
+      },
+      {
+        "turn": 4,
+        "speaker": "Agent (Golf)",
+        "text": "Thank you for checking that for me. So if I understand correctly, your credentials are accepted, but the connection times out with Error 504 over home Wi-Fi. Could you please specify whether you have activated your company VPN before launching the portal?",
+        "purpose": "Reflective Paraphrasing + Actionable Diagnostic Step"
+      }
+    ],
+    "3": [
+      {
+        "turn": 1,
+        "speaker": "Customer",
+        "text": "Hello, helpdesk? I can't get into the company reporting portal at all! The screen just popped up with some weird error code and froze, and I have an urgent report due in twenty minutes!",
+        "purpose": "Customer urgency and problem announcement"
+      },
+      {
+        "turn": 2,
+        "speaker": "Agent",
+        "text": "I completely understand your concern regarding the upcoming deadline. Let me help you get back in right away. Could you please read me the exact error code appearing on the screen?",
+        "purpose": "Empathy + Polite Modal Diagnostic Inquiry"
+      },
+      {
+        "turn": 3,
+        "speaker": "Customer",
+        "text": "Let me check... Okay, the pop-up says 'Error 504: Session Interrupted - Invalid Cached Credentials'. But I know for sure that my username and password are correct because I just used them this morning!",
+        "purpose": "Error string identification & credential clarification"
+      },
+      {
+        "turn": 4,
+        "speaker": "Agent",
+        "text": "Thank you for that information. It looks like your browser is holding on to an expired session token rather than an issue with your password. If you clear your browser cache and refresh the page, you will be able to log in immediately. Would you mind testing that right now while I stay on the line?",
+        "purpose": "De-jargonized Explanation + First Conditional Workaround + Collaborative Verification"
+      }
+    ],
+    "4": [
+      {
+        "turn": 1,
+        "speaker": "Customer (David Miller)",
+        "text": "I just checked my mobile banking statement and you charged me TWICE for my cloud storage subscription! This is completely ridiculous! You people keep taking money from my account without authorization. I want this resolved and refunded right now!",
+        "purpose": "High-intensity customer complaint & refund demand"
+      },
+      {
+        "turn": 2,
+        "speaker": "Agent (Pear)",
+        "text": "I completely understand how frustrating and concerning an unexpected duplicate charge is on your account, Mr. Miller. On behalf of our company, I sincerely apologize for this billing error. I will take care of this for you immediately. To help me locate your file, may I please have your registered email address and the transaction reference number?",
+        "purpose": "HEAR Validation + Corporate Apology + Data Verification"
+      },
+      {
+        "turn": 3,
+        "speaker": "Customer (David Miller)",
+        "text": "Fine! My registered email address is david.miller@techcorp.com, and the transaction reference on my app says TXN-9982. Can you fix this right now? I don't have time to wait around!",
+        "purpose": "Customer complies with verification details"
+      },
+      {
+        "turn": 4,
+        "speaker": "Agent (Pear)",
+        "text": "Thank you for that information, Mr. Miller. Rest assured that I am taking personal ownership of your account right now. I have just verified the duplicate transaction and processed an immediate refund of thirty dollars back to your original payment method. You will receive an official credit confirmation email within fifteen minutes, and the funds will reflect in your account within one to two business days. I am also applying a one-month service credit to your account as a goodwill gesture for the inconvenience.",
+        "purpose": "Personal Ownership + Financial Resolution + SLA Timelines + Goodwill Retention"
+      }
+    ],
+    "5": [
+      {
+        "turn": 1,
+        "speaker": "Customer",
+        "text": "Hi, I really need help! I can't access the company work portal at all, and it's throwing some strange error on my screen. I have an urgent report due in 20 minutes!",
+        "purpose": "Caller distressed by error barrier before deadline"
+      },
+      {
+        "turn": 2,
+        "speaker": "Agent (Mei)",
+        "text": "I understand how urgent this is for your report submission, and I'd be glad to help you resolve this right away. Could you please read me the exact error message displayed in that dialog box?",
+        "purpose": "Empathy + Specific Screen Probing"
+      },
+      {
+        "turn": 3,
+        "speaker": "Customer",
+        "text": "Okay... the red box says 'Invalid Credentials or Session Expired', but I'm absolutely certain I typed my password correctly. What should I do now?",
+        "purpose": "Caller provides exact error text"
+      },
+      {
+        "turn": 4,
+        "speaker": "Agent (Mei)",
+        "text": "Thank you for checking that. First, please click on the 'Reset Password' link directly beneath the sign-in field. Next, enter your employee ID and click 'Send Verification Code'. Finally, check your corporate email on your mobile phone for the reset link. Does the confirmation prompt appear on your screen?",
+        "purpose": "Sequential Imperatives + Visual Screen Alignment"
+      }
+    ],
+    "6": [
+      {
+        "turn": 1,
+        "speaker": "Customer",
+        "text": "Helpdesk? Hi, listen, our regional ERP portal completely crashed while we were syncing monthly inventory data! It's showing some bizarre database connection error and none of our store managers can complete transactions. We have a massive audit deadline in an hour, this is an absolute disaster!",
+        "purpose": "Business-critical incident report with audit panic"
+      },
+      {
+        "turn": 2,
+        "speaker": "Agent",
+        "text": "I completely understand the critical urgency of this situation, and I know how important this audit deadline is for your operations. Please rest assured that I am here to help you get this resolved. To help me identify the exact root cause, could you please read me the specific error message or system code currently displayed on your screen?",
+        "purpose": "Empathy + Business Urgency Validation + Error Probing"
+      },
+      {
+        "turn": 3,
+        "speaker": "Customer",
+        "text": "Right, the exact red box says 'Error 503: Backend Database Node Synchronization Timeout - Master Node Unreachable'. I tried restarting my browser and flushing DNS like we usually do, but it's clearly a central system issue. Can't you just fix this right now from your side?",
+        "purpose": "Identifies backend error & demands frontline fix"
+      },
+      {
+        "turn": 4,
+        "speaker": "Agent",
+        "text": "Thank you for providing that specific error code. Because this issue involves backend database node synchronization, it requires direct administrative intervention from our specialized server engineers. Due to the backend nature of this infrastructure fault, I am escalating your ticket directly to our Tier-2 Database Engineering Team. Given the operational impact on your stores, I have tagged this as a Priority 1 Critical Incident under Ticket ID #TK-9942. Under our Service Level Agreement, our senior database engineers will investigate the master node and contact you with a direct status update within 30 minutes. In the meantime, I am personally attaching all system logs to the handover file and will actively track this case until resolution.",
+        "purpose": "Objective Non-Blaming Escalation + P1 Classification + Ticket ID + 30-min SLA + Stewardship"
+      }
+    ],
+    "7": [
+      {
+        "turn": 1,
+        "speaker": "Customer (Khun Somchai)",
+        "text": "Hello! I'm in a huge hurry right now. I've been trying to log into my merchant portal for the last 20 minutes to check today's payout, but it keeps saying 'Account Temporarily Locked'! I have clients waiting. Can you fix this immediately?",
+        "purpose": "Urgent merchant payout access disruption"
+      },
+      {
+        "turn": 2,
+        "speaker": "Agent",
+        "text": "Hello Khun Somchai. I completely understand how urgent this is for your business, and I deeply apologize for the inconvenience. Please don't worry, I am here to help you regain access right away. To get started, may I please verify your full name and registered Merchant ID for security purposes?",
+        "purpose": "Empathy + Apology + Polite Merchant ID Verification"
+      },
+      {
+        "turn": 3,
+        "speaker": "Customer (Khun Somchai)",
+        "text": "Okay, okay. My Merchant ID is MID-883920 and my name is Somchai Prasert. I tried entering my password three times, and then the error popped up. Is my money safe? What do I need to do now?",
+        "purpose": "Verification data provided + fund safety concern"
+      },
+      {
+        "turn": 4,
+        "speaker": "Agent",
+        "text": "Thank you for the verification, Khun Somchai. Please be assured that your account funds are completely secure; the temporary lock is an automated security feature to protect your portal. To restore access, first, please check your registered email inbox for an automated password reset link we just dispatched. Next, click the link and set a new password complying with our standard security criteria. Finally, log back in using your new credentials. Could you please check your email now to confirm you have received it?",
+        "purpose": "Fund Safety Assurance + Sequential Reset Instructions + Collaborative Follow-up"
+      }
+    ],
+    "8": [
+      {
+        "turn": 1,
+        "speaker": "Customer",
+        "text": "Hi IT Support! I'm in a huge panic right now. I cannot log into the company's regional portal at all! The screen popped up with some weird error and won't let me through, and I have an urgent quarterly report due in 20 minutes! Can you fix this immediately?",
+        "purpose": "Caller panic over portal lockout before deadline"
+      },
+      {
+        "turn": 2,
+        "speaker": "Support Agent",
+        "text": "Hello Ms. Davis, I completely understand how critical this quarterly report is for you, and I apologize for the stress this access issue is causing. Rest assured, I am here to help you get this sorted out right away. To help me fix this quickly, could you please read the exact error message on your screen and confirm your user ID?",
+        "purpose": "De-escalation & Information Gathering"
+      },
+      {
+        "turn": 3,
+        "speaker": "Customer",
+        "text": "Thank you for being so patient. The message on the screen says 'Error 401: Invalid Credentials - Account Temporarily Locked after 3 Failed MFA Attempts'. But I am 100% positive I typed the correct password! I really need this unlocked right now!",
+        "purpose": "Error 401 identification & MFA lock context"
+      },
+      {
+        "turn": 4,
+        "speaker": "Support Agent",
+        "text": "Thank you for that information. It appears the system triggered a temporary security lockout following multiple authentication attempts. Don't worry, your account is perfectly safe. I have just generated a secure MFA reset link and dispatched it directly to your corporate email. First, please open your inbox and click that link. Next, follow the prompt to verify your identity and enter the new one-time password. Let me know as soon as you have submitted it.",
+        "purpose": "Problem Diagnosis & Sequential Technical Instruction"
+      },
+      {
+        "turn": 5,
+        "speaker": "Customer",
+        "text": "Okay, I just clicked the reset link you sent, updated my security token, and entered the new OTP... and wow, it works! The portal dashboard is loading now. Thank you so much for your fast help!",
+        "purpose": "Successful resolution verification"
+      },
+      {
+        "turn": 6,
+        "speaker": "Support Agent",
+        "text": "That is wonderful news, Ms. Davis! I am glad to hear your dashboard is up and running. I have logged this incident under Ticket ID #TK-4402 and marked it as fully resolved. Is there anything else I can assist you with today? ... Excellent. Thank you for contacting IT Support, and best of luck with your quarterly report. Have a great day!",
+        "purpose": "Resolution Confirmation, Ticket Referencing & Professional Call Closure"
+      }
+    ]
+  }
+}
